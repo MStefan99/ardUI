@@ -1,0 +1,40 @@
+//
+// Created by MStefan99 on 16.12.19.
+//
+
+#ifndef ARDUI_LLPI_H
+#define ARDUI_LLPI_H
+
+#include <Arduino.h>
+#include <time.h>
+
+enum returnCode {
+    Ok,
+    Fail,
+    NotImplemented
+};
+
+
+returnCode ardUiDisplayGetHeight(uint16_t& height);
+returnCode ardUiDisplayGetWidth(uint16_t& width);
+returnCode ardUiGetRealTime(tm& currentTime);
+
+returnCode ardUiDisplayInit();
+returnCode ardUiDisplayOn();
+returnCode ardUiDisplayOff();
+returnCode ardUiDisplaySetBrightness(uint8_t brightness);
+returnCode ardUiDisplayFill(uint16_t color);
+returnCode ardUiDisplayDrawPixel(uint16_t x, uint16_t y, uint32_t color);
+returnCode ardUiDisplayDrawLine(uint16_t x, uint16_t y, uint32_t color);
+returnCode ardUiDisplayDrawChar(uint16_t x, uint16_t y, uint16_t height, char text);
+returnCode ardUiDisplayDrawText(uint16_t x, uint16_t y, uint16_t height, String& text);
+returnCode ardUiDisplayDrawCircle(uint16_t x, uint16_t y, uint16_t radius);
+returnCode ardUiDisplayFillCircle(uint16_t x, uint16_t y, uint16_t radius);
+returnCode ardUiDisplayDrawRect(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint32_t color);
+returnCode ardUiDisplayFillRect(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint32_t color);
+returnCode ardUiDisplayDrawTriangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t x3, uint16_t y3);
+returnCode ardUiDisplayFillTriangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t x3, uint16_t y3);
+returnCode ardUiDisplayDrawBitmap(uint16_t x, uint16_t y, uint16_t* bitmap);
+
+
+#endif //ARDUI_LLPI_H
