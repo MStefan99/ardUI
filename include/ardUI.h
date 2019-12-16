@@ -8,6 +8,7 @@
 #include <Arduino_FreeRTOS.h>
 #include <task.h>
 #include "screen.h"
+#include "view.h"
 #include "llpi.h"
 
 
