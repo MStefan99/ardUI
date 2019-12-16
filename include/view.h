@@ -15,13 +15,13 @@ public:
     void setOnLongClickListener(void (*onLongClickListener)(view* view));
     void setOnScrollListener(void (*onScrollListener)(view* view));
 private:
-    void (*onClickHandler) (view* view);
-    void (*onLongClickHandler) (view* view);
-    void (*onScrollHandler) (view* view);
-    uint16_t x1;
-    uint16_t y1;
-    uint16_t x2;
-    uint16_t y2;
+    void (*onClickHandler) (view* view) = nullptr;
+    void (*onLongClickHandler) (view* view) = nullptr;
+    void (*onScrollHandler) (view* view) = nullptr;
+    uint16_t x1 = 0;
+    uint16_t y1 = 0;
+    uint16_t x2 = 0;
+    uint16_t y2 = 0;
 };
 
 #endif //ARDUI_VIEW_H

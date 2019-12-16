@@ -9,6 +9,7 @@
 #include <task.h>
 #include "screen.h"
 #include "view.h"
+#include "textView.h"
 #include "llpi.h"
 
 
@@ -24,11 +25,12 @@ public:
     void operator=(ardUI const &) = delete;
 
 private:
-    const uint16_t screenHeight;
-    const uint16_t screenWidth;
-    screen *currentScreen;
+    const uint16_t screenHeight = 100;
+    const uint16_t screenWidth = 100;
+    screen *currentScreen = nullptr;
 
     ardUI();
+    static void ardUiTask(void*);
 };
 
 
