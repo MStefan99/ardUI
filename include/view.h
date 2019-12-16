@@ -14,6 +14,9 @@ public:
     void setOnClickListener(void (*onClickListener)(view* view));
     void setOnLongClickListener(void (*onLongClickListener)(view* view));
     void setOnScrollListener(void (*onScrollListener)(view* view));
+
+    virtual void draw() const = 0;
+
 private:
     void (*onClickHandler) (view* view) = nullptr;
     void (*onLongClickHandler) (view* view) = nullptr;

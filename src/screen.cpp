@@ -6,12 +6,19 @@
 
 
 void screen::setContentView() {
+    //TODO: populate the viewList from xml or layout class
+    draw();
+}
 
+
+void screen::addView(view* view) {
+    viewList.append(view);
+    draw();
 }
 
 
 void screen::onCreate() {
-
+    draw();
 }
 
 
@@ -42,4 +49,11 @@ void screen::onStop() {
 
 void screen::onDestroy() {
 
+}
+
+
+void screen::draw() const {
+    for (auto *v : viewList) {
+        v->draw();
+    }
 }

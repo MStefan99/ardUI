@@ -10,8 +10,18 @@ void textView::setText(const String& text) {
 }
 
 
+void textView::append(const String &text) {
+    str += text;
+}
+
+
 void textView::setTextSize(uint16_t size) {
     textSize = size;
+}
+
+
+void textView::setCurrentTextColor(uint32_t color) {
+    clr = color;
 }
 
 
@@ -25,18 +35,11 @@ uint16_t textView::getTextSize() {
 }
 
 
-void textView::append(const String &text) {
-    str += text;
-}
-
-
-void textView::setCurrentTextColor(uint32_t color) {
-    clr = color;
-}
-
-
 uint32_t textView::getCurrentTextColor() {
     return clr;
 }
 
 
+void textView::draw() const {
+    // TODO: add textView drawing
+}

@@ -6,22 +6,20 @@
 #define ARDUI_TEXTVIEW_H
 
 #include <Arduino.h>
+#include "view.h"
 
 class textView : public view {
 public:
     void setText(const String& text);
-
-    void setTextSize(uint16_t size);
-
-    String& getText();
-
-    uint16_t getTextSize();
-
     void append(const String& text);
-
+    void setTextSize(uint16_t size);
     void setCurrentTextColor(uint32_t color);
 
+    String& getText();
+    uint16_t getTextSize();
     uint32_t getCurrentTextColor();
+
+    void draw() const override;
 
 private:
     String str = "";
