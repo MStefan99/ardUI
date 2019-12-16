@@ -1,0 +1,4 @@
+C:\Users\MStefan99\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\193.5233.144\bin\cmake\win\bin\cmake.exe -DCMAKE_BUILD_TYPE=uno -G "CodeBlocks - MinGW Makefiles" E:\Documents\Projects\Programming\Arduino\ardUI
+-- Configuring done
+-- Generating done
+-- Build files have been written to: E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno

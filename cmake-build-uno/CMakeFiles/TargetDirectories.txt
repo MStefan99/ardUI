@@ -1,0 +1,15 @@
+E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/CMakeFiles/rebuild_cache.dir
+E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/CMakeFiles/PLATFORMIO_UPLOADFS.dir
+E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/CMakeFiles/PLATFORMIO_BUILD.dir
+E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/CMakeFiles/PLATFORMIO_CLEAN.dir
+E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/CMakeFiles/PLATFORMIO_BUILD_VERBOSE.dir
+E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/CMakeFiles/PLATFORMIO_UPLOAD.dir
+E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/CMakeFiles/PLATFORMIO_MONITOR.dir
+E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/CMakeFiles/PLATFORMIO_TEST.dir
+E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/CMakeFiles/PLATFORMIO_PROGRAM.dir
+E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/CMakeFiles/PLATFORMIO_BUILD_DEBUG.dir
+E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/CMakeFiles/PLATFORMIO_UPDATE_ALL.dir
+E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/CMakeFiles/PLATFORMIO_REBUILD_PROJECT_INDEX.dir
+E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/CMakeFiles/PLATFORMIO_DEVICE_LIST.dir
+E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/CMakeFiles/Z_DUMMY_TARGET.dir
+E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/CMakeFiles/edit_cache.dir

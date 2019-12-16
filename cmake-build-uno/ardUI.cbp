@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="ardUI"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="PLATFORMIO_UPLOADFS">
+				<Option working_dir="E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 PLATFORMIO_UPLOADFS"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="PLATFORMIO_BUILD">
+				<Option working_dir="E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 PLATFORMIO_BUILD"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="PLATFORMIO_CLEAN">
+				<Option working_dir="E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 PLATFORMIO_CLEAN"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="PLATFORMIO_BUILD_VERBOSE">
+				<Option working_dir="E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 PLATFORMIO_BUILD_VERBOSE"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="PLATFORMIO_UPLOAD">
+				<Option working_dir="E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 PLATFORMIO_UPLOAD"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="PLATFORMIO_MONITOR">
+				<Option working_dir="E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 PLATFORMIO_MONITOR"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="PLATFORMIO_TEST">
+				<Option working_dir="E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 PLATFORMIO_TEST"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="PLATFORMIO_PROGRAM">
+				<Option working_dir="E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 PLATFORMIO_PROGRAM"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="PLATFORMIO_BUILD_DEBUG">
+				<Option working_dir="E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 PLATFORMIO_BUILD_DEBUG"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="PLATFORMIO_UPDATE_ALL">
+				<Option working_dir="E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 PLATFORMIO_UPDATE_ALL"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="PLATFORMIO_REBUILD_PROJECT_INDEX">
+				<Option working_dir="E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 PLATFORMIO_REBUILD_PROJECT_INDEX"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="PLATFORMIO_DEVICE_LIST">
+				<Option working_dir="E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 PLATFORMIO_DEVICE_LIST"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Z_DUMMY_TARGET">
+				<Option output="E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Z_DUMMY_TARGET.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="E:/Documents/Projects/Programming/Arduino/ardUI/include"/>
+					<Add directory="E:/Documents/Projects/Programming/Arduino/ardUI/src"/>
+					<Add directory="C:/Users/MStefan99/.platformio/packages/framework-arduino-avr/cores/arduino"/>
+					<Add directory="C:/Users/MStefan99/.platformio/packages/framework-arduino-avr/variants/standard"/>
+					<Add directory="C:/Users/MStefan99/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src"/>
+					<Add directory="C:/Users/MStefan99/.platformio/packages/framework-arduino-avr/libraries/HID/src"/>
+					<Add directory="C:/Users/MStefan99/.platformio/packages/framework-arduino-avr/libraries/SPI/src"/>
+					<Add directory="C:/Users/MStefan99/.platformio/packages/framework-arduino-avr/libraries/SoftwareSerial/src"/>
+					<Add directory="C:/Users/MStefan99/.platformio/packages/framework-arduino-avr/libraries/Wire/src"/>
+					<Add directory="C:/Users/MStefan99/.platformio/packages/toolchain-atmelavr/avr/include"/>
+					<Add directory="C:/Users/MStefan99/.platformio/packages/toolchain-atmelavr/lib/gcc/avr/5.4.0/include"/>
+					<Add directory="C:/Users/MStefan99/.platformio/packages/toolchain-atmelavr/lib/gcc/avr/5.4.0/include-fixed"/>
+					<Add directory="C:/Users/MStefan99/.platformio/packages/tool-unity"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/8.2.0/include/c++"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/8.2.0/include/c++/mingw32"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/8.2.0/include/c++/backward"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/8.2.0/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/8.2.0/../../../../include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/8.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 Z_DUMMY_TARGET"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Z_DUMMY_TARGET/fast">
+				<Option output="E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Z_DUMMY_TARGET.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="E:/Documents/Projects/Programming/Arduino/ardUI/include"/>
+					<Add directory="E:/Documents/Projects/Programming/Arduino/ardUI/src"/>
+					<Add directory="C:/Users/MStefan99/.platformio/packages/framework-arduino-avr/cores/arduino"/>
+					<Add directory="C:/Users/MStefan99/.platformio/packages/framework-arduino-avr/variants/standard"/>
+					<Add directory="C:/Users/MStefan99/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src"/>
+					<Add directory="C:/Users/MStefan99/.platformio/packages/framework-arduino-avr/libraries/HID/src"/>
+					<Add directory="C:/Users/MStefan99/.platformio/packages/framework-arduino-avr/libraries/SPI/src"/>
+					<Add directory="C:/Users/MStefan99/.platformio/packages/framework-arduino-avr/libraries/SoftwareSerial/src"/>
+					<Add directory="C:/Users/MStefan99/.platformio/packages/framework-arduino-avr/libraries/Wire/src"/>
+					<Add directory="C:/Users/MStefan99/.platformio/packages/toolchain-atmelavr/avr/include"/>
+					<Add directory="C:/Users/MStefan99/.platformio/packages/toolchain-atmelavr/lib/gcc/avr/5.4.0/include"/>
+					<Add directory="C:/Users/MStefan99/.platformio/packages/toolchain-atmelavr/lib/gcc/avr/5.4.0/include-fixed"/>
+					<Add directory="C:/Users/MStefan99/.platformio/packages/tool-unity"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/8.2.0/include/c++"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/8.2.0/include/c++/mingw32"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/8.2.0/include/c++/backward"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/8.2.0/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/8.2.0/../../../../include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/8.2.0/include-fixed"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 Z_DUMMY_TARGET/fast"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Documents/Projects/Programming/Arduino/ardUI/cmake-build-uno/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="E:/Documents/Projects/Programming/Arduino/ardUI/src/main.cpp">
+			<Option target="Z_DUMMY_TARGET"/>
+		</Unit>
+		<Unit filename="E:/Documents/Projects/Programming/Arduino/ardUI/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="E:/Documents/Projects/Programming/Arduino/ardUI/CMakeListsPrivate.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
