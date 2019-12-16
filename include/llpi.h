@@ -15,9 +15,9 @@ enum returnCode {
 };
 
 
-returnCode ardUiDisplayGetHeight(uint16_t& height);
-returnCode ardUiDisplayGetWidth(uint16_t& width);
-returnCode ardUiGetRealTime(tm& currentTime);
+uint16_t ardUiDisplayGetHeight();
+uint16_t ardUiDisplayGetWidth();
+tm ardUiGetRealTime();
 
 returnCode ardUiDisplayInit();
 returnCode ardUiDisplayOn();

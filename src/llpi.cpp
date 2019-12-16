@@ -6,26 +6,23 @@
  * hardware to use the ardUI library. */
 
 #include "llpi.h"
+//TODO: replace enum with custom exception
 
-
-returnCode ardUiDisplayGetHeight(const uint16_t& height) {
-    //height = *Your display height in px*
+uint16_t ardUiDisplayGetHeight() {
     //TODO: Implement.
     return NotImplemented;
 }
 
 
-returnCode ardUiDisplayGetWidth(const uint16_t& width) {
-    //height = *Your display width in px*
+uint16_t ardUiDisplayGetWidth() {
     //TODO: Implement.
     return NotImplemented;
 }
 
 
-returnCode ardUiGetRealTime(tm& currentTime) {
-    //tm = *Current time*
+tm ardUiGetRealTime() {
     //TODO: Implement.
-    return NotImplemented;
+    return {};
 }
 
 
