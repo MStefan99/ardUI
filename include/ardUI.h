@@ -13,18 +13,29 @@
 
 class ardUI {
 public:
-    static ardUI& getInstance();
-    template <class ScreenClass> static void show(ScreenClass screenToShow);
+    static ardUI &getInstance();
 
-    ardUI &operator()() const;
-    explicit ardUI(ardUI const&) = delete;
-    void operator=(ardUI const&) = delete;
+    template<class ScreenClass>
+    static void show();
+
+    explicit ardUI(ardUI const &) = delete;
+
+    void operator=(ardUI const &) = delete;
+
 private:
     const uint16_t screenHeight;
     const uint16_t screenWidth;
-    screen currentScreen;
+    screen *currentScreen;
+
     ardUI();
 };
+
+
+template<class ScreenClass>
+void ardUI::show() {
+    auto* screen = new ScreenClass();
+    getInstance().currentScreen = screen;
+}
 
 
 #endif //ARDUI_ARDUI_H

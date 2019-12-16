@@ -8,6 +8,14 @@
 class screen {
 public:
     void setContentView();
+    virtual void onCreate() = 0;
+    virtual void onStart();
+    virtual void onRestart();
+    virtual void onResume();
+
+    virtual void onPause();
+    virtual void onStop();
+    virtual void onDestroy();
 };
 
 #endif //ARDUI_SCREEN_H
