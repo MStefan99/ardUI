@@ -97,6 +97,3 @@ fabric.properties
 .pio
 
 # End of https://www.gitignore.io/api/clion,platformio
-
-
-cmake-build-uno
