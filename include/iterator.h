@@ -32,8 +32,12 @@ public:
 
     element<T> *getPointer();
 private:
-    element<T> *pointer;
+    element<T>* pointer {nullptr};
 };
+
+
+template<class T>
+iterator<T>::iterator(element<T> *elementPtr): pointer(elementPtr) {}
 
 
 template<class T>
@@ -143,10 +147,6 @@ template<class T>
 iterator<T>::operator element<T> *() {
     return pointer;
 }
-
-
-template<class T>
-iterator<T>::iterator(element<T> *elementPtr): pointer(elementPtr) {}
 
 
 template<class T>

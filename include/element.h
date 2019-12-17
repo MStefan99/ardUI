@@ -8,7 +8,8 @@
 template <class T>
 class element {
 public:
-    element(const element& element);
+    explicit element(const T& content);
+    element(const element& element) = default;
     explicit element(const T& content, element* prev = nullptr, element* next = nullptr);
 
     element* getNext() const;
@@ -24,13 +25,13 @@ public:
     explicit operator const T&() const;
 private:
     T content;
-    element* next;
-    element* prev;
+    element* next {nullptr};
+    element* prev {nullptr};
 };
 
 
 template<class T>
-element<T>::element(const element<T> &e): content(e.content), prev(e.prev), next(e.next) {}
+element<T>::element(const T &content): content(content) {}
 
 
 template<class T>

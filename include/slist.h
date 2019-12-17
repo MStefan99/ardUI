@@ -11,7 +11,8 @@
 template<class T>
 class list {
 public:
-    list();
+    list() = default;
+    list(const list& list);
     ~list() noexcept;
 
     void append(const T &content);
@@ -26,17 +27,22 @@ public:
     void wipe();
 
     T &operator[](int n);
+    list& operator=(const list& list);
 
     iterator<T> begin() const;
     iterator<T> end() const;
 private:
-    element<T> *first;
-    element<T> *last;
+    element<T>* first {nullptr};
+    element<T>* last {nullptr};
 };
 
 
 template<class T>
-list<T>::list(): first(nullptr), last(nullptr) {}
+list<T>::list(const list& l) {
+    for (auto e : l) {
+        append(e);
+    }
+}
 
 
 template<class T>
@@ -175,6 +181,18 @@ template<class T>
 T &list<T>::operator[](int n) {
     iterator<T> it(first);
     return *(it + n);
+}
+
+
+template<class T>
+list<T>& list<T>::operator=(const list& l) {
+    if (this == &l) {
+        return *this;
+    }
+    wipe();
+    for (const auto& e : l) {
+        append(e);
+    }
 }
 
 #endif //ARDUI_SLIST_H
