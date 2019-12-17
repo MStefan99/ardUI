@@ -3,7 +3,8 @@
 //
 
 #include <Arduino.h>
-#include "ardUI.h"
+#include "ardUI_setup.h"
+
 
 class mainScreen : public screen {
     void onCreate() override {
@@ -16,8 +17,9 @@ class mainScreen : public screen {
     }
 };
 
+
 void setup() {
-    ardUI::show<mainScreen>();
+
 }
 
 

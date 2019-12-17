@@ -44,83 +44,83 @@ returnCode ardUiDisplayOff() {
 }
 
 
-returnCode ardUiDisplaySetBrightness(const uint8_t brightness) {
+returnCode ardUiDisplaySetBrightness(uint8_t brightness) {
     //TODO: Implement.
     return NotImplemented;
 }
 
 
-returnCode ardUiDisplayFill(const uint16_t color) {
+returnCode ardUiDisplayFill(uint16_t color) {
     //TODO: Implement.
     return NotImplemented;
 }
 
 
-returnCode ardUiDisplayDrawPixel(const uint16_t x, const uint16_t y, const uint32_t color) {
+returnCode ardUiDisplayDrawPixel(uint16_t x, uint16_t y, uint32_t color) {
     //TODO: Implement.
     return NotImplemented;
 }
 
 
-returnCode ardUiDisplayDrawLine(const uint16_t x, const uint16_t y, const uint32_t color) {
+returnCode ardUiDisplayDrawLine(uint16_t x, uint16_t y, uint32_t color) {
     //TODO: Implement.
     return NotImplemented;
 }
 
 
-returnCode ardUiDisplayDrawChar(const uint16_t x, const uint16_t y, const uint16_t height, const char text) {
+returnCode ardUiDisplayDrawChar(uint16_t x, uint16_t y, uint16_t height, char text, uint32_t color) {
     //TODO: Implement.
     return NotImplemented;
 }
 
 
-returnCode ardUiDisplayDrawText(const uint16_t x, const uint16_t y, const uint16_t height, const String& text) {
+returnCode ardUiDisplayDrawText(uint16_t x, uint16_t y, uint16_t height, const String& text, uint32_t color) {
     //TODO: Implement.
     return NotImplemented;
 }
 
 
-returnCode ardUiDisplayDrawCircle(const uint16_t x, const uint16_t y, const uint16_t radius) {
+returnCode ardUiDisplayDrawCircle(uint16_t x, uint16_t y, uint16_t radius, uint32_t color) {
     //TODO: Implement.
     return NotImplemented;
 }
 
 
-returnCode ardUiDisplayFillCircle(const uint16_t x, const uint16_t y, const uint16_t radius) {
+returnCode ardUiDisplayFillCircle(uint16_t x, uint16_t y, uint16_t radius, uint32_t color) {
     //TODO: Implement.
     return NotImplemented;
 }
 
 
-returnCode ardUiDisplayDrawRect(const uint16_t x1, const uint16_t y1, const uint16_t x2, const uint16_t y2,
-        const uint32_t color) {
+returnCode ardUiDisplayDrawRect(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
+        uint32_t color) {
     //TODO: Implement.
     return NotImplemented;
 }
 
 
-returnCode ardUiDisplayFillRect(const uint16_t x1, const uint16_t y1, const uint16_t x2, const uint16_t y2,
-        const uint32_t color) {
+returnCode ardUiDisplayFillRect(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
+        uint32_t color) {
     //TODO: Implement.
     return NotImplemented;
 }
 
 
-returnCode ardUiDisplayDrawTriangle(const uint16_t x1, const uint16_t y1, const uint16_t x2, const uint16_t y2,
-        const uint16_t x3, const uint16_t y3) {
+returnCode ardUiDisplayDrawTriangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
+        uint16_t x3, uint16_t y3, uint32_t color) {
     //TODO: Implement.
     return NotImplemented;
 }
 
 
-returnCode ardUiDisplayFillTriangle(const uint16_t x1, const uint16_t y1, const uint16_t x2, const uint16_t y2,
-        const uint16_t x3, const uint16_t y3) {
+returnCode ardUiDisplayFillTriangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
+        uint16_t x3, uint16_t y3, uint32_t color) {
     //TODO: Implement.
     return NotImplemented;
 }
 
 
-returnCode ardUiDisplayDrawBitmap(const uint16_t x, const uint16_t y, const uint16_t* bitmap) {
+returnCode ardUiDisplayDrawBitmap(uint16_t x, uint16_t y, uint16_t* bitmap) {
     //TODO: Implement.
     return NotImplemented;
 }

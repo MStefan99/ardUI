@@ -13,6 +13,11 @@
 #include "llpi.h"
 
 
+void ardUiSetupRoutine();  // User "setup()" function will be replaced by this custom function
+void ardUiLoopRoutine();  // User "loop()" function will be replaced by this custom function
+void ardUiLoopCaller(void*);  // User loop caller used by FreeRTOS
+
+
 class ardUI {
 public:
     static ardUI &getInstance();
@@ -25,9 +30,9 @@ public:
     void operator=(ardUI const &) = delete;
 
 private:
-    const uint16_t screenHeight = 100;
-    const uint16_t screenWidth = 100;
-    screen *currentScreen = nullptr;
+    const uint16_t screenHeight {100};
+    const uint16_t screenWidth {100};
+    screen *currentScreen {nullptr};
 
     ardUI();
     static void ardUiTask(void*);

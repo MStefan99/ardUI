@@ -10,6 +10,8 @@
 
 class textView : public view {
 public:
+    textView() = default;
+
     void setText(const String& text);
     void append(const String& text);
     void setTextSize(uint16_t size);
@@ -22,9 +24,9 @@ public:
     void draw() const override;
 
 private:
-    String str = "";
-    uint16_t textSize = 0;
-    uint32_t clr = 0;
+    String stringContent {""};
+    uint16_t textSize {0};
+    uint32_t textColor {0};
 };
 
 

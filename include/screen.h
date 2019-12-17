@@ -10,6 +10,8 @@
 
 class screen {
 public:
+    screen() = default;
+
     void setContentView();
     void addView(view* view);
 
@@ -24,7 +26,7 @@ public:
     void draw() const;
 
 private:
-list<view*> viewList;
+    list<view*> viewList {};
 };
 
 #endif //ARDUI_SCREEN_H

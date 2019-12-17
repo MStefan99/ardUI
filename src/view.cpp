@@ -5,16 +5,14 @@
 #include "view.h"
 
 
-view::view() :
-        onClickHandler(nullptr),
-        onLongClickHandler(nullptr),
-        x1(0),
-        y1(0),
-        x2(0),
-        y2(0) {}
+view::view() : box() {}
 
 
-void view::setOnClickListener(void (*l)(view*)) {
+view::view(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2) :
+        box(point(x1, y1), point(x2, y2)) {}
+
+
+void view::setOnClickListener(void (*l)(view *)) {
     onClickHandler = l;
 }
 
@@ -27,3 +25,5 @@ void view::setOnLongClickListener(void (*l)(view*)) {
 void view::setOnScrollListener(void (*l)(view*)) {
     onScrollHandler = l;
 }
+
+
