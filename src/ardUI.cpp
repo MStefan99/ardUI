@@ -2,21 +2,14 @@
 // Created by MStefan99 on 16.12.19.
 //
 
-#include <ardUI.h>
+#include "ardUI.h"
 
 
-ardUI::ardUI() :
-        screenHeight(ardUiDisplayGetHeight()),
-        screenWidth(ardUiDisplayGetWidth()) {
-    xTaskCreate(ardUiTask, "UI task", 100,
-            nullptr, tskIDLE_PRIORITY, nullptr);
-}
+#if FREERTOS_ENABLED
 
-
-ardUI &ardUI::getInstance() {
-    static ardUI instance;
-    return instance;
-}
+#undef setup
+#undef loop
+#undef delay
 
 
 void ardUI::ardUiTask(void *) {
@@ -30,6 +23,7 @@ void setup() {  // Default setup function will be used to create FreeRTOS loop t
     ardUiSetupRoutine();  // Calling user setup routine
     xTaskCreate(ardUiLoopCaller, "Main loop", 500,
                 nullptr, tskIDLE_PRIORITY + 3, nullptr); // Creating loop task
+#define delay(milliSecondsToWait) vTaskDelay(milliSecondsToWait / 15)  // Replacing default delay with FreeRTOS task delay
 }
 
 
@@ -40,4 +34,22 @@ void ardUiLoopCaller(void*) {  // User loop caller used by FreeRTOS
     while (true) {
         ardUiLoopRoutine();  // Calling user loop routine in an infinite loop
     }
+}
+
+#endif
+
+
+ardUI::ardUI() :
+        screenHeight(ardUiDisplayGetHeight()),
+        screenWidth(ardUiDisplayGetWidth()) {
+#if FREERTOS_ENABLED
+    xTaskCreate(ardUiTask, "UI task", 100,
+            nullptr, tskIDLE_PRIORITY, nullptr);
+#endif
+}
+
+
+ardUI &ardUI::getInstance() {
+    static ardUI instance;
+    return instance;
 }

@@ -2,8 +2,8 @@
 // Created by MStefan99 on 16.12.19.
 //
 
-#ifndef ARDUI_TEXTVIEW_H
-#define ARDUI_TEXTVIEW_H
+#ifndef ARDUI_TEXT_VIEW_H
+#define ARDUI_TEXT_VIEW_H
 
 #include <Arduino.h>
 #include "view.h"
@@ -11,6 +11,9 @@
 class textView : public view {
 public:
     textView() = default;
+    explicit textView(const String& text);
+    textView(const String& text, uint16_t size);
+    textView(const String& text, uint16_t size, uint32_t color);
 
     void setText(const String& text);
     void append(const String& text);
@@ -25,9 +28,9 @@ public:
 
 private:
     String stringContent {""};
-    uint16_t textSize {0};
+    uint16_t textSize {10};
     uint32_t textColor {0};
 };
 
 
-#endif //ARDUI_TEXTVIEW_H
+#endif //ARDUI_TEXT_VIEW_H

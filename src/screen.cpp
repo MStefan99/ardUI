@@ -60,7 +60,7 @@ void screen::onDestroy() {
 
 
 void screen::draw() const {
-    for (auto *v : viewList) {
-        v->draw();
+    if (rootView) {
+        rootView->draw();
     }
 }

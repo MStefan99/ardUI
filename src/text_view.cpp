@@ -3,7 +3,20 @@
 //
 
 #include "llpi.h"
-#include "textView.h"
+#include "text_view.h"
+
+
+textView::textView(const String& text): stringContent(text) {}
+
+
+textView::textView(const String& text, uint16_t size): stringContent(text), textSize(size) {}
+
+
+textView::textView(const String& text, uint16_t size, uint32_t color):
+        stringContent(text),
+        textSize(size),
+        textColor(color) {}
+
 
 void textView::setText(const String& text) {
     stringContent = text;
