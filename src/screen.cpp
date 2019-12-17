@@ -5,14 +5,21 @@
 #include "screen.h"
 
 
-void screen::setContentView() {
-    //TODO: populate the viewList from xml or layout class
+template<class compiledLayout>
+void screen::setContentView(compiledLayout layoutClass) {
+    layoutClass.fill();  // "fill()" function must be present in the compiled layout
     draw();
 }
 
 
-void screen::addView(view* view) {
-    viewList.append(view);
+void screen::setContentView(const String& xml) {
+    layoutInflater::inflate(xml, rootView);
+    draw();
+}
+
+
+void screen::setRootView(view *view){
+    rootView = view;
     draw();
 }
 

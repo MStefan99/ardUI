@@ -9,7 +9,7 @@
 
 class view {
 public:
-    view();
+    view() = default;
     view(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2);
     //TODO: add constructor from coordinates of center
 
@@ -70,7 +70,7 @@ protected:
     void (*onLongClickHandler)(view *view) {nullptr};
     void (*onScrollHandler)(view *view) {nullptr};
 
-    boundingBox box;
+    boundingBox box {};
     state currentState {Default};
 };
 

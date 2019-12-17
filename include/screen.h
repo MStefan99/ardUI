@@ -7,13 +7,16 @@
 
 #include "slist.h"
 #include "view.h"
+#include "layout_inflater.h"
 
 class screen {
 public:
     screen() = default;
 
-    void setContentView();
-    void addView(view* view);
+    template <class compiledLayout>
+    void setContentView(compiledLayout layoutClass);
+    void setContentView(const String& xmlData);
+    void setRootView(view* view);
 
     virtual void onCreate() = 0;
     virtual void onStart();
@@ -26,7 +29,7 @@ public:
     void draw() const;
 
 private:
-    list<view*> viewList {};
+    view* rootView {};
 };
 
 #endif //ARDUI_SCREEN_H
