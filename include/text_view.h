@@ -14,6 +14,7 @@ public:
     explicit textView(const String& text);
     textView(const String& text, uint16_t size);
     textView(const String& text, uint16_t size, uint32_t color);
+    ~textView() = default;
 
     void setText(const String& text);
     void append(const String& text);

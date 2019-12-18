@@ -12,7 +12,7 @@ public:
     view() = default;
     view(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2);
     //TODO: add constructor from coordinates of center
-
+    virtual ~view() = default;
 
     void setOnClickListener(void (*onClickListener)(view *view));
     void setOnLongClickListener(void (*onLongClickListener)(view *view));

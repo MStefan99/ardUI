@@ -26,6 +26,8 @@ public:
 
     void wipe();
 
+    int length();
+
     T &operator[](int n);
     list& operator=(const list& list);
 
@@ -95,7 +97,7 @@ T list<T>::pop() {
         delete e;
         return content;
     } else {
-        throw listException("list empty", "", __FUNCTION__, __FILE__, __LINE__);
+        return T{};  //TODO: handle exception
     }
 }
 
@@ -116,7 +118,7 @@ T list<T>::popLeft() {
         delete e;
         return content;
     } else {
-        throw listException("list empty", "", __FUNCTION__, __FILE__, __LINE__);
+        return T{};  //TODO: handle exception
     }
 }
 
@@ -162,6 +164,16 @@ void list<T>::wipe() {
     }
     first = nullptr;
     last = nullptr;
+}
+
+
+template<class T>
+int list<T>::length() {
+    int i = 0;
+    for (auto it = this->begin(); it != this->end(); ++it) {
+        ++i;
+    }
+    return i;
 }
 
 

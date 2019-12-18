@@ -5,6 +5,11 @@
 #include "screen.h"
 
 
+screen::~screen() {
+    delete rootView;
+}
+
+
 template<class compiledLayout>
 void screen::setContentView(compiledLayout layoutClass) {
     layoutClass.fill();  // "fill()" function must be present in the compiled layout

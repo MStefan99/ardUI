@@ -14,7 +14,7 @@
 
 void ardUI::ardUiTask(void *) {
     while (true) {
-        // TODO: Check for events and call necessary callbacks here
+        //TODO: Check for events and call necessary callbacks here
     }
 }
 
@@ -39,13 +39,18 @@ void ardUiLoopCaller(void*) {  // User loop caller used by FreeRTOS
 #endif
 
 
-ardUI::ardUI() :
-        screenHeight(ardUiDisplayGetHeight()),
-        screenWidth(ardUiDisplayGetWidth()) {
+ardUI::ardUI() {
 #if FREERTOS_ENABLED
     xTaskCreate(ardUiTask, "UI task", 100,
             nullptr, tskIDLE_PRIORITY, nullptr);
 #endif
+}
+
+
+ardUI::~ardUI() {
+    for (auto s : backStack) {
+        delete s;
+    }
 }
 
 

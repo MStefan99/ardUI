@@ -10,12 +10,15 @@
 
 class viewGroup: public view {
 public:
+    viewGroup() = default;
+    ~viewGroup() override;
+
     void addView(view* view);
 
     void draw() const override;
 
 private:
-    list<view*> viewList;
+    list<view*> viewList {};
 };
 
 #endif //ARDUI_VIEW_GROUP_H

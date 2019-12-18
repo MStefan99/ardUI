@@ -5,6 +5,13 @@
 #include "view_group.h"
 
 
+viewGroup::~viewGroup() {
+    for (auto e : viewList) {
+        delete e;
+    }
+}
+
+
 void viewGroup::addView(view* view) {
     viewList.append(view);
 }

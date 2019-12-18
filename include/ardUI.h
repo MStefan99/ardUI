@@ -41,13 +41,14 @@ public:
 
     void operator=(ardUI const &) = delete;
 
-
 private:
     ardUI();
+    ~ardUI();
 
-    const uint16_t screenHeight {100};
-    const uint16_t screenWidth {100};
-    screen *currentScreen {nullptr};
+    const uint16_t screenHeight {ardUiDisplayGetHeight()};
+    const uint16_t screenWidth {ardUiDisplayGetWidth()};
+    screen* currentScreen {nullptr};
+    list<screen*> backStack {};
 
     static void ardUiTask(void*);
 };
@@ -55,6 +56,19 @@ private:
 
 template<class ScreenClass>
 void ardUI::show() {
+    if (getInstance().currentScreen) {
+        getInstance().currentScreen->onPause();
+        getInstance().backStack.prepend(getInstance().currentScreen);
+        Serial.println("Screen appended to the stack");
+
+        if (getInstance().backStack.length() > BACK_STACK_DEPTH) {
+            Serial.println("Max stack depth reached, destroying last screen");
+            auto lastScreen = getInstance().backStack.pop();
+            lastScreen->onStop();
+            lastScreen->onDestroy();
+            delete lastScreen;
+        }
+    }
     auto* screen = new ScreenClass();
     getInstance().currentScreen = screen;
 

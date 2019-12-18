@@ -12,6 +12,7 @@
 class screen {
 public:
     screen() = default;
+    virtual ~screen();
 
     template <class compiledLayout>
     void setContentView(compiledLayout layoutClass);
