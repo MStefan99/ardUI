@@ -70,8 +70,10 @@ protected:
     void (*onLongClickHandler)(view *view) {nullptr};
     void (*onScrollHandler)(view *view) {nullptr};
 
-    boundingBox box {};
-    state currentState {Default};
+    static int lastViewId;
+    boundingBox viewBox {};
+    state viewState {Default};
+    int viewId {++lastViewId};
 };
 
 #endif //ARDUI_VIEW_H

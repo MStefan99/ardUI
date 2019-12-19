@@ -6,25 +6,25 @@
 #include "text_view.h"
 
 
-textView::textView(const String& text): stringContent(text) {}
+textView::textView(const String& text): textString(text) {}
 
 
-textView::textView(const String& text, uint16_t size): stringContent(text), textSize(size) {}
+textView::textView(const String& text, uint16_t size): textString(text), textSize(size) {}
 
 
 textView::textView(const String& text, uint16_t size, uint32_t color):
-        stringContent(text),
+        textString(text),
         textSize(size),
         textColor(color) {}
 
 
 void textView::setText(const String& text) {
-    stringContent = text;
+    textString = text;
 }
 
 
 void textView::append(const String &text) {
-    stringContent += text;
+    textString += text;
 }
 
 
@@ -39,7 +39,7 @@ void textView::setCurrentTextColor(uint32_t color) {
 
 
 String& textView::getText() {
-    return stringContent;
+    return textString;
 }
 
 
@@ -54,6 +54,6 @@ uint32_t textView::getCurrentTextColor() {
 
 
 void textView::draw() const {
-    ardUiDisplayDrawText(box.getTopLeftPoint().getX(), box.getTopLeftPoint().getY(),
-            textSize, stringContent, textColor);
+    ardUiDisplayDrawText(viewBox.getTopLeftPoint().getX(), viewBox.getTopLeftPoint().getY(),
+                         textSize, textString, textColor);
 }

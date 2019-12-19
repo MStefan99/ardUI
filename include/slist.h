@@ -13,7 +13,7 @@ class list {
 public:
     list() = default;
     list(const list& list);
-    ~list() noexcept;
+    ~list();
 
     void append(const T &content);
     void prepend(const T &content);
@@ -21,8 +21,8 @@ public:
     T pop();
     T popLeft();
 
-    T drop(iterator<T> iterator);
-    void dropIf(bool (*predicate)(const T&));
+    int remove(const T& element);
+    int removeIf(bool (*predicate)(const T&));
 
     void wipe();
 
@@ -34,6 +34,8 @@ public:
     iterator<T> begin() const;
     iterator<T> end() const;
 private:
+    void drop(iterator<T> iterator);
+
     element<T>* first {nullptr};
     element<T>* last {nullptr};
 };
@@ -41,14 +43,14 @@ private:
 
 template<class T>
 list<T>::list(const list& l) {
-    for (auto e : l) {
+    for (const auto& e : l) {
         append(e);
     }
 }
 
 
 template<class T>
-list<T>::~list() noexcept {
+list<T>::~list() {
     wipe();
 }
 
@@ -83,9 +85,9 @@ void list<T>::prepend(const T &content) {
 
 template<class T>
 T list<T>::pop() {
-    auto e = last;
+    auto e {last};
     if (e) {
-        auto content = last->getContent();
+        auto content {last->getContent()};
 
         if (e->getPrev()) {
             e->getPrev()->setNext(nullptr);
@@ -104,9 +106,9 @@ T list<T>::pop() {
 
 template<class T>
 T list<T>::popLeft() {
-    auto e = first;
+    auto e {first};
     if (e) {
-        auto content = e->getContent();
+        auto content {first->getContent()};
 
         if (e->getNext()) {
             e->getNext()->setPrev(nullptr);
@@ -124,8 +126,8 @@ T list<T>::popLeft() {
 
 
 template<class T>
-T list<T>::drop(iterator<T> iterator) {
-    element<T> e(*iterator);
+void list<T>::drop(iterator<T> iterator) {
+    auto e {*iterator.getPointer()};
 
     if (e.getNext()) {
         e.getNext()->setPrev(e.getPrev());
@@ -139,25 +141,42 @@ T list<T>::drop(iterator<T> iterator) {
     }
 
     delete iterator.getPointer();
-    return e.getContent();
 }
 
 
 template<class T>
-void list<T>::dropIf(bool (*predicate)(const T&)) {
-    auto it = begin();
+int list<T>::remove(const T& e) {
+    int i {0};
+    auto it {begin()};
     while (it != end()) {
-        auto tmp = it++;
-        if (f(*tmp)) {
-            drop(tmp);
+        auto prev {it++};
+        if (*prev == e) {
+            ++i;
+            drop(prev);
         }
     }
+    return i;
+}
+
+
+template<class T>
+int list<T>::removeIf(bool (*p)(const T&)) {
+    int i {0};
+    auto it {begin()};
+    while (it != end()) {
+        auto prev {it++};
+        if (p(*prev)) {
+            ++i;
+            drop(prev);
+        }
+    }
+    return i;
 }
 
 
 template<class T>
 void list<T>::wipe() {
-    auto it = begin();
+    auto it {begin()};
     while (it != end()) {
         auto tmp = it++;
         delete tmp.getPointer();
@@ -170,7 +189,7 @@ void list<T>::wipe() {
 template<class T>
 int list<T>::length() {
     int i = 0;
-    for (auto it = this->begin(); it != this->end(); ++it) {
+    for (auto it {this->begin()}; it != this->end(); ++it) {
         ++i;
     }
     return i;

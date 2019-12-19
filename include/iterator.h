@@ -42,9 +42,6 @@ iterator<T>::iterator(element<T> *elementPtr): pointer(elementPtr) {}
 
 template<class T>
 iterator<T> iterator<T>::operator+(int n) {
-    if (n < 0) {
-        //TODO: handle Exception
-    }
     auto it = *this;
     for (int i = 0; i < n; ++i) {
         ++it;

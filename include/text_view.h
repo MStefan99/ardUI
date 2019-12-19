@@ -28,7 +28,7 @@ public:
     void draw() const override;
 
 private:
-    String stringContent {""};
+    String textString {""};
     uint16_t textSize {10};
     uint32_t textColor {0};
 };
