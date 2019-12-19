@@ -23,3 +23,10 @@ void viewGroup::draw() const {
     }
 }
 
+
+void viewGroup::forEach(void (*predicate)(view *)) {
+    view::forEach(predicate);
+    for (auto e : viewList) {
+        predicate(e);
+    }
+}

@@ -27,17 +27,20 @@ void ardUiLoopCaller(void*);  // User loop caller used by FreeRTOS
 #include "view.h"
 #include "view_group.h"
 #include "text_view.h"
+#include "button_view.h"
 #include "llpi.h"
 
 
 class ardUI {
 public:
+    explicit ardUI(ardUI const &) = delete;
+
     static ardUI &getInstance();
+    static screen* getCurrentScreen();
 
     template<class ScreenClass>
-    static void show();
-
-    explicit ardUI(ardUI const &) = delete;
+    static void showScreen();
+    static void back();
 
     void operator=(ardUI const &) = delete;
 
@@ -55,27 +58,30 @@ private:
 
 
 template<class ScreenClass>
-void ardUI::show() {
-    if (getInstance().currentScreen) {
-        getInstance().currentScreen->onPause();
-        getInstance().backStack.prepend(getInstance().currentScreen);
+void ardUI::showScreen() {
+    auto s {getInstance().currentScreen};
+    if (s) {
+        s->onPause();
+        s->onStop();
+        getInstance().backStack.prepend(s);
         Serial.println("Screen appended to the stack");
 
         if (getInstance().backStack.length() > BACK_STACK_DEPTH) {
             Serial.println("Max stack depth reached, destroying last screen");
             auto lastScreen = getInstance().backStack.pop();
-            lastScreen->onStop();
             lastScreen->onDestroy();
             delete lastScreen;
         }
     }
-    auto* screen = new ScreenClass();
-    getInstance().currentScreen = screen;
+    s = new ScreenClass();
+    getInstance().currentScreen = s;
 
-    getInstance().currentScreen->onCreate();
-    getInstance().currentScreen->onStart();
-    getInstance().currentScreen->onResume();
+    s->onCreate();
+    s->onStart();
+    s->onResume();
 }
 
+
+#define ardUI() ardUI::getInstance()  // Instantiates ardUI from "ardUI()" call (discouraged)
 
 #endif //ARDUI_ARDUI_H

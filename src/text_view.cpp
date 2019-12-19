@@ -33,7 +33,7 @@ void textView::setTextSize(uint16_t size) {
 }
 
 
-void textView::setCurrentTextColor(uint32_t color) {
+void textView::setTextColor(uint32_t color) {
     textColor = color;
 }
 

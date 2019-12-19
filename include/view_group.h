@@ -16,6 +16,7 @@ public:
     void addView(view* view);
 
     void draw() const override;
+    void forEach(void (*predicate)(view *)) override;
 
 private:
     list<view*> viewList {};

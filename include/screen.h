@@ -28,6 +28,7 @@ public:
     virtual void onDestroy();
 
     void draw() const;
+    view* findViewById(int id);
 
 private:
     view* rootView {};

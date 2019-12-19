@@ -19,7 +19,7 @@ public:
     void setText(const String& text);
     void append(const String& text);
     void setTextSize(uint16_t size);
-    void setCurrentTextColor(uint32_t color);
+    void setTextColor(uint32_t color);
 
     String& getText();
     uint16_t getTextSize();

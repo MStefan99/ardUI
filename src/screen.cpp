@@ -30,7 +30,7 @@ void screen::setRootView(view *view){
 
 
 void screen::onCreate() {
-    draw();
+
 }
 
 
@@ -68,4 +68,17 @@ void screen::draw() const {
     if (rootView) {
         rootView->draw();
     }
+}
+
+
+view* screen::findViewById(int id) {
+    static int temp {id};  //TODO: use lambda captures instead of static variables (important)
+    static view* foundView {nullptr};
+
+    rootView->forEach([](view* v) {
+        if (v->getId() == temp) {
+            foundView = v;
+        }
+    });
+    return foundView;
 }

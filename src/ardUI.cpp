@@ -5,6 +5,9 @@
 #include "ardUI.h"
 
 
+#undef ardUI
+
+
 #if FREERTOS_ENABLED
 
 #undef setup
@@ -51,10 +54,33 @@ ardUI::~ardUI() {
     for (auto s : backStack) {
         delete s;
     }
+    delete currentScreen;
 }
 
 
 ardUI &ardUI::getInstance() {
     static ardUI instance;
     return instance;
+}
+
+
+screen* ardUI::getCurrentScreen() {
+    return getInstance().getCurrentScreen();
+}
+
+
+void ardUI::back() {
+    if (getInstance().backStack.length() > 0) {
+        auto s = getInstance().currentScreen;
+        s->onPause();
+        s->onStop();
+        s->onDestroy();
+        delete s;
+
+        s = getInstance().backStack.popLeft();
+        getInstance().currentScreen = s;
+        s->onRestart();
+        s->onStart();
+        s->onResume();
+    }
 }

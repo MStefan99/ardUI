@@ -7,6 +7,9 @@
 
 #include <Arduino.h>
 
+class ardUI;
+
+
 class view {
 public:
     view() = default;
@@ -20,8 +23,13 @@ public:
 
     virtual void draw() const = 0;
 
-protected:
+    virtual void forEach(void (*predicate)(view*));
+    int getId();
+    bool coordsInside(uint16_t x, uint16_t y);
 
+    friend class ardUI;
+
+protected:
     class point {
     public:
         point() = default;
@@ -48,6 +56,11 @@ protected:
                 bottomRight(center.getX() + width / 2, center.getY() + height / 2) {}
         boundingBox(): topLeft(), bottomRight() {}
 
+        bool pointInside(point p) {
+            return p.getX() > topLeft.getX() && p.getY() > topLeft.getY() &&
+                    p.getX() < bottomRight.getX() && p.getY() < bottomRight.getY();
+        }
+
         point getTopLeftPoint() const {
             return topLeft;
         }
@@ -66,9 +79,17 @@ protected:
         IsScrolled
     };
 
+    void setClicked();
+    void setLongClicked();
+    void setScrolled();
+
     void (*onClickHandler)(view *view) {nullptr};
     void (*onLongClickHandler)(view *view) {nullptr};
     void (*onScrollHandler)(view *view) {nullptr};
+
+    bool clickable {false};
+    bool longClickable {false};
+    bool scrollable {false};
 
     static int lastViewId;
     boundingBox viewBox {};
