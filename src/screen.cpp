@@ -2,6 +2,7 @@
 // Created by MStefan99 on 16.12.19.
 //
 
+#include "clickable.h"
 #include "screen.h"
 
 
@@ -81,4 +82,9 @@ view* screen::findViewById(int id) {
         }
     });
     return foundView;
+}
+
+
+view* screen::getRootView() {
+    return rootView;
 }

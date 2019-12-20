@@ -5,12 +5,15 @@
 #ifndef ARDUI_TEST_BUTTON_VIEW_H
 #define ARDUI_TEST_BUTTON_VIEW_H
 
+
 #include <Arduino.h>
 #include "text_view.h"
+#include "clickable.h"
 
-class buttonView: public textView {
+
+class buttonView: public textView, public clickable {
 public:
-    buttonView();
+    buttonView() = default;
     buttonView(const String& text, uint32_t backgroundColor);
     ~buttonView() override = default;
 

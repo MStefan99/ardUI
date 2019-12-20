@@ -20,6 +20,19 @@ uint16_t ardUiDisplayGetWidth() {
 }
 
 
+bool ardUiDisplayIsClicked() {
+    //TODO: Implement.
+    return true;
+}
+
+
+void ardUiDisplayClickLocation(uint16_t& x, uint16_t& y) {
+    //TODO: Implement.
+    x = 0;
+    y = 0;
+}
+
+
 tm ardUiGetRealTime() {
     //TODO: Implement.
     return {};

@@ -7,8 +7,6 @@
 
 #include <Arduino.h>
 
-class ardUI;
-
 
 class view {
 public:
@@ -17,17 +15,11 @@ public:
     //TODO: add constructor from coordinates of center
     virtual ~view() = default;
 
-    void setOnClickListener(void (*onClickListener)(view *view));
-    void setOnLongClickListener(void (*onLongClickListener)(view *view));
-    void setOnScrollListener(void (*onScrollListener)(view *view));
-
     virtual void draw() const = 0;
 
     virtual void forEach(void (*predicate)(view*));
     int getId();
     bool coordsInside(uint16_t x, uint16_t y);
-
-    friend class ardUI;
 
 protected:
     class point {
@@ -57,8 +49,8 @@ protected:
         boundingBox(): topLeft(), bottomRight() {}
 
         bool pointInside(point p) {
-            return p.getX() > topLeft.getX() && p.getY() > topLeft.getY() &&
-                    p.getX() < bottomRight.getX() && p.getY() < bottomRight.getY();
+            return p.getX() >= topLeft.getX() && p.getY() >= topLeft.getY() &&
+                    p.getX() <= bottomRight.getX() && p.getY() <= bottomRight.getY();
         }
 
         point getTopLeftPoint() const {
@@ -72,28 +64,9 @@ protected:
         point topLeft {};
         point bottomRight {};
     };
-    enum state {
-        Default,
-        IsClicked,
-        IsLongClicked,
-        IsScrolled
-    };
-
-    void setClicked();
-    void setLongClicked();
-    void setScrolled();
-
-    void (*onClickHandler)(view *view) {nullptr};
-    void (*onLongClickHandler)(view *view) {nullptr};
-    void (*onScrollHandler)(view *view) {nullptr};
-
-    bool clickable {false};
-    bool longClickable {false};
-    bool scrollable {false};
 
     static int lastViewId;
     boundingBox viewBox {};
-    state viewState {Default};
     int viewId {++lastViewId};
 };
 

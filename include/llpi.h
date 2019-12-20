@@ -17,6 +17,10 @@ enum returnCode {
 
 uint16_t ardUiDisplayGetHeight();
 uint16_t ardUiDisplayGetWidth();
+
+bool ardUiDisplayIsClicked();
+void ardUiDisplayClickLocation(uint16_t& x, uint16_t& y);
+
 tm ardUiGetRealTime();
 
 returnCode ardUiDisplayInit();

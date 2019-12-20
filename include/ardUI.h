@@ -48,6 +48,8 @@ private:
     ardUI();
     ~ardUI();
 
+    static void checkForActions();
+
     const uint16_t screenHeight {ardUiDisplayGetHeight()};
     const uint16_t screenWidth {ardUiDisplayGetWidth()};
     screen* currentScreen {nullptr};

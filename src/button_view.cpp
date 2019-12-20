@@ -5,16 +5,7 @@
 #include "button_view.h"
 
 
-buttonView::buttonView() {
-    clickable = true;
-    longClickable = true;
-}
-
-
 buttonView::buttonView(const String &text, uint32_t backgroundColor):
-        backgroundColor(backgroundColor) {
-    clickable = true;
-    longClickable = true;
-}
+        backgroundColor(backgroundColor) {}
 
 //TODO: implement draw()

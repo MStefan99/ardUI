@@ -65,7 +65,23 @@ ardUI &ardUI::getInstance() {
 
 
 screen* ardUI::getCurrentScreen() {
-    return getInstance().getCurrentScreen();
+    return getInstance().currentScreen;
+}
+
+
+void ardUI::checkForActions() {
+    if (ardUiDisplayIsClicked()) {
+        static uint16_t x, y;
+        ardUiDisplayClickLocation(x, y);
+        getInstance().getCurrentScreen()->getRootView()->forEach([](view* v) {
+            if (v->coordsInside(x, y)) {
+                auto c = dynamic_cast<clickable*>(v);
+                if (c) {
+                    c->onClick(v);
+                }
+            }
+        });
+    }
 }
 
 

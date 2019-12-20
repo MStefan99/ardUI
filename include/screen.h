@@ -5,9 +5,11 @@
 #ifndef ARDUI_SCREEN_H
 #define ARDUI_SCREEN_H
 
+
 #include "slist.h"
 #include "view.h"
 #include "layout_inflater.h"
+
 
 class screen {
 public:
@@ -30,7 +32,10 @@ public:
     void draw() const;
     view* findViewById(int id);
 
+    friend class ardUI;
+
 private:
+    view* getRootView();
     view* rootView {};
 };
 
