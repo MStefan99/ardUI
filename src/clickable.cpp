@@ -16,12 +16,18 @@ void clickable::setOnLongClickListener(void (*l)(view*)) {
 
 
 void clickable::setClicked(bool b) {
-    inClickedState = b;
-}
+    if (b) {
+        inClickedState = true;
+        ++timesClicked;
+    } else {
+        inClickedState = false;
+        inLongClickedState = false;
+        timesClicked = 0;
+    }
 
-
-void clickable::setLongClicked(bool b) {
-    inLongClickedState = b;
+    if (timesClicked > LONG_CLICK_TIME / UPDATE_FREQUENCY) {
+        inLongClickedState = true;
+    }
 }
 
 

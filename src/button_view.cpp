@@ -8,4 +8,8 @@
 buttonView::buttonView(const String &text, uint32_t backgroundColor):
         backgroundColor(backgroundColor) {}
 
-//TODO: implement draw()
+
+void buttonView::draw() const {
+    //TODO: Implement draw()
+    boundingBox();
+}

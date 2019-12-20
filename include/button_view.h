@@ -11,11 +11,13 @@
 #include "clickable.h"
 
 
-class buttonView: public textView, public clickable {
+class buttonView: public textView, virtual public clickable {
 public:
     buttonView() = default;
     buttonView(const String& text, uint32_t backgroundColor);
     ~buttonView() override = default;
+
+    void draw() const override;
 
 private:
     uint32_t backgroundColor {0xFFFFFFFF};

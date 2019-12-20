@@ -9,7 +9,7 @@
 #include "clickable.h"
 
 
-class scrollable: public clickable {
+class scrollable: virtual public clickable {
 public:
     void setOnScrollListener(void (*onScrollListener)(view *view));
 
