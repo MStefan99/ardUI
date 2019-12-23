@@ -75,9 +75,8 @@ void ardUI::checkForActions() {
         ardUiDisplayClickLocation(x, y);
         getInstance().getCurrentScreen()->getRootView()->forEach([](view* v) {
             if (v->coordsInside(x, y)) {
-                auto c = dynamic_cast<clickable*>(v);
-                if (c) {
-                    c->onClick(v);
+                if (v->onClick) {
+                    v->onClick(v);
                 }
             }
         });

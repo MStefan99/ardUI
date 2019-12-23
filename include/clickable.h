@@ -15,17 +15,12 @@ public:
     void setOnClickListener(void (*onClickListener)(view *view));
     void setOnLongClickListener(void (*onLongClickListener)(view *view));
 
-    friend class ardUI;
-
 protected:
     void setClicked(bool isClicked);
     bool isClicked();
     bool isLongClicked();
 
 private:
-    void (*onClick)(view *view) {nullptr};
-    void (*onLongClick)(view *view) {nullptr};
-
     bool inClickedState {false};
     bool inLongClickedState {false};
 

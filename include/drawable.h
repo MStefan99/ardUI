@@ -8,6 +8,9 @@
 #include <Arduino.h>
 
 
+class view;
+
+
 class drawable {
 public:
     drawable() = default;
@@ -17,6 +20,8 @@ public:
     virtual void draw() const = 0;
 
     bool coordsInside(uint16_t x, uint16_t y);
+
+    friend class ardUI;
 
 protected:
     class point {
@@ -46,6 +51,10 @@ protected:
         point topLeft {};
         point bottomRight {};
     };
+
+    void (*onClick)(view *view) {nullptr};
+    void (*onLongClick)(view *view) {nullptr};
+    void (*onScroll)(view *view) {nullptr};
 
     boundingBox viewBox {};
 };

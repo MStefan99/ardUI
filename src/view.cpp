@@ -16,6 +16,3 @@ void view::forEach(void (*predicate)(view *)) {
 int view::getId() {
     return viewId;
 }
-
-
-

@@ -13,15 +13,11 @@ class scrollable: virtual public clickable {
 public:
     void setOnScrollListener(void (*onScrollListener)(view *view));
 
-    friend class ardUI;
-
 protected:
     void setScrolled(bool isScrolled);
     bool isScrolled();
 
 private:
-    void (*onScroll)(view *view) {nullptr};
-
     bool inScrolledState {false};
 };
 
