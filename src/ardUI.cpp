@@ -17,7 +17,8 @@
 
 void ardUI::ardUiTask(void *) {
     while (true) {
-        //TODO: Check for events and call necessary callbacks here
+        draw();
+        checkForActions();
     }
 }
 
@@ -69,6 +70,41 @@ screen* ardUI::getCurrentScreen() {
 }
 
 
+void ardUI::back() {
+    auto s {getInstance().currentScreen};
+
+    if (s) {
+        if (getInstance().currentDialog) {
+            getInstance().currentDialog = nullptr;
+            s->resume();
+        }
+
+        if (getInstance().backStack.length() > 0) {
+            s->pause();
+            s->stop();
+            s->destroy();
+            delete s;
+
+            s = getInstance().backStack.popLeft();
+            getInstance().currentScreen = s;
+            s->restart();
+            s->start();
+            s->resume();
+        }
+    }
+}
+
+
+void ardUI::showDialog(dialog *dialogToShow) {
+    auto s {getInstance().currentScreen};
+
+    if (s) {
+        s->pause();
+        getInstance().currentDialog = dialogToShow;
+    }
+}
+
+
 void ardUI::checkForActions() {
     if (ardUiDisplayIsClicked()) {
         static uint16_t x, y;
@@ -84,18 +120,12 @@ void ardUI::checkForActions() {
 }
 
 
-void ardUI::back() {
-    if (getInstance().backStack.length() > 0) {
-        auto s = getInstance().currentScreen;
-        s->onPause();
-        s->onStop();
-        s->onDestroy();
-        delete s;
+void ardUI::draw() {
+    if (getInstance().currentDialog) {
+        getInstance().currentDialog->draw();
+    }
 
-        s = getInstance().backStack.popLeft();
-        getInstance().currentScreen = s;
-        s->onRestart();
-        s->onStart();
-        s->onResume();
+    if (getInstance().currentScreen) {
+        getInstance().currentScreen->draw();
     }
 }

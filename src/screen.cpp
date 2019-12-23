@@ -65,6 +65,62 @@ void screen::onDestroy() {
 }
 
 
+void screen::create() {
+    if (currentState == Launched || currentState == Stopped) {
+        currentState = Created;
+        onCreate();
+    }
+}
+
+
+void screen::start() {
+    if (currentState == Created || currentState == Restarted) {
+        currentState = Started;
+        onStart();
+    }
+}
+
+
+void screen::restart() {
+    if (currentState == Stopped) {
+        currentState = Restarted;
+        onRestart();
+    }
+}
+
+
+void screen::resume() {
+    if (currentState == Started || currentState == Paused) {
+        currentState = Resumed;
+        onResume();
+    }
+}
+
+
+void screen::pause() {
+    if (currentState == Resumed) {
+        currentState = Paused;
+        onPause();
+    }
+}
+
+
+void screen::stop() {
+    if (currentState == Paused) {
+        currentState = Stopped;
+        onStop();
+    }
+}
+
+
+void screen::destroy() {
+    if (currentState == Stopped) {
+        currentState = Destroyed;
+        onDestroy();
+    }
+}
+
+
 void screen::draw() const {
     if (rootView) {
         rootView->draw();

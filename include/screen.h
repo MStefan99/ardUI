@@ -35,6 +35,26 @@ public:
     friend class ardUI;
 
 private:
+    virtual void create();
+    virtual void start();
+    virtual void restart();
+    virtual void resume();
+    virtual void pause();
+    virtual void stop();
+    virtual void destroy();
+    
+    enum state {
+        Launched,
+        Created,
+        Restarted,
+        Started,
+        Resumed,
+        Paused,
+        Stopped,
+        Destroyed
+    };
+
+    state currentState {Launched};
     view* getRootView();
     view* rootView {};
 };

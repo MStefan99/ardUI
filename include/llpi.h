@@ -29,7 +29,7 @@ returnCode ardUiDisplayOff();
 returnCode ardUiDisplaySetBrightness(uint8_t brightness);
 returnCode ardUiDisplayFill(uint16_t color);
 returnCode ardUiDisplayDrawPixel(uint16_t x, uint16_t y, uint32_t color);
-returnCode ardUiDisplayDrawLine(uint16_t x, uint16_t y, uint32_t color);
+returnCode ardUiDisplayDrawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint32_t color);
 returnCode ardUiDisplayDrawChar(uint16_t x, uint16_t y, uint16_t height, char text, uint32_t color);
 returnCode ardUiDisplayDrawText(uint16_t x, uint16_t y, uint16_t height, const String& tex, uint32_t color);
 returnCode ardUiDisplayDrawCircle(uint16_t x, uint16_t y, uint16_t radius, uint32_t color);
