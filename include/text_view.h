@@ -12,8 +12,8 @@ class textView : public view {
 public:
     textView() = default;
     explicit textView(const String& text);
-    textView(const String& text, uint16_t textSize);
-    textView(const String& text, uint16_t textSize, uint32_t textColor);
+    textView(const String& text, uint16_t x, uint16_t y);
+    textView(const String& text, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2);
     ~textView() override = default;
 
     void setText(const String& textToSet);
@@ -27,7 +27,7 @@ public:
 
     void draw() const override;
 
-private:
+protected:
     String text {""};
     uint16_t textSize {10};
     uint32_t textColor {0};

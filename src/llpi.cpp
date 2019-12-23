@@ -10,11 +10,21 @@
 
 uint16_t ardUiDisplayGetHeight() {
     //TODO: Implement.
-    return NotImplemented;
 }
 
 
 uint16_t ardUiDisplayGetWidth() {
+    //TODO: Implement.
+}
+
+
+uint16_t ardUiDisplayGetFontHeight() {
+    //TODO: Implement.
+    return NotImplemented;
+}
+
+
+uint16_t ardUiDisplayGetFontWidth() {
     //TODO: Implement.
     return NotImplemented;
 }

@@ -17,6 +17,8 @@ enum returnCode {
 
 uint16_t ardUiDisplayGetHeight();
 uint16_t ardUiDisplayGetWidth();
+uint16_t ardUiDisplayGetFontHeight();
+uint16_t ardUiDisplayGetFontWidth();
 
 bool ardUiDisplayIsClicked();
 void ardUiDisplayClickLocation(uint16_t& x, uint16_t& y);
