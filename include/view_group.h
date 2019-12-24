@@ -11,13 +11,12 @@
 class viewGroup: public view {
 public:
     viewGroup() = default;
-    viewGroup(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2);
     ~viewGroup() override;
 
     virtual void addView(view* view);
 
     void draw() const override;
-    void forEach(void (*predicate)(view *)) override;
+    void forEach(void (*predicate)(view&)) override;
 
 private:
     list<view*> viewList {};

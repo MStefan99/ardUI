@@ -5,102 +5,86 @@
 #include "drawable.h"
 
 
-point::point(uint16_t x, uint16_t y): x(x), y(y) {}
-
-
-uint16_t point::getX() const {
-    return x;
+rect drawable::copyBounds() const {
+    return rect(viewBox);
 }
 
 
-uint16_t point::getY() const {
-    return y;
+void drawable::copyBounds(rect &r) const {
+    r = viewBox;
 }
 
 
-void point::setX(uint16_t c) {
-    x = c;
+rect drawable::getBounds() const {
+    return rect(viewBox);
 }
 
 
-void point::setY(uint16_t c) {
-    y = c;
+void drawable::setBounds(uint16_t l, uint16_t t, uint16_t r, uint16_t b) {
+    viewBox.set(l, t, r, b);
+    onBoundsChange(rect(l, t, r, b));
 }
 
 
-point point::operator+(const point &p) const {
-    return point(this->x + p.x, this->y + p.y);
+void drawable::setBounds(const rect &bounds) {
+    onBoundsChange(bounds);
+    viewBox.set(bounds);
 }
 
 
-point& point::operator=(const point &p) {
-    if (this != &p) {
-        this->x = p.x;
-        this->y = p.y;
+int drawable::getLevel() {
+    return level;
+}
+
+
+bool drawable::setLevel(uint16_t l) {
+    if (l > 10000) {
+        l = 10000;
     }
-    return *this;
+    auto changed {onLevelChange(l)};
+    if (changed) {
+        level = l;
+    }
+    return changed;
 }
 
 
-point& point::operator+=(const point &p) {
-    this->x += p.x;
-    this->y += p.y;
-    return *this;
+bool drawable::getPadding(rect &p) const {
+    bool paddingExists {p};
+    if (paddingExists) {
+        p = padding;
+    } else {
+        p.setEmpty();
+    }
+    return paddingExists;
 }
 
 
-boundingBox::boundingBox(point topLeft, point bottomRight):
-        topLeft(topLeft),
-        bottomRight(bottomRight) {}
-
-
-boundingBox::boundingBox(point center, uint16_t width, uint16_t height):
-        topLeft(center.getX() - width / 2, center.getY() - height / 2),
-        bottomRight(center.getX() + width / 2, center.getY() + height / 2) {}
-
-
-bool boundingBox::pointInside(point p) const {
-    return p.getX() >= topLeft.getX() && p.getY() >= topLeft.getY() &&
-           p.getX() <= bottomRight.getX() && p.getY() <= bottomRight.getY();
+bool drawable::isVisible() const {
+    return visible;
 }
 
 
-point boundingBox::getTopLeftPoint() const {
-    return topLeft;
+bool drawable::setVisible(bool v) {
+    auto changed {v != visible};
+    if (changed) {
+        visible = v;
+    }
+    return changed;
 }
 
 
-point boundingBox::getBottomRightPoint() const {
-    return bottomRight;
+void drawable::onBoundsChange(const rect &bounds) {
+    draw();
 }
 
 
-void boundingBox::setTopLeftPoint(const point& p) {
-    topLeft = p;
+bool drawable::onLevelChange(uint16_t l) {
+    auto changed {l != level};
+    if (changed) {
+        draw();
+    }
+    return changed;
 }
 
 
-void boundingBox::setBottomRightPoint(const point& p) {
-    bottomRight = p;
-}
-
-
-boundingBox& boundingBox::operator+=(const point &p) {
-    topLeft += p;
-    bottomRight += p;
-    return *this;
-}
-
-
-drawable::drawable(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2):
-        viewBox(point(x1, y1), point(x2, y2)) {}
-
-
-bool drawable::coordsInside(uint16_t x, uint16_t y) const {
-    return viewBox.pointInside(point(x, y));
-}
-
-
-boundingBox drawable::getViewBox() const {
-    return viewBox;
-}

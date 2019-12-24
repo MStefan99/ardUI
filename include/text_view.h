@@ -12,8 +12,6 @@ class textView : public view {
 public:
     textView() = default;
     explicit textView(const String& text);
-    textView(const String& text, uint16_t x, uint16_t y);
-    textView(const String& text, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2);
     ~textView() override = default;
 
     void setText(const String& textToSet);

@@ -5,7 +5,7 @@
 #include "layout_inflater.h"
 
 
-view* layoutInflater::inflate(const String& xmlData, view* rootView) {
+view& layoutInflater::inflate(const String& xmlData, view& rootView) {
     //TODO: inflate layout from xml string
     return rootView;
 }

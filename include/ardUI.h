@@ -25,7 +25,7 @@ void ardUiLoopCaller(void*);  // User loop caller used by FreeRTOS
 
 #include "llpi.h"
 
-#include "screen.h"
+#include "activity.h"
 #include "dialog.h"
 
 #include "view.h"
@@ -40,13 +40,21 @@ class ardUI {
 public:
     explicit ardUI(ardUI const &) = delete;
 
-    static ardUI &getInstance();
-    static screen* getCurrentScreen();
+    static ardUI& getApplicationContext();
+    static activity& getCurrentScreen();
 
     template<class ScreenClass>
     static void showScreen();
-    static void showDialog(dialog *dialogToShow);
+    static void showDialog(dialog& dialogToShow);
     static void back();
+
+    static void callActivityOnCreate(activity* activity);
+    static void callActivityOnStart(activity* activity);
+    static void callActivityOnRestart(activity* activity);
+    static void callActivityOnResume(activity* activity);
+    static void callActivityOnPause(activity* activity);
+    static void callActivityOnStop(activity* activity);
+    static void callActivityOnDestroy(activity* activity);
 
     void operator=(ardUI const &) = delete;
 
@@ -56,9 +64,9 @@ private:
 
     const uint16_t screenHeight {ardUiDisplayGetHeight()};
     const uint16_t screenWidth {ardUiDisplayGetWidth()};
-    screen* currentScreen {nullptr};
+    activity* currentActivity {nullptr};
     dialog* currentDialog {nullptr};
-    list<screen*> backStack {};
+    list<activity*> backStack {};
 
     static void ardUiTask(void*);
     static void checkForActions();
@@ -68,26 +76,23 @@ private:
 
 template<class ScreenClass>
 void ardUI::showScreen() {
-    auto s {getInstance().currentScreen};
+    auto s {getApplicationContext().currentActivity};
     if (s) {
-        s->pause();
-        s->stop();
-        getInstance().backStack.prepend(s);
+        callActivityOnStop(s);
+        getApplicationContext().backStack.prepend(s);
         Serial.println("Screen appended to the stack");
 
-        if (getInstance().backStack.length() > BACK_STACK_DEPTH) {
-            Serial.println("Max stack depth reached, destroying last screen");
-            auto lastScreen = getInstance().backStack.pop();
-            lastScreen->destroy();
+        if (getApplicationContext().backStack.length() > BACK_STACK_DEPTH) {
+            Serial.println("Max stack depth reached, destroying last activity");
+            auto lastScreen {getApplicationContext().backStack.pop()};
+            callActivityOnDestroy(lastScreen);
             delete lastScreen;
         }
     }
     s = new ScreenClass();
-    getInstance().currentScreen = s;
+    getApplicationContext().currentActivity = s;
 
-    s->create();
-    s->start();
-    s->resume();
+    callActivityOnResume(s);
 }
 
 

@@ -6,72 +6,47 @@
 #define ARDUI_TEST_DRAWABLE_H
 
 #include <Arduino.h>
+#include "rect.h"
 #include "llpi.h"
 
 
 class view;
 
-class point {
-public:
-    point() = default;
-    point(uint16_t x, uint16_t y);
-
-    uint16_t getX() const;
-    uint16_t getY() const;
-    void setX(uint16_t x);
-    void setY(uint16_t y);
-
-    point operator+(const point& point) const;
-    point& operator=(const point& point);
-    point& operator+=(const point& point);
-
-private:
-    uint16_t x {0};
-    uint16_t y {0};
-};
-
-class boundingBox {
-public:
-    boundingBox() = default;
-    boundingBox(point topLeft, point bottomRight);
-    boundingBox(point center, uint16_t width, uint16_t height);
-
-    bool pointInside(point p) const;
-
-    point getTopLeftPoint() const;
-    point getBottomRightPoint() const;
-    void setTopLeftPoint(const point& point);
-    void setBottomRightPoint(const point& point);
-
-    boundingBox& operator+=(const point& point);
-
-    friend class linearLayout;
-
-private:
-    point topLeft {};
-    point bottomRight {};
-};
 
 class drawable {
 public:
     drawable() = default;
-    drawable(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2);
     ~drawable() = default;
 
     virtual void draw() const = 0;
 
-    bool coordsInside(uint16_t x, uint16_t y) const;
-    boundingBox getViewBox() const;
+    rect copyBounds() const;
+    void copyBounds(rect& r) const;
+    rect getBounds() const;
+    void setBounds(uint16_t left, uint16_t top, uint16_t right, uint16_t bottom);
+    void setBounds(const rect& bounds);
 
-    friend class ardUI;
-    friend class linearLayout;
+    int getLevel();
+    bool setLevel(uint16_t level);
+
+    bool getPadding(rect& padding) const;
+
+    //TODO: add inflaters
+
+    bool isVisible() const;
+    bool setVisible(bool visible);
 
 protected:
-    void (*onClick)(view *view) {nullptr};
-    void (*onLongClick)(view *view) {nullptr};
-    void (*onScroll)(view *view) {nullptr};
+    virtual void onBoundsChange(const rect& bounds);
+    virtual bool onLevelChange(uint16_t level);
 
-    boundingBox viewBox {};
+private:
+    bool valid {false};
+    bool visible {true};
+
+    rect viewBox {};
+    rect padding {};
+    uint16_t level {0};
 };
 
 #endif //ARDUI_TEST_DRAWABLE_H

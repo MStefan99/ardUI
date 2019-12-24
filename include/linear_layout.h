@@ -10,10 +10,9 @@
 
 class linearLayout: public viewGroup {
 public:
-    linearLayout();
-    linearLayout(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2);
+    explicit linearLayout(bool vertical = true);
 
-    void addView(view *view) override;
+    void addView(view* view) override;
 
 private:
     bool isVertical {true};

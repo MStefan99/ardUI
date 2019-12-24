@@ -5,14 +5,15 @@
 #include "view.h"
 
 
-view::view(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2): drawable(x1, y1, x2, y2) {}
-
-
 int view::lastViewId {0};
 
 
-void view::forEach(void (*predicate)(view *)) {
-    predicate(this);
+view::view():
+        viewId(++lastViewId) {}
+
+
+void view::forEach(void (*predicate)(view&)) {
+    predicate(*this);
 }
 
 
@@ -21,3 +22,47 @@ int view::getId() {
 }
 
 
+view &view::getParent() const {
+    return *parent;
+}
+
+
+void view::setParent(view* p) {
+    parent = p;
+}
+
+
+void view::setOnClickListener(void (*l)(view&)) {
+    onClick = l;
+}
+
+
+void view::setOnLongClickListener(void (*l)(view&)) {
+    onLongClick = l;
+}
+
+
+void view::setClicked(bool b) {
+    if (b) {
+        inClickedState = true;
+        ++timesClicked;
+    } else {
+        inClickedState = false;
+        inLongClickedState = false;
+        timesClicked = 0;
+    }
+
+    if (timesClicked > LONG_CLICK_TIME / UPDATE_FREQUENCY) {
+        inLongClickedState = true;
+    }
+}
+
+
+bool view::isClicked() {
+    return inClickedState;
+}
+
+
+bool view::isLongClicked() {
+    return inLongClickedState;
+}

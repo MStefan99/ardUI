@@ -10,23 +10,25 @@
 
 uint16_t ardUiDisplayGetHeight() {
     //TODO: Implement.
+    return 360;
 }
 
 
 uint16_t ardUiDisplayGetWidth() {
     //TODO: Implement.
+    return 480;
 }
 
 
 uint16_t ardUiDisplayGetFontHeight() {
     //TODO: Implement.
-    return NotImplemented;
+    return 8;
 }
 
 
 uint16_t ardUiDisplayGetFontWidth() {
     //TODO: Implement.
-    return NotImplemented;
+    return 5;
 }
 
 
@@ -50,6 +52,7 @@ tm ardUiGetRealTime() {
 
 
 returnCode ardUiDisplayInit() {
+    Serial.println("Display init");
     //TODO: Implement.
     return NotImplemented;
 }

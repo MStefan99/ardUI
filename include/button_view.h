@@ -8,16 +8,13 @@
 
 #include <Arduino.h>
 #include "text_view.h"
-#include "clickable.h"
 #include "llpi.h"
 
 
-class buttonView: public textView, virtual public clickable {
+class buttonView: public textView {
 public:
     buttonView() = default;
     explicit buttonView(const String& text);
-    buttonView(const String& text, uint16_t x, uint16_t y);
-    buttonView(const String& text, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2);
     ~buttonView() override = default;
 
     void draw() const override;

@@ -55,52 +55,221 @@ ardUI::~ardUI() {
     for (auto s : backStack) {
         delete s;
     }
-    delete currentScreen;
+    delete currentActivity;
 }
 
 
-ardUI &ardUI::getInstance() {
+ardUI &ardUI::getApplicationContext() {
     static ardUI instance;
     return instance;
 }
 
 
-screen* ardUI::getCurrentScreen() {
-    return getInstance().currentScreen;
+void ardUI::callActivityOnCreate(activity* a) {
+    switch (a->currentState) {
+        // Before in lifecycle
+        case activity::Launched:
+            a->onCreate();
+            break;
+        // Current 
+        case activity::Created:
+        // Unreachable
+        case activity::Restarted:
+        case activity::Started:
+        case activity::Resumed:
+        case activity::Paused:
+        case activity::Stopped:
+        case activity::Destroyed:
+            break;
+    }
+}
+
+
+void ardUI::callActivityOnStart(activity* a) {
+    switch (a->currentState) {
+        // Before in lifecycle
+        case activity::Launched:
+            a->onCreate();
+        case activity::Created:
+        case activity::Restarted:
+            a->onStart();
+            break;
+        // Current
+        case activity::Started:
+        // Unreachable
+        case activity::Destroyed:
+            break;
+        // After in lifecycle
+        case activity::Resumed:
+            a->onPause();
+        case activity::Paused:
+            a->onStop();
+        case activity::Stopped:
+            a->onRestart();
+            a->onStart();
+            break;
+    }
+}
+
+
+void ardUI::callActivityOnRestart(activity* a) {
+    switch (a->currentState) {
+        // Before in lifecycle
+        case activity::Launched:
+            a->onCreate();
+        case activity::Created:
+            a->onStart();
+        case activity::Started:
+            a->onResume();
+        case activity::Resumed:
+            a->onPause();
+        case activity::Paused:
+            a->onStop();
+        case activity::Stopped:
+            a->onRestart();
+        // Current
+        case activity::Restarted:
+        // Unreachable
+        case activity::Destroyed:
+            break;
+    }
+}
+
+
+void ardUI::callActivityOnResume(activity* a) {
+    switch (a->currentState) {
+        // Before in lifecycle
+        case activity::Launched:
+            a->onCreate();
+        case activity::Created:
+        case activity::Restarted:
+            a->onStart();
+        case activity::Started:
+            a->onResume();
+        // Current
+        case activity::Resumed:
+        // Unreachable
+        case activity::Destroyed:
+            break;
+        // After in lifecycle
+        case activity::Paused:
+            a->onResume();
+            break;
+        case activity::Stopped:
+            a->onRestart();
+            a->onStart();
+            a->onResume();
+            break;
+    }
+}
+
+
+void ardUI::callActivityOnPause(activity* a) {
+    switch (a->currentState) {
+        // Before in lifecycle
+        case activity::Launched:
+            a->onCreate();
+        case activity::Created:
+        case activity::Restarted:
+            a->onStart();
+        case activity::Started:
+            a->onResume();
+        case activity::Resumed:
+            a->onPause();
+        // Current
+        case activity::Paused:
+        // Unreachable
+        case activity::Destroyed:
+            break;
+        // After in lifecycle
+        case activity::Stopped:
+            a->onRestart();
+            a->onStart();
+            a->onResume();
+            a->onStop();
+            break;
+    }
+}
+
+
+void ardUI::callActivityOnStop(activity* a) {
+    switch (a->currentState) {
+        // Before in lifecycle
+        case activity::Launched:
+            a->onCreate();
+        case activity::Created:
+        case activity::Restarted:
+            a->onStart();
+        case activity::Started:
+            a->onResume();
+        case activity::Resumed:
+            a->onPause();
+        case activity::Paused:
+            a->onStop();
+        // Current
+        case activity::Stopped:
+        // Unreachable
+        case activity::Destroyed:
+            break;
+    }
+}
+
+
+void ardUI::callActivityOnDestroy(activity* a) {
+    switch (a->currentState) {
+        // Before in lifecycle
+        case activity::Launched:
+            a->onCreate();
+        case activity::Created:
+        case activity::Restarted:
+            a->onStart();
+        case activity::Started:
+            a->onResume();
+        case activity::Resumed:
+            a->onPause();
+        case activity::Paused:
+            a->onStop();
+        case activity::Stopped:
+            a->onDestroy();
+        // Current
+        case activity::Destroyed:
+            break;
+    }
+}
+
+
+activity& ardUI::getCurrentScreen() {
+    return *getApplicationContext().currentActivity;
 }
 
 
 void ardUI::back() {
-    auto s {getInstance().currentScreen};
+    auto s {getApplicationContext().currentActivity};
 
     if (s) {
-        if (getInstance().currentDialog) {
-            getInstance().currentDialog = nullptr;
-            s->resume();
+        if (getApplicationContext().currentDialog) {
+            getApplicationContext().currentDialog = nullptr;
+            callActivityOnResume(s);
         }
 
-        if (getInstance().backStack.length() > 0) {
-            s->pause();
-            s->stop();
-            s->destroy();
+        if (getApplicationContext().backStack.length() > 0) {
+            callActivityOnDestroy(s);
             delete s;
 
-            s = getInstance().backStack.popLeft();
-            getInstance().currentScreen = s;
-            s->restart();
-            s->start();
-            s->resume();
+            s = getApplicationContext().backStack.popLeft();
+            getApplicationContext().currentActivity = s;
+            callActivityOnResume(s);
         }
     }
 }
 
 
-void ardUI::showDialog(dialog *dialogToShow) {
-    auto s {getInstance().currentScreen};
+void ardUI::showDialog(dialog& dialogToShow) {
+    auto s {getApplicationContext().currentActivity};
 
     if (s) {
-        s->pause();
-        getInstance().currentDialog = dialogToShow;
+        callActivityOnPause(s);
+        getApplicationContext().currentDialog = &dialogToShow;
     }
 }
 
@@ -109,10 +278,10 @@ void ardUI::checkForActions() {
     if (ardUiDisplayIsClicked()) {
         static uint16_t x, y;
         ardUiDisplayClickLocation(x, y);
-        getInstance().getCurrentScreen()->getRootView()->forEach([](view* v) {
-            if (v->coordsInside(x, y)) {
-                if (v->onClick) {
-                    v->onClick(v);
+        getApplicationContext().getCurrentScreen().getRootView()->forEach([](view& v) {
+            if (v.getBounds().contains(x, y)) {
+                if (v.onClick) {
+                    v.onClick(v);
                 }
             }
         });
@@ -121,11 +290,11 @@ void ardUI::checkForActions() {
 
 
 void ardUI::draw() {
-    if (getInstance().currentDialog) {
-        getInstance().currentDialog->draw();
+    if (getApplicationContext().currentDialog) {
+        getApplicationContext().currentDialog->draw();
     }
 
-    if (getInstance().currentScreen) {
-        getInstance().currentScreen->draw();
+    if (getApplicationContext().currentActivity) {
+        getApplicationContext().currentActivity->draw();
     }
 }

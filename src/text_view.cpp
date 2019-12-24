@@ -7,17 +7,6 @@
 
 
 textView::textView(const String& text):
-        drawable(0, 0, ardUiDisplayGetFontWidth() * text.length(), ardUiDisplayGetFontHeight()),
-        text(text) {}
-
-
-textView::textView(const String &text, uint16_t x, uint16_t y):
-        drawable(x, y, ardUiDisplayGetFontWidth() * text.length(), ardUiDisplayGetFontHeight()),
-        text(text) {}
-
-
-textView::textView(const String &text, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2):
-        drawable(x1, y1, x2, y2),
         text(text) {}
 
 
@@ -57,6 +46,6 @@ uint32_t textView::getTextColor() const {
 
 
 void textView::draw() const {
-    ardUiDisplayDrawText(viewBox.getTopLeftPoint().getX(), viewBox.getTopLeftPoint().getY(),
+    ardUiDisplayDrawText(getBounds().top, getBounds().left,
                          textSize, text, textColor);
 }

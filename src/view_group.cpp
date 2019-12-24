@@ -5,9 +5,6 @@
 #include "view_group.h"
 
 
-viewGroup::viewGroup(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2): drawable(x1, y1, x2, y2) {}
-
-
 viewGroup::~viewGroup() {
     for (auto e : viewList) {
         delete e;
@@ -27,9 +24,9 @@ void viewGroup::draw() const {
 }
 
 
-void viewGroup::forEach(void (*predicate)(view *)) {
+void viewGroup::forEach(void (*predicate)(view&)) {
     view::forEach(predicate);
     for (auto e : viewList) {
-        predicate(e);
+        predicate(*e);
     }
 }

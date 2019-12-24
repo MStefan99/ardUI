@@ -8,13 +8,14 @@
 
 #include "slist.h"
 #include "view.h"
+#include "context.h"
 #include "layout_inflater.h"
 
 
-class screen {
+class activity: public context {
 public:
-    screen() = default;
-    virtual ~screen();
+    activity() = default;
+    virtual ~activity();
 
     template <class compiledLayout>
     void setContentView(compiledLayout layoutClass);
@@ -35,14 +36,6 @@ public:
     friend class ardUI;
 
 private:
-    virtual void create();
-    virtual void start();
-    virtual void restart();
-    virtual void resume();
-    virtual void pause();
-    virtual void stop();
-    virtual void destroy();
-    
     enum state {
         Launched,
         Created,
