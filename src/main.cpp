@@ -6,8 +6,22 @@
 #include "ardUI.h"
 
 
+class mainScreen: public activity {
+    void onCreate() override {
+        activity::onCreate();
+        auto ll = new linearLayout(true);
+        auto tv = new textView("Text!");
+        auto bv = new buttonView("Button");
+
+        ll->addView(bv);
+        ll->addView(tv);
+        setRootView(ll);
+    }
+};
+
+
 void setup() {
-    
+    ardUI::showScreen<mainScreen>();
 }
 
 

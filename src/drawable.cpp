@@ -74,6 +74,11 @@ bool drawable::setVisible(bool v) {
 }
 
 
+void drawable::invalidateSelf() {
+    valid = false;
+}
+
+
 void drawable::onBoundsChange(const rect &bounds) {
     draw();
 }

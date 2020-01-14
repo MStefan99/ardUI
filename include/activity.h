@@ -6,13 +6,12 @@
 #define ARDUI_SCREEN_H
 
 
-#include "slist.h"
+#include "list.h"
 #include "view.h"
-#include "context.h"
 #include "layout_inflater.h"
 
 
-class activity: public context {
+class activity {
 public:
     activity() = default;
     virtual ~activity();
@@ -47,8 +46,9 @@ private:
         Destroyed
     };
 
-    state currentState {Launched};
     view* getRootView();
+
+    state currentState {Launched};
     view* rootView {};
 };
 

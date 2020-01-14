@@ -278,13 +278,7 @@ void ardUI::checkForActions() {
     if (ardUiDisplayIsClicked()) {
         static uint16_t x, y;
         ardUiDisplayClickLocation(x, y);
-        getApplicationContext().getCurrentScreen().getRootView()->forEach([](view& v) {
-            if (v.getBounds().contains(x, y)) {
-                if (v.onClick) {
-                    v.onClick(v);
-                }
-            }
-        });
+        //TODO: check for actions
     }
 }
 

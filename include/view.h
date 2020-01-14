@@ -15,8 +15,12 @@ public:
     view();
     virtual ~view() = default;
 
-    virtual void forEach(void (*predicate)(view&));
     int getId();
+    void draw() const override;
+    void measure(uint16_t width, uint16_t height);
+    void layout(uint16_t left, uint16_t top, uint16_t right, uint16_t bottom);
+
+    void invalidate();
 
     void setOnClickListener(void (*onClickListener)(view&));
     void setOnLongClickListener(void (*onLongClickListener)(view&));
@@ -26,6 +30,9 @@ public:
 protected:
     view& getParent() const;
     void setParent(view* parent);
+    virtual void onDraw() const;
+    virtual void onMeasure(uint16_t width, uint16_t height);
+    virtual void onLayout(bool changed, uint16_t left, uint16_t top, uint16_t right, uint16_t bottom);
 
 private:
     void (*onClick)(view& view) {nullptr};
@@ -42,6 +49,8 @@ private:
 
     static int lastViewId;
     int viewId {++lastViewId};
+    uint16_t measuredHeight {0};
+    uint16_t measuredWidth {0};
     view* parent {nullptr};
 };
 

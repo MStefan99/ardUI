@@ -5,7 +5,7 @@
 #ifndef ARDUI_VIEW_GROUP_H
 #define ARDUI_VIEW_GROUP_H
 
-#include "slist.h"
+#include "list.h"
 #include "view.h"
 
 class viewGroup: public view {
@@ -16,7 +16,6 @@ public:
     virtual void addView(view* view);
 
     void draw() const override;
-    void forEach(void (*predicate)(view&)) override;
 
 private:
     list<view*> viewList {};

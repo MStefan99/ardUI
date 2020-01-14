@@ -89,6 +89,8 @@ returnCode ardUiDisplayDrawPixel(uint16_t x, uint16_t y, uint32_t color) {
 
 
 returnCode ardUiDisplayDrawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint32_t color) {
+    Serial.println("Drawn line from (" + std::to_string(x1) + ", " + std::to_string(y1) + ") to ("
+    + std::to_string(x2) + ", " + std::to_string(y2) + ").");
     //TODO: Implement.
     return NotImplemented;
 }
@@ -101,6 +103,7 @@ returnCode ardUiDisplayDrawChar(uint16_t x, uint16_t y, uint16_t height, char te
 
 
 returnCode ardUiDisplayDrawText(uint16_t x, uint16_t y, uint16_t height, const String& text, uint32_t color) {
+    Serial.println("Drawn text \"" + text + "\" at (" + std::to_string(x) + ", " + std::to_string(y) + ").");
     //TODO: Implement.
     return NotImplemented;
 }

@@ -75,11 +75,7 @@ view* activity::findViewById(int id) {
     static int temp {id};  //TODO: use lambda captures instead of static variables (important)
     static view* foundView {nullptr};
 
-    rootView->forEach([](view& v) {
-        if (v.getId() == temp) {
-            foundView = &v;
-        }
-    });
+    //TODO: replace forEach with for
     return foundView;
 }
 

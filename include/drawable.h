@@ -36,6 +36,10 @@ public:
     bool isVisible() const;
     bool setVisible(bool visible);
 
+    void invalidateSelf();
+
+    friend class ardUI;
+
 protected:
     virtual void onBoundsChange(const rect& bounds);
     virtual bool onLevelChange(uint16_t level);

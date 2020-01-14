@@ -22,11 +22,3 @@ void viewGroup::draw() const {
         v->draw();
     }
 }
-
-
-void viewGroup::forEach(void (*predicate)(view&)) {
-    view::forEach(predicate);
-    for (auto e : viewList) {
-        predicate(*e);
-    }
-}
