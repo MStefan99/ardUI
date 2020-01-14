@@ -17,7 +17,7 @@ public:
     explicit buttonView(const String& text);
     ~buttonView() override = default;
 
-    void draw() const override;
+    void onDraw() override;
 
 private:
     uint32_t backgroundColor {0xFFFFFFFF};

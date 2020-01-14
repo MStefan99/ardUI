@@ -7,22 +7,6 @@
 
 #include <Arduino.h>
 #include "ardUI_config.h"
-
-#if FREERTOS_ENABLED
-#include <Arduino_FreeRTOS.h>
-#include <task.h>
-
-// Hiding standard Arduino functions for correct operation of FreeRTOS
-void ardUiSetupRoutine();  // User "setup()" function will be replaced by this custom function
-void ardUiLoopRoutine();  // User "loop()" function will be replaced by this custom function
-void ardUiLoopCaller(void*);  // User loop caller used by FreeRTOS
-
-#define setup() ardUiSetupRoutine()  // Replacing default setup with custom
-#define loop() ardUiLoopRoutine()  // Replacing default loop with custom
-
-#endif
-
-
 #include "llpi.h"
 
 #include "activity.h"
@@ -35,12 +19,23 @@ void ardUiLoopCaller(void*);  // User loop caller used by FreeRTOS
 #include "view_group.h"
 #include "linear_layout.h"
 
+#if ARDUI_ENABLED
+
+// Hiding standard Arduino functions for correct operation of ardUI
+void ardUiUserSetup();  // User "setup()" function will be replaced by this custom function
+void ardUiUserLoop();  // User "loop()" function will be replaced by this custom function
+
+#define setup() ardUiUserSetup()
+#define loop() ardUiUserLoop()
+
+#endif
+
 
 class ardUI {
 public:
     explicit ardUI(ardUI const &) = delete;
 
-    static ardUI& getApplicationContext();
+    static ardUI& getInstance();
     static activity& getCurrentScreen();
 
     template<class ScreenClass>
@@ -58,39 +53,39 @@ public:
 
     void operator=(ardUI const &) = delete;
 
+    static void checkForActions();
+    static void draw();
+
 private:
-    ardUI();
+    ardUI() = default;
     ~ardUI();
+
 
     const uint16_t screenHeight {ardUiDisplayGetHeight()};
     const uint16_t screenWidth {ardUiDisplayGetWidth()};
     activity* currentActivity {nullptr};
     dialog* currentDialog {nullptr};
     list<activity*> backStack {};
-
-    static void ardUiTask(void*);
-    static void checkForActions();
-    static void draw();
 };
 
 
 template<class ScreenClass>
 void ardUI::showScreen() {
-    auto s {getApplicationContext().currentActivity};
+    auto s {getInstance().currentActivity};
     if (s) {
         callActivityOnStop(s);
-        getApplicationContext().backStack.prepend(s);
+        getInstance().backStack.prepend(s);
         Serial.println("Screen appended to the stack");
 
-        if (getApplicationContext().backStack.length() > BACK_STACK_DEPTH) {
+        if (getInstance().backStack.length() > BACK_STACK_DEPTH) {
             Serial.println("Max stack depth reached, destroying last activity");
-            auto lastScreen {getApplicationContext().backStack.pop()};
+            auto lastScreen {getInstance().backStack.pop()};
             callActivityOnDestroy(lastScreen);
             delete lastScreen;
         }
     }
     s = new ScreenClass();
-    getApplicationContext().currentActivity = s;
+    getInstance().currentActivity = s;
 
     callActivityOnResume(s);
 }

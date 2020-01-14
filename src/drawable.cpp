@@ -60,6 +60,11 @@ bool drawable::getPadding(rect &p) const {
 }
 
 
+void drawable::setPadding(uint16_t left, uint16_t top, uint16_t right, uint16_t bottom) {
+    padding = rect(left, top, right, bottom);
+}
+
+
 bool drawable::isVisible() const {
     return visible;
 }
@@ -80,7 +85,7 @@ void drawable::invalidateSelf() {
 
 
 void drawable::onBoundsChange(const rect &bounds) {
-    draw();
+    invalidateSelf();
 }
 
 
@@ -93,3 +98,21 @@ bool drawable::onLevelChange(uint16_t l) {
 }
 
 
+uint16_t drawable::getMinimumHeight() const {
+    return minHeight;
+}
+
+
+uint16_t drawable::getMinimumWidth() const {
+    return minWidth;
+}
+
+
+void drawable::setMinimumWidth(uint16_t w) {
+    minWidth = w;
+}
+
+
+void drawable::setMinimumHeight(uint16_t h) {
+    minHeight = h;
+}

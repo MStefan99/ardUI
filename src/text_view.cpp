@@ -45,7 +45,7 @@ uint32_t textView::getTextColor() const {
 }
 
 
-void textView::draw() const {
+void textView::onDraw() {
     ardUiDisplayDrawText(getBounds().top, getBounds().left,
                          textSize, text, textColor);
 }

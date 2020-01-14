@@ -7,48 +7,24 @@
 
 #undef ardUI
 
-
-#if FREERTOS_ENABLED
+#if ARDUI_ENABLED
 
 #undef setup
 #undef loop
-#undef delay
 
 
-void ardUI::ardUiTask(void *) {
-    while (true) {
-        draw();
-        checkForActions();
-    }
+void setup() {  // Default setup function will be used to initiate ardUI
+    ardUiUserSetup();  // Calling user setup routine
 }
 
 
-void setup() {  // Default setup function will be used to create FreeRTOS loop task
-    ardUiSetupRoutine();  // Calling user setup routine
-    xTaskCreate(ardUiLoopCaller, "Main loop", 500,
-                nullptr, tskIDLE_PRIORITY + 3, nullptr); // Creating loop task
-#define delay(milliSecondsToWait) vTaskDelay(milliSecondsToWait / 15)  // Replacing default delay with FreeRTOS task delay
-}
-
-
-void loop() {}  // Default loop should be left empty
-
-
-void ardUiLoopCaller(void*) {  // User loop caller used by FreeRTOS
-    while (true) {
-        ardUiLoopRoutine();  // Calling user loop routine in an infinite loop
-    }
+void loop() {  // ardUI core functions will be added to the loop function
+    ardUI::draw();
+    ardUI::checkForActions();
+    ardUiUserLoop();
 }
 
 #endif
-
-
-ardUI::ardUI() {
-#if FREERTOS_ENABLED
-    xTaskCreate(ardUiTask, "UI task", 100,
-            nullptr, tskIDLE_PRIORITY, nullptr);
-#endif
-}
 
 
 ardUI::~ardUI() {
@@ -59,7 +35,7 @@ ardUI::~ardUI() {
 }
 
 
-ardUI &ardUI::getApplicationContext() {
+ardUI &ardUI::getInstance() {
     static ardUI instance;
     return instance;
 }
@@ -239,25 +215,25 @@ void ardUI::callActivityOnDestroy(activity* a) {
 
 
 activity& ardUI::getCurrentScreen() {
-    return *getApplicationContext().currentActivity;
+    return *getInstance().currentActivity;
 }
 
 
 void ardUI::back() {
-    auto s {getApplicationContext().currentActivity};
+    auto s {getInstance().currentActivity};
 
     if (s) {
-        if (getApplicationContext().currentDialog) {
-            getApplicationContext().currentDialog = nullptr;
+        if (getInstance().currentDialog) {
+            getInstance().currentDialog = nullptr;
             callActivityOnResume(s);
         }
 
-        if (getApplicationContext().backStack.length() > 0) {
+        if (getInstance().backStack.length() > 0) {
             callActivityOnDestroy(s);
             delete s;
 
-            s = getApplicationContext().backStack.popLeft();
-            getApplicationContext().currentActivity = s;
+            s = getInstance().backStack.popLeft();
+            getInstance().currentActivity = s;
             callActivityOnResume(s);
         }
     }
@@ -265,11 +241,11 @@ void ardUI::back() {
 
 
 void ardUI::showDialog(dialog& dialogToShow) {
-    auto s {getApplicationContext().currentActivity};
+    auto s {getInstance().currentActivity};
 
     if (s) {
         callActivityOnPause(s);
-        getApplicationContext().currentDialog = &dialogToShow;
+        getInstance().currentDialog = &dialogToShow;
     }
 }
 
@@ -284,11 +260,13 @@ void ardUI::checkForActions() {
 
 
 void ardUI::draw() {
-    if (getApplicationContext().currentDialog) {
-        getApplicationContext().currentDialog->draw();
+    if (getInstance().currentDialog) {
+        getInstance().currentDialog->draw();
     }
 
-    if (getApplicationContext().currentActivity) {
-        getApplicationContext().currentActivity->draw();
+    if (getInstance().currentActivity) {
+        getInstance().currentActivity->measure();  //TODO: remove
+        getInstance().currentActivity->layout();
+        getInstance().currentActivity->draw();
     }
 }

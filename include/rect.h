@@ -29,6 +29,10 @@ public:
     void offset(uint16_t dx, uint16_t dy);
     void offsetTo(uint16_t newLeft, uint16_t newTop);
 
+    void inset(uint16_t dx, uint16_t dy);
+    void inset(uint16_t left, uint16_t top, uint16_t right, uint16_t bottom);
+    void inset(const rect& r);
+
     void set(uint16_t left, uint16_t top, uint16_t right, uint16_t bottom);
     void set(const rect& r);
 

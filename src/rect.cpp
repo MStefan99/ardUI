@@ -73,6 +73,30 @@ void rect::offsetTo(uint16_t newLeft, uint16_t newTop) {
 }
 
 
+void rect::inset(uint16_t dx, uint16_t dy) {
+    left -= dx / 2;
+    right -= dx / 2;
+    top -= dy / 2;
+    bottom -= dy / 2;
+}
+
+
+void rect::inset(uint16_t l, uint16_t t, uint16_t r, uint16_t b) {
+    left -= l;
+    top -= t;
+    right -= r;
+    bottom -= b;
+}
+
+
+void rect::inset(const rect &r) {
+    left -= r.left;
+    top -= r.top;
+    right -= r.right;
+    bottom -= r.bottom;
+}
+
+
 void rect::set(uint16_t l, uint16_t t, uint16_t r, uint16_t b) {
     left = l;
     top = t;

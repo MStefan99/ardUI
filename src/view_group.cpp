@@ -17,8 +17,24 @@ void viewGroup::addView(view* view) {
 }
 
 
-void viewGroup::draw() const {
-    for (auto v : viewList) {
-        v->draw();
+view* viewGroup::findViewById(int id) {
+    int count = getChildCount();
+    for (int i = 0; i < count; ++i) {
+        view& v = getChildAt(i);
+        if (v.findViewById(id)) {
+            return v.findViewById(id);
+        }
     }
+    return nullptr;
 }
+
+
+int viewGroup::getChildCount() {
+    return viewList.length();
+}
+
+
+view& viewGroup::getChildAt(int i) {
+    return *viewList[i];
+}
+

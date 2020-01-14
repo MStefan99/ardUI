@@ -9,7 +9,7 @@ buttonView::buttonView(const String &text):
         textView(text) {}
 
 
-void buttonView::draw() const {
+void buttonView::onDraw(){
     auto b {getBounds()};
 
     ardUiDisplayDrawLine(b.left, b.top, b.right, b.top, borderColor);  // top

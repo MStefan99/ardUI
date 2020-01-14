@@ -13,12 +13,18 @@ public:
     viewGroup() = default;
     ~viewGroup() override;
 
-    virtual void addView(view* view);
+    void addView(view* view);
+    view* findViewById(int id) override;
 
-    void draw() const override;
+    int getChildCount();
+    view& getChildAt(int index);
 
-private:
+protected:
+    void onMeasure(uint16_t width, uint16_t height) override = 0;
+    void onLayout(bool changed, uint16_t left, uint16_t top, uint16_t right, uint16_t bottom) override = 0;
+    void onDraw() override = 0;
     list<view*> viewList {};
+
 };
 
 #endif //ARDUI_VIEW_GROUP_H

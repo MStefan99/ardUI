@@ -23,7 +23,7 @@ public:
     uint16_t getTextSize() const;
     uint32_t getTextColor() const;
 
-    void draw() const override;
+    void onDraw() override;
 
 protected:
     String text {""};

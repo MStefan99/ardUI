@@ -29,7 +29,6 @@ public:
     virtual void onStop();
     virtual void onDestroy();
 
-    void draw() const;
     view* findViewById(int id);
 
     friend class ardUI;
@@ -46,6 +45,9 @@ private:
         Destroyed
     };
 
+    void draw() const;
+    void measure();
+    void layout();
     view* getRootView();
 
     state currentState {Launched};

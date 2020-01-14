@@ -13,19 +13,16 @@ activity::~activity() {
 template<class compiledLayout>
 void activity::setContentView(compiledLayout layoutClass) {
     layoutClass.fill();  // "fill()" function must be present in the compiled layout
-    draw();
 }
 
 
 void activity::setContentView(const String& xml) {
     layoutInflater::inflate(xml, *rootView);
-    draw();
 }
 
 
 void activity::setRootView(view *view){
     rootView = view;
-    draw();
 }
 
 
@@ -72,14 +69,23 @@ void activity::draw() const {
 
 
 view* activity::findViewById(int id) {
-    static int temp {id};  //TODO: use lambda captures instead of static variables (important)
-    static view* foundView {nullptr};
-
-    //TODO: replace forEach with for
-    return foundView;
+    return rootView->findViewById(id);
 }
 
 
 view* activity::getRootView() {
     return rootView;
+}
+
+
+void activity::measure() {
+    int widthSpec = view::measureSpec::makeMeasureSpec(view::measureSpec::EXACTLY, ardUiDisplayGetWidth());
+    int heightSpec = view::measureSpec::makeMeasureSpec(view::measureSpec::EXACTLY, ardUiDisplayGetHeight());
+    rootView->measure(widthSpec, heightSpec);
+}
+
+
+void activity::layout() {
+    rect display {0, 0, ardUiDisplayGetWidth(), ardUiDisplayGetHeight()};
+    rootView->layout(display);
 }
