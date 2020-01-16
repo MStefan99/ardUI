@@ -2,153 +2,113 @@
 // Created by MStefan99 on 25.11.19.
 //
 
+// An iterator implementation for a simple array.
+// Inherit and override necessary methods for use in custom container.
+
+
 #ifndef ARDUI_ITERATOR_H
 #define ARDUI_ITERATOR_H
 
-#include "element.h"
 
-template<class T>
+template<class T, class Pointer = T*, class Reference = T&>
 class iterator {
 public:
-    explicit iterator(element<T> *elementPtr);
+    iterator() = default;
+    iterator(const iterator&) = default;
+    virtual ~iterator() = default;
 
-    iterator operator+(int n);
-    iterator &operator++();
-    const iterator operator++(int);
+    virtual iterator& operator++();
+    virtual const iterator operator++(int);
 
-    iterator operator-(int n);
-    iterator &operator--();
-    const iterator<T> operator--(int);
+    virtual bool operator==(iterator) const;
+    virtual bool operator!=(iterator it) const;
 
-    bool operator==(iterator it);
-    bool operator!=(iterator it);
+    virtual Pointer operator->() const;
+    virtual Reference operator*() const;
 
-    element<T> *operator[](int n);
+    virtual iterator operator+(int n) const;
+    virtual iterator operator-(int n) const;
+    virtual Reference operator[](int n) const;  //TODO:
+    virtual iterator& operator+=(int);
+    virtual iterator& operator-=(int);
 
-    T &operator*();
-
-    explicit operator bool();
-    explicit operator element<T> *();
-
-    element<T> *getPointer();
-private:
-    element<T>* pointer {nullptr};
+protected:
+    Pointer mPointer {nullptr};
 };
 
 
-template<class T>
-iterator<T>::iterator(element<T> *elementPtr): pointer(elementPtr) {}
-
-
-template<class T>
-iterator<T> iterator<T>::operator+(int n) {
-    auto it = *this;
-    for (int i = 0; i < n; ++i) {
-        ++it;
-    }
-    return it;
-}
-
-
-template<class T>
-iterator<T> &iterator<T>::operator++() {
-    if (pointer) {
-        pointer = pointer->getNext();
-    } else {
-        //TODO: handle Exception
-    }
+template <class T, class Pointer, class Reference>
+iterator<T, Pointer, Reference> &iterator<T, Pointer, Reference>::operator++() {
+    ++mPointer;
     return *this;
 }
 
 
-template<class T>
-const iterator<T> iterator<T>::operator++(int) { // NOLINT(readability-const-return-type)
+template <class T, class Pointer, class Reference>
+const iterator<T, Pointer, Reference> iterator<T, Pointer, Reference>::operator++(int) { // NOLINT(readability-const-return-type)
     auto temp = iterator(*this);
-    if (pointer) {
-        pointer = pointer->getNext();
-    } else {
-        //TODO: handle Exception
-    }
+    ++mPointer;
     return temp;
 }
 
 
-template<class T>
-iterator<T> iterator<T>::operator-(int n) {
-    auto it = *this;
-    for (int i = 0; i < n; ++i) {
-        --it;
-    }
-    return it;
+template<class T, class Pointer, class Reference>
+bool iterator<T, Pointer, Reference>::operator==(iterator it) const {
+    return mPointer == it.mPointer;
 }
 
 
-template<class T>
-iterator<T> &iterator<T>::operator--() {
-    if (pointer) {
-        pointer = pointer->getPrev();
-    } else {
-        //TODO: handle Exception
-    }
+template<class T, class Pointer, class Reference>
+bool iterator<T, Pointer, Reference>::operator!=(iterator it) const {
+    return mPointer != it.mPointer;
+}
+
+
+template<class T, class Pointer, class Reference>
+Pointer iterator<T, Pointer, Reference>::operator->() const {
+    return mPointer;
+}
+
+
+template<class T, class Pointer, class Reference>
+Reference iterator<T, Pointer, Reference>::operator*() const {
+    return *mPointer;
+}
+
+
+template<class T, class Pointer, class Reference>
+iterator<T, Pointer, Reference> iterator<T, Pointer, Reference>::operator+(int n) const {
+    auto temp = iterator(*this);
+    temp.mPointer += n;
+    return temp;
+}
+
+
+template<class T, class Pointer, class Reference>
+iterator<T, Pointer, Reference> iterator<T, Pointer, Reference>::operator-(int n) const {
+    auto temp = iterator(*this);
+    temp.mPointer -= n;
+    return temp;
+}
+
+
+template<class T, class Pointer, class Reference>
+Reference iterator<T, Pointer, Reference>::operator[](int n) const {
+    return *(mPointer + n);
+}
+
+
+template<class T, class Pointer, class Reference>
+iterator<T, Pointer, Reference> &iterator<T, Pointer, Reference>::operator+=(int n) {
+    mPointer += n;
     return *this;
 }
 
 
-template<class T>
-const iterator<T> iterator<T>::operator--(int) { // NOLINT(readability-const-return-type)
-    auto temp = iterator(*this);
-    if (pointer) {
-        pointer = pointer->getPrev();
-    } else {
-        //TODO: handle Exception
-    }
-    return temp;
-}
-
-
-template<class T>
-bool iterator<T>::operator==(iterator<T> it) {
-    return pointer == it.pointer;
-}
-
-
-template<class T>
-bool iterator<T>::operator!=(iterator<T> it) {
-    return pointer != it.pointer;
-}
-
-
-template<class T>
-element<T> *iterator<T>::operator[](int n) {
-    return this + n;
-}
-
-
-template<class T>
-T &iterator<T>::operator*() {
-    if (pointer) {
-        return pointer->getContent();
-    } else {
-        //TODO: handle Exception (Important: control reaches end)
-    }
-}
-
-
-template<class T>
-iterator<T>::operator bool() {
-    return pointer;
-}
-
-
-template<class T>
-iterator<T>::operator element<T> *() {
-    return pointer;
-}
-
-
-template<class T>
-element<T> *iterator<T>::getPointer() {
-    return pointer;
+template<class T, class Pointer, class Reference>
+iterator<T, Pointer, Reference> &iterator<T, Pointer, Reference>::operator-=(int n) {
+    mPointer += n;
+    return *this;
 }
 
 

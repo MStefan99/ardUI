@@ -41,7 +41,7 @@ int view::getId() {
 
 
 void view::draw() {
-    if (!valid) {
+    if (!valid && visible) {
         onDraw();
         valid = true;
     }
@@ -171,17 +171,20 @@ bool view::isLongClicked() {
 
 uint16_t view::getDefaultSize(uint16_t size, uint16_t measureSpec) {
     uint16_t result {0};
-    uint16_t specMode = view::measureSpec::getMode(measureSpec);
 
-    switch (specMode) {
-        case view::measureSpec::UNSPECIFIED:
-        default:
-            result = size;
-            break;
-        case view::measureSpec::AT_MOST:
-        case view::measureSpec::EXACTLY:
-            result = view::measureSpec::getSize(measureSpec);
-            break;
+    if (visible) {
+        uint16_t specMode = view::measureSpec::getMode(measureSpec);
+
+        switch (specMode) {
+            case view::measureSpec::UNSPECIFIED:
+            default:
+                result = size;
+                break;
+            case view::measureSpec::AT_MOST:
+            case view::measureSpec::EXACTLY:
+                result = view::measureSpec::getSize(measureSpec);
+                break;
+        }
     }
     return result;
 }
