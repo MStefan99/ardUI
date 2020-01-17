@@ -8,9 +8,33 @@
 
 template<class T>
 class list {
+protected:
+    class listElement;
+    
 public:
     class listIterator {
-        
+    public:
+        listIterator() = default;
+        listIterator(const listIterator&) = default;
+        virtual ~listIterator() = default;
+
+        virtual listIterator& operator++();
+        virtual const listIterator operator++(int);
+
+        virtual bool operator==(listIterator) const;
+        virtual bool operator!=(listIterator it) const;
+
+        virtual T* operator->() const;
+        virtual T& operator*() const;
+
+        virtual listIterator operator+(int n) const;
+        virtual listIterator operator-(int n) const;
+        virtual T& operator[](int n) const;
+        virtual listIterator& operator+=(int);
+        virtual listIterator& operator-=(int);
+
+    protected:
+        list<T>::listElement* elementPointer;
     };
     
     list() = default;
@@ -184,11 +208,13 @@ void list<T>::erase(listIterator iterator) {
 template<class T>
 int list<T>::remove(const T& content) {
     int i {0};
+    listElement* e {first};
 
-    for (listElement* e {first}; e->getNext(); e = e->getNext()) {
-        if (e->getContent() == content) {
-            removeElement(e);
-            ++i;
+    while (e) {
+        auto temp = e;
+        e = e->getNext();
+        if (temp->getContent() == content) {
+            removeElement(temp);
         }
     }
     return i;
@@ -198,11 +224,13 @@ int list<T>::remove(const T& content) {
 template<class T>
 int list<T>::removeIf(bool (*p)(const T&)) {
     int i {0};
+    listElement* e {first};
 
-    for (listElement* e {first}; e->getNext(); e = e->getNext()) {
-        if (p(e->getContent())) {
-            removeElement(e);
-            ++i;
+    while (e) {
+        auto temp = e;
+        e = e->getNext();
+        if (p(temp->getContent())) {
+            removeElement(temp);
         }
     }
     return i;
@@ -211,10 +239,12 @@ int list<T>::removeIf(bool (*p)(const T&)) {
 
 template<class T>
 void list<T>::clear() {
-    if (first) {
-        for (listElement *e{first}; e->getNext(); e = e->getNext()) {
-            removeElement(e);
-        }
+    listElement* e {first};
+
+    while (e) {
+        auto temp = e;
+        e = e->getNext();
+        removeElement(temp);
     }
 }
 
@@ -223,7 +253,7 @@ template<class T>
 int list<T>::length() {
     int i {0};
 
-    for (listElement* e {first}; e->getNext(); e = e->getNext()) {
+    for (listElement* e {first}; e; e = e->getNext()) {
         ++i;
     }
     return i;
