@@ -5,7 +5,6 @@
 #ifndef ARDUI_ARDUI_CONFIG_H
 #define ARDUI_ARDUI_CONFIG_H
 
-#define ARDUI_ENABLED 1
 #define BACK_STACK_DEPTH 3
 
 #define UPDATE_FREQUENCY 10  // Time between checks for events in Hz

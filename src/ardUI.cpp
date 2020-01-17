@@ -6,9 +6,6 @@
 
 
 #undef ardUI
-
-#if ARDUI_ENABLED
-
 #undef setup
 #undef loop
 
@@ -23,8 +20,6 @@ void loop() {  // ardUI core functions will be added to the loop function
     ardUI::checkForActions();
     ardUiUserLoop();
 }
-
-#endif
 
 
 ardUI::~ardUI() {
@@ -232,7 +227,7 @@ void ardUI::back() {
             callActivityOnDestroy(s);
             delete s;
 
-            s = getInstance().backStack.popLeft();
+            s = getInstance().backStack.popFront();
             getInstance().currentActivity = s;
             callActivityOnResume(s);
         }

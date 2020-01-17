@@ -19,16 +19,12 @@
 #include "view_group.h"
 #include "linear_layout.h"
 
-#if ARDUI_ENABLED
-
 // Hiding standard Arduino functions for correct operation of ardUI
 void ardUiUserSetup();  // User "setup()" function will be replaced by this custom function
 void ardUiUserLoop();  // User "loop()" function will be replaced by this custom function
 
 #define setup() ardUiUserSetup()
 #define loop() ardUiUserLoop()
-
-#endif
 
 
 class ardUI {
@@ -74,12 +70,12 @@ void ardUI::showScreen() {
     auto s {getInstance().currentActivity};
     if (s) {
         callActivityOnStop(s);
-        getInstance().backStack.prepend(s);
+        getInstance().backStack.pushFront(s);
         Serial.println("Screen appended to the stack");
 
         if (getInstance().backStack.length() > BACK_STACK_DEPTH) {
             Serial.println("Max stack depth reached, destroying last activity");
-            auto lastScreen {getInstance().backStack.pop()};
+            auto lastScreen {getInstance().backStack.popBack()};
             callActivityOnDestroy(lastScreen);
             delete lastScreen;
         }

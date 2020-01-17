@@ -5,59 +5,89 @@
 #ifndef ARDUI_SLIST_H
 #define ARDUI_SLIST_H
 
-#include "element.h"
-#include "iterator.h"
 
 template<class T>
 class list {
 public:
+    class listIterator {
+        
+    };
+    
     list() = default;
     list(const list& list);
     ~list();
 
-    void append(const T &content);
-    void prepend(const T &content);
+    void pushBack(const T &content);
+    void pushFront(const T &content);
 
-    T pop();
-    T popLeft();
+    T popBack();
+    T popFront();
 
-    int remove(const T& element);
+    int remove(const T& content);
     int removeIf(bool (*predicate)(const T&));
 
-    void wipe();
-
+    void clear();
+    void erase(listIterator iterator);
     int length();
 
-    T &operator[](int n);
+    T& operator[](int n);
     list& operator=(const list& list);
 
-    iterator<T> begin() const;
-    iterator<T> end() const;
-private:
-    void drop(iterator<T> iterator);
+    listIterator begin() const;
+    listIterator end() const;
 
-    element<T>* first {nullptr};
-    element<T>* last {nullptr};
+protected:
+    class listElement {
+    public:
+        explicit listElement(const T& content, listElement* prev = nullptr, listElement* next = nullptr);
+        listElement(const listElement& listElement) = default;
+        ~listElement();
+
+        listElement* getNext() const;
+        listElement* getPrev() const;
+        T& getContent();
+
+        void setNext(listElement* next);
+        void setPrev(listElement* prev);
+
+        listElement& operator=(const listElement& listElement) = default;
+        listElement& operator=(const T& content);
+
+    private:
+        T elementContent;
+        listElement* nextElement {nullptr};
+        listElement* prevElement {nullptr};
+    };
+
+    listElement* first {nullptr};
+    listElement* last {nullptr};
+
+    void removeElement(listElement* e);
 };
+
+
+template <class T>
+list<T>::listElement::listElement(const T& content, listElement* prev, listElement* next):
+        elementContent(content), prevElement(prev), nextElement(next) {}
 
 
 template<class T>
 list<T>::list(const list& l) {
     for (const auto& e : l) {
-        append(e);
+        pushBack(e);
     }
 }
 
 
 template<class T>
 list<T>::~list() {
-    wipe();
+    clear();
 }
 
 
 template<class T>
-void list<T>::append(const T &content) {
-    auto e = new element<T>(content, last);
+void list<T>::pushBack(const T &content) {
+    auto e = new listElement(content, last);
 
     if (!first) {
         first = e;
@@ -70,8 +100,8 @@ void list<T>::append(const T &content) {
 
 
 template<class T>
-void list<T>::prepend(const T &content) {
-    auto e = new element<T>(content, nullptr, first);
+void list<T>::pushFront(const T &content) {
+    auto e = new listElement(content, nullptr, first);
 
     if (!last) {
         last = e;
@@ -84,7 +114,7 @@ void list<T>::prepend(const T &content) {
 
 
 template<class T>
-T list<T>::pop() {
+T list<T>::popBack() {
     auto e {last};
     if (e) {
         auto content {last->getContent()};
@@ -105,7 +135,7 @@ T list<T>::pop() {
 
 
 template<class T>
-T list<T>::popLeft() {
+T list<T>::popFront() {
     auto e {first};
     if (e) {
         auto content {first->getContent()};
@@ -125,34 +155,40 @@ T list<T>::popLeft() {
 }
 
 
-template<class T>
-void list<T>::drop(iterator<T> iterator) {
-    auto e {*iterator.getPointer()};
+template <class T>
+void list<T>::removeElement(list<T>::listElement* e) {
 
-    if (e.getNext()) {
-        e.getNext()->setPrev(e.getPrev());
+    if (e->getNext()) {
+        e->getNext()->setPrev(e->getPrev());
     } else {
-        last = e.getPrev();
+        last = e->getPrev();
     }
-    if (e.getPrev()) {
-        e.getPrev()->setNext(e.getNext());
+    if (e->getPrev()) {
+        e->getPrev()->setNext(e->getNext());
     } else {
-        first = e.getNext();
+        first = e->getNext();
     }
 
-    delete iterator.getPointer();
+    delete e;
 }
 
 
 template<class T>
-int list<T>::remove(const T& e) {
+void list<T>::erase(listIterator iterator) {
+    auto e {*iterator.getPointer()};
+
+    removeElement(e);
+}
+
+
+template<class T>
+int list<T>::remove(const T& content) {
     int i {0};
-    auto it {begin()};
-    while (it != end()) {
-        auto prev {it++};
-        if (*prev == e) {
+
+    for (listElement* e {first}; e->getNext(); e = e->getNext()) {
+        if (e->getContent() == content) {
+            removeElement(e);
             ++i;
-            drop(prev);
         }
     }
     return i;
@@ -162,12 +198,11 @@ int list<T>::remove(const T& e) {
 template<class T>
 int list<T>::removeIf(bool (*p)(const T&)) {
     int i {0};
-    auto it {begin()};
-    while (it != end()) {
-        auto prev {it++};
-        if (p(*prev)) {
+
+    for (listElement* e {first}; e->getNext(); e = e->getNext()) {
+        if (p(e->getContent())) {
+            removeElement(e);
             ++i;
-            drop(prev);
         }
     }
     return i;
@@ -175,21 +210,20 @@ int list<T>::removeIf(bool (*p)(const T&)) {
 
 
 template<class T>
-void list<T>::wipe() {
-    auto it {begin()};
-    while (it != end()) {
-        auto tmp = it++;
-        delete tmp.getPointer();
+void list<T>::clear() {
+    if (first) {
+        for (listElement *e{first}; e->getNext(); e = e->getNext()) {
+            removeElement(e);
+        }
     }
-    first = nullptr;
-    last = nullptr;
 }
 
 
 template<class T>
 int list<T>::length() {
-    int i = 0;
-    for (auto it {this->begin()}; it != this->end(); ++it) {
+    int i {0};
+
+    for (listElement* e {first}; e->getNext(); e = e->getNext()) {
         ++i;
     }
     return i;
@@ -197,20 +231,20 @@ int list<T>::length() {
 
 
 template<class T>
-iterator<T> list<T>::begin() const {
-    return iterator<T>(first);
+typename list<T>::listIterator list<T>::begin() const {
+    return listIterator(first);
 }
 
 
 template<class T>
-iterator<T> list<T>::end() const {
-    return iterator<T>(nullptr);
+typename list<T>::listIterator list<T>::end() const {
+    return listIterator(nullptr);
 }
 
 
 template<class T>
 T &list<T>::operator[](int n) {
-    iterator<T> it(first);
+    listIterator it(first);
     return *(it + n);
 }
 
@@ -220,10 +254,53 @@ list<T>& list<T>::operator=(const list& l) {
     if (this == &l) {
         return *this;
     }
-    wipe();
+    clear();
     for (const auto& e : l) {
-        append(e);
+        pushBack(e);
     }
+}
+
+
+template <class T>
+typename list<T>::listElement *list<T>::listElement::getNext() const {
+    return nextElement;
+}
+
+
+template <class T>
+typename list<T>::listElement *list<T>::listElement::getPrev() const {
+    return prevElement;
+}
+
+
+template <class T>
+T& list<T>::listElement::getContent() {
+    return elementContent;
+}
+
+
+template <class T>
+void list<T>::listElement::setNext(listElement *next) {
+    nextElement = next;
+}
+
+
+template <class T>
+void list<T>::listElement::setPrev(listElement *prev) {
+    prevElement = prev;
+}
+
+
+template <class T>
+typename list<T>::listElement& list<T>::listElement::operator=(const T& content) {
+    elementContent = content;
+    return *this;
+}
+
+
+template <class T>
+list<T>::listElement::~listElement() {
+
 }
 
 #endif //ARDUI_SLIST_H

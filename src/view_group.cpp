@@ -13,7 +13,7 @@ viewGroup::~viewGroup() {
 
 
 void viewGroup::addView(view* view) {
-    viewList.append(view);
+    viewList.pushBack(view);
 }
 
 
