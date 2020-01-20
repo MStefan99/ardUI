@@ -16,25 +16,32 @@ public:
     public:
         listIterator() = default;
         listIterator(const listIterator&) = default;
-        virtual ~listIterator() = default;
+        ~listIterator() = default;
 
-        virtual listIterator& operator++();
-        virtual const listIterator operator++(int);
+        listIterator& operator++();
+        const listIterator operator++(int);
 
-        virtual bool operator==(listIterator) const;
-        virtual bool operator!=(listIterator it) const;
+        bool operator==(const listIterator& it) const;
+        bool operator!=(const listIterator& it) const;
 
-        virtual T* operator->() const;
-        virtual T& operator*() const;
+        listIterator& operator=(const T&);
 
-        virtual listIterator operator+(int n) const;
-        virtual listIterator operator-(int n) const;
-        virtual T& operator[](int n) const;
-        virtual listIterator& operator+=(int);
-        virtual listIterator& operator-=(int);
+        T* operator->() const;
+        T& operator*() const;
+
+        listIterator operator+(int n) const;
+        listIterator operator-(int n) const;
+        T& operator[](int n) const;
+        listIterator& operator+=(int n);
+        listIterator& operator-=(int n);
+
+        friend class list;
 
     protected:
+        explicit listIterator(listElement* elementPointer);
+        
         list<T>::listElement* elementPointer;
+        int listPosition {0};
     };
     
     list() = default;
@@ -65,7 +72,7 @@ protected:
     public:
         explicit listElement(const T& content, listElement* prev = nullptr, listElement* next = nullptr);
         listElement(const listElement& listElement) = default;
-        ~listElement();
+        ~listElement() = default;
 
         listElement* getNext() const;
         listElement* getPrev() const;
@@ -73,6 +80,7 @@ protected:
 
         void setNext(listElement* next);
         void setPrev(listElement* prev);
+        void setContent(const T& content);
 
         listElement& operator=(const listElement& listElement) = default;
         listElement& operator=(const T& content);
@@ -322,6 +330,12 @@ void list<T>::listElement::setPrev(listElement *prev) {
 
 
 template <class T>
+void list<T>::listElement::setContent(const T& content) {
+    elementContent = content;
+}
+
+
+template <class T>
 typename list<T>::listElement& list<T>::listElement::operator=(const T& content) {
     elementContent = content;
     return *this;
@@ -329,8 +343,107 @@ typename list<T>::listElement& list<T>::listElement::operator=(const T& content)
 
 
 template <class T>
-list<T>::listElement::~listElement() {
+list<T>::listIterator::listIterator(listElement* elementPointer): elementPointer(elementPointer) {}
 
+
+template<class T>
+typename list<T>::listIterator &list<T>::listIterator::operator++() {
+    elementPointer = elementPointer->getNext();
+    ++listPosition;
+    return *this;
 }
+
+
+template<class T>
+const typename list<T>::listIterator list<T>::listIterator::operator++(int) { // NOLINT(readability-const-return-type)
+    elementPointer = elementPointer->getNext();
+    ++listPosition;
+    return *this;
+}
+
+
+template<class T>
+bool list<T>::listIterator::operator==(const listIterator& it) const {
+    return elementPointer == it.elementPointer;
+}
+
+
+template<class T>
+bool list<T>::listIterator::operator!=(const listIterator& it) const {
+    return elementPointer != it.elementPointer;
+}
+
+
+template<class T>
+typename list<T>::listIterator& list<T>::listIterator::operator=(const T& content) {
+    elementPointer->setContent(content);
+    return *this;
+}
+
+
+template<class T>
+T* list<T>::listIterator::operator->() const {
+    return &elementPointer->getContent();
+}
+
+
+template<class T>
+T& list<T>::listIterator::operator*() const {
+    return elementPointer->getContent();
+}
+
+
+template<class T>
+typename list<T>::listIterator list<T>::listIterator::operator+(int n) const {
+    listIterator temp {*this};
+
+    for (int i {0}; i < n; ++i) {
+        ++temp;
+    }
+    return temp;
+}
+
+
+template<class T>
+typename list<T>::listIterator list<T>::listIterator::operator-(int n) const {
+    listIterator temp {*this};
+
+    for (int i {0}; i < n; ++i) {
+        --temp;
+    }
+    return temp;
+}
+
+
+template<class T>
+T& list<T>::listIterator::operator[](int n) const {
+    listIterator temp {*this};
+
+    for (int i {0}; i < n; ++i) {
+        ++temp;
+    }
+    return *temp;
+}
+
+
+template<class T>
+typename list<T>::listIterator& list<T>::listIterator::operator+=(int n) {
+    for (int i {0}; i < n; ++i) {
+        elementPointer = elementPointer->getNext();
+    }
+    listPosition += n;
+    return *this;
+}
+
+
+template<class T>
+typename list<T>::listIterator& list<T>::listIterator::operator-=(int n) {
+    for (int i {0}; i < n; ++i) {
+        elementPointer = elementPointer->getPrev();
+    }
+    listPosition -= n;
+    return *this;
+}
+
 
 #endif //ARDUI_SLIST_H
