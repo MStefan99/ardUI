@@ -12,60 +12,59 @@ protected:
     class listElement;
     
 public:
-    class listIterator {
+    class iterator {  // bidirectional iterator
     public:
-        listIterator() = default;
-        listIterator(const listIterator&) = default;
-        ~listIterator() = default;
+        iterator() = default;
+        iterator(const iterator&) = default;
+        ~iterator() = default;
 
-        listIterator& operator++();
-        const listIterator operator++(int);
+        iterator& operator++();
+        const iterator operator++(int);
 
-        bool operator==(const listIterator& it) const;
-        bool operator!=(const listIterator& it) const;
+        iterator& operator--();
+        const iterator operator--(int);
 
-        listIterator& operator=(const T&);
+        bool operator==(const iterator& it) const;
+        bool operator!=(const iterator& it) const;
+
+        iterator& operator=(const T&);
 
         T* operator->() const;
         T& operator*() const;
 
-        listIterator operator+(int n) const;
-        listIterator operator-(int n) const;
-        T& operator[](int n) const;
-        listIterator& operator+=(int n);
-        listIterator& operator-=(int n);
-
-        friend class list;
-
     protected:
-        explicit listIterator(listElement* elementPointer);
-        
+        explicit iterator(listElement* elementPointer);
         list<T>::listElement* elementPointer;
-        int listPosition {0};
     };
     
     list() = default;
     list(const list& list);
     ~list();
 
-    void pushBack(const T &content);
-    void pushFront(const T &content);
+    void push_back(const T &content);
+    void push_front(const T &content);
 
-    T popBack();
-    T popFront();
+    T& front() const;
+    T& back() const;
+
+    void pop_back();
+    void pop_front();
 
     int remove(const T& content);
-    int removeIf(bool (*predicate)(const T&));
+    int remove_if(bool (*predicate)(const T&));
 
     void clear();
-    void erase(listIterator iterator);
-    int length();
+    void erase(iterator position);
+    void erase(iterator first, iterator last);
 
-    T& operator[](int n);
+    int size() const;
+    bool empty() const;
+
+    T& operator[](int n) const;
     list& operator=(const list& list);
 
-    listIterator begin() const;
-    listIterator end() const;
+    iterator begin() const;
+    iterator end() const;
 
 protected:
     class listElement {
@@ -106,7 +105,7 @@ list<T>::listElement::listElement(const T& content, listElement* prev, listEleme
 template<class T>
 list<T>::list(const list& l) {
     for (const auto& e : l) {
-        pushBack(e);
+        push_back(e);
     }
 }
 
@@ -118,7 +117,7 @@ list<T>::~list() {
 
 
 template<class T>
-void list<T>::pushBack(const T &content) {
+void list<T>::push_back(const T &content) {
     auto e = new listElement(content, last);
 
     if (!first) {
@@ -132,7 +131,7 @@ void list<T>::pushBack(const T &content) {
 
 
 template<class T>
-void list<T>::pushFront(const T &content) {
+void list<T>::push_front(const T &content) {
     auto e = new listElement(content, nullptr, first);
 
     if (!last) {
@@ -146,7 +145,7 @@ void list<T>::pushFront(const T &content) {
 
 
 template<class T>
-T list<T>::popBack() {
+void list<T>::pop_back() {
     auto e {last};
     if (e) {
         auto content {last->getContent()};
@@ -159,15 +158,12 @@ T list<T>::popBack() {
 
         last = e->getPrev();
         delete e;
-        return content;
-    } else {
-        return T{};  //TODO: handle exception
     }
 }
 
 
 template<class T>
-T list<T>::popFront() {
+void list<T>::pop_front() {
     auto e {first};
     if (e) {
         auto content {first->getContent()};
@@ -177,13 +173,22 @@ T list<T>::popFront() {
         } else {
             last = nullptr;
         }
-        first = e->getNext();
 
+        first = e->getNext();
         delete e;
-        return content;
-    } else {
-        return T{};  //TODO: handle exception
     }
+}
+
+
+template <class T>
+T& list<T>::front() const {
+    return first->getContent();
+}
+
+
+template <class T>
+T& list<T>::back() const {
+    return last->getContent();
 }
 
 
@@ -206,10 +211,17 @@ void list<T>::removeElement(list<T>::listElement* e) {
 
 
 template<class T>
-void list<T>::erase(listIterator iterator) {
-    auto e {*iterator.getPointer()};
+void list<T>::erase(iterator position) {
+    removeElement(&(*position));
+}
 
-    removeElement(e);
+
+template<class T>
+void list<T>::erase(iterator f, iterator l) {
+    while (f != l) {
+        removeElement(&(*f));
+        ++l;
+    }
 }
 
 
@@ -230,7 +242,7 @@ int list<T>::remove(const T& content) {
 
 
 template<class T>
-int list<T>::removeIf(bool (*p)(const T&)) {
+int list<T>::remove_if(bool (*p)(const T&)) {
     int i {0};
     listElement* e {first};
 
@@ -258,7 +270,7 @@ void list<T>::clear() {
 
 
 template<class T>
-int list<T>::length() {
+int list<T>::size() const {
     int i {0};
 
     for (listElement* e {first}; e; e = e->getNext()) {
@@ -268,21 +280,27 @@ int list<T>::length() {
 }
 
 
-template<class T>
-typename list<T>::listIterator list<T>::begin() const {
-    return listIterator(first);
+template <class T>
+bool list<T>::empty() const {
+    return first == nullptr;
 }
 
 
 template<class T>
-typename list<T>::listIterator list<T>::end() const {
-    return listIterator(nullptr);
+typename list<T>::iterator list<T>::begin() const {
+    return iterator(first);
 }
 
 
 template<class T>
-T &list<T>::operator[](int n) {
-    listIterator it(first);
+typename list<T>::iterator list<T>::end() const {
+    return iterator(nullptr);
+}
+
+
+template<class T>
+T &list<T>::operator[](int n) const {
+    iterator it(first);
     return *(it + n);
 }
 
@@ -293,8 +311,8 @@ list<T>& list<T>::operator=(const list& l) {
         return *this;
     }
     clear();
-    for (const auto& e : l) {
-        pushBack(e);
+    for (const auto& e : l) {  //TODO: remake using pointers
+        push_back(e);
     }
 }
 
@@ -343,106 +361,65 @@ typename list<T>::listElement& list<T>::listElement::operator=(const T& content)
 
 
 template <class T>
-list<T>::listIterator::listIterator(listElement* elementPointer): elementPointer(elementPointer) {}
+list<T>::iterator::iterator(listElement* elementPointer): elementPointer(elementPointer) {}
 
 
 template<class T>
-typename list<T>::listIterator &list<T>::listIterator::operator++() {
+typename list<T>::iterator &list<T>::iterator::operator++() {
     elementPointer = elementPointer->getNext();
-    ++listPosition;
     return *this;
 }
 
 
 template<class T>
-const typename list<T>::listIterator list<T>::listIterator::operator++(int) { // NOLINT(readability-const-return-type)
+const typename list<T>::iterator list<T>::iterator::operator++(int) { // NOLINT(readability-const-return-type)
     elementPointer = elementPointer->getNext();
-    ++listPosition;
     return *this;
 }
 
 
 template<class T>
-bool list<T>::listIterator::operator==(const listIterator& it) const {
+typename list<T>::iterator &list<T>::iterator::operator--() {
+    elementPointer = elementPointer->getPrev();
+    return *this;
+}
+
+
+template<class T>
+const typename list<T>::iterator list<T>::iterator::operator--(int) { // NOLINT(readability-const-return-type)
+    elementPointer = elementPointer->getPrev();
+    return *this;
+}
+
+
+template<class T>
+bool list<T>::iterator::operator==(const iterator& it) const {
     return elementPointer == it.elementPointer;
 }
 
 
 template<class T>
-bool list<T>::listIterator::operator!=(const listIterator& it) const {
+bool list<T>::iterator::operator!=(const iterator& it) const {
     return elementPointer != it.elementPointer;
 }
 
 
 template<class T>
-typename list<T>::listIterator& list<T>::listIterator::operator=(const T& content) {
+typename list<T>::iterator& list<T>::iterator::operator=(const T& content) {
     elementPointer->setContent(content);
     return *this;
 }
 
 
 template<class T>
-T* list<T>::listIterator::operator->() const {
+T* list<T>::iterator::operator->() const {
     return &elementPointer->getContent();
 }
 
 
 template<class T>
-T& list<T>::listIterator::operator*() const {
+T& list<T>::iterator::operator*() const {
     return elementPointer->getContent();
-}
-
-
-template<class T>
-typename list<T>::listIterator list<T>::listIterator::operator+(int n) const {
-    listIterator temp {*this};
-
-    for (int i {0}; i < n; ++i) {
-        ++temp;
-    }
-    return temp;
-}
-
-
-template<class T>
-typename list<T>::listIterator list<T>::listIterator::operator-(int n) const {
-    listIterator temp {*this};
-
-    for (int i {0}; i < n; ++i) {
-        --temp;
-    }
-    return temp;
-}
-
-
-template<class T>
-T& list<T>::listIterator::operator[](int n) const {
-    listIterator temp {*this};
-
-    for (int i {0}; i < n; ++i) {
-        ++temp;
-    }
-    return *temp;
-}
-
-
-template<class T>
-typename list<T>::listIterator& list<T>::listIterator::operator+=(int n) {
-    for (int i {0}; i < n; ++i) {
-        elementPointer = elementPointer->getNext();
-    }
-    listPosition += n;
-    return *this;
-}
-
-
-template<class T>
-typename list<T>::listIterator& list<T>::listIterator::operator-=(int n) {
-    for (int i {0}; i < n; ++i) {
-        elementPointer = elementPointer->getPrev();
-    }
-    listPosition -= n;
-    return *this;
 }
 
 
