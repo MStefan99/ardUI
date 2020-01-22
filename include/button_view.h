@@ -6,7 +6,7 @@
 #define ARDUI_TEST_BUTTON_VIEW_H
 
 
-#include <Arduino.h>
+#include "platform.h"
 #include "text_view.h"
 #include "llpi.h"
 

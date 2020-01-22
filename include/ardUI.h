@@ -5,7 +5,7 @@
 #ifndef ARDUI_ARDUI_H
 #define ARDUI_ARDUI_H
 
-#include <Arduino.h>
+#include "platform.h"
 #include "ardUI_config.h"
 #include "llpi.h"
 

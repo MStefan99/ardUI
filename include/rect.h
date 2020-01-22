@@ -5,7 +5,7 @@
 #ifndef ARDUI_TEST_RECT_H
 #define ARDUI_TEST_RECT_H
 
-#include <Arduino.h>
+#include "platform.h"
 
 
 class rect {

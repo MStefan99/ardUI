@@ -6,7 +6,7 @@
 #define ARDUI_LAYOUT_INFLATER_H
 
 
-#include <Arduino.h>
+#include "platform.h"
 #include "view.h"
 
 
