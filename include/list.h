@@ -14,10 +14,6 @@ protected:
 public:
     class iterator {  // bidirectional iterator
     public:
-        iterator() = default;
-        iterator(const iterator&) = default;
-        ~iterator() = default;
-
         iterator& operator++();
         const iterator operator++(int);
 
@@ -32,7 +28,9 @@ public:
         T* operator->() const;
         T& operator*() const;
 
-    protected:
+        friend class list;
+
+    private:
         explicit iterator(listElement* elementPointer);
         list<T>::listElement* elementPointer;
     };
@@ -373,8 +371,9 @@ typename list<T>::iterator &list<T>::iterator::operator++() {
 
 template<class T>
 const typename list<T>::iterator list<T>::iterator::operator++(int) { // NOLINT(readability-const-return-type)
+    iterator temp {*this};
     elementPointer = elementPointer->getNext();
-    return *this;
+    return temp;
 }
 
 
@@ -387,8 +386,9 @@ typename list<T>::iterator &list<T>::iterator::operator--() {
 
 template<class T>
 const typename list<T>::iterator list<T>::iterator::operator--(int) { // NOLINT(readability-const-return-type)
+    iterator temp {this};
     elementPointer = elementPointer->getPrev();
-    return *this;
+    return temp;
 }
 
 
