@@ -223,11 +223,12 @@ void ardUI::back() {
             callActivityOnResume(s);
         }
 
-        if (getInstance().backStack.length() > 0) {
+        if (!getInstance().backStack.empty()) {
             callActivityOnDestroy(s);
             delete s;
 
-            s = getInstance().backStack.popFront();
+            s = getInstance().backStack.back();
+            getInstance().backStack.pop_front();
             getInstance().currentActivity = s;
             callActivityOnResume(s);
         }

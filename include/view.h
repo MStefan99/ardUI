@@ -71,7 +71,7 @@ private:
     bool inClickedState {false};
     bool inLongClickedState {false};
 
-    static uint16_t getDefaultSize(uint16_t size, uint16_t measureSpec);
+    uint16_t getDefaultSize(uint16_t size, uint16_t measureSpec);
 
     int timesClicked {0};
 

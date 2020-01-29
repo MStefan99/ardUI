@@ -70,12 +70,13 @@ void ardUI::showScreen() {
     auto s {getInstance().currentActivity};
     if (s) {
         callActivityOnStop(s);
-        getInstance().backStack.pushFront(s);
+        getInstance().backStack.push_front(s);
         Serial.println("Screen appended to the stack");
 
-        if (getInstance().backStack.length() > BACK_STACK_DEPTH) {
+        if (getInstance().backStack.size() > BACK_STACK_DEPTH) {
             Serial.println("Max stack depth reached, destroying last activity");
-            auto lastScreen {getInstance().backStack.popBack()};
+            auto lastScreen {getInstance().backStack.back()};
+            getInstance().backStack.pop_back();
             callActivityOnDestroy(lastScreen);
             delete lastScreen;
         }

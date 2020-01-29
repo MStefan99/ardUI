@@ -13,7 +13,7 @@ viewGroup::~viewGroup() {
 
 
 void viewGroup::addView(view* view) {
-    viewList.pushBack(view);
+    viewList.push_back(view);
 }
 
 
@@ -30,7 +30,7 @@ view* viewGroup::findViewById(int id) {
 
 
 int viewGroup::getChildCount() {
-    return viewList.length();
+    return viewList.size();
 }
 
 

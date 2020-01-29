@@ -298,8 +298,8 @@ typename list<T>::iterator list<T>::end() const {
 
 template<class T>
 T &list<T>::operator[](int n) const {
-    iterator it(first);
-    return *(it + n);
+    iterator it(first);  // TODO: rewrite using list traversal
+    return *it;
 }
 
 
@@ -309,7 +309,7 @@ list<T>& list<T>::operator=(const list& l) {
         return *this;
     }
     clear();
-    for (const auto& e : l) {  //TODO: remake using pointers
+    for (const auto& e : l) {  //TODO: rewrite using list traversal
         push_back(e);
     }
 }
