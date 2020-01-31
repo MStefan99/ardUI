@@ -12,20 +12,23 @@ namespace ardui {
     template <class Key, class T, class Comp = less<T>>
     class map {
     public:
+        class iterator {  // bidirectional iterator
+
+        };
+
         map() = default;
 
     protected:
         class element {
         public:
-            element();
+            element() = default;
 
         private:
-            pair<Key, T> content;
+            pair<Key, T> value;
             element* left {nullptr};
             element* right {nullptr};
         };
 
-        Comp comp {Comp()};
         element* root {nullptr};
     };
 }

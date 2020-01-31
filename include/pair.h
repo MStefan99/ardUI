@@ -1,0 +1,24 @@
+//
+// Created by MStefan99 on 29.1.20.
+//
+
+#ifndef ARDUI_TEST_PAIR_H
+#define ARDUI_TEST_PAIR_H
+
+namespace ardui {
+    template <class T1, class T2>
+    struct pair {
+        pair(const T1& x, const T2& y);
+        T1 first;
+        T2 second;
+
+        typedef T1 first_type;
+        typedef T2 second_type;
+    };
+
+    template <class T1, class T2>
+    pair<T1, T2>::pair(const T1 &x, const T2 &y): first(x), second(y) {
+    }
+}
+
+#endif //ARDUI_TEST_PAIR_H
