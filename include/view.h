@@ -79,8 +79,6 @@ private:
     int viewId {++lastViewId};
     uint16_t measuredHeight {0};
     uint16_t measuredWidth {0};
-private:
-
 };
 
 #endif //ARDUI_VIEW_H

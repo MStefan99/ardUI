@@ -24,7 +24,6 @@ protected:
     void onLayout(bool changed, uint16_t left, uint16_t top, uint16_t right, uint16_t bottom) override = 0;
     void onDraw() override = 0;
     list<view*> viewList {};
-
 };
 
 #endif //ARDUI_VIEW_GROUP_H

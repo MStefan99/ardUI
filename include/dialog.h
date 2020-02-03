@@ -10,7 +10,6 @@
 
 
 class dialog: public drawable {
-
 };
 
 #endif //ARDUI_TEST_DIALOG_H

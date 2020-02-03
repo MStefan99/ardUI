@@ -15,8 +15,8 @@ public:
     layoutInflater() = default;
 
     static view& inflate(const String& xmlData, view& rootView);
-private:
 
+private:
 };
 
 #endif //ARDUI_LAYOUT_INFLATER_H

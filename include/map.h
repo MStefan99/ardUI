@@ -13,7 +13,6 @@ namespace ardui {
     class map {
     public:
         class iterator {  // bidirectional iterator
-
         };
 
         map() = default;
