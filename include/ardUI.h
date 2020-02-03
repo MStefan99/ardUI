@@ -61,7 +61,11 @@ private:
     const uint16_t screenWidth {ardUiDisplayGetWidth()};
     activity* currentActivity {nullptr};
     dialog* currentDialog {nullptr};
-    list<activity*> backStack {};
+#if USING_STL
+    std::list<activity*> backStack {};
+#else
+    ardui::list<activity*> backStack {};
+#endif
 };
 
 
