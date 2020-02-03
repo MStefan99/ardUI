@@ -5,7 +5,7 @@
 #ifndef ARDUI_TEXT_VIEW_H
 #define ARDUI_TEXT_VIEW_H
 
-#include <Arduino.h>
+#include "platform.h"
 #include "view.h"
 
 class textView : public view {

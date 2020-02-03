@@ -5,7 +5,7 @@
 #ifndef ARDUI_TEST_DRAWABLE_H
 #define ARDUI_TEST_DRAWABLE_H
 
-#include <Arduino.h>
+#include "platform.h"
 #include "rect.h"
 #include "llpi.h"
 

@@ -5,7 +5,7 @@
 #ifndef ARDUI_LLPI_H
 #define ARDUI_LLPI_H
 
-#include <Arduino.h>
+#include "platform.h"
 #include <time.h>
 
 enum returnCode {

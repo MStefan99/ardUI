@@ -5,7 +5,7 @@
 #ifndef ARDUI_VIEW_H
 #define ARDUI_VIEW_H
 
-#include <Arduino.h>
+#include "platform.h"
 #include "ardUI_config.h"
 #include "drawable.h"
 
