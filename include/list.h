@@ -182,13 +182,13 @@ namespace ardui {
 
     template <class T>
     T& list<T>::front() const {
-        return first->getvalue();
+        return first->getValue();
     }
 
 
     template <class T>
     T& list<T>::back() const {
-        return last->getvalue();
+        return last->getValue();
     }
 
 
@@ -237,16 +237,20 @@ namespace ardui {
 
     template<class T>
     typename list<T>::iterator list<T>::erase(iterator position) {
-        removeElement(&(*position));
-        return ++position;
+        auto temp = position;
+
+        ++position;
+        removeElement(temp.elementPointer);
+        return position;
     }
 
 
     template<class T>
     typename list<T>::iterator list<T>::erase(iterator f, iterator l) {
         while (f != l) {
-            removeElement(&(*f));
-            ++l;
+            auto temp {f};
+            ++f;
+            removeElement(temp.elementPointer);
         }
         return l;
     }
@@ -260,8 +264,9 @@ namespace ardui {
         while (e) {
             auto temp = e;
             e = e->getNext();
-            if (temp->getvalue() == value) {
+            if (temp->getValue() == value) {
                 removeElement(temp);
+                ++i;
             }
         }
         return i;
@@ -276,8 +281,9 @@ namespace ardui {
         while (e) {
             auto temp = e;
             e = e->getNext();
-            if (p(temp->getvalue())) {
+            if (p(temp->getValue())) {
                 removeElement(temp);
+                ++i;
             }
         }
         return i;
@@ -331,7 +337,7 @@ namespace ardui {
         for (int i {0}; i < n; ++i) {
             p = p->getNext();
         }
-        return p->getvalue();
+        return p->getValue();
     }
 
 
@@ -342,7 +348,7 @@ namespace ardui {
         }
         clear();
         for (auto p = l.first; p != nullptr; p = p->getNext()) {
-            push_back(p->getvalue());
+            push_back(p->getValue());
         }
     }
 
@@ -445,13 +451,13 @@ namespace ardui {
 
     template<class T>
     T* list<T>::iterator::operator->() const {
-        return &elementPointer->getvalue();
+        return &elementPointer->getValue();
     }
 
 
     template<class T>
     T& list<T>::iterator::operator*() const {
-        return elementPointer->getvalue();
+        return elementPointer->getValue();
     }
 }
 

@@ -99,29 +99,49 @@ namespace ardui {
 
     template <class T>
     typename vector<T>::iterator vector<T>::insert(iterator position, const T &value) {
+        long i {position.elementPointer - vectorArray};
+
         if (vectorSize == vectorCapacity) {
             resize(vectorCapacity * 1.1 + 1);
         }
+        for (long j {vectorSize - 1}; j >= i; --j) {
+            vectorArray[j + 1] = vectorArray[j];
+        }
+        vectorArray[i] = value;
+        ++vectorSize;
 
-        // TODO: rewrite using iterator
+        return position;
     }
 
 
     template <class T>
     typename vector<T>::iterator vector<T>::erase(vector<T>::iterator position) {
-        while (position != end()) {
-            *position = *position + 1;
+        long i {position.elementPointer - vectorArray};
+
+        if (i > vectorSize - 1) {
+            return position;
         }
-        return ++position;
+        while (i < vectorSize - 1) {
+            vectorArray[i] = vectorArray[i + 1];
+            ++i;
+        }
+        --vectorSize;
+        return position;
     }
 
 
     template <class T>
     typename vector<T>::iterator vector<T>::erase(iterator first, iterator last) {
-        while (first != last) {
-            *first = *first + 1;
+        long i {first.elementPointer - vectorArray};
+        long n {last.elementPointer - first.elementPointer};
+
+        while (i < vectorSize - n) {
+            vectorArray[i] = vectorArray[i + n];
+            ++i;
         }
-        return last;
+
+        vectorSize -= n;
+        return last - n;
     }
 
 
