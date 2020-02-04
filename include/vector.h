@@ -5,6 +5,7 @@
 #ifndef ARDUI_TEST_VECTOR_H
 #define ARDUI_TEST_VECTOR_H
 
+
 namespace ardui {
     template <class T>
     class vector {
@@ -59,6 +60,7 @@ namespace ardui {
         T& operator[](int n) const;
         vector& operator=(const vector& vector);
 
+        bool empty() const;
         int size() const;
         int capacity() const;
 
@@ -185,6 +187,11 @@ namespace ardui {
         } else {
             return *this;
         }
+    }
+
+    template<class T>
+    bool vector<T>::empty() const {
+        return vectorSize == 0;
     }
 
 

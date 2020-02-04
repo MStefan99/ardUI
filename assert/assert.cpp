@@ -6,6 +6,7 @@
 #include <cstring>
 
 #include "vector.h"
+#include "stack.h"
 #include "map.h"
 #include "list.h"
 
@@ -175,5 +176,6 @@ int main() {
     vectorAssert();
     listAssert();
     mapAssert();
+
     cout << "Tests passed successfully!" << endl;
 }
