@@ -12,6 +12,8 @@ namespace ardui {
     public:
         class iterator {  // random access iterator
         public:
+            iterator() = default;
+
             iterator& operator++();
             const iterator operator++(int);
 
@@ -43,7 +45,7 @@ namespace ardui {
 
         private:
             explicit iterator(T* elementPointer);
-            T* elementPointer;
+            T* elementPointer {nullptr};
         };
 
         vector() = default;

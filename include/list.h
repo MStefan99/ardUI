@@ -10,11 +10,13 @@ namespace ardui {
     template<class T>
     class list {
     protected:
-        class element;
+        struct element;
 
     public:
         class iterator {  // bidirectional iterator
         public:
+            iterator() = default;
+
             iterator& operator++();
             const iterator operator++(int);
 
@@ -33,7 +35,8 @@ namespace ardui {
 
         private:
             explicit iterator(element* elementPointer);
-            list<T>::element* elementPointer;
+            element* elementPointer {nullptr};
+            element* lastPointer {nullptr};
         };
 
         list() = default;
@@ -68,25 +71,15 @@ namespace ardui {
         iterator end() const;
 
     protected:
-        class element {
-        public:
-            explicit element(const T& value, element* prev = nullptr, element* next = nullptr);
+        struct element {
+            explicit element(const T& value, element* prev, element* next);
             element(const element& listElement) = default;
             ~element() = default;
-
-            element* getNext() const;
-            element* getPrev() const;
-            T& getValue();
-
-            void setNext(element* next);
-            void setPrev(element* prev);
-            void setValue(const T& value);
 
             element& operator=(const element& listElement) = default;
             element& operator=(const T& value);
 
-        private:
-            T elementvalue;
+            T elementValue;
             element* nextElement {nullptr};
             element* prevElement {nullptr};
         };
@@ -101,7 +94,7 @@ namespace ardui {
 
     template <class T>
     list<T>::element::element(const T& value, element* prev, element* next):
-            elementvalue(value), prevElement(prev), nextElement(next) {}
+            elementValue(value), prevElement(prev), nextElement(next) {}
 
 
     template<class T>
@@ -121,13 +114,13 @@ namespace ardui {
 
     template<class T>
     void list<T>::push_back(const T &value) {
-        auto e = new element(value, last);
+        auto e = new element {value, last, nullptr};
 
         if (!first) {
             first = e;
         }
         if (last) {
-            last->setNext(e);
+            last->nextElement = e;
         }
         last = e;
         ++listSize;
@@ -136,13 +129,13 @@ namespace ardui {
 
     template<class T>
     void list<T>::push_front(const T &value) {
-        auto e = new element(value, nullptr, first);
+        auto e = new element {value, nullptr, first};
 
         if (!last) {
             last = e;
         }
         if (first) {
-            first->setPrev(e);
+            first->prevElement = e;
         }
         first = e;
         ++listSize;
@@ -153,15 +146,13 @@ namespace ardui {
     void list<T>::pop_back() {
         auto e {last};
         if (e) {
-            auto value {last->getvalue()};
-
-            if (e->getPrev()) {
-                e->getPrev()->setNext(nullptr);
+            if (e->prevElement) {
+                e->prevElement->nextElement = nullptr;
             } else {
                 first = nullptr;
             }
 
-            last = e->getPrev();
+            last = e->prevElement;
             --listSize;
             delete e;
         }
@@ -172,15 +163,13 @@ namespace ardui {
     void list<T>::pop_front() {
         auto e {first};
         if (e) {
-            auto value {first->getvalue()};
-
-            if (e->getNext()) {
-                e->getNext()->setPrev(nullptr);
+            if (e->nextElement) {
+                e->nextElement->prevElement = nullptr;
             } else {
                 last = nullptr;
             }
 
-            first = e->getNext();
+            first = e->nextElement;
             --listSize;
             delete e;
         }
@@ -189,27 +178,27 @@ namespace ardui {
 
     template <class T>
     T& list<T>::front() const {
-        return first->getValue();
+        return first->elementValue;
     }
 
 
     template <class T>
     T& list<T>::back() const {
-        return last->getValue();
+        return last->elementValue;
     }
 
 
     template <class T>
     void list<T>::destroyElement(list<T>::element* e) {
-        if (e->getNext()) {
-            e->getNext()->setPrev(e->getPrev());
+        if (e->nextElement) {
+            e->nextElement->prevElement = e->prevElement;
         } else {
-            last = e->getPrev();
+            last = e->prevElement;
         }
-        if (e->getPrev()) {
-            e->getPrev()->setNext(e->getNext());
+        if (e->prevElement) {
+            e->prevElement->nextElement = e->nextElement;
         } else {
-            first = e->getNext();
+            first = e->nextElement;
         }
         delete e;
     }
@@ -218,23 +207,23 @@ namespace ardui {
     template<class T>
     typename list<T>::iterator list<T>::insert(iterator position, const T& value) {
         auto e {position.elementPointer};
-        auto n = new element(value, nullptr, e);
+        auto n = new element {value, nullptr, e};
 
         if (e) {
-            if (e->getPrev()) {
-                n->setPrev(e->getPrev());
-                e->getPrev()->setNext(n);
+            if (e->prevElement) {
+                n->prevElement = e->prevElement;
+                e->prevElement->nextElement = n;
             } else {
                 first = n;
             }
-            e->setPrev(n);
+            e->prevElement = n;
         } else {
             if (!first) {
                 first = n;
             }
             if (last) {
-                last->setNext(n);
-                n->setPrev(last);
+                last->nextElement = n;
+                n->prevElement = last;
             }
             last = n;
         }
@@ -273,8 +262,8 @@ namespace ardui {
 
         while (e) {
             auto temp = e;
-            e = e->getNext();
-            if (temp->getValue() == value) {
+            e = e->nextElement;
+            if (temp->elementValue == value) {
                 destroyElement(temp);
                 ++i;
                 --listSize;
@@ -291,8 +280,8 @@ namespace ardui {
 
         while (e) {
             auto temp = e;
-            e = e->getNext();
-            if (p(temp->getValue())) {
+            e = e->nextElement;
+            if (p(temp->elementValue)) {
                 destroyElement(temp);
                 ++i;
                 --listSize;
@@ -308,7 +297,7 @@ namespace ardui {
 
         while (e) {
             auto temp = e;
-            e = e->getNext();
+            e = e->nextElement;
             destroyElement(temp);
             listSize = 0;
         }
@@ -335,7 +324,9 @@ namespace ardui {
 
     template<class T>
     typename list<T>::iterator list<T>::end() const {
-        return iterator(nullptr);
+        iterator it {};
+        it.lastPointer = last;
+        return it;
     }
 
 
@@ -343,9 +334,9 @@ namespace ardui {
     T &list<T>::operator[](int n) const {
         auto p {first};
         for (int i {0}; i < n; ++i) {
-            p = p->getNext();
+            p = p->nextElement;
         }
-        return p->getValue();
+        return p->elementValue;
     }
 
 
@@ -355,51 +346,15 @@ namespace ardui {
             return *this;
         }
         clear();
-        for (auto p = l.first; p != nullptr; p = p->getNext()) {
-            push_back(p->getValue());
+        for (auto p = l.first; p != nullptr; p = p->nextElement) {
+            push_back(p->elementValue);
         }
     }
 
 
     template <class T>
-    typename list<T>::element *list<T>::element::getNext() const {
-        return nextElement;
-    }
-
-
-    template <class T>
-    typename list<T>::element *list<T>::element::getPrev() const {
-        return prevElement;
-    }
-
-
-    template <class T>
-    T& list<T>::element::getValue() {
-        return elementvalue;
-    }
-
-
-    template <class T>
-    void list<T>::element::setNext(element *next) {
-        nextElement = next;
-    }
-
-
-    template <class T>
-    void list<T>::element::setPrev(element *prev) {
-        prevElement = prev;
-    }
-
-
-    template <class T>
-    void list<T>::element::setValue(const T& value) {
-        elementvalue = value;
-    }
-
-
-    template <class T>
     typename list<T>::element& list<T>::element::operator=(const T& value) {
-        elementvalue = value;
+        elementValue = value;
         return *this;
     }
 
@@ -410,22 +365,34 @@ namespace ardui {
 
     template<class T>
     typename list<T>::iterator &list<T>::iterator::operator++() {
-        elementPointer = elementPointer->getNext();
+        if (!elementPointer->nextElement) {
+            lastPointer = elementPointer;
+        } else {
+            elementPointer = elementPointer->nextElement;
+        }
         return *this;
     }
 
 
     template<class T>
     const typename list<T>::iterator list<T>::iterator::operator++(int) { // NOLINT(readability-const-return-type)
-        iterator temp {*this};
-        elementPointer = elementPointer->getNext();
+        iterator temp {this};
+        if (!elementPointer->nextElement) {
+            lastPointer = elementPointer;
+        } else {
+            elementPointer = elementPointer->nextElement;
+        }
         return temp;
     }
 
 
     template<class T>
     typename list<T>::iterator &list<T>::iterator::operator--() {
-        elementPointer = elementPointer->getPrev();
+        if (!elementPointer) {
+            elementPointer = lastPointer;
+        } else {
+            elementPointer = elementPointer->prevElement;
+        }
         return *this;
     }
 
@@ -433,7 +400,11 @@ namespace ardui {
     template<class T>
     const typename list<T>::iterator list<T>::iterator::operator--(int) { // NOLINT(readability-const-return-type)
         iterator temp {this};
-        elementPointer = elementPointer->getPrev();
+        if (!elementPointer) {
+            elementPointer = lastPointer;
+        } else {
+            elementPointer = elementPointer->prevElement;
+        }
         return temp;
     }
 
@@ -452,20 +423,20 @@ namespace ardui {
 
     template<class T>
     typename list<T>::iterator& list<T>::iterator::operator=(const T& value) {
-        elementPointer->setvalue(value);
+        elementPointer->elementValue = value;
         return *this;
     }
 
 
     template<class T>
     T* list<T>::iterator::operator->() const {
-        return &elementPointer->getValue();
+        return &elementPointer->elementValue;
     }
 
 
     template<class T>
     T& list<T>::iterator::operator*() const {
-        return elementPointer->getValue();
+        return elementPointer->elementValue;
     }
 }
 

@@ -25,7 +25,7 @@ namespace ardui {
         void push(const T& value);
 
     protected:
-        Container c;
+        Container c {};
     };
 
 

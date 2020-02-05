@@ -126,6 +126,7 @@ void listAssert() {
         assert(l[j], j);
     }
 
+    assert(l.size(), 10);
     assert(*l.begin(), 0);
     assert(l[5], 5);
     assert(l[8], 8);
@@ -137,7 +138,7 @@ void listAssert() {
     assert(l[1], -2);
     assert(l[2], 0);
     assert(l[3], 1);
-
+    assert(l.size(), 12);
 
     // erase assert
     auto it {l.begin()};
@@ -146,6 +147,7 @@ void listAssert() {
     it = l.erase(++it);
     it = l.erase(it, ++it);
     it = l.erase(it);
+    assert(l.size(), 8);
 
     assert(l[0], -1);
     assert(l[1], 0);
@@ -165,6 +167,7 @@ void listAssert() {
     assert(l.size(), 6);
     assert(l.front(), -1);
     assert(l.back(), 9);
+    assert(*--l.end(), 9);
 }
 
 
