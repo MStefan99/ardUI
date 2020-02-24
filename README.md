@@ -2,9 +2,10 @@
 
 ![Version](https://img.shields.io/badge/ardUI-pre--alpha-orange?style=flat-square)
 [![Code quality](https://img.shields.io/codefactor/grade/github/MStefan99/ardUI/master?style=flat-square)](https://www.codefactor.io/repository/github/mstefan99/ardui)
-![Open issues](https://img.shields.io/github/issues/MStefan99/ardUI?style=flat-square)
+[![Wiki](https://img.shields.io/badge/ardUI-wiki-brightgreen?style=flat-square)](https://github.com/MStefan99/ardUI/wiki)
+[![Open issues](https://img.shields.io/github/issues/MStefan99/ardUI?style=flat-square)](https://github.com/MStefan99/ardUI/issues)
 [![License](https://img.shields.io/badge/license-GPL--3.0-brightgreen?style=flat-square)](https://www.gnu.org/licenses/gpl-3.0.en.html)
-![Last commit](https://img.shields.io/github/last-commit/MStefan99/ardUI?style=flat-square)
+[![Last commit](https://img.shields.io/github/last-commit/MStefan99/ardUI?style=flat-square)](https://github.com/MStefan99/ardUI/commits)
 
 _Note: ardUI is in pre-alpha now, many features are still in development_
 
