@@ -94,6 +94,8 @@ namespace ardui {
             element* right {nullptr};
         };
 
+        void replaceElement(element* o, element* n);
+        void deleteElement(element* e);
         element* mapRoot {nullptr};
         Comp less {};
         int mapSize {0};
@@ -102,13 +104,13 @@ namespace ardui {
 
 
     template<class Key, class T, class Comp>
-    map<Key, T, Comp>::iterator::iterator(map::element *elementPointer):
+    map<Key, T, Comp>::iterator::iterator(element *elementPointer):
             currentElement(elementPointer) {
     }
 
 
     template<class Key, class T, class Comp>
-    map<Key, T, Comp>::iterator::iterator(map::element *currentElement, element* lastElement):
+    map<Key, T, Comp>::iterator::iterator(element *currentElement, element* lastElement):
             currentElement(currentElement),
             lastElement(lastElement) {
     }
@@ -123,10 +125,12 @@ namespace ardui {
             while (currentElement->parent && currentElement->parent->right == currentElement) {
                 currentElement = currentElement->parent;
             }
-            currentElement = currentElement->parent;
-        } else {
-            lastElement = currentElement;
-            currentElement = nullptr;
+            if (currentElement->parent) {
+                currentElement = currentElement->parent;
+            } else {
+                lastElement = currentElement;  // TODO: fix
+                currentElement = nullptr;
+            }
         }
         return *this;
     }
@@ -142,10 +146,12 @@ namespace ardui {
             while (currentElement->parent && currentElement->parent->right == currentElement) {
                 currentElement = currentElement->parent;
             }
-            currentElement = currentElement->parent;
-        } else {
-            lastElement = currentElement;
-            currentElement = nullptr;
+            if (currentElement->parent) {
+                currentElement = currentElement->parent;
+            } else {
+                lastElement = currentElement;  // TODO: fix
+                currentElement = nullptr;
+            }
         }
         return temp;
     }
@@ -162,7 +168,9 @@ namespace ardui {
             while (currentElement->parent && currentElement->parent->left == currentElement) {
                 currentElement = currentElement->parent;
             }
-            currentElement = currentElement->parent;
+            if (currentElement->parent) {
+                currentElement = currentElement->parent;
+            }
         }
         return *this;
     }
@@ -180,20 +188,22 @@ namespace ardui {
             while (currentElement->parent && currentElement->parent->left == currentElement) {
                 currentElement = currentElement->parent;
             }
-            currentElement = currentElement->parent;
+            if (currentElement->parent) {
+                currentElement = currentElement->parent;
+            }
         }
         return temp;
     }
 
 
     template<class Key, class T, class Comp>
-    bool map<Key, T, Comp>::iterator::operator==(const map::iterator &it) const {
+    bool map<Key, T, Comp>::iterator::operator==(const iterator &it) const {
         return currentElement == it.currentElement;
     }
 
 
     template<class Key, class T, class Comp>
-    bool map<Key, T, Comp>::iterator::operator!=(const map::iterator &it) const {
+    bool map<Key, T, Comp>::iterator::operator!=(const iterator &it) const {
         return currentElement != it.currentElement;
     }
 
@@ -260,8 +270,20 @@ namespace ardui {
                 node = &(*node)->right;
             }
         }
+        ++mapSize;
         *node = new element {value, *parent};
         return {iterator(*node), true};
+    }
+
+
+    template<class Key, class T, class Comp>
+    typename map<Key, T, Comp>::iterator map<Key, T, Comp>::erase(iterator position) {
+        deleteElement(position.currentElement);
+        auto it {position};
+        ++it;
+        delete position.currentElement;
+
+        return it;
     }
 
 
@@ -282,6 +304,7 @@ namespace ardui {
                 node = &(*node)->right;
             }
         }
+        ++mapSize;
         *node = new element {k, *parent};
         return (*node)->value.second;
     }
@@ -300,6 +323,50 @@ namespace ardui {
         auto p {mapRoot};
         MOVE_TO_RIGHTMOST_NODE(p);
         return map::iterator(nullptr, p);
+    }
+
+
+    template<class Key, class T, class Comp>
+    void map<Key, T, Comp>::replaceElement(element *o, element *n) {
+        if (o->parent) {
+            if (o == o->parent->left) {
+                o->parent->left = n;
+            } else {
+                o->parent->right = n;
+            }
+            if (n->parent) {
+                n->parent = o->parent;
+            }
+        }
+    }
+
+
+    template<class Key, class T, class Comp>
+    void map<Key, T, Comp>::deleteElement(element* e) {
+        element* replacement {};
+
+        if (e->left && e->right) {
+            if (balancingLeft) {
+                replacement = e->left;
+                MOVE_TO_RIGHTMOST_NODE(replacement);
+                replacement->right = e->right;
+            } else {
+                replacement = e->right;
+                MOVE_TO_LEFTMOST_NODE(replacement);
+                replacement->left = e->left;
+            }
+            replaceElement(e, replacement);
+        } else if (e->left) {
+            replaceElement(e, e->left);
+        } else if (e->right) {
+            replaceElement(e, e->right);
+        } else {
+            if (e->parent->left == e) {
+                e->parent->left = nullptr;
+            } else {
+                e->parent->right = nullptr;
+            }
+        }
     }
 }
 
