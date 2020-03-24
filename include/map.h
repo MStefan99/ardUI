@@ -305,12 +305,28 @@ namespace ardui {
 
     template<class Key, class T, class Comp>
     typename map<Key, T, Comp>::iterator map<Key, T, Comp>::erase(iterator first, iterator last) {
-        while (first != last) {  // TODO: fix
-            auto temp {first};
-            ++first;
-            unlinkElement(temp.currentElement);
-            delete (temp.currentElement);
-            --mapSize;
+        element* node {first.currentElement};  // TODO: fix tree root not being deleted
+        element* temp {node};
+
+        while (node != last.currentElement) {
+            if (node->right) {
+                node = leftmost(node->right);
+            } else if (node->parent) {
+                while (node->parent && node->parent->right == node) {
+                    temp = node;
+                    node = node->parent;
+                    unlinkElement(temp);
+                    delete (temp);
+                    --mapSize;
+                }
+                temp = node;
+                node = node->parent;
+                if (!temp->right) {
+                    unlinkElement(temp);
+                    delete (temp);
+                    --mapSize;
+                }
+            }
         }
         return last;
     }
@@ -318,7 +334,29 @@ namespace ardui {
 
     template<class Key, class T, class Comp>
     void map<Key, T, Comp>::clear() {
-        erase(begin(), end());  // TODO: remove iterators
+        element* node {leftmost(mapRoot)};
+        element* temp {node};
+
+        while (node) {
+            if (node->right) {
+                node = leftmost(node->right);
+            } else if (node->parent) {
+                while (node->parent && node->parent->right == node) {
+                    temp = node;
+                    node = node->parent;
+                    unlinkElement(temp);
+                    delete (temp);
+                }
+                temp = node;
+                node = node->parent;
+                if (!temp->right) {
+                    unlinkElement(temp);
+                    delete (temp);
+                }
+            }
+        }
+        mapSize = 0;
+        mapRoot = nullptr;
     }
 
     template<class Key, class T, class Comp>
@@ -396,10 +434,12 @@ namespace ardui {
         } else if (e->right) {
             replaceElement(e, e->right);
         } else {
-            if (e->parent->left == e) {
-                e->parent->left = nullptr;
-            } else {
-                e->parent->right = nullptr;
+            if (e->parent) {  // if tree root is being unlinked
+                if (e->parent->left == e) {
+                    e->parent->left = nullptr;
+                } else {
+                    e->parent->right = nullptr;
+                }
             }
         }
     }
