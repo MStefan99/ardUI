@@ -238,7 +238,7 @@ namespace ardui {
 
     template<class Key, class T, class Comp>
     bool map<Key, T, Comp>::empty() const {
-        return mapSize == 0;
+        return !mapRoot;
     }
 
 
@@ -246,6 +246,7 @@ namespace ardui {
     int map<Key, T, Comp>::size() const {
         return mapSize;
     }
+
 
     template<class Key, class T, class Comp>
     typename map<Key, T, Comp>::iterator map<Key, T, Comp>::find(const Key& k) const {
@@ -326,9 +327,10 @@ namespace ardui {
                 --mapSize;
             }
         }
-        if (deleteRoot) {
+        if (deleteRoot && mapRoot) {
             temp = mapRoot;
             destroyElement(temp);
+            --mapSize;
         }
         return last;
     }
@@ -353,10 +355,12 @@ namespace ardui {
                 if (!temp->right) {
                     destroyElement(temp);
                 }
+            } else if (node == mapRoot && !node->right && !node->left) {
+                destroyElement(node);
+                node = nullptr;
             }
         }
         mapSize = 0;
-        mapRoot = nullptr;
     }
 
     template<class Key, class T, class Comp>
