@@ -98,7 +98,7 @@ namespace ardui {
         };
 
         void replaceElement(element* o, element* n);
-        void unlinkElement(element* e);
+        void destroyElement(element* e);
         element* findElement(const Key& k) const;
 
         element* mapRoot {nullptr};
@@ -280,8 +280,7 @@ namespace ardui {
     typename map<Key, T, Comp>::iterator map<Key, T, Comp>::erase(iterator position) {
         auto temp {position};
         ++position;
-        unlinkElement(temp.currentElement);
-        delete (temp.currentElement);
+        destroyElement(temp.currentElement);
         --mapSize;
 
         return position;
@@ -293,8 +292,7 @@ namespace ardui {
         element* e {findElement(k)};
 
         if (e) {
-            unlinkElement(e);
-            delete e;
+            destroyElement(e);
             --mapSize;
             return 1;
         } else {
@@ -305,28 +303,32 @@ namespace ardui {
 
     template<class Key, class T, class Comp>
     typename map<Key, T, Comp>::iterator map<Key, T, Comp>::erase(iterator first, iterator last) {
-        element* node {first.currentElement};  // TODO: fix tree root not being deleted
+        element* node {first.currentElement};
         element* temp {node};
+        bool deleteRoot {false};
 
         while (node != last.currentElement) {
+            if (node == mapRoot) {
+                deleteRoot = true;
+            }
             if (node->right) {
                 node = leftmost(node->right);
             } else if (node->parent) {
                 while (node->parent && node->parent->right == node) {
                     temp = node;
                     node = node->parent;
-                    unlinkElement(temp);
-                    delete (temp);
+                    destroyElement(temp);
                     --mapSize;
                 }
                 temp = node;
                 node = node->parent;
-                if (!temp->right) {
-                    unlinkElement(temp);
-                    delete (temp);
-                    --mapSize;
-                }
+                destroyElement(temp);
+                --mapSize;
             }
+        }
+        if (deleteRoot) {
+            temp = mapRoot;
+            destroyElement(temp);
         }
         return last;
     }
@@ -344,14 +346,12 @@ namespace ardui {
                 while (node->parent && node->parent->right == node) {
                     temp = node;
                     node = node->parent;
-                    unlinkElement(temp);
-                    delete (temp);
+                    destroyElement(temp);
                 }
                 temp = node;
                 node = node->parent;
                 if (!temp->right) {
-                    unlinkElement(temp);
-                    delete (temp);
+                    destroyElement(temp);
                 }
             }
         }
@@ -408,15 +408,19 @@ namespace ardui {
             } else {
                 o->parent->right = n;
             }
-            if (n->parent) {
-                n->parent = o->parent;
-            }
         }
+        if (o->right) {
+            o->right->parent = n;
+        }
+        if (o->left) {
+            o->left->parent = n;
+        }
+        n->parent = o->parent;
     }
 
 
     template<class Key, class T, class Comp>
-    void map<Key, T, Comp>::unlinkElement(element* e) {
+    void map<Key, T, Comp>::destroyElement(element* e) {
         element* replacement {};
 
         if (e->left && e->right) {
@@ -434,7 +438,7 @@ namespace ardui {
         } else if (e->right) {
             replaceElement(e, e->right);
         } else {
-            if (e->parent) {  // if tree root is being unlinked
+            if (e->parent) {  // check if tree root is being unlinked
                 if (e->parent->left == e) {
                     e->parent->left = nullptr;
                 } else {
@@ -442,6 +446,10 @@ namespace ardui {
                 }
             }
         }
+        if (e == mapRoot) {
+            mapRoot = replacement;
+        }
+        delete(e);
     }
 
 
