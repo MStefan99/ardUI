@@ -10,12 +10,12 @@
 #undef loop
 
 
-void setup() {  // Default setup function will be used to initiate ardUI
+void setup() {  // Default setup function will be used to initiate ardUI1
     ardUiUserSetup();  // Calling user setup routine
 }
 
 
-void loop() {  // ardUI core functions will be added to the loop function
+void loop() {  // ardUI1 core functions will be added to the loop function
     ardUI::draw();
     ardUI::checkForActions();
     ardUiUserLoop();

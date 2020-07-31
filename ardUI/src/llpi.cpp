@@ -3,7 +3,7 @@
 //
 
 /* This is the low-level platform interface. You'll need to implement the following functions to work on your
- * hardware to use the ardUI library. */
+ * hardware to use the ardUI1 library. */
 
 #include "llpi.h"
 //TODO: replace enum with custom exception

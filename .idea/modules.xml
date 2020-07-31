@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/clion.iml" filepath="$PROJECT_DIR$/.idea/clion.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/platformio.iml" filepath="$PROJECT_DIR$/.idea/platformio.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/ardUI.iml" filepath="$PROJECT_DIR$/.idea/ardUI.iml" />
     </modules>
   </component>
 </project>

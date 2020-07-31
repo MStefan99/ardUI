@@ -7,6 +7,7 @@
 
 
 void setup() {
+	std::cout << "Hello" << std::endl;
 }
 
 

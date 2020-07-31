@@ -1,89 +1,45 @@
-# !!! WARNING !!! AUTO-GENERATED FILE, PLEASE DO NOT MODIFY IT AND USE
-# https://docs.platformio.org/page/projectconf/section_env_build.html#build-flags
-#
-# If you need to override existing CMake configuration or add extra,
-# please create `CMakeListsUser.txt` in the root of project.
-# The `CMakeListsUser.txt` will not be overwritten by PlatformIO.
+cmake_minimum_required(VERSION 3.16)
+project(ardUI_test)
 
-cmake_minimum_required(VERSION 3.2)
-project("ardUI")
+set(CMAKE_CXX_STANDARD 20)
+# set(CMAKE_CXX_FLAGS "--coverage")
 
-include(CMakeListsPrivate.txt)
+# Setting directory names
+set(ARDUI_DIRNAME ardUI)
+set(SOURCE_DIRNAME src)
+set(INCLUDE_DIRNAME include)
+set(ARDUINO_DIRNAME Arduino)
+set(TESTS_DIRNAME test)
 
-if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/CMakeListsUser.txt)
-include(CMakeListsUser.txt)
-endif()
+# Setting directory paths
+set(ARDUI_DIRECTORY ${PROJECT_SOURCE_DIR}/${ARDUI_DIRNAME})
+set(SOURCE_DIRECTORY ${PROJECT_SOURCE_DIR}/${ARDUI_DIRNAME}/${SOURCE_DIRNAME})
+set(INCLUDE_DIRECTORY ${PROJECT_SOURCE_DIR}/${ARDUI_DIRNAME}/${INCLUDE_DIRNAME})
+set(ARDUINO_DIRECTORY ${PROJECT_SOURCE_DIR}/${ARDUINO_DIRNAME})
+set(TEST_DIRECTORY ${PROJECT_SOURCE_DIR}/${TESTS_DIRNAME})
 
-add_custom_target(
-    PLATFORMIO_BUILD ALL
-    COMMAND ${PLATFORMIO_CMD} -f -c clion run "$<$<NOT:$<CONFIG:All>>:-e${CMAKE_BUILD_TYPE}>"
-    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+
+# Adding ardUI1 and Arduino emulator build lists
+add_subdirectory(${ARDUINO_DIRECTORY})
+add_subdirectory(${ARDUI_DIRECTORY})
+
+
+# Creating run target
+add_executable(
+		Run
+		${PROJECT_SOURCE_DIR}/main.cpp
 )
 
-add_custom_target(
-    PLATFORMIO_BUILD_VERBOSE ALL
-    COMMAND ${PLATFORMIO_CMD} -f -c clion run --verbose "$<$<NOT:$<CONFIG:All>>:-e${CMAKE_BUILD_TYPE}>"
-    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+# Creating template library test target
+add_executable(
+		Test_template_library
+		${TEST_DIRECTORY}/tl.test.cpp
 )
 
-add_custom_target(
-    PLATFORMIO_UPLOAD ALL
-    COMMAND ${PLATFORMIO_CMD} -f -c clion run --target upload "$<$<NOT:$<CONFIG:All>>:-e${CMAKE_BUILD_TYPE}>"
-    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-)
 
-add_custom_target(
-    PLATFORMIO_CLEAN ALL
-    COMMAND ${PLATFORMIO_CMD} -f -c clion run --target clean "$<$<NOT:$<CONFIG:All>>:-e${CMAKE_BUILD_TYPE}>"
-    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-)
+# Linking emulator and ardUI1 to main code
+target_link_libraries(Run ardUI)
+target_link_libraries(Run arduinoEmulator)
 
-add_custom_target(
-    PLATFORMIO_MONITOR ALL
-    COMMAND ${PLATFORMIO_CMD} -f -c clion device monitor "$<$<NOT:$<CONFIG:All>>:-e${CMAKE_BUILD_TYPE}>"
-    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-)
-
-add_custom_target(
-    PLATFORMIO_TEST ALL
-    COMMAND ${PLATFORMIO_CMD} -f -c clion test "$<$<NOT:$<CONFIG:All>>:-e${CMAKE_BUILD_TYPE}>"
-    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-)
-
-add_custom_target(
-    PLATFORMIO_PROGRAM ALL
-    COMMAND ${PLATFORMIO_CMD} -f -c clion run --target program "$<$<NOT:$<CONFIG:All>>:-e${CMAKE_BUILD_TYPE}>"
-    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-)
-
-add_custom_target(
-    PLATFORMIO_UPLOADFS ALL
-    COMMAND ${PLATFORMIO_CMD} -f -c clion run --target uploadfs "$<$<NOT:$<CONFIG:All>>:-e${CMAKE_BUILD_TYPE}>"
-    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-)
-
-add_custom_target(
-    PLATFORMIO_BUILD_DEBUG ALL
-    COMMAND ${PLATFORMIO_CMD} -f -c clion run --target debug "$<$<NOT:$<CONFIG:All>>:-e${CMAKE_BUILD_TYPE}>"
-    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-)
-
-add_custom_target(
-    PLATFORMIO_UPDATE_ALL ALL
-    COMMAND ${PLATFORMIO_CMD} -f -c clion update
-    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-)
-
-add_custom_target(
-    PLATFORMIO_REBUILD_PROJECT_INDEX ALL
-    COMMAND ${PLATFORMIO_CMD} -f -c clion init --ide clion
-    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-)
-
-add_custom_target(
-    PLATFORMIO_DEVICE_LIST ALL
-    COMMAND ${PLATFORMIO_CMD} -f -c clion device list
-    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-)
-
-add_executable(Z_DUMMY_TARGET ${SRC_LIST})
+# Linking emulator and ardUI1 to tests
+target_link_libraries(Test_template_library ardUI)

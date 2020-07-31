@@ -19,7 +19,7 @@
 #include "view_group.h"
 #include "linear_layout.h"
 
-// Hiding standard Arduino functions for correct operation of ardUI
+// Hiding standard Arduino functions for correct operation of ardUI1
 void ardUiUserSetup();  // User "setup()" function will be replaced by this custom function
 void ardUiUserLoop();  // User "loop()" function will be replaced by this custom function
 
@@ -92,6 +92,6 @@ void ardUI::showScreen() {
 }
 
 
-#define ardUI() ardUI::getInstance()  // Instantiates ardUI from "ardUI()" call (discouraged)
+#define ardUI() ardUI::getInstance()  // Instantiates ardUI1 from "ardUI1()" call (discouraged)
 
 #endif //ARDUI_ARDUI_H
