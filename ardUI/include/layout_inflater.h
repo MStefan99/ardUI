@@ -12,9 +12,9 @@
 
 class layoutInflater {
 public:
-    layoutInflater() = default;
+	layoutInflater() = default;
 
-    static view& inflate(const String& xmlData, view& rootView);
+	static view& inflate(const String& xmlData, view& rootView);
 
 private:
 };

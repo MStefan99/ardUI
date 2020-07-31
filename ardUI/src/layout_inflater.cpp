@@ -6,6 +6,6 @@
 
 
 view& layoutInflater::inflate(const String& xmlData, view& rootView) {
-    //TODO: inflate layout from xml string
-    return rootView;
+	//TODO: inflate layout from xml string
+	return rootView;
 }

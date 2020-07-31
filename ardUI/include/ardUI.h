@@ -29,66 +29,66 @@ void ardUiUserLoop();  // User "loop()" function will be replaced by this custom
 
 class ardUI {
 public:
-    explicit ardUI(ardUI const &) = delete;
+	explicit ardUI(ardUI const &) = delete;
 
-    static ardUI& getInstance();
-    static activity& getCurrentScreen();
+	static ardUI& getInstance();
+	static activity& getCurrentScreen();
 
-    template<class ScreenClass>
-    static void showScreen();
-    static void showDialog(dialog& dialogToShow);
-    static void back();
+	template<class ScreenClass>
+	static void showScreen();
+	static void showDialog(dialog& dialogToShow);
+	static void back();
 
-    static void callActivityOnCreate(activity* activity);
-    static void callActivityOnStart(activity* activity);
-    static void callActivityOnRestart(activity* activity);
-    static void callActivityOnResume(activity* activity);
-    static void callActivityOnPause(activity* activity);
-    static void callActivityOnStop(activity* activity);
-    static void callActivityOnDestroy(activity* activity);
+	static void callActivityOnCreate(activity* activity);
+	static void callActivityOnStart(activity* activity);
+	static void callActivityOnRestart(activity* activity);
+	static void callActivityOnResume(activity* activity);
+	static void callActivityOnPause(activity* activity);
+	static void callActivityOnStop(activity* activity);
+	static void callActivityOnDestroy(activity* activity);
 
-    void operator=(ardUI const &) = delete;
+	void operator=(ardUI const &) = delete;
 
-    static void checkForActions();
-    static void draw();
+	static void checkForActions();
+	static void draw();
 
 private:
-    ardUI() = default;
-    ~ardUI();
+	ardUI() = default;
+	~ardUI();
 
 
-    const uint16_t screenHeight {ardUiDisplayGetHeight()};
-    const uint16_t screenWidth {ardUiDisplayGetWidth()};
-    activity* currentActivity {nullptr};
-    dialog* currentDialog {nullptr};
+	const uint16_t screenHeight {ardUiDisplayGetHeight()};
+	const uint16_t screenWidth {ardUiDisplayGetWidth()};
+	activity* currentActivity {nullptr};
+	dialog* currentDialog {nullptr};
 #if USING_STL
-    std::list<activity*> backStack {};
+	std::list<activity*> backStack {};
 #else
-    ardui::list<activity*> backStack {};
+	ardui::list<activity*> backStack {};
 #endif
 };
 
 
 template<class ScreenClass>
 void ardUI::showScreen() {
-    auto s {getInstance().currentActivity};
-    if (s) {
-        callActivityOnStop(s);
-        getInstance().backStack.push_front(s);
-        Serial.println("Screen appended to the stack");
+	auto s {getInstance().currentActivity};
+	if (s) {
+		callActivityOnStop(s);
+		getInstance().backStack.push_front(s);
+		Serial.println("Screen appended to the stack");
 
-        if (getInstance().backStack.size() > BACK_STACK_DEPTH) {
-            Serial.println("Max stack depth reached, destroying last activity");
-            auto lastScreen {getInstance().backStack.back()};
-            getInstance().backStack.pop_back();
-            callActivityOnDestroy(lastScreen);
-            delete lastScreen;
-        }
-    }
-    s = new ScreenClass();
-    getInstance().currentActivity = s;
+		if (getInstance().backStack.size() > BACK_STACK_DEPTH) {
+			Serial.println("Max stack depth reached, destroying last activity");
+			auto lastScreen {getInstance().backStack.back()};
+			getInstance().backStack.pop_back();
+			callActivityOnDestroy(lastScreen);
+			delete lastScreen;
+		}
+	}
+	s = new ScreenClass();
+	getInstance().currentActivity = s;
 
-    callActivityOnResume(s);
+	callActivityOnResume(s);
 }
 
 

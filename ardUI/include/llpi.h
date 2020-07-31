@@ -9,9 +9,9 @@
 #include <time.h>
 
 enum returnCode {
-    Ok,
-    Fail,
-    NotImplemented
+	Ok,
+	Fail,
+	NotImplemented
 };
 
 
@@ -39,9 +39,9 @@ returnCode ardUiDisplayFillCircle(uint16_t x, uint16_t y, uint16_t radius, uint3
 returnCode ardUiDisplayDrawRect(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint32_t color);
 returnCode ardUiDisplayFillRect(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint32_t color);
 returnCode ardUiDisplayDrawTriangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
-        uint16_t x3, uint16_t y3, uint32_t color);
+		uint16_t x3, uint16_t y3, uint32_t color);
 returnCode ardUiDisplayFillTriangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
-        uint16_t x3, uint16_t y3, uint32_t color);
+		uint16_t x3, uint16_t y3, uint32_t color);
 returnCode ardUiDisplayDrawBitmap(uint16_t x, uint16_t y, uint16_t* bitmap);
 
 

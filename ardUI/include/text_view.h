@@ -10,25 +10,25 @@
 
 class textView : public view {
 public:
-    textView() = default;
-    explicit textView(const String& text);
-    ~textView() override = default;
+	textView() = default;
+	explicit textView(const String& text);
+	~textView() override = default;
 
-    void setText(const String& textToSet);
-    void append(const String& textToAppend);
-    void setTextSize(uint16_t textSize);
-    void setTextColor(uint32_t textColor);
+	void setText(const String& textToSet);
+	void append(const String& textToAppend);
+	void setTextSize(uint16_t textSize);
+	void setTextColor(uint32_t textColor);
 
-    String getText() const;
-    uint16_t getTextSize() const;
-    uint32_t getTextColor() const;
+	String getText() const;
+	uint16_t getTextSize() const;
+	uint32_t getTextColor() const;
 
-    void onDraw() override;
+	void onDraw() override;
 
 protected:
-    String text {""};
-    uint16_t textSize {10};
-    uint32_t textColor {0};
+	String text {""};
+	uint16_t textSize {10};
+	uint32_t textColor {0};
 };
 
 

@@ -7,45 +7,45 @@
 
 
 textView::textView(const String& text):
-        text(text) {}
+		text(text) {}
 
 
 void textView::setText(const String &textToSet) {
-    text = textToSet;
+	text = textToSet;
 }
 
 
 void textView::append(const String &textToAppend) {
-    text += textToAppend;
+	text += textToAppend;
 }
 
 
 void textView::setTextSize(uint16_t size) {
-    textSize = size;
+	textSize = size;
 }
 
 
 void textView::setTextColor(uint32_t color) {
-    textColor = color;
+	textColor = color;
 }
 
 
 String textView::getText() const {
-    return text;
+	return text;
 }
 
 
 uint16_t textView::getTextSize() const {
-    return textSize;
+	return textSize;
 }
 
 
 uint32_t textView::getTextColor() const {
-    return textColor;
+	return textColor;
 }
 
 
 void textView::onDraw() {
-    ardUiDisplayDrawText(getBounds().top, getBounds().left,
-                         textSize, text, textColor);
+	ardUiDisplayDrawText(getBounds().top, getBounds().left,
+						 textSize, text, textColor);
 }

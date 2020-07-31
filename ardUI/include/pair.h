@@ -2,36 +2,36 @@
 // Created by MStefan99 on 29.1.20.
 //
 
-#ifndef ARDUI_TEST_PAIR_H
-#define ARDUI_TEST_PAIR_H
+#ifndef ARDUI_PAIR_H
+#define ARDUI_PAIR_H
 
 namespace ardui {
-    template <class T1, class T2>
-    struct pair {
-        pair(const T1& x, const T2& y);
-        pair(const pair& p) = default;
-        pair& operator=(const pair& p);
+	template <class T1, class T2>
+	struct pair {
+		pair(const T1& x, const T2& y);
+		pair(const pair& p) = default;
+		pair& operator=(const pair& p);
 
-        T1 first;
-        T2 second;
+		T1 first;
+		T2 second;
 
-        typedef T1 first_type;
-        typedef T2 second_type;
-    };
+		typedef T1 first_type;
+		typedef T2 second_type;
+	};
 
-    template <class T1, class T2>
-    pair<T1, T2>::pair(const T1 &x, const T2 &y): first(x), second(y) {
-    }
+	template <class T1, class T2>
+	pair<T1, T2>::pair(const T1 &x, const T2 &y): first(x), second(y) {
+	}
 
-    template<class T1, class T2>
-    pair<T1, T2> &pair<T1, T2>::operator=(const pair &p) {
-        if (this == &p) {
-            return *this;
-        } else {
-            first = p.first;
-            second = p.second;
-        }
-    }
+	template<class T1, class T2>
+	pair<T1, T2> &pair<T1, T2>::operator=(const pair &p) {
+		if (this == &p) {
+			return *this;
+		} else {
+			first = p.first;
+			second = p.second;
+		}
+	}
 }
 
-#endif //ARDUI_TEST_PAIR_H
+#endif //ARDUI_PAIR_H

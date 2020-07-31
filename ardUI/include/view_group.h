@@ -10,23 +10,23 @@
 
 class viewGroup: public view {
 public:
-    viewGroup() = default;
-    ~viewGroup() override;
+	viewGroup() = default;
+	~viewGroup() override;
 
-    void addView(view* view);
-    view* findViewById(int id) override;
+	void addView(view* view);
+	view* findViewById(int id) override;
 
-    int getChildCount();
-    view& getChildAt(int index);
+	int getChildCount();
+	view& getChildAt(int index);
 
 protected:
-    void onMeasure(uint16_t width, uint16_t height) override = 0;
-    void onLayout(bool changed, uint16_t left, uint16_t top, uint16_t right, uint16_t bottom) override = 0;
-    void onDraw() override = 0;
+	void onMeasure(uint16_t width, uint16_t height) override = 0;
+	void onLayout(bool changed, uint16_t left, uint16_t top, uint16_t right, uint16_t bottom) override = 0;
+	void onDraw() override = 0;
 #if USING_STL
-    std::list<view*> viewList {};
+	std::list<view*> viewList {};
 #else
-    ardui::list<view*> viewList {};
+	ardui::list<view*> viewList {};
 #endif
 };
 

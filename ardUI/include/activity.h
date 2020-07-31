@@ -13,45 +13,45 @@
 
 class activity {
 public:
-    activity() = default;
-    virtual ~activity();
+	activity() = default;
+	virtual ~activity();
 
-    template <class compiledLayout>
-    void setContentView(compiledLayout layoutClass);
-    void setContentView(const String& xmlData);
-    void setRootView(view* view);
+	template <class compiledLayout>
+	void setContentView(compiledLayout layoutClass);
+	void setContentView(const String& xmlData);
+	void setRootView(view* view);
 
-    virtual void onCreate() = 0;
-    virtual void onStart();
-    virtual void onRestart();
-    virtual void onResume();
-    virtual void onPause();
-    virtual void onStop();
-    virtual void onDestroy();
+	virtual void onCreate() = 0;
+	virtual void onStart();
+	virtual void onRestart();
+	virtual void onResume();
+	virtual void onPause();
+	virtual void onStop();
+	virtual void onDestroy();
 
-    view* findViewById(int id);
+	view* findViewById(int id);
 
-    friend class ardUI;
+	friend class ardUI;
 
 private:
-    enum state {
-        Launched,
-        Created,
-        Restarted,
-        Started,
-        Resumed,
-        Paused,
-        Stopped,
-        Destroyed
-    };
+	enum state {
+		Launched,
+		Created,
+		Restarted,
+		Started,
+		Resumed,
+		Paused,
+		Stopped,
+		Destroyed
+	};
 
-    void draw() const;
-    void measure();
-    void layout();
-    view* getRootView();
+	void draw() const;
+	void measure();
+	void layout();
+	view* getRootView();
 
-    state currentState {Launched};
-    view* rootView {};
+	state currentState {Launched};
+	view* rootView {};
 };
 
 #endif //ARDUI_SCREEN_H

@@ -2,8 +2,8 @@
 // Created by MStefan99 on 17.12.19.
 //
 
-#ifndef ARDUI_TEST_ARDUINO_H
-#define ARDUI_TEST_ARDUINO_H
+#ifndef ARDUI_ARDUINO_H
+#define ARDUI_ARDUINO_H
 
 
 #include <iostream>
@@ -53,4 +53,4 @@ void arduinoSerial::println(const C &data) {
 
 static arduinoSerial Serial{};
 
-#endif //ARDUI_TEST_ARDUINO_H
+#endif //ARDUI_ARDUINO_H
