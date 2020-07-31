@@ -5,22 +5,22 @@
 #include "view_group.h"
 
 
-viewGroup::~viewGroup() {
+ViewGroup::~ViewGroup() {
 	for (auto e : viewList) {
 		delete e;
 	}
 }
 
 
-void viewGroup::addView(view* view) {
+void ViewGroup::addView(View* view) {
 	viewList.push_back(view);
 }
 
 
-view* viewGroup::findViewById(int id) {
+View* ViewGroup::findViewById(int id) {
 	int count = getChildCount();
 	for (int i = 0; i < count; ++i) {
-		view& v = getChildAt(i);
+		View& v = getChildAt(i);
 		if (v.findViewById(id)) {
 			return v.findViewById(id);
 		}
@@ -29,12 +29,12 @@ view* viewGroup::findViewById(int id) {
 }
 
 
-int viewGroup::getChildCount() {
+int ViewGroup::getChildCount() {
 	return viewList.size();
 }
 
 
-view& viewGroup::getChildAt(int i) {
+View& ViewGroup::getChildAt(int i) {
 	return *viewList[i];
 }
 

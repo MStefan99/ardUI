@@ -6,7 +6,7 @@
 #define ARDUI_LLPI_H
 
 #include "platform.h"
-#include <time.h>
+#include <ctime>
 
 enum returnCode {
 	Ok,
@@ -15,34 +15,34 @@ enum returnCode {
 };
 
 
-uint16_t ardUiDisplayGetHeight();
-uint16_t ardUiDisplayGetWidth();
-uint16_t ardUiDisplayGetFontHeight();
-uint16_t ardUiDisplayGetFontWidth();
+uint16_t arduiDisplayGetHeight();
+uint16_t arduiDisplayGetWidth();
+uint16_t arduiDisplayGetFontHeight();
+uint16_t arduiDisplayGetFontWidth();
 
-bool ardUiDisplayIsClicked();
-void ardUiDisplayClickLocation(uint16_t& x, uint16_t& y);
+bool arduiDisplayIsClicked();
+void arduiDisplayClickLocation(uint16_t& x, uint16_t& y);
 
-tm ardUiGetRealTime();
+tm arduiGetRealTime();
 
-returnCode ardUiDisplayInit();
-returnCode ardUiDisplayOn();
-returnCode ardUiDisplayOff();
-returnCode ardUiDisplaySetBrightness(uint8_t brightness);
-returnCode ardUiDisplayFill(uint16_t color);
-returnCode ardUiDisplayDrawPixel(uint16_t x, uint16_t y, uint32_t color);
-returnCode ardUiDisplayDrawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint32_t color);
-returnCode ardUiDisplayDrawChar(uint16_t x, uint16_t y, uint16_t height, char text, uint32_t color);
-returnCode ardUiDisplayDrawText(uint16_t x, uint16_t y, uint16_t height, const String& tex, uint32_t color);
-returnCode ardUiDisplayDrawCircle(uint16_t x, uint16_t y, uint16_t radius, uint32_t color);
-returnCode ardUiDisplayFillCircle(uint16_t x, uint16_t y, uint16_t radius, uint32_t color);
-returnCode ardUiDisplayDrawRect(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint32_t color);
-returnCode ardUiDisplayFillRect(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint32_t color);
-returnCode ardUiDisplayDrawTriangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
+returnCode arduiDisplayInit();
+returnCode arduiDisplayOn();
+returnCode arduiDisplayOff();
+returnCode arduiDisplaySetBrightness(uint8_t brightness);
+returnCode arduiDisplayFill(uint16_t color);
+returnCode arduiDisplayDrawPixel(uint16_t x, uint16_t y, uint32_t color);
+returnCode arduiDisplayDrawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint32_t color);
+returnCode arduiDisplayDrawChar(uint16_t x, uint16_t y, uint16_t height, char text, uint32_t color);
+returnCode arduiDisplayDrawText(uint16_t x, uint16_t y, uint16_t height, const String& tex, uint32_t color);
+returnCode arduiDisplayDrawCircle(uint16_t x, uint16_t y, uint16_t radius, uint32_t color);
+returnCode arduiDisplayFillCircle(uint16_t x, uint16_t y, uint16_t radius, uint32_t color);
+returnCode arduiDisplayDrawRect(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint32_t color);
+returnCode arduiDisplayFillRect(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint32_t color);
+returnCode arduiDisplayDrawTriangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
 		uint16_t x3, uint16_t y3, uint32_t color);
-returnCode ardUiDisplayFillTriangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
+returnCode arduiDisplayFillTriangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
 		uint16_t x3, uint16_t y3, uint32_t color);
-returnCode ardUiDisplayDrawBitmap(uint16_t x, uint16_t y, uint16_t* bitmap);
+returnCode arduiDisplayDrawBitmap(uint16_t x, uint16_t y, uint16_t* bitmap);
 
 
 #endif //ARDUI_LLPI_H

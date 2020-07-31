@@ -10,9 +10,9 @@
 #include "drawable.h"
 
 
-class view: virtual public drawable {
+class View: virtual public Drawable {
 public:
-	class measureSpec {
+	class MeasureSpec {
 	public:
 		static const uint16_t AT_MOST {0x8000};
 		static const uint16_t EXACTLY {0x4000};
@@ -27,15 +27,15 @@ public:
 		uint16_t size;
 	};
 
-	view();
-	virtual ~view() = default;
+	View();
+	virtual ~View() = default;
 
-	virtual view* findViewById(int id);
+	virtual View* findViewById(int id);
 	int getId();
 
 	void measure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec);
 	void layout(uint16_t left, uint16_t top, uint16_t right, uint16_t bottom);
-	void layout(const rect& rect);
+	void layout(const Rect& rect);
 	void draw() final;
 	void invalidate();
 
@@ -50,8 +50,8 @@ public:
 	uint16_t getWidth();
 	uint16_t getHeight();
 
-	void setOnClickListener(void (*onClickListener)(view&));
-	void setOnLongClickListener(void (*onLongClickListener)(view&));
+	void setOnClickListener(void (*onClickListener)(View&));
+	void setOnLongClickListener(void (*onLongClickListener)(View&));
 
 protected:
 	virtual void onMeasure(uint16_t width, uint16_t height);
@@ -61,9 +61,9 @@ protected:
 	void setMeasuredDimensions(uint16_t measuredWidth, uint16_t measuredHeight);
 
 private:
-	void (*onClick)(view& view) {nullptr};
-	void (*onLongClick)(view& view) {nullptr};
-	void (*onScroll)(view& view) {nullptr};
+	void (*onClick)(View& view) {nullptr};
+	void (*onLongClick)(View& view) {nullptr};
+	void (*onScroll)(View& view) {nullptr};
 
 	void setClicked(bool isClicked);
 	bool isClicked();

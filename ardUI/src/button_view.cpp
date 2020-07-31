@@ -5,16 +5,16 @@
 #include "button_view.h"
 
 
-buttonView::buttonView(const String &text):
-		textView(text) {}
+ButtonView::ButtonView(const String &text):
+		TextView(text) {}
 
 
-void buttonView::onDraw(){
+void ButtonView::onDraw(){
 	auto b {getBounds()};
 
-	ardUiDisplayDrawLine(b.left, b.top, b.right, b.top, borderColor);  // top
-	ardUiDisplayDrawLine(b.left, b.top, b.left, b.bottom, borderColor);  // left
-	ardUiDisplayDrawLine(b.right, b.top, b.right, b.bottom, borderColor);  // right
-	ardUiDisplayDrawLine(b.left, b.bottom, b.right, b.bottom, borderColor);  // bottom
-	ardUiDisplayDrawText(b.left, b.top, getTextSize(), getText(), getTextColor());
+	arduiDisplayDrawLine(b.left, b.top, b.right, b.top, borderColor);  // top
+	arduiDisplayDrawLine(b.left, b.top, b.left, b.bottom, borderColor);  // left
+	arduiDisplayDrawLine(b.right, b.top, b.right, b.bottom, borderColor);  // right
+	arduiDisplayDrawLine(b.left, b.bottom, b.right, b.bottom, borderColor);  // bottom
+	arduiDisplayDrawText(b.left, b.top, getTextSize(), getText(), getTextColor());
 }

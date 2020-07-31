@@ -9,7 +9,7 @@
 #include "drawable.h"
 
 
-class dialog: public drawable {
+class Dialog: public Drawable {
 };
 
 #endif //ARDUI_DIALOG_H

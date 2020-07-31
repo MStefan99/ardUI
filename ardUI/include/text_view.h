@@ -8,11 +8,11 @@
 #include "platform.h"
 #include "view.h"
 
-class textView : public view {
+class TextView : public View {
 public:
-	textView() = default;
-	explicit textView(const String& text);
-	~textView() override = default;
+	TextView() = default;
+	explicit TextView(const String& text);
+	~TextView() override = default;
 
 	void setText(const String& textToSet);
 	void append(const String& textToAppend);

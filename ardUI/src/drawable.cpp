@@ -5,39 +5,39 @@
 #include "drawable.h"
 
 
-rect drawable::copyBounds() const {
-	return rect(viewBox);
+Rect Drawable::copyBounds() const {
+	return Rect(viewBox);
 }
 
 
-void drawable::copyBounds(rect &r) const {
+void Drawable::copyBounds(Rect &r) const {
 	r = viewBox;
 }
 
 
-rect drawable::getBounds() const {
-	return rect(viewBox);
+Rect Drawable::getBounds() const {
+	return Rect(viewBox);
 }
 
 
-void drawable::setBounds(uint16_t l, uint16_t t, uint16_t r, uint16_t b) {
+void Drawable::setBounds(uint16_t l, uint16_t t, uint16_t r, uint16_t b) {
 	viewBox.set(l, t, r, b);
-	onBoundsChange(rect(l, t, r, b));
+	onBoundsChange(Rect(l, t, r, b));
 }
 
 
-void drawable::setBounds(const rect &bounds) {
+void Drawable::setBounds(const Rect &bounds) {
 	onBoundsChange(bounds);
 	viewBox.set(bounds);
 }
 
 
-int drawable::getLevel() {
+int Drawable::getLevel() {
 	return level;
 }
 
 
-bool drawable::setLevel(uint16_t l) {
+bool Drawable::setLevel(uint16_t l) {
 	if (l > 10000) {
 		l = 10000;
 	}
@@ -49,7 +49,7 @@ bool drawable::setLevel(uint16_t l) {
 }
 
 
-bool drawable::getPadding(rect &p) const {
+bool Drawable::getPadding(Rect &p) const {
 	bool paddingExists {p};
 	if (paddingExists) {
 		p = padding;
@@ -60,17 +60,17 @@ bool drawable::getPadding(rect &p) const {
 }
 
 
-void drawable::setPadding(uint16_t left, uint16_t top, uint16_t right, uint16_t bottom) {
-	padding = rect(left, top, right, bottom);
+void Drawable::setPadding(uint16_t left, uint16_t top, uint16_t right, uint16_t bottom) {
+	padding = Rect(left, top, right, bottom);
 }
 
 
-bool drawable::isVisible() const {
+bool Drawable::isVisible() const {
 	return visible;
 }
 
 
-bool drawable::setVisible(bool v) {
+bool Drawable::setVisible(bool v) {
 	auto changed {v != visible};
 	if (changed) {
 		visible = v;
@@ -79,17 +79,17 @@ bool drawable::setVisible(bool v) {
 }
 
 
-void drawable::invalidateSelf() {
+void Drawable::invalidateSelf() {
 	valid = false;
 }
 
 
-void drawable::onBoundsChange(const rect &bounds) {
+void Drawable::onBoundsChange(const Rect &bounds) {
 	invalidateSelf();
 }
 
 
-bool drawable::onLevelChange(uint16_t l) {
+bool Drawable::onLevelChange(uint16_t l) {
 	auto changed {l != level};
 	if (changed) {
 		draw();
@@ -98,21 +98,21 @@ bool drawable::onLevelChange(uint16_t l) {
 }
 
 
-uint16_t drawable::getMinimumHeight() const {
+uint16_t Drawable::getMinimumHeight() const {
 	return minHeight;
 }
 
 
-uint16_t drawable::getMinimumWidth() const {
+uint16_t Drawable::getMinimumWidth() const {
 	return minWidth;
 }
 
 
-void drawable::setMinimumWidth(uint16_t w) {
+void Drawable::setMinimumWidth(uint16_t w) {
 	minWidth = w;
 }
 
 
-void drawable::setMinimumHeight(uint16_t h) {
+void Drawable::setMinimumHeight(uint16_t h) {
 	minHeight = h;
 }

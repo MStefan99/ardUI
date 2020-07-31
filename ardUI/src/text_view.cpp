@@ -6,46 +6,46 @@
 #include "text_view.h"
 
 
-textView::textView(const String& text):
+TextView::TextView(const String& text):
 		text(text) {}
 
 
-void textView::setText(const String &textToSet) {
+void TextView::setText(const String &textToSet) {
 	text = textToSet;
 }
 
 
-void textView::append(const String &textToAppend) {
+void TextView::append(const String &textToAppend) {
 	text += textToAppend;
 }
 
 
-void textView::setTextSize(uint16_t size) {
+void TextView::setTextSize(uint16_t size) {
 	textSize = size;
 }
 
 
-void textView::setTextColor(uint32_t color) {
+void TextView::setTextColor(uint32_t color) {
 	textColor = color;
 }
 
 
-String textView::getText() const {
+String TextView::getText() const {
 	return text;
 }
 
 
-uint16_t textView::getTextSize() const {
+uint16_t TextView::getTextSize() const {
 	return textSize;
 }
 
 
-uint32_t textView::getTextColor() const {
+uint32_t TextView::getTextColor() const {
 	return textColor;
 }
 
 
-void textView::onDraw() {
-	ardUiDisplayDrawText(getBounds().top, getBounds().left,
+void TextView::onDraw() {
+	arduiDisplayDrawText(getBounds().top, getBounds().left,
 						 textSize, text, textColor);
 }

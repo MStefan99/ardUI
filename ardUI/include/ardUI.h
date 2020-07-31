@@ -10,7 +10,7 @@
 #include "llpi.h"
 
 #include "activity.h"
-#include "dialog.h"
+#include "dialog.h"  //TODO: move to activity
 
 #include "view.h"
 #include "text_view.h"
@@ -20,11 +20,11 @@
 #include "linear_layout.h"
 
 // Hiding standard Arduino functions for correct operation of ardUI1
-void ardUiUserSetup();  // User "setup()" function will be replaced by this custom function
-void ardUiUserLoop();  // User "loop()" function will be replaced by this custom function
+void arduiUserSetup();  // User "setup()" function will be replaced by this custom function
+void arduiUserLoop();  // User "loop()" function will be replaced by this custom function
 
-#define setup() ardUiUserSetup()
-#define loop() ardUiUserLoop()
+#define setup() arduiUserSetup()
+#define loop() arduiUserLoop()
 
 
 class ardUI {
@@ -32,20 +32,20 @@ public:
 	explicit ardUI(ardUI const &) = delete;
 
 	static ardUI& getInstance();
-	static activity& getCurrentScreen();
+	static Activity& getCurrentScreen();
 
 	template<class ScreenClass>
 	static void showScreen();
-	static void showDialog(dialog& dialogToShow);
+	static void showDialog(Dialog& dialogToShow);
 	static void back();
 
-	static void callActivityOnCreate(activity* activity);
-	static void callActivityOnStart(activity* activity);
-	static void callActivityOnRestart(activity* activity);
-	static void callActivityOnResume(activity* activity);
-	static void callActivityOnPause(activity* activity);
-	static void callActivityOnStop(activity* activity);
-	static void callActivityOnDestroy(activity* activity);
+	static void callActivityOnCreate(Activity* activity);
+	static void callActivityOnStart(Activity* activity);
+	static void callActivityOnRestart(Activity* activity);
+	static void callActivityOnResume(Activity* activity);
+	static void callActivityOnPause(Activity* activity);
+	static void callActivityOnStop(Activity* activity);
+	static void callActivityOnDestroy(Activity* activity);
 
 	void operator=(ardUI const &) = delete;
 
@@ -57,14 +57,14 @@ private:
 	~ardUI();
 
 
-	const uint16_t screenHeight {ardUiDisplayGetHeight()};
-	const uint16_t screenWidth {ardUiDisplayGetWidth()};
-	activity* currentActivity {nullptr};
-	dialog* currentDialog {nullptr};
+	const uint16_t screenHeight {arduiDisplayGetHeight()};
+	const uint16_t screenWidth {arduiDisplayGetWidth()};
+	Activity* currentActivity {nullptr};
+	Dialog* currentDialog {nullptr};
 #if USING_STL
-	std::list<activity*> backStack {};
+	std::list<Activity*> backStack {};
 #else
-	ardui::list<activity*> backStack {};
+	ardui::list<Activity*> backStack {};
 #endif
 };
 

@@ -27,9 +27,9 @@ void setup();
 void loop();
 
 
-class arduinoSerial {
+class ArduinoSerial {
 public:
-	static void begin(long baud);
+	void begin(long baud);
 
 	template<class C>
 	void print(const C &data);
@@ -40,17 +40,17 @@ public:
 
 
 template<class C>
-void arduinoSerial::print(const C &data) {
+void ArduinoSerial::print(const C &data) {
 	std::cout << data;
 }
 
 
 template<class C>
-void arduinoSerial::println(const C &data) {
+void ArduinoSerial::println(const C &data) {
 	std::cout << data << std::endl;
 }
 
 
-static arduinoSerial Serial{};
+static ArduinoSerial Serial{};
 
 #endif //ARDUI_ARDUINO_H

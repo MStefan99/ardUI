@@ -6,151 +6,154 @@
  * hardware to use the ardUI1 library. */
 
 #include "llpi.h"
-//TODO: replace enum with custom exception
 
-uint16_t ardUiDisplayGetHeight() {
-	//TODO: Implement.
+
+uint16_t arduiDisplayGetHeight() {
+	// Has to be implemented by the user
 	return 360;
 }
 
 
-uint16_t ardUiDisplayGetWidth() {
-	//TODO: Implement.
+uint16_t arduiDisplayGetWidth() {
+	// Has to be implemented by the user
 	return 480;
 }
 
 
-uint16_t ardUiDisplayGetFontHeight() {
-	//TODO: Implement.
+uint16_t arduiDisplayGetFontHeight() {
+	// Has to be implemented by the user
 	return 8;
 }
 
 
-uint16_t ardUiDisplayGetFontWidth() {
-	//TODO: Implement.
+uint16_t arduiDisplayGetFontWidth() {
+	// Has to be implemented by the user
 	return 5;
 }
 
 
-bool ardUiDisplayIsClicked() {
-	//TODO: Implement.
+bool arduiDisplayIsClicked() {
+	// Has to be implemented by the user
 	return true;
 }
 
 
-void ardUiDisplayClickLocation(uint16_t& x, uint16_t& y) {
-	//TODO: Implement.
+void arduiDisplayClickLocation(uint16_t& x, uint16_t& y) {
+	// Has to be implemented by the user
 	x = 0;
 	y = 0;
 }
 
 
-tm ardUiGetRealTime() {
-	//TODO: Implement.
+tm arduiGetRealTime() {
+	// Has to be implemented by the user
 	return {};
 }
 
 
-returnCode ardUiDisplayInit() {
+returnCode arduiDisplayInit() {
+	// TODO: remove
 	Serial.println("Display init");
-	//TODO: Implement.
+	// Has to be implemented by the user
 	return NotImplemented;
 }
 
 
-returnCode ardUiDisplayOn() {
-	//TODO: Implement.
+returnCode arduiDisplayOn() {
+	// Has to be implemented by the user
 	return NotImplemented;
 }
 
 
-returnCode ardUiDisplayOff() {
-	//TODO: Implement.
+returnCode arduiDisplayOff() {
+	// Has to be implemented by the user
 	return NotImplemented;
 }
 
 
-returnCode ardUiDisplaySetBrightness(uint8_t brightness) {
-	//TODO: Implement.
+returnCode arduiDisplaySetBrightness(uint8_t brightness) {
+	// Has to be implemented by the user
 	return NotImplemented;
 }
 
 
-returnCode ardUiDisplayFill(uint16_t color) {
-	//TODO: Implement.
+returnCode arduiDisplayFill(uint16_t color) {
+	// Has to be implemented by the user
 	return NotImplemented;
 }
 
 
-returnCode ardUiDisplayDrawPixel(uint16_t x, uint16_t y, uint32_t color) {
-	//TODO: Implement.
+returnCode arduiDisplayDrawPixel(uint16_t x, uint16_t y, uint32_t color) {
+	// Has to be implemented by the user
 	return NotImplemented;
 }
 
 
-returnCode ardUiDisplayDrawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint32_t color) {
+returnCode arduiDisplayDrawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint32_t color) {
+	// TODO: remove
 	Serial.println("Drawn line from (" + std::to_string(x1) + ", " + std::to_string(y1) + ") to ("
 	+ std::to_string(x2) + ", " + std::to_string(y2) + ").");
-	//TODO: Implement.
+	// Has to be implemented by the user
 	return NotImplemented;
 }
 
 
-returnCode ardUiDisplayDrawChar(uint16_t x, uint16_t y, uint16_t height, char text, uint32_t color) {
-	//TODO: Implement.
+returnCode arduiDisplayDrawChar(uint16_t x, uint16_t y, uint16_t height, char text, uint32_t color) {
+	// Has to be implemented by the user
 	return NotImplemented;
 }
 
 
-returnCode ardUiDisplayDrawText(uint16_t x, uint16_t y, uint16_t height, const String& text, uint32_t color) {
+returnCode arduiDisplayDrawText(uint16_t x, uint16_t y, uint16_t height, const String& text, uint32_t color) {
+	// TODO: remove
 	Serial.println("Drawn text \"" + text + "\" at (" + std::to_string(x) + ", " + std::to_string(y) + ").");
-	//TODO: Implement.
+	// Has to be implemented by the user
 	return NotImplemented;
 }
 
 
-returnCode ardUiDisplayDrawCircle(uint16_t x, uint16_t y, uint16_t radius, uint32_t color) {
-	//TODO: Implement.
+returnCode arduiDisplayDrawCircle(uint16_t x, uint16_t y, uint16_t radius, uint32_t color) {
+	// Has to be implemented by the user
 	return NotImplemented;
 }
 
 
-returnCode ardUiDisplayFillCircle(uint16_t x, uint16_t y, uint16_t radius, uint32_t color) {
-	//TODO: Implement.
+returnCode arduiDisplayFillCircle(uint16_t x, uint16_t y, uint16_t radius, uint32_t color) {
+	// Has to be implemented by the user
 	return NotImplemented;
 }
 
 
-returnCode ardUiDisplayDrawRect(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
+returnCode arduiDisplayDrawRect(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
 		uint32_t color) {
-	//TODO: Implement.
+	// Has to be implemented by the user
 	return NotImplemented;
 }
 
 
-returnCode ardUiDisplayFillRect(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
+returnCode arduiDisplayFillRect(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
 		uint32_t color) {
-	//TODO: Implement.
+	// Has to be implemented by the user
 	return NotImplemented;
 }
 
 
-returnCode ardUiDisplayDrawTriangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
+returnCode arduiDisplayDrawTriangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
 		uint16_t x3, uint16_t y3, uint32_t color) {
-	//TODO: Implement.
+	// Has to be implemented by the user
 	return NotImplemented;
 }
 
 
-returnCode ardUiDisplayFillTriangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
+returnCode arduiDisplayFillTriangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
 		uint16_t x3, uint16_t y3, uint32_t color) {
-	//TODO: Implement.
+	// Has to be implemented by the user
 	return NotImplemented;
 }
 
 
-returnCode ardUiDisplayDrawBitmap(uint16_t x, uint16_t y, uint16_t* bitmap) {
-	//TODO: Implement.
+returnCode arduiDisplayDrawBitmap(uint16_t x, uint16_t y, uint16_t* bitmap) {
+	// Has to be implemented by the user
 	return NotImplemented;
 }
 

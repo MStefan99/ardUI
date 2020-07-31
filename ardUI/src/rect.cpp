@@ -5,54 +5,54 @@
 #include "rect.h"
 
 
-rect::rect(uint16_t left, uint16_t top, uint16_t right, uint16_t bottom):
+Rect::Rect(uint16_t left, uint16_t top, uint16_t right, uint16_t bottom):
 		left(left),
 		top(top),
 		right(right),
 		bottom{bottom} {}
 
 
-bool rect::contains(const rect &r) const {
+bool Rect::contains(const Rect &r) const {
 	return contains(r.left, r.top) && contains(r.right, r.bottom);
 }
 
 
-bool rect::contains(uint16_t l, uint16_t t, uint16_t r, uint16_t b) const {
+bool Rect::contains(uint16_t l, uint16_t t, uint16_t r, uint16_t b) const {
 	return contains(l, t) && contains(r, b);
 }
 
 
-bool rect::contains(uint16_t x, uint16_t y) const {
+bool Rect::contains(uint16_t x, uint16_t y) const {
 	return x > left && x < right && y > top && y < bottom;
 }
 
 
-uint16_t rect::centerX() const {
+uint16_t Rect::centerX() const {
 	return (left + right) / 2;
 }
 
 
-uint16_t rect::centerY() const {
+uint16_t Rect::centerY() const {
 	return (top + bottom) / 2;
 }
 
 
-uint16_t rect::height() const {
+uint16_t Rect::height() const {
 	return bottom - top;
 }
 
 
-uint16_t rect::width() const {
+uint16_t Rect::width() const {
 	return right - left;
 }
 
 
-bool rect::isEmpty() const {
+bool Rect::isEmpty() const {
 	return top == bottom || right == left;
 }
 
 
-void rect::setEmpty() {
+void Rect::setEmpty() {
 	left = 0;
 	top = 0;
 	right = 0;
@@ -60,7 +60,7 @@ void rect::setEmpty() {
 }
 
 
-void rect::offset(uint16_t dx, uint16_t dy) {
+void Rect::offset(uint16_t dx, uint16_t dy) {
 	left += dx;
 	right += dx;
 	top += dy;
@@ -68,12 +68,12 @@ void rect::offset(uint16_t dx, uint16_t dy) {
 }
 
 
-void rect::offsetTo(uint16_t newLeft, uint16_t newTop) {
+void Rect::offsetTo(uint16_t newLeft, uint16_t newTop) {
 	offset(newLeft - left, newTop - top);
 }
 
 
-void rect::inset(uint16_t dx, uint16_t dy) {
+void Rect::inset(uint16_t dx, uint16_t dy) {
 	left -= dx / 2;
 	right -= dx / 2;
 	top -= dy / 2;
@@ -81,7 +81,7 @@ void rect::inset(uint16_t dx, uint16_t dy) {
 }
 
 
-void rect::inset(uint16_t l, uint16_t t, uint16_t r, uint16_t b) {
+void Rect::inset(uint16_t l, uint16_t t, uint16_t r, uint16_t b) {
 	left -= l;
 	top -= t;
 	right -= r;
@@ -89,7 +89,7 @@ void rect::inset(uint16_t l, uint16_t t, uint16_t r, uint16_t b) {
 }
 
 
-void rect::inset(const rect &r) {
+void Rect::inset(const Rect &r) {
 	left -= r.left;
 	top -= r.top;
 	right -= r.right;
@@ -97,7 +97,7 @@ void rect::inset(const rect &r) {
 }
 
 
-void rect::set(uint16_t l, uint16_t t, uint16_t r, uint16_t b) {
+void Rect::set(uint16_t l, uint16_t t, uint16_t r, uint16_t b) {
 	left = l;
 	top = t;
 	right = r;
@@ -105,7 +105,7 @@ void rect::set(uint16_t l, uint16_t t, uint16_t r, uint16_t b) {
 }
 
 
-void rect::set(const rect &r) {
+void Rect::set(const Rect &r) {
 	left = r.left;
 	top = r.top;
 	right = r.right;
@@ -113,7 +113,7 @@ void rect::set(const rect &r) {
 }
 
 
-rect &rect::operator=(const rect &r) {
+Rect &Rect::operator=(const Rect &r) {
 	if (this != &r) {
 		set(r);
 	}
@@ -121,7 +121,7 @@ rect &rect::operator=(const rect &r) {
 }
 
 
-rect::operator bool() const {
+Rect::operator bool() const {
 	return isEmpty();
 }
 

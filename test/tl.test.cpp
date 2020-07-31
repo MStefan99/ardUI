@@ -13,19 +13,19 @@
 
 
 // Needed to avoid undefined reference error, usually defined with setup() and loop()
-void ardUiUserSetup() {}
+void arduiUserSetup() {}
 
-void ardUiUserLoop() {}
+void arduiUserLoop() {}
 
 
-class assertException : public std::exception {
+class AssertException : public std::exception {
 public:
-	explicit assertException(const char *description) {
+	explicit AssertException(const char *description) {
 		desc = new char[strlen(description) + 1];
 		strcpy(desc, description);
 	}
 
-	~assertException() override { delete[] desc; }
+	~AssertException() override { delete[] desc; }
 
 	const char *what() const noexcept override { return desc; }
 
@@ -40,7 +40,7 @@ template<class T>
 void assert(T c) {
 	if (!c) {
 		cerr << "True assert failed!" << endl;
-		throw assertException("True assert failed");
+		throw AssertException("True assert failed");
 	}
 }
 
@@ -49,7 +49,7 @@ template<class T>
 void assertFalse(T c) {
 	if (c) {
 		cerr << "False assert failed!" << endl;
-		throw assertException("False assert failed");
+		throw AssertException("False assert failed");
 	}
 }
 
@@ -58,7 +58,7 @@ template<class T>
 void assert(T c1, T c2) {
 	if (c1 != c2) {
 		cerr << "Object comparison assert failed!" << endl;
-		throw assertException("Object comparison assert failed");
+		throw AssertException("Object comparison assert failed");
 	}
 }
 
@@ -67,7 +67,7 @@ template<class T>
 void assertFalse(T c1, T c2) {
 	if (c1 == c2) {
 		cerr << "Object false comparison assert failed!" << endl;
-		throw assertException("Object false comparison assert failed");
+		throw AssertException("Object false comparison assert failed");
 	}
 }
 
@@ -262,7 +262,7 @@ int main() {
 		queueAssert();
 
 		cout << "All tests passed successfully!" << endl;
-	} catch (const assertException &e) {
+	} catch (const AssertException &e) {
 		cout << "The following exception occurred while running the tests: " << e.what() << std::endl;
 	}
 }

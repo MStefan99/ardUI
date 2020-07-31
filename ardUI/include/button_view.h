@@ -11,11 +11,11 @@
 #include "llpi.h"
 
 
-class buttonView: public textView {
+class ButtonView: public TextView {
 public:
-	buttonView() = default;
-	explicit buttonView(const String& text);
-	~buttonView() override = default;
+	ButtonView() = default;
+	explicit ButtonView(const String& text);
+	~ButtonView() override = default;
 
 	void onDraw() override;
 

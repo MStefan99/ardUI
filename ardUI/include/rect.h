@@ -8,13 +8,13 @@
 #include "platform.h"
 
 
-class rect {
+class Rect {
 public:
-	rect() = default;
-	rect(uint16_t left, uint16_t top, uint16_t right, uint16_t bottom);
+	Rect() = default;
+	Rect(uint16_t left, uint16_t top, uint16_t right, uint16_t bottom);
 
 	bool contains(uint16_t left, uint16_t top, uint16_t right, uint16_t bottom) const;
-	bool contains(const rect& r) const;
+	bool contains(const Rect& r) const;
 	bool contains(uint16_t x, uint16_t y) const;
 
 	uint16_t centerX() const;
@@ -31,12 +31,12 @@ public:
 
 	void inset(uint16_t dx, uint16_t dy);
 	void inset(uint16_t left, uint16_t top, uint16_t right, uint16_t bottom);
-	void inset(const rect& r);
+	void inset(const Rect& r);
 
 	void set(uint16_t left, uint16_t top, uint16_t right, uint16_t bottom);
-	void set(const rect& r);
+	void set(const Rect& r);
 
-	rect& operator=(const rect& r);
+	Rect& operator=(const Rect& r);
 	operator bool() const;
 
 	uint16_t left {0};

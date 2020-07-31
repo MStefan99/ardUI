@@ -10,11 +10,11 @@
 #include "view.h"
 
 
-class layoutInflater {
+class LayoutInflater {
 public:
-	layoutInflater() = default;
+	LayoutInflater() = default;
 
-	static view& inflate(const String& xmlData, view& rootView);
+	static View& inflate(const String& xmlData, View& rootView);
 
 private:
 };

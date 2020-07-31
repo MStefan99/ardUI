@@ -5,22 +5,22 @@
 #include "linear_layout.h"
 
 
-linearLayout::linearLayout(bool vertical):
+LinearLayout::LinearLayout(bool vertical):
 		isVertical(vertical) {}
 
 
-void linearLayout::onMeasure(uint16_t w, uint16_t h) {
+void LinearLayout::onMeasure(uint16_t w, uint16_t h) {
 	for (const auto &v : viewList) {
-		v->measure(view::measureSpec::makeMeasureSpec(view::measureSpec::AT_MOST, w),
-				   view::measureSpec::makeMeasureSpec(view::measureSpec::AT_MOST, h));
+		v->measure(View::MeasureSpec::makeMeasureSpec(View::MeasureSpec::AT_MOST, w),
+				   View::MeasureSpec::makeMeasureSpec(View::MeasureSpec::AT_MOST, h));
 	}
 }
 
-void linearLayout::onLayout(bool changed, uint16_t l, uint16_t t, uint16_t r, uint16_t b) {
+void LinearLayout::onLayout(bool changed, uint16_t l, uint16_t t, uint16_t r, uint16_t b) {
 	int viewLeft {0};
 	int viewTop {0};
-	int layoutRight {ardUiDisplayGetWidth()};
-	int layoutBottom {ardUiDisplayGetHeight()};
+	int layoutRight {arduiDisplayGetWidth()};
+	int layoutBottom {arduiDisplayGetHeight()};
 
 	for (const auto& v : viewList) {
 		v->setTop(viewTop);
@@ -40,7 +40,7 @@ void linearLayout::onLayout(bool changed, uint16_t l, uint16_t t, uint16_t r, ui
 }
 
 
-void linearLayout::onDraw() {
+void LinearLayout::onDraw() {
 	for (const auto& v : viewList) {
 		v->draw();
 	}

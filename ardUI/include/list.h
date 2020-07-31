@@ -2,8 +2,8 @@
 // Created by MStefan99 on 25.11.19.
 //
 
-#ifndef ARDUI_SLIST_H
-#define ARDUI_SLIST_H
+#ifndef ARDUI_LIST_H
+#define ARDUI_LIST_H
 
 
 namespace ardui {
@@ -440,4 +440,4 @@ namespace ardui {
 	}
 }
 
-#endif //ARDUI_SLIST_H
+#endif //ARDUI_LIST_H

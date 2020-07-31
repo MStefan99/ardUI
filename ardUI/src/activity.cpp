@@ -5,87 +5,87 @@
 #include "activity.h"
 
 
-activity::~activity() {
+Activity::~Activity() {
 	delete rootView;
 }
 
 
 template<class compiledLayout>
-void activity::setContentView(compiledLayout layoutClass) {
+void Activity::setContentView(compiledLayout layoutClass) {
 	layoutClass.fill();  // "fill()" function must be present in the compiled layout
 }
 
 
-void activity::setContentView(const String& xml) {
-	layoutInflater::inflate(xml, *rootView);
+void Activity::setContentView(const String& xml) {
+	LayoutInflater::inflate(xml, *rootView);
 }
 
 
-void activity::setRootView(view *view){
+void Activity::setRootView(View *view){
 	rootView = view;
 }
 
 
-void activity::onCreate() {
+void Activity::onCreate() {
 	currentState = Created;
 }
 
 
-void activity::onStart() {
+void Activity::onStart() {
 	currentState = Started;
 }
 
 
-void activity::onRestart() {
+void Activity::onRestart() {
 	currentState = Restarted;
 }
 
 
-void activity::onResume() {
+void Activity::onResume() {
 	currentState = Resumed;
 }
 
 
-void activity::onPause() {
+void Activity::onPause() {
 	currentState = Paused;
 }
 
 
-void activity::onStop() {
+void Activity::onStop() {
 	currentState = Stopped;
 }
 
 
-void activity::onDestroy() {
+void Activity::onDestroy() {
 	currentState = Destroyed;
 }
 
 
-void activity::draw() const {
+void Activity::draw() const {
 	if (rootView) {
 		rootView->draw();
 	}
 }
 
 
-view* activity::findViewById(int id) {
+View* Activity::findViewById(int id) {
 	return rootView->findViewById(id);
 }
 
 
-view* activity::getRootView() {
+View* Activity::getRootView() {
 	return rootView;
 }
 
 
-void activity::measure() {
-	int widthSpec = view::measureSpec::makeMeasureSpec(view::measureSpec::EXACTLY, ardUiDisplayGetWidth());
-	int heightSpec = view::measureSpec::makeMeasureSpec(view::measureSpec::EXACTLY, ardUiDisplayGetHeight());
+void Activity::measure() {
+	int widthSpec = View::MeasureSpec::makeMeasureSpec(View::MeasureSpec::EXACTLY, arduiDisplayGetWidth());
+	int heightSpec = View::MeasureSpec::makeMeasureSpec(View::MeasureSpec::EXACTLY, arduiDisplayGetHeight());
 	rootView->measure(widthSpec, heightSpec);
 }
 
 
-void activity::layout() {
-	rect display {0, 0, ardUiDisplayGetWidth(), ardUiDisplayGetHeight()};
+void Activity::layout() {
+	Rect display {0, 0, arduiDisplayGetWidth(), arduiDisplayGetHeight()};
 	rootView->layout(display);
 }

@@ -5,7 +5,7 @@
 #include "Arduino.h"
 
 
-void arduinoSerial::begin(long baud) {
+void ArduinoSerial::begin(long baud) {
 	std::cout << "Began serial communication with baud rate " << baud << std::endl;
 }
 

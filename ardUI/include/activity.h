@@ -2,8 +2,8 @@
 // Created by MStefan99 on 16.12.19.
 //
 
-#ifndef ARDUI_SCREEN_H
-#define ARDUI_SCREEN_H
+#ifndef ARDUI_ACTIVITY_H
+#define ARDUI_ACTIVITY_H
 
 
 #include "list.h"
@@ -11,15 +11,15 @@
 #include "layout_inflater.h"
 
 
-class activity {
+class Activity {
 public:
-	activity() = default;
-	virtual ~activity();
+	Activity() = default;
+	virtual ~Activity();
 
 	template <class compiledLayout>
 	void setContentView(compiledLayout layoutClass);
 	void setContentView(const String& xmlData);
-	void setRootView(view* view);
+	void setRootView(View* view);
 
 	virtual void onCreate() = 0;
 	virtual void onStart();
@@ -29,7 +29,7 @@ public:
 	virtual void onStop();
 	virtual void onDestroy();
 
-	view* findViewById(int id);
+	View* findViewById(int id);
 
 	friend class ardUI;
 
@@ -48,10 +48,10 @@ private:
 	void draw() const;
 	void measure();
 	void layout();
-	view* getRootView();
+	View* getRootView();
 
 	state currentState {Launched};
-	view* rootView {};
+	View* rootView {};
 };
 
-#endif //ARDUI_SCREEN_H
+#endif //ARDUI_ACTIVITY_H
