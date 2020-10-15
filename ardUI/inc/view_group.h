@@ -5,8 +5,10 @@
 #ifndef ARDUI_VIEW_GROUP_H
 #define ARDUI_VIEW_GROUP_H
 
+
 #include "list.h"
 #include "view.h"
+
 
 class ViewGroup: public View {
 public:
@@ -15,9 +17,6 @@ public:
 
 	void addView(View* view);
 	View* findViewById(int id) override;
-
-	int getChildCount();
-	View& getChildAt(int index);
 
 protected:
 	void onMeasure(uint16_t width, uint16_t height) override = 0;

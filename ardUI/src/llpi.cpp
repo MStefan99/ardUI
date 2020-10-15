@@ -3,7 +3,7 @@
 //
 
 /* This is the low-level platform interface. You'll need to implement the following functions to work on your
- * hardware to use the ardUI1 library. */
+ * hardware to use the ardUI library. */
 
 #include "llpi.h"
 
@@ -92,7 +92,7 @@ returnCode arduiDisplayDrawPixel(uint16_t x, uint16_t y, uint32_t color) {
 returnCode arduiDisplayDrawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint32_t color) {
 	// TODO: remove
 	Serial.println("Drawn line from (" + std::to_string(x1) + ", " + std::to_string(y1) + ") to ("
-	+ std::to_string(x2) + ", " + std::to_string(y2) + ").");
+				   + std::to_string(x2) + ", " + std::to_string(y2) + ").");
 	// Has to be implemented by the user
 	return NotImplemented;
 }
@@ -125,28 +125,28 @@ returnCode arduiDisplayFillCircle(uint16_t x, uint16_t y, uint16_t radius, uint3
 
 
 returnCode arduiDisplayDrawRect(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
-		uint32_t color) {
+								uint32_t color) {
 	// Has to be implemented by the user
 	return NotImplemented;
 }
 
 
 returnCode arduiDisplayFillRect(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
-		uint32_t color) {
+								uint32_t color) {
 	// Has to be implemented by the user
 	return NotImplemented;
 }
 
 
 returnCode arduiDisplayDrawTriangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
-		uint16_t x3, uint16_t y3, uint32_t color) {
+									uint16_t x3, uint16_t y3, uint32_t color) {
 	// Has to be implemented by the user
 	return NotImplemented;
 }
 
 
 returnCode arduiDisplayFillTriangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
-		uint16_t x3, uint16_t y3, uint32_t color) {
+									uint16_t x3, uint16_t y3, uint32_t color) {
 	// Has to be implemented by the user
 	return NotImplemented;
 }

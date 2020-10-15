@@ -5,6 +5,7 @@
 #ifndef ARDUI_VIEW_H
 #define ARDUI_VIEW_H
 
+
 #include "platform.h"
 #include "ardUI_config.h"
 #include "drawable.h"
@@ -50,8 +51,8 @@ public:
 	uint16_t getWidth();
 	uint16_t getHeight();
 
-	void setOnClickListener(void (*onClickListener)(View&));
-	void setOnLongClickListener(void (*onLongClickListener)(View&));
+	void setOnClickListener(void (* onClickListener)(View&));
+	void setOnLongClickListener(void (* onLongClickListener)(View&));
 
 protected:
 	virtual void onMeasure(uint16_t width, uint16_t height);
@@ -61,9 +62,9 @@ protected:
 	void setMeasuredDimensions(uint16_t measuredWidth, uint16_t measuredHeight);
 
 private:
-	void (*onClick)(View& view) {nullptr};
-	void (*onLongClick)(View& view) {nullptr};
-	void (*onScroll)(View& view) {nullptr};
+	void (* onClick)(View& view) {nullptr};
+	void (* onLongClick)(View& view) {nullptr};
+	void (* onScroll)(View& view) {nullptr};
 
 	void setClicked(bool isClicked);
 	bool isClicked();

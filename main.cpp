@@ -9,17 +9,24 @@
 
 
 class MainActivity: public Activity {
-	TextView *t;
+	TextView* t;
+
 
 	void onCreate() override {
 		Serial.println("Hi, I am MainActivity!");
 
 		t = new TextView;
+		t->setText("Hello");
 		this->setRootView(t);
 	}
 
+
+	void onResume() override {
+		t->setText("Hello, I am textview!");
+	}
+
+
 	void onDestroy() override {
-		delete t;
 		Serial.println("MainActivity has been destroyed");
 	}
 };
@@ -27,6 +34,7 @@ class MainActivity: public Activity {
 
 void setup() {
 	ardUI::showScreen<MainActivity>();
+	ardUI::exit();
 }
 
 

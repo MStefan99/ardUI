@@ -5,6 +5,7 @@
 #ifndef ARDUI_RECT_H
 #define ARDUI_RECT_H
 
+
 #include "platform.h"
 
 
@@ -36,7 +37,7 @@ public:
 	void set(uint16_t left, uint16_t top, uint16_t right, uint16_t bottom);
 	void set(const Rect& r);
 
-	Rect& operator=(const Rect& r);
+	Rect& operator =(const Rect& r);
 	operator bool() const;
 
 	uint16_t left {0};

@@ -2,8 +2,9 @@
 // Created by MStefan99 on 16.12.19.
 //
 
-#ifndef ARDUI_ARDUI_H
-#define ARDUI_ARDUI_H
+#ifndef ARDUI_H
+#define ARDUI_H
+
 
 #include "platform.h"
 #include "ardUI_config.h"
@@ -19,25 +20,26 @@
 #include "view_group.h"
 #include "linear_layout.h"
 
-// Hiding standard Arduino functions for correct operation of ardUI1
+
+// Hiding standard Arduino functions for correct operation of ardUI
 void arduiUserSetup();  // User "setup()" function will be replaced by this custom function
 void arduiUserLoop();  // User "loop()" function will be replaced by this custom function
 
 #define setup() arduiUserSetup()
 #define loop() arduiUserLoop()
 
-
 class ardUI {
 public:
-	explicit ardUI(ardUI const &) = delete;
+	explicit ardUI(ardUI const&) = delete;
 
 	static ardUI& getInstance();
 	static Activity& getCurrentScreen();
 
-	template<class ScreenClass>
+	template <class ScreenClass>
 	static void showScreen();
 	static void showDialog(Dialog& dialogToShow);
 	static void back();
+	static void exit();
 
 	static void callActivityOnCreate(Activity* activity);
 	static void callActivityOnStart(Activity* activity);
@@ -47,7 +49,7 @@ public:
 	static void callActivityOnStop(Activity* activity);
 	static void callActivityOnDestroy(Activity* activity);
 
-	void operator=(ardUI const &) = delete;
+	void operator =(ardUI const&) = delete;
 
 	static void checkForActions();
 	static void draw();
@@ -55,7 +57,6 @@ public:
 private:
 	ardUI() = default;
 	~ardUI();
-
 
 	const uint16_t screenHeight {arduiDisplayGetHeight()};
 	const uint16_t screenWidth {arduiDisplayGetWidth()};
@@ -69,7 +70,7 @@ private:
 };
 
 
-template<class ScreenClass>
+template <class ActivityClass>
 void ardUI::showScreen() {
 	auto s {getInstance().currentActivity};
 	if (s) {
@@ -85,13 +86,13 @@ void ardUI::showScreen() {
 			delete lastScreen;
 		}
 	}
-	s = new ScreenClass();
+	s = new ActivityClass();
 	getInstance().currentActivity = s;
 
 	callActivityOnResume(s);
 }
 
 
-#define ardUI() ardUI::getInstance()  // Instantiates ardUI1 from "ardUI1()" call (discouraged)
+#define ardUI() ardUI::getInstance()  // Instantiates ardUI from "ardUI()" call (discouraged)
 
-#endif //ARDUI_ARDUI_H
+#endif //ARDUI_H

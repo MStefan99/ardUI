@@ -10,7 +10,7 @@ Rect Drawable::copyBounds() const {
 }
 
 
-void Drawable::copyBounds(Rect &r) const {
+void Drawable::copyBounds(Rect& r) const {
 	r = viewBox;
 }
 
@@ -26,7 +26,7 @@ void Drawable::setBounds(uint16_t l, uint16_t t, uint16_t r, uint16_t b) {
 }
 
 
-void Drawable::setBounds(const Rect &bounds) {
+void Drawable::setBounds(const Rect& bounds) {
 	onBoundsChange(bounds);
 	viewBox.set(bounds);
 }
@@ -49,7 +49,7 @@ bool Drawable::setLevel(uint16_t l) {
 }
 
 
-bool Drawable::getPadding(Rect &p) const {
+bool Drawable::getPadding(Rect& p) const {
 	bool paddingExists {p};
 	if (paddingExists) {
 		p = padding;
@@ -84,7 +84,7 @@ void Drawable::invalidateSelf() {
 }
 
 
-void Drawable::onBoundsChange(const Rect &bounds) {
+void Drawable::onBoundsChange(const Rect& bounds) {
 	invalidateSelf();
 }
 

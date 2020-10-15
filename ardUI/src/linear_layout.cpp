@@ -10,11 +10,12 @@ LinearLayout::LinearLayout(bool vertical):
 
 
 void LinearLayout::onMeasure(uint16_t w, uint16_t h) {
-	for (const auto &v : viewList) {
+	for (const auto& v : viewList) {
 		v->measure(View::MeasureSpec::makeMeasureSpec(View::MeasureSpec::AT_MOST, w),
 				   View::MeasureSpec::makeMeasureSpec(View::MeasureSpec::AT_MOST, h));
 	}
 }
+
 
 void LinearLayout::onLayout(bool changed, uint16_t l, uint16_t t, uint16_t r, uint16_t b) {
 	int viewLeft {0};
@@ -30,7 +31,6 @@ void LinearLayout::onLayout(bool changed, uint16_t l, uint16_t t, uint16_t r, ui
 			viewTop += v->getMeasuredHeight();
 			v->setBottom(viewTop);
 			v->setRight(layoutRight);
-
 		} else {
 			viewLeft += v->getMeasuredWidth();
 			v->setRight(viewLeft);

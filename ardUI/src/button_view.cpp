@@ -5,11 +5,11 @@
 #include "button_view.h"
 
 
-ButtonView::ButtonView(const String &text):
+ButtonView::ButtonView(const String& text):
 		TextView(text) {}
 
 
-void ButtonView::onDraw(){
+void ButtonView::onDraw() {
 	auto b {getBounds()};
 
 	arduiDisplayDrawLine(b.left, b.top, b.right, b.top, borderColor);  // top

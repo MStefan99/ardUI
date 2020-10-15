@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD 20)
 # Setting directory names
 set(ARDUI_DIRNAME ardUI)
 set(SOURCE_DIRNAME src)
-set(INCLUDE_DIRNAME include)
+set(INCLUDE_DIRNAME inc)
 set(ARDUINO_DIRNAME Arduino)
 set(TESTS_DIRNAME test)
 
@@ -19,7 +19,7 @@ set(ARDUINO_DIRECTORY ${PROJECT_SOURCE_DIR}/${ARDUINO_DIRNAME})
 set(TEST_DIRECTORY ${PROJECT_SOURCE_DIR}/${TESTS_DIRNAME})
 
 
-# Adding ardUI1 and Arduino emulator build lists
+# Adding ardUI and Arduino emulator build lists
 add_subdirectory(${ARDUINO_DIRECTORY})
 add_subdirectory(${ARDUI_DIRECTORY})
 
@@ -37,9 +37,9 @@ add_executable(
 )
 
 
-# Linking emulator and ardUI1 to main code
+# Linking emulator and ardUI to main code
 target_link_libraries(Run ardUI)
 target_link_libraries(Run arduinoEmulator)
 
-# Linking emulator and ardUI1 to tests
+# Linking emulator and ardUI to tests
 target_link_libraries(Test_template_library ardUI)

@@ -10,12 +10,12 @@ TextView::TextView(const String& text):
 		text(text) {}
 
 
-void TextView::setText(const String &textToSet) {
+void TextView::setText(const String& textToSet) {
 	text = textToSet;
 }
 
 
-void TextView::append(const String &textToAppend) {
+void TextView::append(const String& textToAppend) {
 	text += textToAppend;
 }
 

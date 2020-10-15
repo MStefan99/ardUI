@@ -10,7 +10,7 @@ Activity::~Activity() {
 }
 
 
-template<class compiledLayout>
+template <class compiledLayout>
 void Activity::setContentView(compiledLayout layoutClass) {
 	layoutClass.fill();  // "fill()" function must be present in the compiled layout
 }
@@ -21,7 +21,7 @@ void Activity::setContentView(const String& xml) {
 }
 
 
-void Activity::setRootView(View *view){
+void Activity::setRootView(View* view) {
 	rootView = view;
 }
 

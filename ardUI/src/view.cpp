@@ -63,12 +63,14 @@ void View::layout(uint16_t left, uint16_t top, uint16_t right, uint16_t bottom) 
 }
 
 
-void View::layout(const Rect &r) {
+void View::layout(const Rect& r) {
 	layout(r.left, r.top, r.right, r.bottom);
 }
 
 
-void View::onDraw() {}
+void View::onDraw() {
+	// Nothing to do
+}
 
 
 void View::invalidate() {
@@ -122,12 +124,12 @@ void View::setMeasuredDimensions(uint16_t w, uint16_t h) {
 }
 
 
-void View::setOnClickListener(void (*l)(View&)) {
+void View::setOnClickListener(void (* l)(View&)) {
 	onClick = l;
 }
 
 
-void View::setOnLongClickListener(void (*l)(View&)) {
+void View::setOnLongClickListener(void (* l)(View&)) {
 	onLongClick = l;
 }
 

@@ -10,7 +10,7 @@
 
 
 namespace ardui {
-	template <class T, class Container = list<T>>
+	template <class T, class Container = list <T>>
 	class stack {
 	public:
 		stack() = default;
@@ -29,32 +29,32 @@ namespace ardui {
 	};
 
 
-	template<class T, class Container>
+	template <class T, class Container>
 	bool stack<T, Container>::empty() const {
 		return c.empty();
 	}
 
 
-	template<class T, class Container>
+	template <class T, class Container>
 	int stack<T, Container>::size() const {
 		return c.size();
 	}
 
 
-	template<class T, class Container>
-	T &stack<T, Container>::top() const {
+	template <class T, class Container>
+	T& stack<T, Container>::top() const {
 		return c.back();
 	}
 
 
-	template<class T, class Container>
+	template <class T, class Container>
 	void stack<T, Container>::pop() {
 		c.pop_back();
 	}
 
 
-	template<class T, class Container>
-	void stack<T, Container>::push(const T &value) {
+	template <class T, class Container>
+	void stack<T, Container>::push(const T& value) {
 		c.push_back(value);
 	}
 }

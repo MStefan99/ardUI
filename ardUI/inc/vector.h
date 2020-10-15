@@ -5,7 +5,6 @@
 #ifndef ARDUI_VECTOR_H
 #define ARDUI_VECTOR_H
 
-
 namespace ardui {
 	template <class T>
 	class vector {
@@ -14,32 +13,32 @@ namespace ardui {
 		public:
 			iterator() = default;
 
-			iterator& operator++();
-			const iterator operator++(int);
+			iterator& operator ++();
+			const iterator operator ++(int);
 
-			iterator& operator--();
-			const iterator operator--(int);
+			iterator& operator --();
+			const iterator operator --(int);
 
-			bool operator==(const iterator& it) const;
-			bool operator!=(const iterator& it) const;
+			bool operator ==(const iterator& it) const;
+			bool operator !=(const iterator& it) const;
 
-			iterator& operator=(const T&);
+			iterator& operator =(const T&);
 
-			T* operator->() const;
-			T& operator*() const;
+			T* operator ->() const;
+			T& operator *() const;
 
-			iterator operator+(int n) const;
-			iterator operator-(int n) const;
+			iterator operator +(int n) const;
+			iterator operator -(int n) const;
 
-			iterator& operator+=(int n);
-			iterator& operator-=(int n);
+			iterator& operator +=(int n);
+			iterator& operator -=(int n);
 
-			bool operator<(const iterator& it) const;
-			bool operator<=(const iterator& it) const;
-			bool operator>(const iterator& it) const;
-			bool operator>=(const iterator& it) const;
+			bool operator <(const iterator& it) const;
+			bool operator <=(const iterator& it) const;
+			bool operator >(const iterator& it) const;
+			bool operator >=(const iterator& it) const;
 
-			T& operator[](int n) const;
+			T& operator [](int n) const;
 
 			friend class vector;
 
@@ -49,6 +48,7 @@ namespace ardui {
 		};
 
 		vector() = default;
+		//TODO: add copy constructor
 		~vector();
 
 		void push_back(const T& value);
@@ -59,8 +59,8 @@ namespace ardui {
 		iterator erase(iterator first, iterator last);
 		void clear();
 
-		T& operator[](int n) const;
-		vector& operator=(const vector& vector);
+		T& operator [](int n) const;
+		vector& operator =(const vector& vector);
 
 		bool empty() const;
 		int size() const;
@@ -85,7 +85,7 @@ namespace ardui {
 
 
 	template <class T>
-	void vector<T>::push_back(const T &value) {
+	void vector<T>::push_back(const T& value) {
 		if (vectorSize == vectorCapacity) {
 			resize(vectorCapacity * 1.1 + 1);
 		}
@@ -95,14 +95,14 @@ namespace ardui {
 	}
 
 
-	template<class T>
+	template <class T>
 	void vector<T>::pop_back() {
 		--vectorSize;
 	}
 
 
 	template <class T>
-	typename vector<T>::iterator vector<T>::insert(iterator position, const T &value) {
+	typename vector<T>::iterator vector<T>::insert(iterator position, const T& value) {
 		long i {position.elementPointer - vectorArray};
 
 		if (vectorSize == vectorCapacity) {
@@ -152,7 +152,7 @@ namespace ardui {
 	template <class T>
 	void vector<T>::clear() {
 		for (int i {0}; i < vectorSize; ++i) {
-			vectorArray[i] = T{};
+			vectorArray[i] = T {};
 		}
 		vectorSize = 0;
 	}
@@ -173,14 +173,14 @@ namespace ardui {
 	}
 
 
-	template<class T>
-	T &vector<T>::operator[](int n) const {
+	template <class T>
+	T& vector<T>::operator [](int n) const {
 		return vectorArray[n];
 	}
 
 
 	template <class T>
-	vector<T>& vector<T>::operator=(const vector<T> &vector) {
+	vector<T>& vector<T>::operator =(const vector <T>& vector) {
 		if (this != &vector) {
 			resize(vector.vectorSize);
 			for (int i {0}; i < vectorSize; ++i) {
@@ -191,19 +191,20 @@ namespace ardui {
 		}
 	}
 
-	template<class T>
+
+	template <class T>
 	bool vector<T>::empty() const {
 		return vectorSize == 0;
 	}
 
 
-	template<class T>
+	template <class T>
 	int vector<T>::size() const {
 		return vectorSize;
 	}
 
 
-	template<class T>
+	template <class T>
 	int vector<T>::capacity() const {
 		return vectorCapacity;
 	}
@@ -222,19 +223,19 @@ namespace ardui {
 
 
 	template <class T>
-	vector<T>::iterator::iterator(T *elementPointer): elementPointer(elementPointer) {
+	vector<T>::iterator::iterator(T* elementPointer): elementPointer(elementPointer) {
 	}
 
 
 	template <class T>
-	typename vector<T>::iterator& vector<T>::iterator::operator++() {
+	typename vector<T>::iterator& vector<T>::iterator::operator ++() {
 		++elementPointer;
 		return *this;
 	}
 
 
 	template <class T>
-	const typename vector<T>::iterator vector<T>::iterator::operator++(int) { // NOLINT(readability-const-return-type)
+	const typename vector<T>::iterator vector<T>::iterator::operator ++(int) { // NOLINT(readability-const-return-type)
 		iterator temp {*this};
 		++elementPointer;
 		return temp;
@@ -242,14 +243,14 @@ namespace ardui {
 
 
 	template <class T>
-	typename vector<T>::iterator& vector<T>::iterator::operator--() {
+	typename vector<T>::iterator& vector<T>::iterator::operator --() {
 		--elementPointer;
 		return *this;
 	}
 
 
 	template <class T>
-	const typename vector<T>::iterator vector<T>::iterator::operator--(int) { // NOLINT(readability-const-return-type)
+	const typename vector<T>::iterator vector<T>::iterator::operator --(int) { // NOLINT(readability-const-return-type)
 		iterator temp {*this};
 		--elementPointer;
 		return temp;
@@ -257,7 +258,7 @@ namespace ardui {
 
 
 	template <class T>
-	typename vector<T>::iterator vector<T>::iterator::operator+(int n) const {
+	typename vector<T>::iterator vector<T>::iterator::operator +(int n) const {
 		iterator temp {*this};
 		temp.elementPointer += n;
 		return temp;
@@ -265,7 +266,7 @@ namespace ardui {
 
 
 	template <class T>
-	typename vector<T>::iterator vector<T>::iterator::operator-(int n) const {
+	typename vector<T>::iterator vector<T>::iterator::operator -(int n) const {
 		iterator temp {*this};
 		temp.elementPointer -= n;
 		return temp;
@@ -273,78 +274,77 @@ namespace ardui {
 
 
 	template <class T>
-	typename vector<T>::iterator& vector<T>::iterator::operator+=(int n) {
+	typename vector<T>::iterator& vector<T>::iterator::operator +=(int n) {
 		elementPointer += n;
 		return *this;
 	}
 
 
 	template <class T>
-	typename vector<T>::iterator& vector<T>::iterator::operator-=(int n) {
+	typename vector<T>::iterator& vector<T>::iterator::operator -=(int n) {
 		elementPointer -= n;
 		return *this;
 	}
 
 
 	template <class T>
-	typename vector<T>::iterator& vector<T>::iterator::operator=(const T &value) {
+	typename vector<T>::iterator& vector<T>::iterator::operator =(const T& value) {
 		*elementPointer = value;
 	}
 
 
 	template <class T>
-	T* vector<T>::iterator::operator->() const {
+	T* vector<T>::iterator::operator ->() const {
 		return elementPointer;
 	}
 
 
 	template <class T>
-	T& vector<T>::iterator::operator*() const {
+	T& vector<T>::iterator::operator *() const {
 		return *elementPointer;
 	}
 
 
 	template <class T>
-	T& vector<T>::iterator::operator[](int n) const {
+	T& vector<T>::iterator::operator [](int n) const {
 		return elementPointer[n];
 	}
 
 
 	template <class T>
-	bool vector<T>::iterator::operator==(const iterator &it) const {
+	bool vector<T>::iterator::operator ==(const iterator& it) const {
 		return elementPointer == it.elementPointer;
 	}
 
 
 	template <class T>
-	bool vector<T>::iterator::operator!=(const iterator &it) const {
+	bool vector<T>::iterator::operator !=(const iterator& it) const {
 		return elementPointer != it.elementPointer;
 	}
 
 
 	template <class T>
-	bool vector<T>::iterator::operator<(const iterator &it) const {
+	bool vector<T>::iterator::operator <(const iterator& it) const {
 		return elementPointer < it.elementPointer;
 	}
 
 
 	template <class T>
-	bool vector<T>::iterator::operator<=(const iterator &it) const {
+	bool vector<T>::iterator::operator <=(const iterator& it) const {
 		return elementPointer <= it.elementPointer;
 	}
 
 
 	template <class T>
-	bool vector<T>::iterator::operator>(const iterator &it) const {
+	bool vector<T>::iterator::operator >(const iterator& it) const {
 		return elementPointer > it.elementPointer;
 	}
 
 
 	template <class T>
-	bool vector<T>::iterator::operator>=(const iterator &it) const {
+	bool vector<T>::iterator::operator >=(const iterator& it) const {
 		return elementPointer >= it.elementPointer;
 	}
 }
-
 
 #endif //ARDUI_VECTOR_H

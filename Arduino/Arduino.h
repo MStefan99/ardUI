@@ -16,7 +16,6 @@
 
 #define LOOP_ITERATIONS 1
 
-
 typedef std::string String;
 
 
@@ -31,26 +30,26 @@ class ArduinoSerial {
 public:
 	void begin(long baud);
 
-	template<class C>
-	void print(const C &data);
+	template <class C>
+	void print(const C& data);
 
-	template<class C>
-	void println(const C &data);
+	template <class C>
+	void println(const C& data);
 };
 
 
-template<class C>
-void ArduinoSerial::print(const C &data) {
+template <class C>
+void ArduinoSerial::print(const C& data) {
 	std::cout << data;
 }
 
 
-template<class C>
-void ArduinoSerial::println(const C &data) {
+template <class C>
+void ArduinoSerial::println(const C& data) {
 	std::cout << data << std::endl;
 }
 
 
-static ArduinoSerial Serial{};
+static ArduinoSerial Serial {};
 
 #endif //ARDUI_ARDUINO_H

@@ -18,23 +18,10 @@ void ViewGroup::addView(View* view) {
 
 
 View* ViewGroup::findViewById(int id) {
-	int count = getChildCount();
-	for (int i = 0; i < count; ++i) {
-		View& v = getChildAt(i);
-		if (v.findViewById(id)) {
-			return v.findViewById(id);
+	for (const auto& view : viewList) {
+		if (view->findViewById(id)) {
+			return view->findViewById(id);
 		}
 	}
 	return nullptr;
 }
-
-
-int ViewGroup::getChildCount() {
-	return viewList.size();
-}
-
-
-View& ViewGroup::getChildAt(int i) {
-	return *viewList[i];
-}
-

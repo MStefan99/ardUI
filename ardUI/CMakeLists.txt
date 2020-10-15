@@ -1,4 +1,4 @@
-# Adding ardUI1 framework
+# Adding ardUI framework
 add_library(ardUI SHARED)
 target_sources(ardUI PRIVATE
 		${SOURCE_DIRECTORY}/ardUI.cpp

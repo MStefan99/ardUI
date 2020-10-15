@@ -2,12 +2,13 @@
 // Created by MStefan99 on 25.11.19.
 //
 
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "OCInconsistentNamingInspection"
 #ifndef ARDUI_LIST_H
 #define ARDUI_LIST_H
 
-
 namespace ardui {
-	template<class T>
+	template <class T>
 	class list {
 	protected:
 		struct element;
@@ -17,19 +18,19 @@ namespace ardui {
 		public:
 			iterator() = default;
 
-			iterator& operator++();
-			const iterator operator++(int);
+			iterator& operator ++();
+			const iterator operator ++(int);
 
-			iterator& operator--();
-			const iterator operator--(int);
+			iterator& operator --();
+			const iterator operator --(int);
 
-			bool operator==(const iterator& it) const;
-			bool operator!=(const iterator& it) const;
+			bool operator ==(const iterator& it) const;
+			bool operator !=(const iterator& it) const;
 
-			iterator& operator=(const T&);
+			iterator& operator =(const T&);
 
-			T* operator->() const;
-			T& operator*() const;
+			T* operator ->() const;
+			T& operator *() const;
 
 			friend class list;
 
@@ -43,8 +44,8 @@ namespace ardui {
 		list(const list& list);
 		~list();
 
-		void push_back(const T &value);
-		void push_front(const T &value);
+		void push_back(const T& value);
+		void push_front(const T& value);
 
 		T& front() const;
 		T& back() const;
@@ -53,7 +54,7 @@ namespace ardui {
 		void pop_front();
 
 		int remove(const T& value);
-		int remove_if(bool (*predicate)(const T&));
+		int remove_if(bool (* predicate)(const T&));
 
 		iterator insert(iterator position, const T& value);
 
@@ -64,8 +65,8 @@ namespace ardui {
 		int size() const;
 		bool empty() const;
 
-		T& operator[](int n) const;
-		list& operator=(const list& list);
+		T& operator [](int n) const;
+		list& operator =(const list& list);
 
 		iterator begin() const;
 		iterator end() const;
@@ -76,8 +77,8 @@ namespace ardui {
 			element(const element& listElement) = default;
 			~element() = default;
 
-			element& operator=(const element& listElement) = default;
-			element& operator=(const T& value);
+			element& operator =(const element& listElement) = default;
+			element& operator =(const T& value);
 
 			T elementValue;
 			element* nextElement {nullptr};
@@ -97,7 +98,7 @@ namespace ardui {
 			elementValue(value), prevElement(prev), nextElement(next) {}
 
 
-	template<class T>
+	template <class T>
 	list<T>::list(const list& l) {
 		for (const auto& e : l) {
 			push_back(e);
@@ -106,14 +107,14 @@ namespace ardui {
 	}
 
 
-	template<class T>
+	template <class T>
 	list<T>::~list() {
 		clear();
 	}
 
 
-	template<class T>
-	void list<T>::push_back(const T &value) {
+	template <class T>
+	void list<T>::push_back(const T& value) {
 		auto e = new element {value, last, nullptr};
 
 		if (!first) {
@@ -127,8 +128,8 @@ namespace ardui {
 	}
 
 
-	template<class T>
-	void list<T>::push_front(const T &value) {
+	template <class T>
+	void list<T>::push_front(const T& value) {
 		auto e = new element {value, nullptr, first};
 
 		if (!last) {
@@ -142,7 +143,7 @@ namespace ardui {
 	}
 
 
-	template<class T>
+	template <class T>
 	void list<T>::pop_back() {
 		auto e {last};
 		if (e) {
@@ -159,7 +160,7 @@ namespace ardui {
 	}
 
 
-	template<class T>
+	template <class T>
 	void list<T>::pop_front() {
 		auto e {first};
 		if (e) {
@@ -204,7 +205,7 @@ namespace ardui {
 	}
 
 
-	template<class T>
+	template <class T>
 	typename list<T>::iterator list<T>::insert(iterator position, const T& value) {
 		auto e {position.elementPointer};
 		auto n = new element {value, nullptr, e};
@@ -232,7 +233,7 @@ namespace ardui {
 	}
 
 
-	template<class T>
+	template <class T>
 	typename list<T>::iterator list<T>::erase(iterator position) {
 		auto temp = position;
 
@@ -243,7 +244,7 @@ namespace ardui {
 	}
 
 
-	template<class T>
+	template <class T>
 	typename list<T>::iterator list<T>::erase(iterator f, iterator l) {
 		while (f != l) {
 			auto temp {f};
@@ -255,7 +256,7 @@ namespace ardui {
 	}
 
 
-	template<class T>
+	template <class T>
 	int list<T>::remove(const T& value) {
 		int i {0};
 		element* e {first};
@@ -273,8 +274,8 @@ namespace ardui {
 	}
 
 
-	template<class T>
-	int list<T>::remove_if(bool (*p)(const T&)) {
+	template <class T>
+	int list<T>::remove_if(bool (* p)(const T&)) {
 		int i {0};
 		element* e {first};
 
@@ -291,7 +292,7 @@ namespace ardui {
 	}
 
 
-	template<class T>
+	template <class T>
 	void list<T>::clear() {
 		element* e {first};
 
@@ -304,7 +305,7 @@ namespace ardui {
 	}
 
 
-	template<class T>
+	template <class T>
 	int list<T>::size() const {
 		return listSize;
 	}
@@ -316,13 +317,13 @@ namespace ardui {
 	}
 
 
-	template<class T>
+	template <class T>
 	typename list<T>::iterator list<T>::begin() const {
 		return iterator(first);
 	}
 
 
-	template<class T>
+	template <class T>
 	typename list<T>::iterator list<T>::end() const {
 		iterator it {};
 		it.lastPointer = last;
@@ -330,8 +331,8 @@ namespace ardui {
 	}
 
 
-	template<class T>
-	T &list<T>::operator[](int n) const {
+	template <class T>
+	T& list<T>::operator [](int n) const {
 		auto p {first};
 		for (int i {0}; i < n; ++i) {
 			p = p->nextElement;
@@ -340,8 +341,8 @@ namespace ardui {
 	}
 
 
-	template<class T>
-	list<T>& list<T>::operator=(const list& l) {
+	template <class T>
+	list<T>& list<T>::operator =(const list& l) {
 		if (this == &l) {
 			return *this;
 		}
@@ -353,7 +354,7 @@ namespace ardui {
 
 
 	template <class T>
-	typename list<T>::element& list<T>::element::operator=(const T& value) {
+	typename list<T>::element& list<T>::element::operator =(const T& value) {
 		elementValue = value;
 		return *this;
 	}
@@ -363,31 +364,29 @@ namespace ardui {
 	list<T>::iterator::iterator(element* elementPointer): elementPointer(elementPointer) {}
 
 
-	template<class T>
-	typename list<T>::iterator &list<T>::iterator::operator++() {
+	template <class T>
+	typename list<T>::iterator& list<T>::iterator::operator ++() {
 		if (!elementPointer->nextElement) {
 			lastPointer = elementPointer;
-		} else {
-			elementPointer = elementPointer->nextElement;
 		}
+		elementPointer = elementPointer->nextElement;
 		return *this;
 	}
 
 
-	template<class T>
-	const typename list<T>::iterator list<T>::iterator::operator++(int) { // NOLINT(readability-const-return-type)
+	template <class T>
+	const typename list<T>::iterator list<T>::iterator::operator ++(int) { // NOLINT(readability-const-return-type)
 		iterator temp {this};
 		if (!elementPointer->nextElement) {
 			lastPointer = elementPointer;
-		} else {
-			elementPointer = elementPointer->nextElement;
 		}
+		elementPointer = elementPointer->nextElement;
 		return temp;
 	}
 
 
-	template<class T>
-	typename list<T>::iterator &list<T>::iterator::operator--() {
+	template <class T>
+	typename list<T>::iterator& list<T>::iterator::operator --() {
 		if (!elementPointer) {
 			elementPointer = lastPointer;
 		} else {
@@ -397,8 +396,8 @@ namespace ardui {
 	}
 
 
-	template<class T>
-	const typename list<T>::iterator list<T>::iterator::operator--(int) { // NOLINT(readability-const-return-type)
+	template <class T>
+	const typename list<T>::iterator list<T>::iterator::operator --(int) { // NOLINT(readability-const-return-type)
 		iterator temp {this};
 		if (!elementPointer) {
 			elementPointer = lastPointer;
@@ -409,35 +408,37 @@ namespace ardui {
 	}
 
 
-	template<class T>
-	bool list<T>::iterator::operator==(const iterator& it) const {
+	template <class T>
+	bool list<T>::iterator::operator ==(const iterator& it) const {
 		return elementPointer == it.elementPointer;
 	}
 
 
-	template<class T>
-	bool list<T>::iterator::operator!=(const iterator& it) const {
+	template <class T>
+	bool list<T>::iterator::operator !=(const iterator& it) const {
 		return elementPointer != it.elementPointer;
 	}
 
 
-	template<class T>
-	typename list<T>::iterator& list<T>::iterator::operator=(const T& value) {
+	template <class T>
+	typename list<T>::iterator& list<T>::iterator::operator =(const T& value) {
 		elementPointer->elementValue = value;
 		return *this;
 	}
 
 
-	template<class T>
-	T* list<T>::iterator::operator->() const {
+	template <class T>
+	T* list<T>::iterator::operator ->() const {
 		return &elementPointer->elementValue;
 	}
 
 
-	template<class T>
-	T& list<T>::iterator::operator*() const {
+	template <class T>
+	T& list<T>::iterator::operator *() const {
 		return elementPointer->elementValue;
 	}
 }
 
 #endif //ARDUI_LIST_H
+
+#pragma clang diagnostic pop

@@ -44,19 +44,19 @@ namespace ardui {
 		public:
 			iterator() = default;
 
-			iterator& operator++();
-			const iterator operator++(int);
+			iterator& operator ++();
+			const iterator operator ++(int);
 
-			iterator& operator--();
-			const iterator operator--(int);
+			iterator& operator --();
+			const iterator operator --(int);
 
-			bool operator==(const iterator& it) const;
-			bool operator!=(const iterator& it) const;
+			bool operator ==(const iterator& it) const;
+			bool operator !=(const iterator& it) const;
 
-			iterator& operator=(const T&);
+			iterator& operator =(const T&);
 
-			pair<const Key, T>* operator->() const;
-			pair<const Key, T>& operator*() const;
+			pair<const Key, T>* operator ->() const;
+			pair<const Key, T>& operator *() const;
 
 			friend class map;
 
@@ -67,9 +67,10 @@ namespace ardui {
 		};
 
 		map() = default;
+		//TODO: add copy constructor
 		~map();
 
-		T& operator[](const Key& k);
+		T& operator [](const Key& k);
 
 		bool empty() const;
 		int size() const;
@@ -108,15 +109,15 @@ namespace ardui {
 	};
 
 
-	template<class Key, class T, class Comp>
-	map<Key, T, Comp>::iterator::iterator(element *currentElement, element* lastElement):
+	template <class Key, class T, class Comp>
+	map<Key, T, Comp>::iterator::iterator(element* currentElement, element* lastElement):
 			currentElement(currentElement),
 			lastElement(lastElement) {
 	}
 
 
-	template<class Key, class T, class Comp>
-	typename map<Key, T, Comp>::iterator &map<Key, T, Comp>::iterator::operator++() {
+	template <class Key, class T, class Comp>
+	typename map<Key, T, Comp>::iterator& map<Key, T, Comp>::iterator::operator ++() {
 		if (currentElement->right) {
 			currentElement = leftmost(currentElement->right);
 			lastElement = currentElement;
@@ -134,8 +135,9 @@ namespace ardui {
 	}
 
 
-	template<class Key, class T, class Comp>
-	const typename map<Key, T, Comp>::iterator map<Key, T, Comp>::iterator::operator++(int) { // NOLINT(readability-const-return-type)
+	template <class Key, class T, class Comp>
+	const typename map<Key, T, Comp>::iterator
+	map<Key, T, Comp>::iterator::operator ++(int) { // NOLINT(readability-const-return-type)
 		auto temp {*this};
 		if (currentElement->right) {
 			currentElement = leftmost(currentElement->right);
@@ -154,8 +156,8 @@ namespace ardui {
 	}
 
 
-	template<class Key, class T, class Comp>
-	typename map<Key, T, Comp>::iterator &map<Key, T, Comp>::iterator::operator--() {
+	template <class Key, class T, class Comp>
+	typename map<Key, T, Comp>::iterator& map<Key, T, Comp>::iterator::operator --() {
 		if (!currentElement) {
 			currentElement = lastElement;
 		} else if (currentElement->left) {
@@ -172,8 +174,9 @@ namespace ardui {
 	}
 
 
-	template<class Key, class T, class Comp>
-	const typename map<Key, T, Comp>::iterator map<Key, T, Comp>::iterator::operator--(int) { // NOLINT(readability-const-return-type)
+	template <class Key, class T, class Comp>
+	const typename map<Key, T, Comp>::iterator
+	map<Key, T, Comp>::iterator::operator --(int) { // NOLINT(readability-const-return-type)
 		auto temp {*this};
 		if (!currentElement) {
 			currentElement = lastElement;
@@ -191,70 +194,70 @@ namespace ardui {
 	}
 
 
-	template<class Key, class T, class Comp>
-	bool map<Key, T, Comp>::iterator::operator==(const iterator &it) const {
+	template <class Key, class T, class Comp>
+	bool map<Key, T, Comp>::iterator::operator ==(const iterator& it) const {
 		return currentElement == it.currentElement;
 	}
 
 
-	template<class Key, class T, class Comp>
-	bool map<Key, T, Comp>::iterator::operator!=(const iterator &it) const {
+	template <class Key, class T, class Comp>
+	bool map<Key, T, Comp>::iterator::operator !=(const iterator& it) const {
 		return currentElement != it.currentElement;
 	}
 
 
-	template<class Key, class T, class Comp>
-	typename map<Key, T, Comp>::iterator &map<Key, T, Comp>::iterator::operator=(const T& value) {
+	template <class Key, class T, class Comp>
+	typename map<Key, T, Comp>::iterator& map<Key, T, Comp>::iterator::operator =(const T& value) {
 		currentElement->value.second = value;
 		return *this;
 	}
 
 
-	template<class Key, class T, class Comp>
-	pair<const Key, T> *map<Key, T, Comp>::iterator::operator->() const {
+	template <class Key, class T, class Comp>
+	pair<const Key, T>* map<Key, T, Comp>::iterator::operator ->() const {
 		return &currentElement->value;
 	}
 
 
-	template<class Key, class T, class Comp>
-	pair<const Key, T> &map<Key, T, Comp>::iterator::operator*() const {
+	template <class Key, class T, class Comp>
+	pair<const Key, T>& map<Key, T, Comp>::iterator::operator *() const {
 		return currentElement->value;
 	}
 
 
-	template<class Key, class T, class Comp>
-	map<Key, T, Comp>::element::element(const pair<const Key, T> &value, element* parent):
+	template <class Key, class T, class Comp>
+	map<Key, T, Comp>::element::element(const pair<const Key, T>& value, element* parent):
 			value(value),
 			parent(parent) {
 	}
 
 
-	template<class Key, class T, class Comp>
+	template <class Key, class T, class Comp>
 	map<Key, T, Comp>::element::element(const Key& k, element* parent):
-			value(k, T{}),
+			value(k, T {}),
 			parent(parent) {
 	}
 
 
-	template<class Key, class T, class Comp>
+	template <class Key, class T, class Comp>
 	bool map<Key, T, Comp>::empty() const {
 		return !mapRoot;
 	}
 
 
-	template<class Key, class T, class Comp>
+	template <class Key, class T, class Comp>
 	int map<Key, T, Comp>::size() const {
 		return mapSize;
 	}
 
 
-	template<class Key, class T, class Comp>
+	template <class Key, class T, class Comp>
 	typename map<Key, T, Comp>::iterator map<Key, T, Comp>::find(const Key& k) const {
 		return iterator(findElement(k));
 	}
 
 
-	template<class Key, class T, class Comp>
+	template <class Key, class T, class Comp>
 	pair<typename map<Key, T, Comp>::iterator, bool> map<Key, T, Comp>::insert(const pair<const Key, T>& value) {
 		element** node {&mapRoot};
 		element** parent {&mapRoot};
@@ -277,7 +280,7 @@ namespace ardui {
 	}
 
 
-	template<class Key, class T, class Comp>
+	template <class Key, class T, class Comp>
 	typename map<Key, T, Comp>::iterator map<Key, T, Comp>::erase(iterator position) {
 		auto temp {position};
 		++position;
@@ -288,7 +291,7 @@ namespace ardui {
 	}
 
 
-	template<class Key, class T, class Comp>
+	template <class Key, class T, class Comp>
 	int map<Key, T, Comp>::erase(const Key& k) {
 		element* e {findElement(k)};
 
@@ -302,7 +305,7 @@ namespace ardui {
 	}
 
 
-	template<class Key, class T, class Comp>
+	template <class Key, class T, class Comp>
 	typename map<Key, T, Comp>::iterator map<Key, T, Comp>::erase(iterator first, iterator last) {
 		element* node {first.currentElement};
 		element* temp {node};
@@ -336,7 +339,7 @@ namespace ardui {
 	}
 
 
-	template<class Key, class T, class Comp>
+	template <class Key, class T, class Comp>
 	void map<Key, T, Comp>::clear() {
 		element* node {leftmost(mapRoot)};
 		element* temp {node};
@@ -363,14 +366,15 @@ namespace ardui {
 		mapSize = 0;
 	}
 
-	template<class Key, class T, class Comp>
+
+	template <class Key, class T, class Comp>
 	map<Key, T, Comp>::~map() {
 		clear();
 	}
 
 
-	template<class Key, class T, class Comp>
-	T &map<Key, T, Comp>::operator[](const Key &k) {
+	template <class Key, class T, class Comp>
+	T& map<Key, T, Comp>::operator [](const Key& k) {
 		element** node {&mapRoot};
 		element** parent {&mapRoot};
 
@@ -392,20 +396,20 @@ namespace ardui {
 	}
 
 
-	template<class Key, class T, class Comp>
+	template <class Key, class T, class Comp>
 	typename map<Key, T, Comp>::iterator map<Key, T, Comp>::begin() const {
 		return map::iterator(leftmost(mapRoot));
 	}
 
 
-	template<class Key, class T, class Comp>
+	template <class Key, class T, class Comp>
 	typename map<Key, T, Comp>::iterator map<Key, T, Comp>::end() const {
 		return map::iterator(nullptr, rightmost(mapRoot));
 	}
 
 
-	template<class Key, class T, class Comp>
-	void map<Key, T, Comp>::replaceElement(element *o, element *n) {
+	template <class Key, class T, class Comp>
+	void map<Key, T, Comp>::replaceElement(element* o, element* n) {
 		if (o->parent) {
 			if (o == o->parent->left) {
 				o->parent->left = n;
@@ -423,7 +427,7 @@ namespace ardui {
 	}
 
 
-	template<class Key, class T, class Comp>
+	template <class Key, class T, class Comp>
 	void map<Key, T, Comp>::destroyElement(element* e) {
 		element* replacement {};
 
@@ -453,11 +457,11 @@ namespace ardui {
 		if (e == mapRoot) {
 			mapRoot = replacement;
 		}
-		delete(e);
+		delete (e);
 	}
 
 
-	template<class Key, class T, class Comp>
+	template <class Key, class T, class Comp>
 	typename map<Key, T, Comp>::element* map<Key, T, Comp>::findElement(const Key& k) const {
 		element* node {mapRoot};
 
@@ -473,6 +477,5 @@ namespace ardui {
 		return nullptr;
 	}
 }
-
 
 #endif //ARDUI_MAP_H

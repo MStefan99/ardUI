@@ -5,10 +5,12 @@
 #ifndef ARDUI_TEXT_VIEW_H
 #define ARDUI_TEXT_VIEW_H
 
+
 #include "platform.h"
 #include "view.h"
 
-class TextView : public View {
+
+class TextView: public View {
 public:
 	TextView() = default;
 	explicit TextView(const String& text);
@@ -30,6 +32,5 @@ protected:
 	uint16_t textSize {10};
 	uint32_t textColor {0};
 };
-
 
 #endif //ARDUI_TEXT_VIEW_H

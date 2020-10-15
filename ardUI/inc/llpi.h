@@ -5,8 +5,10 @@
 #ifndef ARDUI_LLPI_H
 #define ARDUI_LLPI_H
 
+
 #include "platform.h"
 #include <ctime>
+
 
 enum returnCode {
 	Ok,
@@ -39,10 +41,9 @@ returnCode arduiDisplayFillCircle(uint16_t x, uint16_t y, uint16_t radius, uint3
 returnCode arduiDisplayDrawRect(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint32_t color);
 returnCode arduiDisplayFillRect(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint32_t color);
 returnCode arduiDisplayDrawTriangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
-		uint16_t x3, uint16_t y3, uint32_t color);
+									uint16_t x3, uint16_t y3, uint32_t color);
 returnCode arduiDisplayFillTriangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
-		uint16_t x3, uint16_t y3, uint32_t color);
+									uint16_t x3, uint16_t y3, uint32_t color);
 returnCode arduiDisplayDrawBitmap(uint16_t x, uint16_t y, uint16_t* bitmap);
-
 
 #endif //ARDUI_LLPI_H

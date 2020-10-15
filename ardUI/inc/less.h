@@ -6,17 +6,18 @@
 #define ARDUI_LESS_H
 
 namespace ardui {
-	template<class T>
+	template <class T>
 	struct less {
-		bool operator()(const T &x, const T &y) const;
+		bool operator ()(const T& x, const T& y) const;
 
 		typedef T first_argument_type;
 		typedef T second_argument_type;
 		typedef bool result_type;
 	};
 
-	template<class T>
-	bool ardui::less<T>::operator()(const T &x, const T &y) const {
+
+	template <class T>
+	bool ardui::less<T>::operator ()(const T& x, const T& y) const {
 		return x < y;
 	}
 }

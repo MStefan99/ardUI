@@ -15,28 +15,32 @@
 // Needed to avoid undefined reference error, usually defined with setup() and loop()
 void arduiUserSetup() {}
 
+
 void arduiUserLoop() {}
 
 
-class AssertException : public std::exception {
+class AssertException: public std::exception {
 public:
-	explicit AssertException(const char *description) {
+	explicit AssertException(const char* description) {
 		desc = new char[strlen(description) + 1];
 		strcpy(desc, description);
 	}
 
+
 	~AssertException() override { delete[] desc; }
 
-	const char *what() const noexcept override { return desc; }
+
+	const char* what() const noexcept override { return desc; }
+
 
 private:
-	char *desc{nullptr};
+	char* desc {nullptr};
 };
-
 
 using namespace std;
 
-template<class T>
+
+template <class T>
 void assert(T c) {
 	if (!c) {
 		cerr << "True assert failed!" << endl;
@@ -45,7 +49,7 @@ void assert(T c) {
 }
 
 
-template<class T>
+template <class T>
 void assertFalse(T c) {
 	if (c) {
 		cerr << "False assert failed!" << endl;
@@ -54,7 +58,7 @@ void assertFalse(T c) {
 }
 
 
-template<class T>
+template <class T>
 void assert(T c1, T c2) {
 	if (c1 != c2) {
 		cerr << "Object comparison assert failed!" << endl;
@@ -63,7 +67,7 @@ void assert(T c1, T c2) {
 }
 
 
-template<class T>
+template <class T>
 void assertFalse(T c1, T c2) {
 	if (c1 == c2) {
 		cerr << "Object false comparison assert failed!" << endl;
@@ -73,7 +77,7 @@ void assertFalse(T c1, T c2) {
 
 
 void vectorAssert() {
-	ardui::vector<int> v{};
+	ardui::vector<int> v {};
 
 	assert(v.empty(), true);
 	// Push and subscript assert
@@ -125,7 +129,7 @@ void vectorAssert() {
 
 
 void listAssert() {
-	ardui::list<int> l{};
+	ardui::list<int> l {};
 
 	assert(l.empty(), true);
 	// Push and subscript assert
@@ -153,7 +157,7 @@ void listAssert() {
 	assert(l.size(), 12);
 
 	// erase assert
-	auto it{l.begin()};
+	auto it {l.begin()};
 	it = l.erase(++it);
 	++it;
 	it = l.erase(++it);
@@ -170,7 +174,7 @@ void listAssert() {
 	int i = l.remove(6);
 	assert(l[4], 7);
 	assert(i, 1);
-	i = l.remove_if([](const int &e) -> bool {
+	i = l.remove_if([](const int& e) -> bool {
 		return !e;
 	});
 	assert(l[1], 1);
@@ -180,11 +184,18 @@ void listAssert() {
 	assert(l.front(), -1);
 	assert(l.back(), 9);
 	assert(*--l.end(), 9);
+
+	ardui::list<int> l2 {l};
+
+	assert(l2.size(), 6);
+	assert(l2.front(), -1);
+	assert(l2.back(), 9);
+	assert(*--l2.end(), 9);
 }
 
 
 void mapAssert() {
-	ardui::map<int, double> m{};
+	ardui::map<int, double> m {};
 
 	// insert assert
 	assert(m.empty(), true);
@@ -204,7 +215,7 @@ void mapAssert() {
 	assert(m.empty(), false);
 
 	// erase assert
-	auto it{--m.end()};
+	auto it {--m.end()};
 	it = m.erase(--it);
 	m.erase(3);
 	assert(m.size(), 6);
@@ -262,7 +273,7 @@ int main() {
 		queueAssert();
 
 		cout << "All tests passed successfully!" << endl;
-	} catch (const AssertException &e) {
+	} catch (const AssertException& e) {
 		cout << "The following exception occurred while running the tests: " << e.what() << std::endl;
 	}
 }

@@ -9,10 +9,10 @@ Rect::Rect(uint16_t left, uint16_t top, uint16_t right, uint16_t bottom):
 		left(left),
 		top(top),
 		right(right),
-		bottom{bottom} {}
+		bottom {bottom} {}
 
 
-bool Rect::contains(const Rect &r) const {
+bool Rect::contains(const Rect& r) const {
 	return contains(r.left, r.top) && contains(r.right, r.bottom);
 }
 
@@ -89,7 +89,7 @@ void Rect::inset(uint16_t l, uint16_t t, uint16_t r, uint16_t b) {
 }
 
 
-void Rect::inset(const Rect &r) {
+void Rect::inset(const Rect& r) {
 	left -= r.left;
 	top -= r.top;
 	right -= r.right;
@@ -105,7 +105,7 @@ void Rect::set(uint16_t l, uint16_t t, uint16_t r, uint16_t b) {
 }
 
 
-void Rect::set(const Rect &r) {
+void Rect::set(const Rect& r) {
 	left = r.left;
 	top = r.top;
 	right = r.right;
@@ -113,7 +113,7 @@ void Rect::set(const Rect &r) {
 }
 
 
-Rect &Rect::operator=(const Rect &r) {
+Rect& Rect::operator =(const Rect& r) {
 	if (this != &r) {
 		set(r);
 	}

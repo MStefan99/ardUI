@@ -10,12 +10,12 @@
 #undef loop
 
 
-void setup() {  // Default setup function will be used to initiate ardUI1
+void setup() {  // Default setup function will be used to initiate ardUI
 	arduiUserSetup();  // Calling user setup routine
 }
 
 
-void loop() {  // ardUI1 core functions will be added to the loop function
+void loop() {  // ardUI core functions will be added to the loop function
 	ardUI::draw();
 	ardUI::checkForActions();
 	arduiUserLoop();
@@ -30,7 +30,7 @@ ardUI::~ardUI() {
 }
 
 
-ardUI &ardUI::getInstance() {
+ardUI& ardUI::getInstance() {
 	static ardUI instance;
 	return instance;
 }
@@ -42,9 +42,9 @@ void ardUI::callActivityOnCreate(Activity* a) {
 		case Activity::Launched:
 			a->onCreate();
 			break;
-		// Current
+			// Current
 		case Activity::Created:
-		// Unreachable
+			// Unreachable
 		case Activity::Restarted:
 		case Activity::Started:
 		case Activity::Resumed:
@@ -65,12 +65,12 @@ void ardUI::callActivityOnStart(Activity* a) {
 		case Activity::Restarted:
 			a->onStart();
 			break;
-		// Current
+			// Current
 		case Activity::Started:
-		// Unreachable
+			// Unreachable
 		case Activity::Destroyed:
 			break;
-		// After in lifecycle
+			// After in lifecycle
 		case Activity::Resumed:
 			a->onPause();
 		case Activity::Paused:
@@ -98,9 +98,9 @@ void ardUI::callActivityOnRestart(Activity* a) {
 			a->onStop();
 		case Activity::Stopped:
 			a->onRestart();
-		// Current
+			// Current
 		case Activity::Restarted:
-		// Unreachable
+			// Unreachable
 		case Activity::Destroyed:
 			break;
 	}
@@ -117,12 +117,12 @@ void ardUI::callActivityOnResume(Activity* a) {
 			a->onStart();
 		case Activity::Started:
 			a->onResume();
-		// Current
+			// Current
 		case Activity::Resumed:
-		// Unreachable
+			// Unreachable
 		case Activity::Destroyed:
 			break;
-		// After in lifecycle
+			// After in lifecycle
 		case Activity::Paused:
 			a->onResume();
 			break;
@@ -147,12 +147,12 @@ void ardUI::callActivityOnPause(Activity* a) {
 			a->onResume();
 		case Activity::Resumed:
 			a->onPause();
-		// Current
+			// Current
 		case Activity::Paused:
-		// Unreachable
+			// Unreachable
 		case Activity::Destroyed:
 			break;
-		// After in lifecycle
+			// After in lifecycle
 		case Activity::Stopped:
 			a->onRestart();
 			a->onStart();
@@ -177,9 +177,9 @@ void ardUI::callActivityOnStop(Activity* a) {
 			a->onPause();
 		case Activity::Paused:
 			a->onStop();
-		// Current
+			// Current
 		case Activity::Stopped:
-		// Unreachable
+			// Unreachable
 		case Activity::Destroyed:
 			break;
 	}
@@ -202,7 +202,7 @@ void ardUI::callActivityOnDestroy(Activity* a) {
 			a->onStop();
 		case Activity::Stopped:
 			a->onDestroy();
-		// Current
+			// Current
 		case Activity::Destroyed:
 			break;
 	}
@@ -233,6 +233,19 @@ void ardUI::back() {
 			callActivityOnResume(s);
 		}
 	}
+}
+
+
+void ardUI::exit() {
+	for (const auto& activity : getInstance().backStack) {
+		callActivityOnDestroy(activity);
+		delete activity;
+	}
+	getInstance().backStack.clear();
+
+	callActivityOnDestroy(getInstance().currentActivity);
+	delete getInstance().currentActivity;
+	getInstance().currentActivity = nullptr;
 }
 
 
