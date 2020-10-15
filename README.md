@@ -18,11 +18,11 @@ for all your projects.
 ### Why ardUI?
 - ardUI is a plug-and-play solution built specifically for Arduino with no extra setup required
 - ardUI is platform-independent and works with any displays if the library is provided
-- ardUI has a robust set of widgets out of the box but also allows you to create custom ones
-- ardUI does not need to be called, since it runs automatically in the background
+- ardUI includes a robust set of widgets out of the box but also allows you to create custom ones
+- ardUI runs automatically in the background so you don't need to worry about calling it
 
 ### What can you run ardUI on?
-ardUI is designed to run on Arduino out of the box, with no extra setup required. However, it can be easily ported to
+ardUI is designed to run on Arduino out of the box, with no extra setup required. However, it can be easily ported over to
 _any_ microcontroller running C++.
 
 ### What Arduino boards are compatible?
@@ -30,6 +30,10 @@ ardUI is designed with efficiency and performance in mind, so theoretically you 
 On lower-end boards, though, you can run out of RAM fairly quickly so at least 8K of RAM is recommended for basic use.
 
 _Arduino Mega or higher is recommended._
+
+### What about non-Arduino boards?
+Any other microcontroller supporting C++ can run ardUI but you will not get out-of-the-box compatibility.
+In most cases, you will need to port the framework yourself. If you decide to do it, you can find a detailed porting guide in the wiki.
 
 ### Learn ardUI
 ardUI takes inspiration from modern operating systems and if you've previously made apps for something like Android or
