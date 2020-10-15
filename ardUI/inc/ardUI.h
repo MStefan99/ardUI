@@ -34,13 +34,7 @@ public:
 	static void back();
 	static void exit();
 
-	static void rewindActivityOnCreate(Activity* activity);
-	static void rewindActivityOnStart(Activity* activity);
-	static void rewindActivityOnRestart(Activity* activity);
-	static void rewindActivityOnResume(Activity* activity);
-	static void rewindActivityOnPause(Activity* activity);
-	static void rewindActivityOnStop(Activity* activity);
-	static void rewindActivityOnDestroy(Activity* activity);
+	static void rewindActivityState(Activity* activity, Activity::state targetState);
 
 	void operator =(ardUI const&) = delete;
 
@@ -66,7 +60,7 @@ template <class ActivityClass>
 void ardUI::showScreen() {
 	auto s {getInstance().currentActivity};
 	if (s) {
-		rewindActivityOnStop(s);
+		rewindActivityState(s, Activity::Stopped);
 		getInstance().backStack.push_front(s);
 		Serial.println("Screen appended to the stack");
 
@@ -74,14 +68,14 @@ void ardUI::showScreen() {
 			Serial.println("Max stack depth reached, destroying last activity");
 			auto lastScreen {getInstance().backStack.back()};
 			getInstance().backStack.pop_back();
-			rewindActivityOnDestroy(lastScreen);
+			rewindActivityState(lastScreen, Activity::Destroyed);
 			delete lastScreen;
 		}
 	}
 	s = new ActivityClass();
 	getInstance().currentActivity = s;
 
-	rewindActivityOnResume(s);
+	rewindActivityState(s, Activity::Resumed);
 }
 
 

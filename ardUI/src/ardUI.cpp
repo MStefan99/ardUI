@@ -36,166 +36,45 @@ ardUI& ardUI::getInstance() {
 }
 
 
-// Fallback is intended in the following state change functions
-void ardUI::rewindActivityOnCreate(Activity* a) {
-	switch (a->currentState) {
-		case Activity::Created:  // Current
-
-		case Activity::Restarted:  // Unreachable
-		case Activity::Started:
-		case Activity::Resumed:
-		case Activity::Paused:
-		case Activity::Stopped:
-		case Activity::Destroyed:
-			break;
-
-		case Activity::Launched:  // Before in lifecycle
-			a->create();
-			break;
+void ardUI::rewindActivityState(Activity* a, Activity::state targetState) {
+	if ((targetState <= Activity::Created && a->currentState > Activity::Created)
+		|| (targetState < Activity::Destroyed && a->currentState == Activity::Destroyed)) {
+		return;  // State unreachable
 	}
-}
 
+	while (a->currentState != targetState) {
+		switch (a->currentState) {
+			case Activity::Launched:
+				a->create();
+				break;
+			case Activity::Created:
+			case Activity::Restarted:
+				a->start();
+				break;
+			case Activity::Started:
+				a->resume();
+				break;
+			case Activity::Resumed:
+				a->pause();
+				break;
+			case Activity::Paused:
+				if (targetState == Activity::Resumed) {
+					a->resume();
+				} else {
+					a->stop();
+				}
+				break;
+			case Activity::Stopped:
+				if (targetState == Activity::Destroyed) {
+					a->destroy();
+				} else {
+					a->restart();
+				}
+				break;
 
-void ardUI::rewindActivityOnStart(Activity* a) {
-	switch (a->currentState) {
-		case Activity::Started:  // Current
-
-		case Activity::Destroyed:  // Unreachable
-			break;
-
-		case Activity::Launched:  // Before in lifecycle
-			a->create();
-		case Activity::Created:
-		case Activity::Restarted:
-			a->start();
-			break;
-
-		case Activity::Resumed:  // After in lifecycle
-			a->pause();
-		case Activity::Paused:
-			a->stop();
-		case Activity::Stopped:
-			a->restart();
-			a->start();
-	}
-}
-
-
-void ardUI::rewindActivityOnRestart(Activity* a) {
-	switch (a->currentState) {
-		case Activity::Restarted:  // Current
-
-		case Activity::Destroyed:  // Unreachable
-			break;
-
-		case Activity::Launched:// Before in lifecycle
-			a->create();
-		case Activity::Created:
-			a->start();
-		case Activity::Started:
-			a->resume();
-		case Activity::Resumed:
-			a->pause();
-		case Activity::Paused:
-			a->stop();
-		case Activity::Stopped:
-			a->restart();
-	}
-}
-
-
-void ardUI::rewindActivityOnResume(Activity* a) {
-	switch (a->currentState) {
-		case Activity::Resumed:  // Current
-
-		case Activity::Destroyed:  // Unreachable
-			break;
-
-		case Activity::Launched:  // Before in lifecycle
-			a->create();
-		case Activity::Created:
-		case Activity::Restarted:
-			a->start();
-		case Activity::Started:
-		case Activity::Paused:  // After in lifecycle
-			a->resume();
-			break;
-
-		case Activity::Stopped:
-			a->restart();
-			a->start();
-			a->resume();
-	}
-}
-
-
-void ardUI::rewindActivityOnPause(Activity* a) {
-	switch (a->currentState) {
-		case Activity::Paused:  // Current
-
-		case Activity::Destroyed:  // Unreachable
-			break;
-
-		case Activity::Launched:  // Before in lifecycle
-			a->create();
-		case Activity::Created:
-		case Activity::Restarted:
-			a->start();
-		case Activity::Started:
-			a->resume();
-		case Activity::Resumed:
-			a->pause();
-			break;
-
-		case Activity::Stopped:  // After in lifecycle
-			a->restart();
-			a->start();
-			a->resume();
-			a->pause();
-	}
-}
-
-
-void ardUI::rewindActivityOnStop(Activity* a) {
-	switch (a->currentState) {
-		case Activity::Stopped:  // Current
-
-		case Activity::Destroyed:  // Unreachable
-			break;
-
-		case Activity::Launched:  // Before in lifecycle
-			a->create();
-		case Activity::Created:
-		case Activity::Restarted:
-			a->start();
-		case Activity::Started:
-			a->resume();
-		case Activity::Resumed:
-			a->pause();
-		case Activity::Paused:
-			a->stop();
-	}
-}
-
-
-void ardUI::rewindActivityOnDestroy(Activity* a) {
-	switch (a->currentState) {
-		case Activity::Destroyed:  // Current
-			break;
-
-		case Activity::Launched:  // Before in lifecycle
-			a->create();
-		case Activity::Created:
-		case Activity::Restarted:
-			a->start();
-		case Activity::Started:
-			a->resume();
-		case Activity::Resumed:
-			a->pause();
-		case Activity::Paused:
-			a->stop();
-		case Activity::Stopped:
-			a->destroy();
+			case Activity::Destroyed:
+				break;
+		}
 	}
 }
 
@@ -210,13 +89,13 @@ void ardUI::back() {
 
 	if (s) {
 		if (!getInstance().backStack.empty()) {
-			rewindActivityOnDestroy(s);
+			rewindActivityState(s, Activity::Destroyed);
 			delete s;
 
 			s = getInstance().backStack.back();
 			getInstance().backStack.pop_front();
 			getInstance().currentActivity = s;
-			rewindActivityOnResume(s);
+			rewindActivityState(s, Activity::Resumed);
 		}
 	}
 }
@@ -224,13 +103,13 @@ void ardUI::back() {
 
 void ardUI::exit() {
 	for (const auto& activity : getInstance().backStack) {
-		rewindActivityOnDestroy(activity);
+		rewindActivityState(activity, Activity::Destroyed);
 		delete activity;
 	}
 	getInstance().backStack.clear();
 
 	if (getInstance().currentActivity) {
-		rewindActivityOnDestroy(getInstance().currentActivity);
+		rewindActivityState(getInstance().currentActivity, Activity::Destroyed);
 		delete getInstance().currentActivity;
 		getInstance().currentActivity = nullptr;
 	}
