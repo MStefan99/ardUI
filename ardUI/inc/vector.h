@@ -48,7 +48,7 @@ namespace ardui {
 		};
 
 		vector() = default;
-		//TODO: add copy constructor
+		vector(const vector& v);
 		~vector();
 
 		void push_back(const T& value);
@@ -76,6 +76,18 @@ namespace ardui {
 		int vectorSize {0};
 		int vectorCapacity {0};
 	};
+
+
+	template <class T>
+	vector<T>::vector(const vector& v) {
+		vectorCapacity = v.vectorCapacity;
+		vectorSize = v.vectorSize;
+
+		resize(vectorCapacity);
+		for (int i {0}; i < v.vectorSize; ++i) {
+			vectorArray[i] = v.vectorArray[i];
+		}
+	}
 
 
 	template <class T>

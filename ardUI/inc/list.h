@@ -65,7 +65,7 @@ namespace ardui {
 		int size() const;
 		bool empty() const;
 
-		T& operator [](int n) const;
+		T& operator [](int n) const;  // TODO: remove
 		list& operator =(const list& list);
 
 		iterator begin() const;
@@ -100,8 +100,8 @@ namespace ardui {
 
 	template <class T>
 	list<T>::list(const list& l) {
-		for (const auto& e : l) {
-			push_back(e);
+		for (auto e {l.first}; e != nullptr; e = e->nextElement) {
+			push_back(e->elementValue);
 		}
 		listSize = l.size();
 	}

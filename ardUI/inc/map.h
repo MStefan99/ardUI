@@ -67,7 +67,7 @@ namespace ardui {
 		};
 
 		map() = default;
-		//TODO: add copy constructor
+		map(const map& m);
 		~map();
 
 		T& operator [](const Key& k);
@@ -77,7 +77,7 @@ namespace ardui {
 
 		iterator find(const Key& k) const;
 
-		pair<iterator, bool> insert(const pair<const Key, T>& value);  // Pair should be passed as argument
+		pair<iterator, bool> insert(const pair<const Key, T>& value);
 
 		iterator erase(iterator position);
 		int erase(const Key& k);
@@ -93,7 +93,7 @@ namespace ardui {
 			explicit element(const Key& k, element* parent);
 
 			pair<const Key, T> value;
-			element* parent;
+			element* parent {nullptr};
 			element* left {nullptr};
 			element* right {nullptr};
 		};
@@ -136,8 +136,8 @@ namespace ardui {
 
 
 	template <class Key, class T, class Comp>
-	const typename map<Key, T, Comp>::iterator
-	map<Key, T, Comp>::iterator::operator ++(int) { // NOLINT(readability-const-return-type)
+	const typename map<Key, T, Comp>::iterator  // NOLINT(readability-const-return-type)
+	map<Key, T, Comp>::iterator::operator ++(int) {
 		auto temp {*this};
 		if (currentElement->right) {
 			currentElement = leftmost(currentElement->right);
@@ -175,8 +175,8 @@ namespace ardui {
 
 
 	template <class Key, class T, class Comp>
-	const typename map<Key, T, Comp>::iterator
-	map<Key, T, Comp>::iterator::operator --(int) { // NOLINT(readability-const-return-type)
+	const typename map<Key, T, Comp>::iterator  // NOLINT(readability-const-return-type)
+	map<Key, T, Comp>::iterator::operator --(int) {
 		auto temp {*this};
 		if (!currentElement) {
 			currentElement = lastElement;
@@ -364,6 +364,38 @@ namespace ardui {
 			}
 		}
 		mapSize = 0;
+	}
+
+
+	template <class Key, class T, class Comp>
+	map<Key, T, Comp>::map(const map& m) {
+		mapRoot = new element {{m.mapRoot->value}, nullptr};
+		mapSize = 1;
+
+		auto e {m.mapRoot};
+		while (e->left) {
+			e = e->left;
+			insert({e->value});
+		}
+		while (e != nullptr) {
+			if (e->right) {
+				e = e->right;
+				insert({e->value});
+				while (e->left) {
+					e = e->left;
+					insert({e->value});
+				}
+			} else if (e->parent) {
+				while (e->parent && e->parent->right == e) {
+					e = e->parent;
+				}
+				if (e->parent) {
+					e = e->parent;
+				} else {
+					e = nullptr;
+				}
+			}
+		}
 	}
 
 

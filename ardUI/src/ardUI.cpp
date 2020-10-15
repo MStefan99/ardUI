@@ -127,7 +127,7 @@ void ardUI::checkForActions() {
 
 void ardUI::draw() {
 	if (getInstance().currentActivity) {
-		getInstance().currentActivity->measure();  //TODO: remove
+		getInstance().currentActivity->measure();
 		getInstance().currentActivity->layout();
 		getInstance().currentActivity->draw();
 	}

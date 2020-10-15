@@ -118,6 +118,10 @@ void vectorAssert() {
 	assert(v[7], 8);
 	assert(v.size(), 9);
 
+	// copy assert
+	ardui::vector v1 {v};
+	assert(v1.size(), 9);
+
 	// pop assert
 	v.pop_back();
 	assert(*--v.end(), 8);
@@ -164,7 +168,6 @@ void listAssert() {
 	it = l.erase(it, ++it);
 	it = l.erase(it);
 	assert(l.size(), 8);
-
 	assert(l[0], -1);
 	assert(l[1], 0);
 	assert(l[2], 1);
@@ -179,18 +182,17 @@ void listAssert() {
 	});
 	assert(l[1], 1);
 	assert(i, 1);
-
 	assert(l.size(), 6);
 	assert(l.front(), -1);
 	assert(l.back(), 9);
 	assert(*--l.end(), 9);
 
-	ardui::list<int> l2 {l};
-
-	assert(l2.size(), 6);
-	assert(l2.front(), -1);
-	assert(l2.back(), 9);
-	assert(*--l2.end(), 9);
+	// copy assert
+	ardui::list<int> l1 {l};
+	assert(l1.size(), 6);
+	assert(l1.front(), -1);
+	assert(l1.back(), 9);
+	assert(*--l1.end(), 9);
 }
 
 
@@ -213,6 +215,11 @@ void mapAssert() {
 	// size assert
 	assert(m.size(), 8);
 	assert(m.empty(), false);
+
+	// copy assert
+	ardui::map m1 {m};
+	assert(m1.size(), 8);
+	assert(m1[0], 0.0);
 
 	// erase assert
 	auto it {--m.end()};
