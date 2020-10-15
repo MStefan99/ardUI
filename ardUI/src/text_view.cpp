@@ -7,7 +7,9 @@
 
 
 TextView::TextView(const String& text):
-		text(text) {}
+		text(text) {
+	// Nothing to do
+}
 
 
 void TextView::setText(const String& textToSet) {

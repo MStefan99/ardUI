@@ -11,4 +11,6 @@
 #define UPDATE_FREQUENCY 10  // Time between checks for events in Hz
 #define LONG_CLICK_TIME 300  // Long click time in ms
 
+#define DEBUG
+
 #endif //ARDUI_CONFIG_H

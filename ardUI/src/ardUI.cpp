@@ -11,18 +11,18 @@
 
 
 void setup() {  // Default setup function will be used to initiate ardUI
-	arduiUserSetup();  // Calling user setup routine
+	arduiUserSetup();  // Calling user setup function
 }
 
 
 void loop() {  // ardUI core functions will be added to the loop function
-	ardUI::draw();
-	ardUI::checkForActions();
-	arduiUserLoop();
+	ardUI::draw();  // Drawing UI elements
+	ardUI::checkForActions();  // Checking for user interaction
+	arduiUserLoop();  // Calling user loop function
 }
 
 
-ardUI::~ardUI() {
+ardUI::~ardUI() {  // Should never be called since instance is declared static
 	for (auto s : backStack) {
 		delete s;
 	}

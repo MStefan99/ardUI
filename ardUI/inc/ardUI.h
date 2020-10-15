@@ -14,11 +14,6 @@
 #include "dialog.h"  //TODO: move to activity
 
 #include "view.h"
-#include "text_view.h"
-#include "button_view.h"
-
-#include "view_group.h"
-#include "linear_layout.h"
 
 
 // Hiding standard Arduino functions for correct operation of ardUI
