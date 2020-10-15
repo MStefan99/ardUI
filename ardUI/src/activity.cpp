@@ -26,38 +26,80 @@ void Activity::setRootView(View* view) {
 }
 
 
-void Activity::onCreate() {
+void Activity::create() {
 	currentState = Created;
+	onCreate();
+}
+
+
+void Activity::restart() {
+	currentState = Restarted;
+	onRestart();
+}
+
+
+void Activity::start() {
+	currentState = Started;
+	onStart();
+}
+
+
+void Activity::resume() {
+	currentState = Resumed;
+	onResume();
+}
+
+
+void Activity::pause() {
+	currentState = Paused;
+	onPause();
+}
+
+
+void Activity::stop() {
+	currentState = Stopped;
+	onStop();
+}
+
+
+void Activity::destroy() {
+	currentState = Destroyed;
+	onDestroy();
+}
+
+
+void Activity::onCreate() {
+	// Nothing to do
 }
 
 
 void Activity::onStart() {
-	currentState = Started;
+	// Nothing to do
 }
 
 
 void Activity::onRestart() {
-	currentState = Restarted;
+	// Nothing to do
 }
 
 
 void Activity::onResume() {
-	currentState = Resumed;
+	// Nothing to do
 }
 
 
 void Activity::onPause() {
-	currentState = Paused;
+	// Nothing to do
 }
 
 
 void Activity::onStop() {
-	currentState = Stopped;
+	// Nothing to do
 }
 
 
 void Activity::onDestroy() {
-	currentState = Destroyed;
+	// Nothing to do
 }
 
 

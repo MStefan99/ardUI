@@ -45,6 +45,14 @@ private:
 		Destroyed
 	};
 
+	void create();
+	void restart();
+	void start();
+	void resume();
+	void pause();
+	void stop();
+	void destroy();
+
 	void draw() const;
 	void measure();
 	void layout();

@@ -11,7 +11,6 @@
 #include "llpi.h"
 
 #include "activity.h"
-#include "dialog.h"  //TODO: move to activity
 
 #include "view.h"
 
@@ -32,17 +31,16 @@ public:
 
 	template <class ScreenClass>
 	static void showScreen();
-	static void showDialog(Dialog& dialogToShow);
 	static void back();
 	static void exit();
 
-	static void callActivityOnCreate(Activity* activity);
-	static void callActivityOnStart(Activity* activity);
-	static void callActivityOnRestart(Activity* activity);
-	static void callActivityOnResume(Activity* activity);
-	static void callActivityOnPause(Activity* activity);
-	static void callActivityOnStop(Activity* activity);
-	static void callActivityOnDestroy(Activity* activity);
+	static void rewindActivityOnCreate(Activity* activity);
+	static void rewindActivityOnStart(Activity* activity);
+	static void rewindActivityOnRestart(Activity* activity);
+	static void rewindActivityOnResume(Activity* activity);
+	static void rewindActivityOnPause(Activity* activity);
+	static void rewindActivityOnStop(Activity* activity);
+	static void rewindActivityOnDestroy(Activity* activity);
 
 	void operator =(ardUI const&) = delete;
 
@@ -56,7 +54,6 @@ private:
 	const uint16_t screenHeight {arduiDisplayGetHeight()};
 	const uint16_t screenWidth {arduiDisplayGetWidth()};
 	Activity* currentActivity {nullptr};
-	Dialog* currentDialog {nullptr};
 #if USING_STL
 	std::list<Activity*> backStack {};
 #else
@@ -69,7 +66,7 @@ template <class ActivityClass>
 void ardUI::showScreen() {
 	auto s {getInstance().currentActivity};
 	if (s) {
-		callActivityOnStop(s);
+		rewindActivityOnStop(s);
 		getInstance().backStack.push_front(s);
 		Serial.println("Screen appended to the stack");
 
@@ -77,14 +74,14 @@ void ardUI::showScreen() {
 			Serial.println("Max stack depth reached, destroying last activity");
 			auto lastScreen {getInstance().backStack.back()};
 			getInstance().backStack.pop_back();
-			callActivityOnDestroy(lastScreen);
+			rewindActivityOnDestroy(lastScreen);
 			delete lastScreen;
 		}
 	}
 	s = new ActivityClass();
 	getInstance().currentActivity = s;
 
-	callActivityOnResume(s);
+	rewindActivityOnResume(s);
 }
 
 

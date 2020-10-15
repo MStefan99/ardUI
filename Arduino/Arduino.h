@@ -14,7 +14,7 @@
 #include <unistd.h>
 
 
-#define LOOP_ITERATIONS 1
+#define LOOP_ITERATIONS 3
 
 typedef std::string String;
 

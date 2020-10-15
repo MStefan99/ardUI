@@ -10,7 +10,6 @@ target_sources(ardUI PRIVATE
 		${SOURCE_DIRECTORY}/view_group.cpp
 		${SOURCE_DIRECTORY}/button_view.cpp
 		${SOURCE_DIRECTORY}/drawable.cpp
-		${SOURCE_DIRECTORY}/dialog.cpp
 		${SOURCE_DIRECTORY}/linear_layout.cpp
 		${SOURCE_DIRECTORY}/rect.cpp
 		)

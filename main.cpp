@@ -46,4 +46,5 @@ void setup() {
 
 
 void loop() {
+	ardUI::exit();
 }
