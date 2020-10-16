@@ -12,17 +12,15 @@
 
 
 #if USING_STL
-
-
 #include <vector>
 #include <list>
 #include <map>
-
 
 #else
 #include "vector.h"
 #include "list.h"
 #include "map.h"
+
 #endif
 
 #endif //ARDUI_PLATFORM_H

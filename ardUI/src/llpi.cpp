@@ -46,12 +46,6 @@ void arduiDisplayClickLocation(uint16_t& x, uint16_t& y) {
 }
 
 
-tm arduiGetRealTime() {
-	// Has to be implemented by the user
-	return {};
-}
-
-
 returnCode arduiDisplayInit() {
 #ifdef DEBUG
 	Serial.println("Display init");
