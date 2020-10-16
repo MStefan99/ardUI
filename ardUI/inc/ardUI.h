@@ -55,7 +55,7 @@ private:
 	const uint16_t screenHeight {arduiDisplayGetHeight()};
 	const uint16_t screenWidth {arduiDisplayGetWidth()};
 	Activity* currentActivity {nullptr};
-#if USING_STL
+#if USE_STL
 	std::list<Activity*> backStack {};
 #else
 	ardui::list<Activity*> backStack {};

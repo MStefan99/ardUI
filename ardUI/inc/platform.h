@@ -11,7 +11,7 @@
 #include <Arduino.h>
 
 
-#if USING_STL
+#if USE_STL
 #include <vector>
 #include <list>
 #include <map>

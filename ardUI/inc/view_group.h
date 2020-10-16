@@ -22,7 +22,7 @@ protected:
 	void onMeasure(uint16_t width, uint16_t height) override = 0;
 	void onLayout(bool changed, uint16_t left, uint16_t top, uint16_t right, uint16_t bottom) override = 0;
 	void onDraw() override = 0;
-#if USING_STL
+#if USE_STL
 	std::list<View*> viewList {};
 #else
 	ardui::list<View*> viewList {};

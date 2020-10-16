@@ -148,8 +148,8 @@ void ardUI::checkForActions() {
 			actionTicks > LONG_CLICK_TIME * REFRESH_RATE / 1000) {
 			currentAction = ardUI::action::LONG_CLICK;
 		}
-		if (lastX - x > 10 || lastX - x < -10 ||
-			lastY - y > 10 || lastY - y < -10) {
+		if (lastX - x > SCROLL_SENSITIVITY || lastX - x < -SCROLL_SENSITIVITY ||
+			lastY - y > SCROLL_SENSITIVITY || lastY - y < -SCROLL_SENSITIVITY) {
 			currentAction = ardUI::action::SCROLL;
 		}
 		if (currentAction == ardUI::action::NO_ACTION) {
