@@ -16,8 +16,26 @@ void setup() {  // Default setup function will be used to initiate ardUI
 
 
 void loop() {  // ardUI core functions will be added to the loop function
-	ardUI::draw();  // Drawing UI elements
-	ardUI::checkForActions();  // Checking for user interaction
+	static uint16_t lastDisplayRefresh, lastTouchRefresh;
+
+	uint16_t currentTime = millis();
+
+	if (currentTime < lastDisplayRefresh) {
+		lastDisplayRefresh = 0;
+	}
+	if (currentTime < lastTouchRefresh) {
+		lastTouchRefresh = 0;
+	}
+
+	if (currentTime - lastDisplayRefresh > 1000 / REFRESH_RATE) {
+		ardUI::draw();  // Drawing UI elements
+		lastDisplayRefresh = currentTime;
+	}
+	if (currentTime - lastTouchRefresh > 1000 / TOUCH_RATE) {
+		ardUI::checkForActions();  // Checking for user interaction
+		lastTouchRefresh = currentTime;
+	}
+
 	arduiUserLoop();  // Calling user loop function
 }
 
@@ -37,42 +55,42 @@ ardUI& ardUI::getInstance() {
 
 
 void ardUI::rewindActivityState(Activity* a, Activity::state targetState) {
-	if ((targetState <= Activity::Created && a->currentState > Activity::Created)
-		|| (targetState < Activity::Destroyed && a->currentState == Activity::Destroyed)) {
+	if ((targetState <= Activity::state::Created && a->currentState > Activity::state::Created)
+		|| (targetState < Activity::state::Destroyed && a->currentState == Activity::state::Destroyed)) {
 		return;  // State unreachable
 	}
 
 	while (a->currentState != targetState) {
 		switch (a->currentState) {
-			case Activity::Launched:
+			case Activity::state::Launched:
 				a->create();
 				break;
-			case Activity::Created:
-			case Activity::Restarted:
+			case Activity::state::Created:
+			case Activity::state::Restarted:
 				a->start();
 				break;
-			case Activity::Started:
+			case Activity::state::Started:
 				a->resume();
 				break;
-			case Activity::Resumed:
+			case Activity::state::Resumed:
 				a->pause();
 				break;
-			case Activity::Paused:
-				if (targetState == Activity::Resumed) {
+			case Activity::state::Paused:
+				if (targetState == Activity::state::Resumed) {
 					a->resume();
 				} else {
 					a->stop();
 				}
 				break;
-			case Activity::Stopped:
-				if (targetState == Activity::Destroyed) {
+			case Activity::state::Stopped:
+				if (targetState == Activity::state::Destroyed) {
 					a->destroy();
 				} else {
 					a->restart();
 				}
 				break;
 
-			case Activity::Destroyed:
+			case Activity::state::Destroyed:
 				break;
 		}
 	}
@@ -89,13 +107,13 @@ void ardUI::back() {
 
 	if (s) {
 		if (!getInstance().backStack.empty()) {
-			rewindActivityState(s, Activity::Destroyed);
+			rewindActivityState(s, Activity::state::Destroyed);
 			delete s;
 
 			s = getInstance().backStack.back();
 			getInstance().backStack.pop_front();
 			getInstance().currentActivity = s;
-			rewindActivityState(s, Activity::Resumed);
+			rewindActivityState(s, Activity::state::Resumed);
 		}
 	}
 }
@@ -103,13 +121,13 @@ void ardUI::back() {
 
 void ardUI::exit() {
 	for (const auto& activity : getInstance().backStack) {
-		rewindActivityState(activity, Activity::Destroyed);
+		rewindActivityState(activity, Activity::state::Destroyed);
 		delete activity;
 	}
 	getInstance().backStack.clear();
 
 	if (getInstance().currentActivity) {
-		rewindActivityState(getInstance().currentActivity, Activity::Destroyed);
+		rewindActivityState(getInstance().currentActivity, Activity::state::Destroyed);
 		delete getInstance().currentActivity;
 		getInstance().currentActivity = nullptr;
 	}
@@ -117,10 +135,32 @@ void ardUI::exit() {
 
 
 void ardUI::checkForActions() {
-	if (arduiDisplayIsClicked()) {
-		static uint16_t x, y;
+	static uint16_t x, y;
+	static ardUI::action currentAction {ardUI::action::NO_ACTION};
+	static uint16_t actionTicks {0};
+
+	if (arduiDisplayIsClicked()) {  // Detecting actions
+		static uint16_t lastX {x}, lastY {y};
 		arduiDisplayClickLocation(x, y);
-		//TODO: check for actions
+		++actionTicks;
+
+		if (currentAction != ardUI::action::SCROLL &&
+			actionTicks > LONG_CLICK_TIME * REFRESH_RATE / 1000) {
+			currentAction = ardUI::action::LONG_CLICK;
+		}
+		if (lastX - x > 10 || lastX - x < -10 ||
+			lastY - y > 10 || lastY - y < -10) {
+			currentAction = ardUI::action::SCROLL;
+		}
+		if (currentAction == ardUI::action::NO_ACTION) {
+			currentAction = ardUI::action::CLICK;
+		} else if (currentAction == ardUI::action::SCROLL) {
+			// TODO: handle scroll action
+		}
+	} else {
+		// TODO: handle actions
+		currentAction = ardUI::action::NO_ACTION;
+		actionTicks = 0;
 	}
 }
 

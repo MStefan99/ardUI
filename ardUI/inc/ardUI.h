@@ -45,6 +45,13 @@ private:
 	ardUI() = default;
 	~ardUI();
 
+	enum action {
+		NO_ACTION,
+		CLICK,
+		LONG_CLICK,
+		SCROLL
+	};
+
 	const uint16_t screenHeight {arduiDisplayGetHeight()};
 	const uint16_t screenWidth {arduiDisplayGetWidth()};
 	Activity* currentActivity {nullptr};

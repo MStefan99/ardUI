@@ -8,7 +8,8 @@
 #define BACK_STACK_DEPTH 3
 #define USING_STL 1
 
-#define UPDATE_FREQUENCY 10  // Time between checks for events in Hz
+#define REFRESH_RATE 10  // Display refresh rate in Hz
+#define TOUCH_RATE 60  // Touch sensor refresh rate in Hz
 #define LONG_CLICK_TIME 300  // Long click time in ms
 
 #define DEBUG

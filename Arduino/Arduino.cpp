@@ -15,6 +15,14 @@ void delay(int delay) {
 }
 
 
+uint16_t millis() {
+	timespec time {};
+
+	clock_gettime(CLOCK_MONOTONIC, &time);
+	return time.tv_nsec / 1.0e6;
+}
+
+
 int main() {
 	setup();
 

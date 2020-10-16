@@ -48,8 +48,8 @@ void View::draw() {
 }
 
 
-void View::measure(uint16_t width, uint16_t height) {
-	onMeasure(width, height);
+void View::measure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec) {
+	onMeasure(widthMeasureSpec, heightMeasureSpec);
 }
 
 
@@ -141,33 +141,6 @@ void View::onMeasure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec) {
 
 
 void View::onLayout(bool changed, uint16_t left, uint16_t top, uint16_t right, uint16_t bottom) {
-}
-
-
-void View::setClicked(bool b) {
-	invalidate();
-	if (b) {
-		inClickedState = true;
-		++timesClicked;
-	} else {
-		inClickedState = false;
-		inLongClickedState = false;
-		timesClicked = 0;
-	}
-
-	if (timesClicked > LONG_CLICK_TIME / UPDATE_FREQUENCY) {
-		inLongClickedState = true;
-	}
-}
-
-
-bool View::isClicked() {
-	return inClickedState;
-}
-
-
-bool View::isLongClicked() {
-	return inLongClickedState;
 }
 
 

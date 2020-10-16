@@ -55,7 +55,7 @@ public:
 	void setOnLongClickListener(void (* onLongClickListener)(View&));
 
 protected:
-	virtual void onMeasure(uint16_t width, uint16_t height);
+	virtual void onMeasure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec);
 	virtual void onLayout(bool changed, uint16_t left, uint16_t top, uint16_t right, uint16_t bottom);
 	virtual void onDraw();
 
@@ -66,15 +66,7 @@ private:
 	void (* onLongClick)(View& view) {nullptr};
 	void (* onScroll)(View& view) {nullptr};
 
-	void setClicked(bool isClicked);
-	bool isClicked();
-	bool isLongClicked();
-	bool inClickedState {false};
-	bool inLongClickedState {false};
-
 	uint16_t getDefaultSize(uint16_t size, uint16_t measureSpec);
-
-	int timesClicked {0};
 
 	static int lastViewId;
 	int viewId {++lastViewId};

@@ -21,6 +21,8 @@ typedef std::string String;
 
 void delay(int delay);
 
+uint16_t millis();
+
 void setup();
 
 void loop();

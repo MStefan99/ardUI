@@ -28,7 +28,7 @@ public:
 	void onDraw() override;
 
 protected:
-	String text {""};
+	String text;
 	uint16_t textSize {10};
 	uint32_t textColor {0};
 };
