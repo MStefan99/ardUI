@@ -23,7 +23,7 @@ bool Rect::contains(uint16_t l, uint16_t t, uint16_t r, uint16_t b) const {
 
 
 bool Rect::contains(uint16_t x, uint16_t y) const {
-	return x > left && x < right && y > top && y < bottom;
+	return x >= left && x <= right && y >= top && y <= bottom;
 }
 
 

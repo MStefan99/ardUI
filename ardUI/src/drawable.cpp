@@ -5,16 +5,6 @@
 #include "drawable.h"
 
 
-Rect Drawable::copyBounds() const {
-	return Rect(viewBox);
-}
-
-
-void Drawable::copyBounds(Rect& r) const {
-	r = viewBox;
-}
-
-
 Rect Drawable::getBounds() const {
 	return Rect(viewBox);
 }
@@ -27,8 +17,8 @@ void Drawable::setBounds(uint16_t l, uint16_t t, uint16_t r, uint16_t b) {
 
 
 void Drawable::setBounds(const Rect& bounds) {
-	onBoundsChange(bounds);
 	viewBox.set(bounds);
+	onBoundsChange(bounds);
 }
 
 
@@ -76,6 +66,11 @@ bool Drawable::setVisible(bool v) {
 		visible = v;
 	}
 	return changed;
+}
+
+
+bool Drawable::isValid() const {
+	return valid;
 }
 
 

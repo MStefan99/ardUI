@@ -33,3 +33,12 @@ void ViewGroup::invalidate() {
 		view->invalidate();
 	}
 }
+
+
+void ViewGroup::draw() {
+	for (auto view: viewList) {
+		if (!view->isValid() && view->isVisible()) {
+			view->draw();
+		}
+	}
+}

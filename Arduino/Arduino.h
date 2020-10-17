@@ -21,7 +21,7 @@
 typedef std::string String;
 
 
-void delay(int delay);
+void delay(int ms);
 
 uint16_t millis();
 

@@ -24,8 +24,6 @@ public:
 	virtual void invalidate() = 0;
 	virtual void handleEvent(const Event& event) = 0;
 
-	Rect copyBounds() const;
-	void copyBounds(Rect& rect) const;
 	Rect getBounds() const;
 	void setBounds(uint16_t left, uint16_t top, uint16_t right, uint16_t bottom);
 	void setBounds(const Rect& bounds);
@@ -33,8 +31,8 @@ public:
 	int getLevel();
 	bool setLevel(uint16_t level);
 
-	bool getPadding(Rect& padding) const;
 	void setPadding(uint16_t left, uint16_t top, uint16_t right, uint16_t bottom);
+	bool getPadding(Rect& padding) const;
 
 	uint16_t getMinimumHeight() const;
 	void setMinimumHeight(uint16_t minimumHeight);
@@ -45,6 +43,7 @@ public:
 	bool isVisible() const;
 	bool setVisible(bool visible);
 
+	bool isValid() const;
 	void invalidateSelf();
 
 protected:

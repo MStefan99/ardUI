@@ -12,6 +12,7 @@
 struct Event {
 	enum Action {
 		NO_ACTION,
+		TOUCH,
 		CLICK,
 		LONG_CLICK,
 		SCROLL

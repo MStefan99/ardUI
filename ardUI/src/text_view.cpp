@@ -13,21 +13,25 @@ TextView::TextView(const String& text):
 
 void TextView::setText(const String& textToSet) {
 	text = textToSet;
+	invalidate();
 }
 
 
 void TextView::append(const String& textToAppend) {
 	text += textToAppend;
+	invalidate();
 }
 
 
 void TextView::setTextSize(uint16_t size) {
 	textSize = size;
+	invalidate();
 }
 
 
 void TextView::setTextColor(uint32_t color) {
 	textColor = color;
+	invalidate();
 }
 
 

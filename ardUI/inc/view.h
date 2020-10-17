@@ -40,7 +40,7 @@ public:
 	void measure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec) final;
 	void layout(uint16_t left, uint16_t top, uint16_t right, uint16_t bottom) final;
 	void layout(const Rect& rect) final;
-	void draw() final;
+	void draw() override;
 	void invalidate() override;
 	void handleEvent(const Event& event) override;
 
@@ -57,6 +57,8 @@ public:
 
 	void setOnClickListener(void (* onClickListener)(View*));
 	void setOnLongClickListener(void (* onLongClickListener)(View*));
+
+	friend class Activity;
 
 protected:
 	virtual void onMeasure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec);

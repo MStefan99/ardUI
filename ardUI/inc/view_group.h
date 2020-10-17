@@ -20,6 +20,7 @@ public:
 	void addView(View* view);
 	View* findViewById(int id) override;
 
+	void draw() override;
 	void invalidate() override;
 
 protected:

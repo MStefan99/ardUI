@@ -5,6 +5,7 @@
 #ifndef ARDUI_H
 #define ARDUI_H
 
+
 #include "platform.h"
 #include "ardUI_config.h"
 #include "llpi.h"
@@ -61,10 +62,9 @@ private:
 
 template <class ActivityClass>
 void ardUI::showScreen() {
-	auto s {currentActivity};
-	if (s) {
-		rewindActivityState(s, Activity::State::STOPPED);
-		backStack.push_front(s);
+	if (currentActivity) {
+		rewindActivityState(currentActivity, Activity::State::STOPPED);
+		backStack.push_front(currentActivity);
 		Serial.println("Screen appended to the stack");
 
 		if (backStack.size() > BACK_STACK_DEPTH) {
@@ -75,10 +75,9 @@ void ardUI::showScreen() {
 			delete lastScreen;
 		}
 	}
-	s = new ActivityClass();
-	currentActivity = s;
+	currentActivity = new ActivityClass {};
 
-	rewindActivityState(s, Activity::State::RESUMED);
+	rewindActivityState(currentActivity, Activity::State::RESUMED);
 }
 
 

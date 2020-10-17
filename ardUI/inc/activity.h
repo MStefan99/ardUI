@@ -8,7 +8,6 @@
 
 #include "event.h"
 #include "view.h"
-#include "layout_inflater.h"
 
 
 class Activity {
@@ -18,7 +17,6 @@ public:
 
 	template <class compiledLayout>
 	void setContentView(compiledLayout layoutClass);
-	void setContentView(const String& xmlData);
 	void setRootView(View* view);
 
 	virtual void onCreate() = 0;

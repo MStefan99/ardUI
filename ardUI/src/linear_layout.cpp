@@ -47,3 +47,12 @@ void LinearLayout::onDraw() {
 		v->draw();
 	}
 }
+
+
+void LinearLayout::handleEvent(const Event& event) {
+	for (auto view: viewList) {
+		if (view->getBounds().contains(event.targetX, event.targetY)) {
+			view->handleEvent(event);
+		}
+	}
+}

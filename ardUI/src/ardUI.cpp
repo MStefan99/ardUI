@@ -42,6 +42,10 @@ void loop() {  // ardUI core functions will be added to the loop function
 	}
 
 	arduiUserLoop();  // Calling user loop function
+
+#ifdef DEBUG
+	delay(1000 / REFRESH_RATE + 100);
+#endif
 }
 
 
@@ -170,14 +174,14 @@ void ardUI::checkForActions() {
 					currentActivity->handleEvent(event);
 				}
 			}
-		} else if (actionTicks == LONG_CLICK_TIME * REFRESH_RATE / 1000) {
+		} else if (actionTicks == LONG_CLICK_TIME * TOUCH_RATE / 1000) {
 			event.currentAction = Event::Action::LONG_CLICK;  // Register long click
 		}
 		if (event.currentAction == Event::Action::CLICK && (
-			(event.deltaX > SCROLL_SENSITIVITY) ||
-			(event.deltaX < -SCROLL_SENSITIVITY) ||
-			(event.deltaY > SCROLL_SENSITIVITY) ||
-			(event.deltaY < -SCROLL_SENSITIVITY))) {
+				(event.deltaX > SCROLL_SENSITIVITY) ||
+				(event.deltaX < -SCROLL_SENSITIVITY) ||
+				(event.deltaY > SCROLL_SENSITIVITY) ||
+				(event.deltaY < -SCROLL_SENSITIVITY))) {
 			event.currentAction = Event::Action::SCROLL;  // Register scroll
 		}
 	} else if (event.currentAction != Event::Action::NO_ACTION) {

@@ -16,11 +16,6 @@ void Activity::setContentView(compiledLayout layoutClass) {
 }
 
 
-void Activity::setContentView(const String& xml) {
-	LayoutInflater::inflate(xml, *rootView);
-}
-
-
 void Activity::setRootView(View* view) {
 	rootView = view;
 }

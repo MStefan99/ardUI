@@ -30,6 +30,7 @@ class MainActivity: public Activity {
 		ardUI::setViewName(t, "text_view");
 
 		b->setOnClickListener([](View* view) -> void {
+			Serial.println("Changing text");
 			auto t = (TextView*)ardUI::getViewByName("text_view");
 			t->setText("Button pressed!");
 		});
