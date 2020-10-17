@@ -68,6 +68,24 @@ void View::layout(const Rect& r) {
 }
 
 
+void View::handleEvent(const Event& event) {
+	switch (event.currentAction) {
+		case Event::NO_ACTION:
+			// Nothing to do
+			break;
+		case Event::CLICK:
+			onClick(this);
+			break;
+		case Event::LONG_CLICK:
+			onLongClick(this);
+			break;
+		case Event::SCROLL:
+			onScroll(this);
+			break;
+	}
+}
+
+
 void View::onDraw() {
 	// Nothing to do
 }
@@ -124,12 +142,12 @@ void View::setMeasuredDimensions(uint16_t w, uint16_t h) {
 }
 
 
-void View::setOnClickListener(void (* l)(View&)) {
+void View::setOnClickListener(void (* l)(View*)) {
 	onClick = l;
 }
 
 
-void View::setOnLongClickListener(void (* l)(View&)) {
+void View::setOnLongClickListener(void (* l)(View*)) {
 	onLongClick = l;
 }
 
@@ -141,6 +159,7 @@ void View::onMeasure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec) {
 
 
 void View::onLayout(bool changed, uint16_t left, uint16_t top, uint16_t right, uint16_t bottom) {
+	// Nothing to do
 }
 
 
@@ -151,12 +170,12 @@ uint16_t View::getDefaultSize(uint16_t size, uint16_t measureSpec) {
 		uint16_t specMode = View::MeasureSpec::getMode(measureSpec);
 
 		switch (specMode) {
-			case View::MeasureSpec::UNSPECIFIED:
+			case View::MeasureSpec::Sizing::UNSPECIFIED:
 			default:
 				result = size;
 				break;
-			case View::MeasureSpec::AT_MOST:
-			case View::MeasureSpec::EXACTLY:
+			case View::MeasureSpec::Sizing::AT_MOST:
+			case View::MeasureSpec::Sizing::EXACTLY:
 				result = View::MeasureSpec::getSize(measureSpec);
 				break;
 		}

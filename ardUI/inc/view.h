@@ -8,6 +8,7 @@
 
 #include "platform.h"
 #include "ardUI_config.h"
+#include "event.h"
 #include "drawable.h"
 
 
@@ -15,9 +16,11 @@ class View: virtual public Drawable {
 public:
 	class MeasureSpec {
 	public:
-		static const uint16_t AT_MOST {0x8000};
-		static const uint16_t EXACTLY {0x4000};
-		static const uint16_t UNSPECIFIED {0};
+		enum Sizing {
+			AT_MOST = 0x8000,
+			EXACTLY = 0x4000,
+			UNSPECIFIED = 0
+		};
 
 		static uint16_t getMode(uint16_t measureSpec);
 		static uint16_t getSize(uint16_t measureSpec);
@@ -34,11 +37,12 @@ public:
 	virtual View* findViewById(int id);
 	int getId();
 
-	void measure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec);
-	void layout(uint16_t left, uint16_t top, uint16_t right, uint16_t bottom);
-	void layout(const Rect& rect);
+	void measure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec) final;
+	void layout(uint16_t left, uint16_t top, uint16_t right, uint16_t bottom) final;
+	void layout(const Rect& rect) final;
 	void draw() final;
-	void invalidate();
+	void invalidate() final;
+	void handleEvent(const Event& event) override;
 
 	void setLeft(uint16_t left);
 	void setTop(uint16_t top);
@@ -51,8 +55,8 @@ public:
 	uint16_t getWidth();
 	uint16_t getHeight();
 
-	void setOnClickListener(void (* onClickListener)(View&));
-	void setOnLongClickListener(void (* onLongClickListener)(View&));
+	void setOnClickListener(void (* onClickListener)(View*));
+	void setOnLongClickListener(void (* onLongClickListener)(View*));
 
 protected:
 	virtual void onMeasure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec);
@@ -62,9 +66,9 @@ protected:
 	void setMeasuredDimensions(uint16_t measuredWidth, uint16_t measuredHeight);
 
 private:
-	void (* onClick)(View& view) {nullptr};
-	void (* onLongClick)(View& view) {nullptr};
-	void (* onScroll)(View& view) {nullptr};
+	void (* onClick)(View* view) {nullptr};
+	void (* onLongClick)(View* view) {nullptr};
+	void (* onScroll)(View* view) {nullptr};
 
 	uint16_t getDefaultSize(uint16_t size, uint16_t measureSpec);
 

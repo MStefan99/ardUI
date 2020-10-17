@@ -22,7 +22,7 @@ uint16_t arduiDisplayGetFontHeight();
 uint16_t arduiDisplayGetFontWidth();
 
 bool arduiDisplayIsClicked();
-void arduiDisplayClickLocation(uint16_t& x, uint16_t& y);
+void arduiDisplayGetClickLocation(uint16_t& x, uint16_t& y);
 
 //tm arduiGetRealTime();
 

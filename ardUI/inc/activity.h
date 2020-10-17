@@ -5,8 +5,7 @@
 #ifndef ARDUI_ACTIVITY_H
 #define ARDUI_ACTIVITY_H
 
-
-#include "list.h"
+#include "event.h"
 #include "view.h"
 #include "layout_inflater.h"
 
@@ -34,15 +33,15 @@ public:
 	friend class ardUI;
 
 private:
-	enum state {
-		Launched,
-		Created,
-		Restarted,
-		Started,
-		Resumed,
-		Paused,
-		Stopped,
-		Destroyed
+	enum State {
+		LAUNCHED,
+		CREATED,
+		RESTARTED,
+		STARTED,
+		RESUMED,
+		PAUSED,
+		STOPPED,
+		DESTROYED
 	};
 
 	void create();
@@ -56,9 +55,10 @@ private:
 	void draw() const;
 	void measure();
 	void layout();
+	void handleEvent(const Event& event);
 	View* getRootView();
 
-	state currentState {Launched};
+	State currentState {LAUNCHED};
 	View* rootView {};
 };
 

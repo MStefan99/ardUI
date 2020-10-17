@@ -11,7 +11,7 @@
 #include "llpi.h"
 
 #include "activity.h"
-
+#include "event.h"
 #include "view.h"
 
 
@@ -34,7 +34,7 @@ public:
 	static void back();
 	static void exit();
 
-	static void rewindActivityState(Activity* activity, Activity::state targetState);
+	static void rewindActivityState(Activity* activity, Activity::State targetState);
 
 	void operator =(ardUI const&) = delete;
 
@@ -44,13 +44,6 @@ public:
 private:
 	ardUI() = default;
 	~ardUI();
-
-	enum action {
-		NO_ACTION,
-		CLICK,
-		LONG_CLICK,
-		SCROLL
-	};
 
 	const uint16_t screenHeight {arduiDisplayGetHeight()};
 	const uint16_t screenWidth {arduiDisplayGetWidth()};
@@ -67,7 +60,7 @@ template <class ActivityClass>
 void ardUI::showScreen() {
 	auto s {getInstance().currentActivity};
 	if (s) {
-		rewindActivityState(s, Activity::Stopped);
+		rewindActivityState(s, Activity::State::STOPPED);
 		getInstance().backStack.push_front(s);
 		Serial.println("Screen appended to the stack");
 
@@ -75,14 +68,14 @@ void ardUI::showScreen() {
 			Serial.println("Max stack depth reached, destroying last activity");
 			auto lastScreen {getInstance().backStack.back()};
 			getInstance().backStack.pop_back();
-			rewindActivityState(lastScreen, Activity::Destroyed);
+			rewindActivityState(lastScreen, Activity::State::DESTROYED);
 			delete lastScreen;
 		}
 	}
 	s = new ActivityClass();
 	getInstance().currentActivity = s;
 
-	rewindActivityState(s, Activity::Resumed);
+	rewindActivityState(s, Activity::State::RESUMED);
 }
 
 

@@ -54,43 +54,43 @@ ardUI& ardUI::getInstance() {
 }
 
 
-void ardUI::rewindActivityState(Activity* a, Activity::state targetState) {
-	if ((targetState <= Activity::state::Created && a->currentState > Activity::state::Created)
-		|| (targetState < Activity::state::Destroyed && a->currentState == Activity::state::Destroyed)) {
+void ardUI::rewindActivityState(Activity* a, Activity::State targetState) {
+	if ((targetState <= Activity::State::CREATED && a->currentState > Activity::State::CREATED)
+		|| (targetState < Activity::State::DESTROYED && a->currentState == Activity::State::DESTROYED)) {
 		return;  // State unreachable
 	}
 
 	while (a->currentState != targetState) {
 		switch (a->currentState) {
-			case Activity::state::Launched:
+			case Activity::State::LAUNCHED:
 				a->create();
 				break;
-			case Activity::state::Created:
-			case Activity::state::Restarted:
+			case Activity::State::CREATED:
+			case Activity::State::RESTARTED:
 				a->start();
 				break;
-			case Activity::state::Started:
+			case Activity::State::STARTED:
 				a->resume();
 				break;
-			case Activity::state::Resumed:
+			case Activity::State::RESUMED:
 				a->pause();
 				break;
-			case Activity::state::Paused:
-				if (targetState == Activity::state::Resumed) {
+			case Activity::State::PAUSED:
+				if (targetState == Activity::State::RESUMED) {
 					a->resume();
 				} else {
 					a->stop();
 				}
 				break;
-			case Activity::state::Stopped:
-				if (targetState == Activity::state::Destroyed) {
+			case Activity::State::STOPPED:
+				if (targetState == Activity::State::DESTROYED) {
 					a->destroy();
 				} else {
 					a->restart();
 				}
 				break;
 
-			case Activity::state::Destroyed:
+			case Activity::State::DESTROYED:
 				break;
 		}
 	}
@@ -107,13 +107,13 @@ void ardUI::back() {
 
 	if (s) {
 		if (!getInstance().backStack.empty()) {
-			rewindActivityState(s, Activity::state::Destroyed);
+			rewindActivityState(s, Activity::State::DESTROYED);
 			delete s;
 
 			s = getInstance().backStack.back();
 			getInstance().backStack.pop_front();
 			getInstance().currentActivity = s;
-			rewindActivityState(s, Activity::state::Resumed);
+			rewindActivityState(s, Activity::State::RESUMED);
 		}
 	}
 }
@@ -121,13 +121,13 @@ void ardUI::back() {
 
 void ardUI::exit() {
 	for (const auto& activity : getInstance().backStack) {
-		rewindActivityState(activity, Activity::state::Destroyed);
+		rewindActivityState(activity, Activity::State::DESTROYED);
 		delete activity;
 	}
 	getInstance().backStack.clear();
 
 	if (getInstance().currentActivity) {
-		rewindActivityState(getInstance().currentActivity, Activity::state::Destroyed);
+		rewindActivityState(getInstance().currentActivity, Activity::State::DESTROYED);
 		delete getInstance().currentActivity;
 		getInstance().currentActivity = nullptr;
 	}
@@ -135,31 +135,39 @@ void ardUI::exit() {
 
 
 void ardUI::checkForActions() {
-	static uint16_t x, y;
-	static ardUI::action currentAction {ardUI::action::NO_ACTION};
+	static Event event {};
 	static uint16_t actionTicks {0};
 
 	if (arduiDisplayIsClicked()) {  // Detecting actions
-		static uint16_t lastX {x}, lastY {y};
-		arduiDisplayClickLocation(x, y);
+		static uint16_t lastX {event.targetX}, lastY {event.targetY};
+		arduiDisplayGetClickLocation(event.targetX, event.targetY);
 		++actionTicks;
 
-		if (currentAction != ardUI::action::SCROLL &&
-			actionTicks > LONG_CLICK_TIME * REFRESH_RATE / 1000) {
-			currentAction = ardUI::action::LONG_CLICK;
+		if (event.currentAction == Event::Action::NO_ACTION) {
+			event.currentAction = Event::Action::CLICK;  // Register click
+		} else {
+			event.deltaX = lastX - event.targetX;
+			event.deltaY = lastY = event.targetY;
 		}
-		if (lastX - x > SCROLL_SENSITIVITY || lastX - x < -SCROLL_SENSITIVITY ||
-			lastY - y > SCROLL_SENSITIVITY || lastY - y < -SCROLL_SENSITIVITY) {
-			currentAction = ardUI::action::SCROLL;
+		if (event.currentAction == Event::Action::SCROLL) {
+			// Handle scroll event every tick
+			if (getInstance().currentActivity) {
+				getInstance().currentActivity->handleEvent(event);
+			}
+		} else if (actionTicks > LONG_CLICK_TIME * REFRESH_RATE / 1000) {
+			event.currentAction = Event::Action::LONG_CLICK;  // Register long click
 		}
-		if (currentAction == ardUI::action::NO_ACTION) {
-			currentAction = ardUI::action::CLICK;
-		} else if (currentAction == ardUI::action::SCROLL) {
-			// TODO: handle scroll action
+		if ((event.deltaX > SCROLL_SENSITIVITY) ||
+			(event.deltaX < -SCROLL_SENSITIVITY) ||
+			(event.deltaY > SCROLL_SENSITIVITY) ||
+			(event.deltaY < -SCROLL_SENSITIVITY)) {
+			event.currentAction = Event::Action::SCROLL;  // Register scroll
 		}
 	} else {
-		// TODO: handle actions
-		currentAction = ardUI::action::NO_ACTION;
+		if (getInstance().currentActivity) {  // Touch over, handle event
+			getInstance().currentActivity->handleEvent(event);
+		}
+		event.currentAction = Event::Action::NO_ACTION;
 		actionTicks = 0;
 	}
 }

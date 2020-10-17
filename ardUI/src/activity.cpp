@@ -27,43 +27,43 @@ void Activity::setRootView(View* view) {
 
 
 void Activity::create() {
-	currentState = Created;
+	currentState = CREATED;
 	onCreate();
 }
 
 
 void Activity::restart() {
-	currentState = Restarted;
+	currentState = RESTARTED;
 	onRestart();
 }
 
 
 void Activity::start() {
-	currentState = Started;
+	currentState = STARTED;
 	onStart();
 }
 
 
 void Activity::resume() {
-	currentState = Resumed;
+	currentState = RESUMED;
 	onResume();
 }
 
 
 void Activity::pause() {
-	currentState = Paused;
+	currentState = PAUSED;
 	onPause();
 }
 
 
 void Activity::stop() {
-	currentState = Stopped;
+	currentState = STOPPED;
 	onStop();
 }
 
 
 void Activity::destroy() {
-	currentState = Destroyed;
+	currentState = DESTROYED;
 	onDestroy();
 }
 
@@ -103,13 +103,6 @@ void Activity::onDestroy() {
 }
 
 
-void Activity::draw() const {
-	if (rootView) {
-		rootView->draw();
-	}
-}
-
-
 View* Activity::findViewById(int id) {
 	return rootView->findViewById(id);
 }
@@ -120,14 +113,32 @@ View* Activity::getRootView() {
 }
 
 
+void Activity::draw() const {
+	if (rootView) {
+		rootView->draw();
+	}
+}
+
+
 void Activity::measure() {
-	int widthSpec = View::MeasureSpec::makeMeasureSpec(View::MeasureSpec::EXACTLY, arduiDisplayGetWidth());
-	int heightSpec = View::MeasureSpec::makeMeasureSpec(View::MeasureSpec::EXACTLY, arduiDisplayGetHeight());
-	rootView->measure(widthSpec, heightSpec);
+	if (rootView) {
+		int widthSpec = View::MeasureSpec::makeMeasureSpec(View::MeasureSpec::EXACTLY, arduiDisplayGetWidth());
+		int heightSpec = View::MeasureSpec::makeMeasureSpec(View::MeasureSpec::EXACTLY, arduiDisplayGetHeight());
+		rootView->measure(widthSpec, heightSpec);
+	}
 }
 
 
 void Activity::layout() {
-	Rect display {0, 0, arduiDisplayGetWidth(), arduiDisplayGetHeight()};
-	rootView->layout(display);
+	if (rootView) {
+		Rect display {0, 0, arduiDisplayGetWidth(), arduiDisplayGetHeight()};
+		rootView->layout(display);
+	}
+}
+
+
+void Activity::handleEvent(const Event& event) {
+	if (rootView) {
+		rootView->handleEvent(event);
+	}
 }

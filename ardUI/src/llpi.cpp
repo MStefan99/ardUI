@@ -39,7 +39,7 @@ bool arduiDisplayIsClicked() {
 }
 
 
-void arduiDisplayClickLocation(uint16_t& x, uint16_t& y) {
+void arduiDisplayGetClickLocation(uint16_t& x, uint16_t& y) {
 	// Has to be implemented by the user
 	x = 0;
 	y = 0;

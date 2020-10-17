@@ -7,6 +7,7 @@
 
 
 #include "platform.h"
+#include "event.h"
 #include "rect.h"
 #include "llpi.h"
 
@@ -16,10 +17,15 @@ public:
 	Drawable() = default;
 	~Drawable() = default;
 
+	virtual void measure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec) = 0;
+	virtual void layout(uint16_t left, uint16_t top, uint16_t right, uint16_t bottom) = 0;
+	virtual void layout(const Rect& rect) = 0;
 	virtual void draw() = 0;
+	virtual void invalidate() = 0;
+	virtual void handleEvent(const Event& event) = 0;
 
 	Rect copyBounds() const;
-	void copyBounds(Rect& r) const;
+	void copyBounds(Rect& rect) const;
 	Rect getBounds() const;
 	void setBounds(uint16_t left, uint16_t top, uint16_t right, uint16_t bottom);
 	void setBounds(const Rect& bounds);
@@ -35,8 +41,6 @@ public:
 
 	uint16_t getMinimumWidth() const;
 	void setMinimumWidth(uint16_t minimumWidth);
-
-	//TODO: add inflaters
 
 	bool isVisible() const;
 	bool setVisible(bool visible);

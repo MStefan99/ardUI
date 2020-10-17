@@ -5,6 +5,9 @@
 #ifndef ARDUI_CONFIG_H
 #define ARDUI_CONFIG_H
 
+
+#include <Arduino.h>
+
 /*
  * How many back actions to save.
  * Higher values improve user experience but require more RAM.
@@ -49,6 +52,8 @@
  */
 #define SCROLL_SENSITIVITY ( 10 )
 
+#ifndef Arduino_h
 #define DEBUG
+#endif
 
 #endif //ARDUI_CONFIG_H
