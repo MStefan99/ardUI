@@ -22,15 +22,22 @@ class MainActivity: public Activity {
 		auto b = new ButtonView();
 
 		t->setText("Hello");
-		b->setText("I am a button!");
+		b->setText("Press me!");
 		ll->addView(t);
 		ll->addView(b);
 		setRootView(ll);
+
+		ardUI::setViewName(t, "text_view");
+
+		b->setOnClickListener([](View* view) -> void {
+			auto t = (TextView*)ardUI::getViewByName("text_view");
+			t->setText("Button pressed!");
+		});
 	}
 
 
 	void onResume() override {
-		t->setText("Hello, I am textview!");
+		t->setText("Touch the button!");
 	}
 
 
@@ -41,6 +48,7 @@ class MainActivity: public Activity {
 
 
 void setup() {
+	Serial.begin(9600);
 	ardUI::showScreen<MainActivity>();
 }
 
