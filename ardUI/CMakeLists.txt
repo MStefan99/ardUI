@@ -2,7 +2,6 @@
 add_library(ardUI SHARED)
 target_sources(ardUI PRIVATE
 		${SOURCE_DIRECTORY}/ardUI.cpp
-		${SOURCE_DIRECTORY}/layout_inflater.cpp
 		${SOURCE_DIRECTORY}/llpi.cpp
 		${SOURCE_DIRECTORY}/activity.cpp
 		${SOURCE_DIRECTORY}/text_view.cpp
