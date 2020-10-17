@@ -10,6 +10,11 @@
 #undef loop
 
 
+Activity* ardUI::currentActivity {};
+LIST<Activity*> ardUI::backStack {};
+MAP<String, View*> ardUI::viewMap {};
+
+
 void setup() {  // Default setup function will be used to initiate ardUI
 	arduiUserSetup();  // Calling user setup function
 }
@@ -98,21 +103,21 @@ void ardUI::rewindActivityState(Activity* a, Activity::State targetState) {
 
 
 Activity& ardUI::getCurrentScreen() {
-	return *getInstance().currentActivity;
+	return *currentActivity;
 }
 
 
 void ardUI::back() {
-	auto s {getInstance().currentActivity};
+	auto s {currentActivity};
 
 	if (s) {
-		if (!getInstance().backStack.empty()) {
+		if (!backStack.empty()) {
 			rewindActivityState(s, Activity::State::DESTROYED);
 			delete s;
 
-			s = getInstance().backStack.back();
-			getInstance().backStack.pop_front();
-			getInstance().currentActivity = s;
+			s = backStack.back();
+			backStack.pop_front();
+			currentActivity = s;
 			rewindActivityState(s, Activity::State::RESUMED);
 		}
 	}
@@ -120,16 +125,16 @@ void ardUI::back() {
 
 
 void ardUI::exit() {
-	for (const auto& activity : getInstance().backStack) {
+	for (const auto& activity : backStack) {
 		rewindActivityState(activity, Activity::State::DESTROYED);
 		delete activity;
 	}
-	getInstance().backStack.clear();
+	backStack.clear();
 
-	if (getInstance().currentActivity) {
-		rewindActivityState(getInstance().currentActivity, Activity::State::DESTROYED);
-		delete getInstance().currentActivity;
-		getInstance().currentActivity = nullptr;
+	if (currentActivity) {
+		rewindActivityState(currentActivity, Activity::State::DESTROYED);
+		delete currentActivity;
+		currentActivity = nullptr;
 	}
 }
 
@@ -151,8 +156,8 @@ void ardUI::checkForActions() {
 		}
 		if (event.currentAction == Event::Action::SCROLL) {
 			// Handle scroll event every tick
-			if (getInstance().currentActivity) {
-				getInstance().currentActivity->handleEvent(event);
+			if (currentActivity) {
+				currentActivity->handleEvent(event);
 			}
 		} else if (actionTicks > LONG_CLICK_TIME * REFRESH_RATE / 1000) {
 			event.currentAction = Event::Action::LONG_CLICK;  // Register long click
@@ -164,8 +169,8 @@ void ardUI::checkForActions() {
 			event.currentAction = Event::Action::SCROLL;  // Register scroll
 		}
 	} else {
-		if (getInstance().currentActivity) {  // Touch over, handle event
-			getInstance().currentActivity->handleEvent(event);
+		if (currentActivity) {  // Touch over, handle event
+			currentActivity->handleEvent(event);
 		}
 		event.currentAction = Event::Action::NO_ACTION;
 		actionTicks = 0;
@@ -174,9 +179,19 @@ void ardUI::checkForActions() {
 
 
 void ardUI::draw() {
-	if (getInstance().currentActivity) {
-		getInstance().currentActivity->measure();
-		getInstance().currentActivity->layout();
-		getInstance().currentActivity->draw();
+	if (currentActivity) {
+		currentActivity->measure();
+		currentActivity->layout();
+		currentActivity->draw();
 	}
+}
+
+
+void ardUI::setViewName(View* view, const String& name) {
+	viewMap[name] = view;
+}
+
+
+View* ardUI::getViewByName(const String& name) {
+	return viewMap[name];
 }
