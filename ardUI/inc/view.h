@@ -41,7 +41,7 @@ public:
 	void layout(uint16_t left, uint16_t top, uint16_t right, uint16_t bottom) final;
 	void layout(const Rect& rect) final;
 	void draw() final;
-	void invalidate() final;
+	void invalidate() override;
 	void handleEvent(const Event& event) override;
 
 	void setLeft(uint16_t left);

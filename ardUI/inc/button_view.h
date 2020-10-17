@@ -17,6 +17,7 @@ public:
 	explicit ButtonView(const String& text);
 	~ButtonView() override = default;
 
+protected:
 	void onDraw() override;
 
 private:

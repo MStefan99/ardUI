@@ -74,13 +74,22 @@ void View::handleEvent(const Event& event) {
 			// Nothing to do
 			break;
 		case Event::CLICK:
-			onClick(this);
+			invalidate();
+			if (onClick) {
+				onClick(this);
+			}
 			break;
 		case Event::LONG_CLICK:
-			onLongClick(this);
+			invalidate();
+			if (onLongClick) {
+				onLongClick(this);
+			}
 			break;
 		case Event::SCROLL:
-			onScroll(this);
+			invalidate();
+			if (onScroll) {
+				onScroll(this);
+			}
 			break;
 	}
 }

@@ -25,3 +25,11 @@ View* ViewGroup::findViewById(int id) {
 	}
 	return nullptr;
 }
+
+
+void ViewGroup::invalidate() {
+	invalidateSelf();
+	for (auto view : viewList) {
+		view->invalidate();
+	}
+}

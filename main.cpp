@@ -37,7 +37,7 @@ class MainActivity: public Activity {
 
 
 	void onResume() override {
-		t->setText("Touch the button!");
+		t->setText("Press the button!");
 	}
 
 

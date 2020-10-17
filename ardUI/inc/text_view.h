@@ -25,9 +25,9 @@ public:
 	uint16_t getTextSize() const;
 	uint32_t getTextColor() const;
 
+protected:
 	void onDraw() override;
 
-protected:
 	String text;
 	uint16_t textSize {10};
 	uint32_t textColor {0};

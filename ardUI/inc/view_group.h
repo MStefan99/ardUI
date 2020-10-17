@@ -20,6 +20,8 @@ public:
 	void addView(View* view);
 	View* findViewById(int id) override;
 
+	void invalidate() override;
+
 protected:
 	void onMeasure(uint16_t width, uint16_t height) override = 0;
 	void onLayout(bool changed, uint16_t left, uint16_t top, uint16_t right, uint16_t bottom) override = 0;
