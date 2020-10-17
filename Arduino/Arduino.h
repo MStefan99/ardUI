@@ -15,6 +15,8 @@
 
 
 #define LOOP_ITERATIONS 3
+#define DEC 1
+#define HEX 2
 
 typedef std::string String;
 
@@ -33,22 +35,32 @@ public:
 	void begin(long baud);
 
 	template <class C>
-	void print(const C& data);
+	void print(const C& data, int type = DEC);
 
 	template <class C>
-	void println(const C& data);
+	void println(const C& data, int type = DEC);
 };
 
 
 template <class C>
-void ArduinoSerial::print(const C& data) {
+void ArduinoSerial::print(const C& data, int type) {
+	switch (type) {
+		case DEC:
+		default:
+			std::cout << std::dec;
+			break;
+		case HEX:
+			std::cout << std::hex;
+			break;
+	}
 	std::cout << data;
 }
 
 
 template <class C>
-void ArduinoSerial::println(const C& data) {
-	std::cout << data << std::endl;
+void ArduinoSerial::println(const C& data, int type) {
+	print(data, type);
+	std::cout << std::endl;
 }
 
 

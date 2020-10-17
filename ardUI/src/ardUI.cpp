@@ -15,6 +15,7 @@ MAP<String, View*> ardUI::viewMap {};
 
 
 void setup() {  // Default setup function will be used to initiate ardUI
+	arduiDisplayInit();
 	arduiUserSetup();  // Calling user setup function
 }
 
@@ -149,12 +150,15 @@ void ardUI::checkForActions() {
 
 		if (event.currentAction == Event::Action::NO_ACTION) {
 			event.currentAction = Event::Action::CLICK;  // Register click
+
+			lastX = event.targetX;  // Set last coords to current
+			lastY = event.targetY;
 #if VERBOSE
 			Serial.println("Event registered");
 #endif
 		} else {
 			event.deltaX = lastX - event.targetX;
-			event.deltaY = lastY = event.targetY;
+			event.deltaY = lastY - event.targetY;
 		}
 		if (event.currentAction == Event::Action::SCROLL) {
 			// Handle scroll event every tick
@@ -162,15 +166,18 @@ void ardUI::checkForActions() {
 #if VERBOSE
 				Serial.println("Scroll event dispatched");
 #endif
-				currentActivity->handleEvent(event);
+				if (currentActivity) {
+					currentActivity->handleEvent(event);
+				}
 			}
-		} else if (actionTicks > LONG_CLICK_TIME * REFRESH_RATE / 1000) {
+		} else if (actionTicks == LONG_CLICK_TIME * REFRESH_RATE / 1000) {
 			event.currentAction = Event::Action::LONG_CLICK;  // Register long click
 		}
-		if ((event.deltaX > SCROLL_SENSITIVITY) ||
+		if (event.currentAction == Event::Action::CLICK && (
+			(event.deltaX > SCROLL_SENSITIVITY) ||
 			(event.deltaX < -SCROLL_SENSITIVITY) ||
 			(event.deltaY > SCROLL_SENSITIVITY) ||
-			(event.deltaY < -SCROLL_SENSITIVITY)) {
+			(event.deltaY < -SCROLL_SENSITIVITY))) {
 			event.currentAction = Event::Action::SCROLL;  // Register scroll
 		}
 	} else if (event.currentAction != Event::Action::NO_ACTION) {

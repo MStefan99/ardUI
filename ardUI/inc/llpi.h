@@ -34,7 +34,7 @@ ReturnCode arduiDisplayFill(uint16_t color);
 ReturnCode arduiDisplayDrawPixel(uint16_t x, uint16_t y, uint32_t color);
 ReturnCode arduiDisplayDrawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint32_t color);
 ReturnCode arduiDisplayDrawChar(uint16_t x, uint16_t y, uint16_t height, char text, uint32_t color);
-ReturnCode arduiDisplayDrawText(uint16_t x, uint16_t y, uint16_t height, const String& tex, uint32_t color);
+ReturnCode arduiDisplayDrawText(uint16_t x, uint16_t y, uint16_t height, const String& text, uint32_t color);
 ReturnCode arduiDisplayDrawCircle(uint16_t x, uint16_t y, uint16_t radius, uint32_t color);
 ReturnCode arduiDisplayFillCircle(uint16_t x, uint16_t y, uint16_t radius, uint32_t color);
 ReturnCode arduiDisplayDrawRect(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint32_t color);

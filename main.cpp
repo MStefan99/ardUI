@@ -48,11 +48,10 @@ class MainActivity: public Activity {
 
 
 void setup() {
-	Serial.begin(9600);
+	Serial.begin(115200);
 	ardUI::showScreen<MainActivity>();
 }
 
 
 void loop() {
-	ardUI::exit();
 }

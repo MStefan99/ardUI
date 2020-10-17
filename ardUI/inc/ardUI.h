@@ -5,7 +5,6 @@
 #ifndef ARDUI_H
 #define ARDUI_H
 
-
 #include "platform.h"
 #include "ardUI_config.h"
 #include "llpi.h"

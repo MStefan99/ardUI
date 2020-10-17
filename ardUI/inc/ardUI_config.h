@@ -58,12 +58,13 @@
  *
  * Enter the values in px since last touch refresh.
  */
-#define SCROLL_SENSITIVITY ( 10 )
+#define SCROLL_SENSITIVITY ( 50 )
 
 
 // Debugging
 /*
  * Enable debug mode.
+ * Can be useful during debugging.
  * Debug mode is not guaranteed to run on Arduino
  * and will only turned on in a desktop environment.
  */
