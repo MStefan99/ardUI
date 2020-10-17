@@ -35,7 +35,7 @@ uint16_t arduiDisplayGetFontWidth() {
 
 bool arduiDisplayIsClicked() {
 	// Has to be implemented by the user
-	return true;
+	return false;
 }
 
 

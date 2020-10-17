@@ -173,7 +173,7 @@ void ardUI::checkForActions() {
 			(event.deltaY < -SCROLL_SENSITIVITY)) {
 			event.currentAction = Event::Action::SCROLL;  // Register scroll
 		}
-	} else {
+	} else if (event.currentAction != Event::Action::NO_ACTION) {
 #if VERBOSE
 		Serial.println("Event dispatched");
 #endif
