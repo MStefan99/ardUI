@@ -14,6 +14,9 @@
 #include "event.h"
 #include "view.h"
 
+#include LIST_H
+#include MAP_H
+
 
 // Hiding standard Arduino functions for correct operation of ardUI
 void arduiUserSetup();  // User "setup()" function will be replaced by this custom function

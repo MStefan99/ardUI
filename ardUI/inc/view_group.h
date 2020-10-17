@@ -6,8 +6,10 @@
 #define ARDUI_VIEW_GROUP_H
 
 
-#include "list.h"
+#include "platform.h"
 #include "view.h"
+
+#include LIST_H
 
 
 class ViewGroup: public View {
