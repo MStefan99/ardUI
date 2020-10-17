@@ -5,6 +5,7 @@
 #ifndef ARDUI_ACTIVITY_H
 #define ARDUI_ACTIVITY_H
 
+
 #include "event.h"
 #include "view.h"
 #include "layout_inflater.h"

@@ -44,4 +44,8 @@
 
 #endif
 
+#if (!defined(Arduino_h) && ENABLE_DEBUG)
+#define DEBUG
+#endif
+
 #endif //ARDUI_PLATFORM_H

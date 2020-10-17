@@ -9,7 +9,6 @@
 #undef setup
 #undef loop
 
-
 Activity* ardUI::currentActivity {};
 LIST<Activity*> ardUI::backStack {};
 MAP<String, View*> ardUI::viewMap {};
@@ -150,6 +149,9 @@ void ardUI::checkForActions() {
 
 		if (event.currentAction == Event::Action::NO_ACTION) {
 			event.currentAction = Event::Action::CLICK;  // Register click
+#if VERBOSE
+			Serial.println("Event registered");
+#endif
 		} else {
 			event.deltaX = lastX - event.targetX;
 			event.deltaY = lastY = event.targetY;
@@ -157,6 +159,9 @@ void ardUI::checkForActions() {
 		if (event.currentAction == Event::Action::SCROLL) {
 			// Handle scroll event every tick
 			if (currentActivity) {
+#if VERBOSE
+				Serial.println("Scroll event dispatched");
+#endif
 				currentActivity->handleEvent(event);
 			}
 		} else if (actionTicks > LONG_CLICK_TIME * REFRESH_RATE / 1000) {
@@ -169,6 +174,9 @@ void ardUI::checkForActions() {
 			event.currentAction = Event::Action::SCROLL;  // Register scroll
 		}
 	} else {
+#if VERBOSE
+		Serial.println("Event dispatched");
+#endif
 		if (currentActivity) {  // Touch over, handle event
 			currentActivity->handleEvent(event);
 		}

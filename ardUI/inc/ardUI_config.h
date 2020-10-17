@@ -8,16 +8,21 @@
 
 #include <Arduino.h>
 
-/*
- * How many back actions to save.
- * Higher values improve user experience but require more RAM.
- */
-#define BACK_STACK_DEPTH ( 3 )
+
+// Platform
 /*
  * Use standard template library.
  * Disable if not supported on your platform.
  */
 #define USE_STL ( false )
+
+
+// User Interface
+/*
+ * How many back actions to save.
+ * Higher values improve user experience but require more memory.
+ */
+#define BACK_STACK_DEPTH ( 3 )
 
 /*
  * How often to update a display.
@@ -27,6 +32,7 @@
  * Enter the value in Hz.
  */
 #define REFRESH_RATE ( 10 )
+
 /*
  * How often to check for user input.
  * Higher values result in a more accurate and responsive touch
@@ -35,6 +41,7 @@
  * Enter the value in Hz.
  */
 #define TOUCH_RATE ( 60 )
+
 /*
  * How long to wait for a long click.
  * The higher the value, the longer the user has to touch and
@@ -43,6 +50,7 @@
  * Enter the value in ms.
  */
 #define LONG_CLICK_TIME ( 300 )
+
 /*
  * How fast should the user scroll.
  * The higher the value, the faster the user has to scroll to
@@ -52,8 +60,20 @@
  */
 #define SCROLL_SENSITIVITY ( 10 )
 
-#ifndef Arduino_h
-#define DEBUG
-#endif
+
+// Debugging
+/*
+ * Enable debug mode.
+ * Debug mode is not guaranteed to run on Arduino
+ * and will only turned on in a desktop environment.
+ */
+#define ENABLE_DEBUG ( true )
+
+/*
+ * Enable verbose logging.
+ * Verbose logging may be useful for debugging
+ * but may impact performance with low baud rates.
+ */
+#define VERBOSE ( true )
 
 #endif //ARDUI_CONFIG_H

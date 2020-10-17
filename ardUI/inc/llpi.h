@@ -9,10 +9,10 @@
 #include "platform.h"
 
 
-enum returnCode {
-	Ok,
-	Fail,
-	NotImplemented
+enum ReturnCode {
+	OK,
+	FAIL,
+	NOT_IMPLEMENTED
 };
 
 
@@ -26,23 +26,23 @@ void arduiDisplayGetClickLocation(uint16_t& x, uint16_t& y);
 
 //tm arduiGetRealTime();
 
-returnCode arduiDisplayInit();
-returnCode arduiDisplayOn();
-returnCode arduiDisplayOff();
-returnCode arduiDisplaySetBrightness(uint8_t brightness);
-returnCode arduiDisplayFill(uint16_t color);
-returnCode arduiDisplayDrawPixel(uint16_t x, uint16_t y, uint32_t color);
-returnCode arduiDisplayDrawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint32_t color);
-returnCode arduiDisplayDrawChar(uint16_t x, uint16_t y, uint16_t height, char text, uint32_t color);
-returnCode arduiDisplayDrawText(uint16_t x, uint16_t y, uint16_t height, const String& tex, uint32_t color);
-returnCode arduiDisplayDrawCircle(uint16_t x, uint16_t y, uint16_t radius, uint32_t color);
-returnCode arduiDisplayFillCircle(uint16_t x, uint16_t y, uint16_t radius, uint32_t color);
-returnCode arduiDisplayDrawRect(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint32_t color);
-returnCode arduiDisplayFillRect(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint32_t color);
-returnCode arduiDisplayDrawTriangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
+ReturnCode arduiDisplayInit();
+ReturnCode arduiDisplayOn();
+ReturnCode arduiDisplayOff();
+ReturnCode arduiDisplaySetBrightness(uint8_t brightness);
+ReturnCode arduiDisplayFill(uint16_t color);
+ReturnCode arduiDisplayDrawPixel(uint16_t x, uint16_t y, uint32_t color);
+ReturnCode arduiDisplayDrawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint32_t color);
+ReturnCode arduiDisplayDrawChar(uint16_t x, uint16_t y, uint16_t height, char text, uint32_t color);
+ReturnCode arduiDisplayDrawText(uint16_t x, uint16_t y, uint16_t height, const String& tex, uint32_t color);
+ReturnCode arduiDisplayDrawCircle(uint16_t x, uint16_t y, uint16_t radius, uint32_t color);
+ReturnCode arduiDisplayFillCircle(uint16_t x, uint16_t y, uint16_t radius, uint32_t color);
+ReturnCode arduiDisplayDrawRect(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint32_t color);
+ReturnCode arduiDisplayFillRect(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint32_t color);
+ReturnCode arduiDisplayDrawTriangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
 									uint16_t x3, uint16_t y3, uint32_t color);
-returnCode arduiDisplayFillTriangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
+ReturnCode arduiDisplayFillTriangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
 									uint16_t x3, uint16_t y3, uint32_t color);
-returnCode arduiDisplayDrawBitmap(uint16_t x, uint16_t y, uint16_t* bitmap);
+ReturnCode arduiDisplayDrawBitmap(uint16_t x, uint16_t y, uint16_t* bitmap);
 
 #endif //ARDUI_LLPI_H

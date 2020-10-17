@@ -46,133 +46,133 @@ void arduiDisplayGetClickLocation(uint16_t& x, uint16_t& y) {
 }
 
 
-returnCode arduiDisplayInit() {
+ReturnCode arduiDisplayInit() {
 #ifdef DEBUG
 	Serial.println("Display init");
 #endif
 	// Has to be implemented by the user
-	return NotImplemented;
+	return NOT_IMPLEMENTED;
 }
 
 
-returnCode arduiDisplayOn() {
+ReturnCode arduiDisplayOn() {
 #ifdef DEBUG
 	Serial.println("Display on");
 #endif
 	// Has to be implemented by the user
-	return NotImplemented;
+	return NOT_IMPLEMENTED;
 }
 
 
-returnCode arduiDisplayOff() {
+ReturnCode arduiDisplayOff() {
 #ifdef DEBUG
 	Serial.println("Display on");
 #endif
 	// Has to be implemented by the user
-	return NotImplemented;
+	return NOT_IMPLEMENTED;
 }
 
 
-returnCode arduiDisplaySetBrightness(uint8_t brightness) {
+ReturnCode arduiDisplaySetBrightness(uint8_t brightness) {
 #ifdef DEBUG
 	Serial.println("Display brigthness set to " + std::to_string(brightness));
 #endif
 	// Has to be implemented by the user
-	return NotImplemented;
+	return NOT_IMPLEMENTED;
 }
 
 
-returnCode arduiDisplayFill(uint16_t color) {
+ReturnCode arduiDisplayFill(uint16_t color) {
 #ifdef DEBUG
 	Serial.println("Display filled");
 #endif
 	// Has to be implemented by the user
-	return NotImplemented;
+	return NOT_IMPLEMENTED;
 }
 
 
-returnCode arduiDisplayDrawPixel(uint16_t x, uint16_t y, uint32_t color) {
+ReturnCode arduiDisplayDrawPixel(uint16_t x, uint16_t y, uint32_t color) {
 #ifdef DEBUG
 	Serial.println("Drawn pixel at (" + std::to_string(x) + ", "
 				   + std::to_string(y) + ")");
 #endif
 	// Has to be implemented by the user
-	return NotImplemented;
+	return NOT_IMPLEMENTED;
 }
 
 
-returnCode arduiDisplayDrawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint32_t color) {
+ReturnCode arduiDisplayDrawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint32_t color) {
 #ifdef DEBUG
 	Serial.println("Drawn line from (" + std::to_string(x1) + ", " + std::to_string(y1) + ") to ("
 				   + std::to_string(x2) + ", " + std::to_string(y2) + ")");
 #endif
 	// Has to be implemented by the user
-	return NotImplemented;
+	return NOT_IMPLEMENTED;
 }
 
 
-returnCode arduiDisplayDrawChar(uint16_t x, uint16_t y, uint16_t height, char text, uint32_t color) {
+ReturnCode arduiDisplayDrawChar(uint16_t x, uint16_t y, uint16_t height, char text, uint32_t color) {
 #ifdef DEBUG
 	Serial.println("Drawn char " + std::to_string(text) + " at ("
 				   + std::to_string(x) + ", " + std::to_string(y) + ")");
 #endif
 	// Has to be implemented by the user
-	return NotImplemented;
+	return NOT_IMPLEMENTED;
 }
 
 
-returnCode arduiDisplayDrawText(uint16_t x, uint16_t y, uint16_t height, const String& text, uint32_t color) {
+ReturnCode arduiDisplayDrawText(uint16_t x, uint16_t y, uint16_t height, const String& text, uint32_t color) {
 #ifdef DEBUG
 	Serial.println("Drawn text \"" + text + "\" at (" + std::to_string(x) + ", " + std::to_string(y) + ")");
 #endif
 	// Has to be implemented by the user
-	return NotImplemented;
+	return NOT_IMPLEMENTED;
 }
 
 
-returnCode arduiDisplayDrawCircle(uint16_t x, uint16_t y, uint16_t radius, uint32_t color) {
+ReturnCode arduiDisplayDrawCircle(uint16_t x, uint16_t y, uint16_t radius, uint32_t color) {
 #ifdef DEBUG
 	Serial.println("Drawn circle at (" + std::to_string(x) + ", " + std::to_string(y)
 				   + ") with radius " + std::to_string(radius));
 #endif
 	// Has to be implemented by the user
-	return NotImplemented;
+	return NOT_IMPLEMENTED;
 }
 
 
-returnCode arduiDisplayFillCircle(uint16_t x, uint16_t y, uint16_t radius, uint32_t color) {
+ReturnCode arduiDisplayFillCircle(uint16_t x, uint16_t y, uint16_t radius, uint32_t color) {
 #ifdef DEBUG
 	Serial.println("Filled circle at (" + std::to_string(x) + ", " + std::to_string(y)
 				   + ") with radius " + std::to_string(radius));
 #endif
 	// Has to be implemented by the user
-	return NotImplemented;
+	return NOT_IMPLEMENTED;
 }
 
 
-returnCode arduiDisplayDrawRect(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
+ReturnCode arduiDisplayDrawRect(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
 								uint32_t color) {
 #ifdef DEBUG
 	Serial.println("Drawn rect from (" + std::to_string(x1) + ", " + std::to_string(y1) + ") to ("
 				   + std::to_string(x2) + ", " + std::to_string(y2) + ")");
 #endif
 	// Has to be implemented by the user
-	return NotImplemented;
+	return NOT_IMPLEMENTED;
 }
 
 
-returnCode arduiDisplayFillRect(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
+ReturnCode arduiDisplayFillRect(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
 								uint32_t color) {
 #ifdef DEBUG
 	Serial.println("Filled rect from (" + std::to_string(x1) + ", " + std::to_string(y1) + ") to ("
 				   + std::to_string(x2) + ", " + std::to_string(y2) + ")");
 #endif
 	// Has to be implemented by the user
-	return NotImplemented;
+	return NOT_IMPLEMENTED;
 }
 
 
-returnCode arduiDisplayDrawTriangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
+ReturnCode arduiDisplayDrawTriangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
 									uint16_t x3, uint16_t y3, uint32_t color) {
 	// Has to be implemented by the user
 #ifdef DEBUG
@@ -180,11 +180,11 @@ returnCode arduiDisplayDrawTriangle(uint16_t x1, uint16_t y1, uint16_t x2, uint1
 				   + std::to_string(x2) + ", " + std::to_string(y2) + ") and ("
 				   + std::to_string(x3) + ", " + std::to_string(y3));
 #endif
-	return NotImplemented;
+	return NOT_IMPLEMENTED;
 }
 
 
-returnCode arduiDisplayFillTriangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
+ReturnCode arduiDisplayFillTriangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
 									uint16_t x3, uint16_t y3, uint32_t color) {
 	// Has to be implemented by the user
 #ifdef DEBUG
@@ -192,15 +192,15 @@ returnCode arduiDisplayFillTriangle(uint16_t x1, uint16_t y1, uint16_t x2, uint1
 				   + std::to_string(x2) + ", " + std::to_string(y2) + ") and ("
 				   + std::to_string(x3) + ", " + std::to_string(y3));
 #endif
-	return NotImplemented;
+	return NOT_IMPLEMENTED;
 }
 
 
-returnCode arduiDisplayDrawBitmap(uint16_t x, uint16_t y, uint16_t* bitmap) {
+ReturnCode arduiDisplayDrawBitmap(uint16_t x, uint16_t y, uint16_t* bitmap) {
 	// Has to be implemented by the user
 #ifdef DEBUG
 	Serial.println("Drawn bitmap at (" + std::to_string(x) + ", " + std::to_string(y));
 #endif
-	return NotImplemented;
+	return NOT_IMPLEMENTED;
 }
 
