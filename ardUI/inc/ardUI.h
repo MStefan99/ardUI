@@ -27,12 +27,9 @@ void arduiUserLoop();  // User "loop()" function will be replaced by this custom
 
 class ardUI {
 public:
-	explicit ardUI(ardUI const&) = delete;
+	ardUI() = delete;
 
-	static ardUI& getInstance();
-	static Activity& getCurrentScreen();
-
-	template <class ScreenClass>
+	template <class ActivityClass>
 	static void showScreen();
 	static void back();
 	static void exit();
@@ -43,19 +40,14 @@ public:
 	static void checkForActions();
 	static void draw();
 
-	void operator =(ardUI const&) = delete;
-
 private:
-	ardUI() = default;
-	~ardUI();
-
 	static void rewindActivityState(Activity* activity, Activity::State targetState);
 
 	const uint16_t screenHeight {arduiDisplayGetHeight()};
 	const uint16_t screenWidth {arduiDisplayGetWidth()};
 
 	static Activity* currentActivity;
-	static LIST<Activity*> backStack;
+	static LIST<Activity*> backList;
 	static MAP<String, View*> viewMap;
 };
 
@@ -64,13 +56,13 @@ template <class ActivityClass>
 void ardUI::showScreen() {
 	if (currentActivity) {
 		rewindActivityState(currentActivity, Activity::State::STOPPED);
-		backStack.push_front(currentActivity);
+		backList.push_back(currentActivity);
 		Serial.println("Screen appended to the stack");
 
-		if (backStack.size() > BACK_STACK_DEPTH) {
-			Serial.println("Max stack depth reached, destroying last activity");
-			auto lastScreen {backStack.back()};
-			backStack.pop_back();
+		if (backList.size() > BACK_STACK_DEPTH) {
+			Serial.println("Max stack depth reached, destroying oldest activity");
+			auto lastScreen {backList.front()};
+			backList.pop_front();
 			rewindActivityState(lastScreen, Activity::State::DESTROYED);
 			delete lastScreen;
 		}
@@ -80,7 +72,5 @@ void ardUI::showScreen() {
 	rewindActivityState(currentActivity, Activity::State::RESUMED);
 }
 
-
-#define ardUI() ardUI::getInstance()  // Instantiates ardUI from "ardUI()" call (discouraged)
 
 #endif //ARDUI_H

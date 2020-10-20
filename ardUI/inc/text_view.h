@@ -26,6 +26,7 @@ public:
 	uint32_t getTextColor() const;
 
 protected:
+	// TODO: add onMeasure
 	void onDraw() override;
 
 	String text;

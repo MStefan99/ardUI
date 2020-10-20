@@ -23,7 +23,9 @@ uint16_t View::MeasureSpec::getSize(uint16_t measureSpec) {
 int View::lastViewId {0};
 
 
-View::View(): viewId(++lastViewId) {}
+View::View(): viewId(++lastViewId) {
+	// Nothing to do
+}
 
 
 View* View::findViewById(int id) {
@@ -70,23 +72,21 @@ void View::layout(const Rect& r) {
 
 void View::handleEvent(const Event& event) {
 	switch (event.currentAction) {
-		case Event::NO_ACTION:
+		case Event::Action::NO_ACTION:
+		case Event::Action::TOUCH:
 			// Nothing to do
 			break;
-		case Event::CLICK:
-			invalidate();
+		case Event::Action::CLICK:
 			if (onClick) {
 				onClick(this);
 			}
 			break;
-		case Event::LONG_CLICK:
-			invalidate();
+		case Event::Action::LONG_CLICK:
 			if (onLongClick) {
 				onLongClick(this);
 			}
 			break;
-		case Event::SCROLL:
-			invalidate();
+		case Event::Action::SCROLL:
 			if (onScroll) {
 				onScroll(this);
 			}

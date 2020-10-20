@@ -10,7 +10,7 @@
 #undef loop
 
 Activity* ardUI::currentActivity {};
-LIST<Activity*> ardUI::backStack {};
+LIST<Activity*> ardUI::backList {};
 MAP<String, View*> ardUI::viewMap {};
 
 
@@ -46,20 +46,6 @@ void loop() {  // ardUI core functions will be added to the loop function
 #ifdef DEBUG
 	delay(1000 / REFRESH_RATE + 100);
 #endif
-}
-
-
-ardUI::~ardUI() {  // Should never be called since instance is declared static
-	for (auto s : backStack) {
-		delete s;
-	}
-	delete currentActivity;
-}
-
-
-ardUI& ardUI::getInstance() {
-	static ardUI instance;
-	return instance;
 }
 
 
@@ -106,39 +92,32 @@ void ardUI::rewindActivityState(Activity* a, Activity::State targetState) {
 }
 
 
-Activity& ardUI::getCurrentScreen() {
-	return *currentActivity;
-}
-
-
 void ardUI::back() {
-	auto s {currentActivity};
+	if (currentActivity) {
+		if (!backList.empty()) {
+			rewindActivityState(currentActivity, Activity::State::DESTROYED);
+			delete currentActivity;
 
-	if (s) {
-		if (!backStack.empty()) {
-			rewindActivityState(s, Activity::State::DESTROYED);
-			delete s;
-
-			s = backStack.back();
-			backStack.pop_front();
-			currentActivity = s;
-			rewindActivityState(s, Activity::State::RESUMED);
+			currentActivity = backList.back();
+			backList.pop_back();
+			rewindActivityState(currentActivity, Activity::State::RESUMED);
 		}
 	}
 }
 
 
 void ardUI::exit() {
-	for (const auto& activity : backStack) {
-		rewindActivityState(activity, Activity::State::DESTROYED);
-		delete activity;
-	}
-	backStack.clear();
-
 	if (currentActivity) {
 		rewindActivityState(currentActivity, Activity::State::DESTROYED);
 		delete currentActivity;
 		currentActivity = nullptr;
+	}
+
+	while (!backList.empty()) {
+		auto activity = backList.front();
+		rewindActivityState(activity, Activity::State::DESTROYED);
+		delete activity;
+		backList.pop_front();
 	}
 }
 

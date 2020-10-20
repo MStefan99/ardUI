@@ -44,7 +44,6 @@ public:
 	bool setVisible(bool visible);
 
 	bool isValid() const;
-	void invalidateSelf();
 
 protected:
 	virtual void onBoundsChange(const Rect& bounds);
@@ -52,6 +51,8 @@ protected:
 
 	bool valid {false};
 	bool visible {true};
+
+	void invalidateSelf();
 
 	Rect viewBox {};
 	Rect padding {};

@@ -30,9 +30,12 @@ class MainActivity: public Activity {
 		ardUI::setViewName(t, "text_view");
 
 		b->setOnClickListener([](View* view) -> void {
-			Serial.println("Changing text");
+			Serial.println("Button pressed");
 			auto t = (TextView*)ardUI::getViewByName("text_view");
 			t->setText("Button pressed!");
+		});
+		b->setOnLongClickListener([](View* view) -> void {
+			Serial.println("Button long pressed");
 		});
 	}
 
@@ -50,7 +53,7 @@ class MainActivity: public Activity {
 
 void setup() {
 	Serial.begin(115200);
-	ardUI::showScreen<MainActivity>();
+		ardUI::showScreen<MainActivity>();
 }
 
 

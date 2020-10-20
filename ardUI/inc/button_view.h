@@ -18,6 +18,7 @@ public:
 	~ButtonView() override = default;
 
 protected:
+	// TODO: add onMeasure
 	void onDraw() override;
 
 private:
