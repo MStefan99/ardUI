@@ -7,9 +7,9 @@
 
 
 #include "platform.h"
-#include "event.h"
-#include "rect.h"
 #include "llpi.h"
+#include "Event.h"
+#include "Rect.h"
 
 
 class Drawable {

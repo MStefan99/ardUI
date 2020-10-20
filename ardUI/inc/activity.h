@@ -6,8 +6,8 @@
 #define ARDUI_ACTIVITY_H
 
 
-#include "event.h"
-#include "view.h"
+#include "Event.h"
+#include "View.h"
 
 
 class Activity {

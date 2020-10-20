@@ -2,7 +2,7 @@
 // Created by MStefan99 on 19.12.19.
 //
 
-#include "button_view.h"
+#include "ButtonView.h"
 
 
 ButtonView::ButtonView(const String& text):

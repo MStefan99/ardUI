@@ -2,7 +2,7 @@
 // Created by MStefan99 on 24.12.19.
 //
 
-#include "rect.h"
+#include "Rect.h"
 
 
 Rect::Rect(uint16_t left, uint16_t top, uint16_t right, uint16_t bottom):

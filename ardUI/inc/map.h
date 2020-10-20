@@ -2,13 +2,14 @@
 // Created by MStefan99 on 29.1.20.
 //
 
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "OCInconsistentNamingInspection"
 #ifndef ARDUI_MAP_H
 #define ARDUI_MAP_H
 
 
 #include "pair.h"
 #include "less.h"
-#include "stack.h"
 
 
 template <class pNode>
@@ -511,3 +512,5 @@ namespace ardui {
 }
 
 #endif //ARDUI_MAP_H
+
+#pragma clang diagnostic pop

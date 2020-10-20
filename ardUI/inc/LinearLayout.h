@@ -2,12 +2,12 @@
 // Created by MStefan99 on 23.12.19.
 //
 
-#ifndef ARDUI_LINEAR_LAYOUT_H
-#define ARDUI_LINEAR_LAYOUT_H
+#ifndef ARDUI_LINEARLAYOUT_H
+#define ARDUI_LINEARLAYOUT_H
 
 
-#include "event.h"
-#include "view_group.h"
+#include "Event.h"
+#include "ViewGroup.h"
 
 
 class LinearLayout: public ViewGroup {
@@ -24,4 +24,4 @@ protected:
 	bool isVertical {true};
 };
 
-#endif //ARDUI_LINEAR_LAYOUT_H
+#endif //ARDUI_LINEARLAYOUT_H

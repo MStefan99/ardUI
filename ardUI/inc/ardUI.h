@@ -7,12 +7,12 @@
 
 
 #include "platform.h"
-#include "ardUI_config.h"
 #include "llpi.h"
+#include "ardUI_config.h"
 
-#include "activity.h"
-#include "event.h"
-#include "view.h"
+#include "Activity.h"
+#include "Event.h"
+#include "View.h"
 
 #include LIST_H
 #include MAP_H

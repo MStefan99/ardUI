@@ -2,11 +2,10 @@
 // Created by MStefan99 on 4.2.20.
 //
 
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "OCInconsistentNamingInspection"
 #ifndef ARDUI_STACK_H
 #define ARDUI_STACK_H
-
-
-#include "list.h"
 
 
 namespace ardui {
@@ -60,3 +59,5 @@ namespace ardui {
 }
 
 #endif //ARDUI_STACK_H
+
+#pragma clang diagnostic pop

@@ -2,7 +2,7 @@
 // Created by MStefan99 on 16.12.19.
 //
 
-#include "view.h"
+#include "View.h"
 
 
 uint16_t View::MeasureSpec::makeMeasureSpec(uint16_t mode, uint16_t size) {

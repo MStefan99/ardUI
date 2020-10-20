@@ -2,6 +2,8 @@
 // Created by MStefan99 on 29.1.20.
 //
 
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "OCInconsistentNamingInspection"
 #ifndef ARDUI_PAIR_H
 #define ARDUI_PAIR_H
 
@@ -38,3 +40,5 @@ namespace ardui {
 }
 
 #endif //ARDUI_PAIR_H
+
+#pragma clang diagnostic pop

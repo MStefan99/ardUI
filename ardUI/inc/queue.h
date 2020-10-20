@@ -6,7 +6,6 @@
 #define ARDUI_QUEUE_H
 
 
-#include "list.h"
 
 
 namespace ardui {

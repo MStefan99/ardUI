@@ -2,6 +2,8 @@
 // Created by MStefan99 on 21.1.2020.
 //
 
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "OCInconsistentNamingInspection"
 #ifndef ARDUI_VECTOR_H
 #define ARDUI_VECTOR_H
 
@@ -360,3 +362,5 @@ namespace ardui {
 }
 
 #endif //ARDUI_VECTOR_H
+
+#pragma clang diagnostic pop

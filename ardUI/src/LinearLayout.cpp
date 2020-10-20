@@ -2,7 +2,7 @@
 // Created by MStefan99 on 23.12.19.
 //
 
-#include "linear_layout.h"
+#include "LinearLayout.h"
 
 
 LinearLayout::LinearLayout(bool vertical):

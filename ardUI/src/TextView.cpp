@@ -2,7 +2,7 @@
 // Created by MStefan99 on 16.12.19.
 //
 
-#include "text_view.h"
+#include "TextView.h"
 
 
 TextView::TextView(const String& text):

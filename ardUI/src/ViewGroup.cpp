@@ -2,7 +2,7 @@
 // Created by MStefan99 on 17.12.19.
 //
 
-#include "view_group.h"
+#include "ViewGroup.h"
 
 
 ViewGroup::~ViewGroup() {

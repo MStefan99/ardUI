@@ -2,12 +2,12 @@
 // Created by MStefan99 on 17.12.19.
 //
 
-#ifndef ARDUI_VIEW_GROUP_H
-#define ARDUI_VIEW_GROUP_H
+#ifndef ARDUI_VIEWGROUP_H
+#define ARDUI_VIEWGROUP_H
 
 
 #include "platform.h"
-#include "view.h"
+#include "View.h"
 
 #include LIST_H
 
@@ -31,4 +31,4 @@ protected:
 	LIST<View*> viewList {};
 };
 
-#endif //ARDUI_VIEW_GROUP_H
+#endif //ARDUI_VIEWGROUP_H

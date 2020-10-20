@@ -2,12 +2,12 @@
 // Created by MStefan99 on 16.12.19.
 //
 
-#ifndef ARDUI_TEXT_VIEW_H
-#define ARDUI_TEXT_VIEW_H
+#ifndef ARDUI_TEXTVIEW_H
+#define ARDUI_TEXTVIEW_H
 
 
 #include "platform.h"
-#include "view.h"
+#include "View.h"
 
 
 class TextView: public View {
@@ -34,4 +34,4 @@ protected:
 	uint32_t textColor {0};
 };
 
-#endif //ARDUI_TEXT_VIEW_H
+#endif //ARDUI_TEXTVIEW_H

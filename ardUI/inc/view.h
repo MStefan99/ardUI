@@ -8,8 +8,8 @@
 
 #include "platform.h"
 #include "ardUI_config.h"
-#include "event.h"
-#include "drawable.h"
+#include "Event.h"
+#include "Drawable.h"
 
 
 class View: virtual public Drawable {

@@ -5,9 +5,9 @@
 #include <Arduino.h>
 #include "ardUI.h"
 
-#include "text_view.h"
-#include "button_view.h"
-#include "linear_layout.h"
+#include "TextView.h"
+#include "ButtonView.h"
+#include "LinearLayout.h"
 
 
 class MainActivity: public Activity {

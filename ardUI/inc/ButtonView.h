@@ -2,13 +2,13 @@
 // Created by MStefan99 on 19.12.19.
 //
 
-#ifndef ARDUI_BUTTON_VIEW_H
-#define ARDUI_BUTTON_VIEW_H
+#ifndef ARDUI_BUTTONVIEW_H
+#define ARDUI_BUTTONVIEW_H
 
 
 #include "platform.h"
-#include "text_view.h"
 #include "llpi.h"
+#include "TextView.h"
 
 
 class ButtonView: public TextView {
@@ -26,4 +26,4 @@ private:
 	uint32_t borderColor {0};
 };
 
-#endif //ARDUI_BUTTON_VIEW_H
+#endif //ARDUI_BUTTONVIEW_H

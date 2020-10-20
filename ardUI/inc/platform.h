@@ -6,8 +6,8 @@
 #define ARDUI_PLATFORM_H
 
 
-#include "ardUI_config.h"
 #include <Arduino.h>
+#include "ardUI_config.h"
 
 
 #if USE_STL
