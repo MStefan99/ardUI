@@ -11,7 +11,7 @@ namespace ardui {
 	template <class T>
 	class vector {
 	public:
-		class iterator {  // random access iterator
+		class iterator final {  // random access iterator
 		public:
 			iterator() = default;
 

@@ -12,7 +12,7 @@
 #include "Drawable.h"
 
 
-class View: virtual public Drawable {
+class View: public Drawable {
 public:
 	class MeasureSpec {
 	public:
@@ -27,7 +27,7 @@ public:
 
 		static uint16_t makeMeasureSpec(uint16_t mode, uint16_t size);
 
-	private:
+	protected:
 		uint16_t size;
 	};
 

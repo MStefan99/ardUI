@@ -41,7 +41,7 @@ namespace ardui {
 		struct element;
 
 	public:
-		class iterator {  // bidirectional iterator
+		class iterator final {  // bidirectional iterator
 		public:
 			iterator() = default;
 
