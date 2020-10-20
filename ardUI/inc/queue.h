@@ -5,9 +5,6 @@
 #ifndef ARDUI_QUEUE_H
 #define ARDUI_QUEUE_H
 
-
-
-
 namespace ardui {
 	template <class T, class Container = list <T>>
 	class queue {

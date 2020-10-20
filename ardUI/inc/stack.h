@@ -7,7 +7,6 @@
 #ifndef ARDUI_STACK_H
 #define ARDUI_STACK_H
 
-
 namespace ardui {
 	template <class T, class Container = list <T>>
 	class stack {

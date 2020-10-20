@@ -3,14 +3,14 @@ add_library(ardUI SHARED)
 target_sources(ardUI PRIVATE
 		${SOURCE_DIRECTORY}/ardUI.cpp
 		${SOURCE_DIRECTORY}/llpi.cpp
-		${SOURCE_DIRECTORY}/activity.cpp
-		${SOURCE_DIRECTORY}/text_view.cpp
-		${SOURCE_DIRECTORY}/view.cpp
-		${SOURCE_DIRECTORY}/view_group.cpp
-		${SOURCE_DIRECTORY}/button_view.cpp
-		${SOURCE_DIRECTORY}/drawable.cpp
-		${SOURCE_DIRECTORY}/linear_layout.cpp
-		${SOURCE_DIRECTORY}/rect.cpp
+		${SOURCE_DIRECTORY}/Activity.cpp
+		${SOURCE_DIRECTORY}/TextView.cpp
+		${SOURCE_DIRECTORY}/View.cpp
+		${SOURCE_DIRECTORY}/ViewGroup.cpp
+		${SOURCE_DIRECTORY}/ButtonView.cpp
+		${SOURCE_DIRECTORY}/Drawable.cpp
+		${SOURCE_DIRECTORY}/LinearLayout.cpp
+		${SOURCE_DIRECTORY}/Rect.cpp
 		)
 target_include_directories(ardUI PUBLIC ${INCLUDE_DIRECTORY})
 target_link_libraries(ardUI arduinoEmulator)

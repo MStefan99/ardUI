@@ -75,7 +75,7 @@ ReturnCode arduiDisplayOff() {
 
 ReturnCode arduiDisplaySetBrightness(uint8_t brightness) {
 #ifdef VERBOSE
-	Serial.print("Display brigthness set to ");
+	Serial.print("Display brightness set to ");
 	Serial.println(brightness);
 #endif
 	// Has to be implemented by the user
@@ -122,10 +122,10 @@ ReturnCode arduiDisplayDrawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t 
 }
 
 
-ReturnCode arduiDisplayDrawChar(uint16_t x, uint16_t y, uint16_t height, char text, uint32_t color) {
+ReturnCode arduiDisplayDrawChar(uint16_t x, uint16_t y, uint16_t height, char c, uint32_t color) {
 #ifdef VERBOSE
 	Serial.print("Drawn char ");
-	Serial.print(text);
+	Serial.print(c);
 	Serial.print(" at (");
 	Serial.print(x);
 	Serial.print(", ");
