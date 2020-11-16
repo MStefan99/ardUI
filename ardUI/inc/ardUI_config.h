@@ -14,7 +14,7 @@
  * Use standard template library.
  * Disable if not supported on your platform.
  */
-#define USE_STL ( false )
+#define USE_STL ( true )
 
 
 // User Interface

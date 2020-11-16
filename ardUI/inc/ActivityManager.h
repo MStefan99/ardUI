@@ -20,7 +20,9 @@ public:
 
 private:
 	template <class ActivityClass>
-	static void switchActivity(const Bundle& extras = {});
+	static void switchActivity(const Bundle& extras = {},
+														 bool startedForResult = false,
+														 int requestCode = {});
 	static void back();
 	static void exit();
 
@@ -29,10 +31,9 @@ private:
 
 	friend class EventManager;
 
+	friend class Activity;
+
 	friend class ardUI;
 };
-
-
-
 
 #endif //ARDUI_ACTIVITYMANAGER_H

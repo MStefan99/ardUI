@@ -10,7 +10,9 @@
 
 
 template <class ActivityClass>
-void ActivityManager::switchActivity(const Bundle& extras) {
+void ActivityManager::switchActivity(const Bundle& extras,
+																		 bool startedForResult,
+																		 int requestCode) {
 	if (currentActivity) {
 		currentActivity->rewindState(Activity::State::STOPPED);
 		backList.push_back(currentActivity);
@@ -25,7 +27,7 @@ void ActivityManager::switchActivity(const Bundle& extras) {
 		}
 	}
 
-	currentActivity = new ActivityClass {extras};
+	currentActivity = new ActivityClass {extras, startedForResult, requestCode};
 	currentActivity->rewindState(Activity::State::RESUMED);
 }
 

@@ -5,7 +5,12 @@
 #include "Activity.h"
 
 
-Activity::Activity(const Bundle& extras): bundle {extras} {
+Activity::Activity(const Bundle& extras,
+									 bool startedForResult,
+									 int requestCode):
+		bundle {extras},
+		returnsResult {startedForResult},
+		request {requestCode} {
 	// Nothing to do
 }
 
@@ -23,6 +28,12 @@ void Activity::setContentView(compiledLayout layoutClass) {
 
 void Activity::setRootView(View* view) {
 	rootView = view;
+}
+
+
+void Activity::setResult(int resultCode, const Bundle& data) {
+	result = resultCode;
+	resultData = data;
 }
 
 
@@ -103,6 +114,11 @@ void Activity::onDestroy() {
 }
 
 
+void Activity::onActivityResult(int requestCode, int resultCode, const Bundle& results) {
+	// Nothing to do
+}
+
+
 View* Activity::findViewById(int id) {
 	return rootView->findViewById(id);
 }
@@ -145,11 +161,6 @@ void Activity::handleEvent(const Event& event) {
 
 
 void Activity::rewindState(Activity::State targetState) {
-	if ((targetState <= Activity::State::CREATED && currentState > Activity::State::CREATED)
-			|| (targetState < Activity::State::DESTROYED && currentState == Activity::State::DESTROYED)) {
-		return;  // State unreachable
-	}
-
 	while (currentState != targetState) {
 		switch (currentState) {
 			case Activity::State::LAUNCHED:
@@ -181,7 +192,7 @@ void Activity::rewindState(Activity::State targetState) {
 				break;
 
 			case Activity::State::DESTROYED:
-				break;
+				return;
 		}
 	}
 }

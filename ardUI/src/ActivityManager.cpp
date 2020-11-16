@@ -13,6 +13,12 @@ LIST<Activity*> ActivityManager::backList {};
 void ActivityManager::back() {
 	if (currentActivity) {
 		if (!backList.empty()) {
+			auto prevActivity = backList.back();
+			if (currentActivity->returnsResult) {
+				prevActivity->onActivityResult(currentActivity->request,
+																	 currentActivity->result,
+																	 currentActivity->resultData);
+			}
 			currentActivity->rewindState(Activity::State::DESTROYED);
 			delete currentActivity;
 

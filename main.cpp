@@ -10,6 +10,19 @@
 #include "LinearLayout.h"
 
 
+class ResultActivity: public Activity {
+	using Activity::Activity;
+
+	void onCreate() override {
+		Serial.println("Hi, I am ResultActivity!");
+		auto b = Bundle{};
+		b.putInt("someResult", 12354);
+		setResult(2, b);
+		ardUI::back();
+	}
+};
+
+
 class MainActivity: public Activity {
 	using Activity::Activity;
 	TextView* t;
@@ -38,11 +51,21 @@ class MainActivity: public Activity {
 		b->setOnLongClickListener([](View* view) -> void {
 			Serial.println("Button long pressed");
 		});
+
+		startActivityForResult<ResultActivity>(1);
 	}
 
 
 	void onResume() override {
 		t->setText("Press the button!");
+	}
+
+
+	void onActivityResult(int requestCode, int resultCode, const Bundle &results) override {
+		Serial.print("Received Activity result. Request code: ");
+		Serial.print(requestCode);
+		Serial.print(" , Result code: ");
+		Serial.println(resultCode);
 	}
 
 

@@ -18,12 +18,20 @@
 class Activity {
 public:
 	Activity() = default;
-	explicit Activity(const Bundle& extras);
+	explicit Activity(const Bundle& extras,
+									 bool startedForResult = false,
+									 int requestCode = -1);
 	virtual ~Activity();
 
 	template <class compiledLayout>
 	void setContentView(compiledLayout layoutClass);
 	void setRootView(View* view);
+
+	template <class ActivityClass>
+	void startActivity(const Bundle& extras);
+	template <class ActivityClass>
+	void startActivityForResult(int requestCode, const Bundle& extras = {});
+	void setResult(int resultCode, const Bundle& data = {});
 
 	virtual void onCreate() = 0;
 	virtual void onStart();
@@ -32,7 +40,8 @@ public:
 	virtual void onPause();
 	virtual void onStop();
 	virtual void onDestroy();
-//	virtual void onActivityResult();
+	virtual void onActivityResult(int requestCode, int resultCode,
+															 const Bundle& results);
 
 	View* findViewById(int id);
 
@@ -68,11 +77,28 @@ private:
 
 	void rewindState(Activity::State targetState);
 
-	State currentState {LAUNCHED};
-	Bundle bundle {};
-	View* rootView {};
 	void (* resultCallback)(const Bundle& extras) {};
+
+	State currentState {LAUNCHED};
+	View* rootView {};
+	Bundle bundle {};
+	bool returnsResult {false};
+	Bundle resultData {};
+	int request {-1};
+	int result {-1};
 };
+
+
+template <class ActivityClass>
+void Activity::startActivity(const Bundle& extras) {
+	ActivityManager::switchActivity<ActivityClass>(extras);
+}
+
+
+template <class ActivityClass>
+void Activity::startActivityForResult(int requestCode, const Bundle& extras) {
+	ActivityManager::switchActivity<ActivityClass>(extras, true, requestCode);
+}
 
 
 #endif //ARDUI_ACTIVITY_H
