@@ -11,6 +11,7 @@
 
 
 class MainActivity: public Activity {
+	using Activity::Activity;
 	TextView* t;
 
 
@@ -53,7 +54,7 @@ class MainActivity: public Activity {
 
 void setup() {
 	Serial.begin(115200);
-		ardUI::showScreen<MainActivity>();
+	ardUI::startFirstActivity<MainActivity>();
 }
 
 

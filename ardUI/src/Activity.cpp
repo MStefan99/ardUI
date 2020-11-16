@@ -5,6 +5,11 @@
 #include "Activity.h"
 
 
+Activity::Activity(const Bundle& extras): bundle {extras} {
+	// Nothing to do
+}
+
+
 Activity::~Activity() {
 	delete rootView;
 }
@@ -135,5 +140,48 @@ void Activity::layout() {
 void Activity::handleEvent(const Event& event) {
 	if (rootView) {
 		rootView->handleEvent(event);
+	}
+}
+
+
+void Activity::rewindState(Activity::State targetState) {
+	if ((targetState <= Activity::State::CREATED && currentState > Activity::State::CREATED)
+			|| (targetState < Activity::State::DESTROYED && currentState == Activity::State::DESTROYED)) {
+		return;  // State unreachable
+	}
+
+	while (currentState != targetState) {
+		switch (currentState) {
+			case Activity::State::LAUNCHED:
+				create();
+				break;
+			case Activity::State::CREATED:
+			case Activity::State::RESTARTED:
+				start();
+				break;
+			case Activity::State::STARTED:
+				resume();
+				break;
+			case Activity::State::RESUMED:
+				pause();
+				break;
+			case Activity::State::PAUSED:
+				if (targetState == Activity::State::RESUMED) {
+					resume();
+				} else {
+					stop();
+				}
+				break;
+			case Activity::State::STOPPED:
+				if (targetState == Activity::State::DESTROYED) {
+					destroy();
+				} else {
+					restart();
+				}
+				break;
+
+			case Activity::State::DESTROYED:
+				break;
+		}
 	}
 }

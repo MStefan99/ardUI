@@ -24,6 +24,14 @@ public:
 	float* getFloatArray(const String& key);
 	String& getString(const String& key);
 
+	void remove(const String& key);
+
+	template <class DataClass>
+	void put(const String& key, const DataClass& data);
+
+	template <class DataClass>
+	DataClass& get(const String& key);
+
 protected:
 	MAP<String, void*> bundleMap {};
 };

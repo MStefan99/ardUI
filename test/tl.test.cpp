@@ -32,13 +32,11 @@ public:
 
 	const char* what() const noexcept override { return desc; }
 
-
 private:
 	char* desc {nullptr};
 };
 
 using namespace std;
-
 
 template <class T>
 void assert(T c) {
@@ -119,7 +117,7 @@ void vectorAssert() {
 	assert(v.size(), 9);
 
 	// copy assert
-	ardui::vector v1 {v};
+	ardui::vector<int> v1 {v};
 	assert(v1.size(), 9);
 
 	// pop assert
@@ -129,6 +127,9 @@ void vectorAssert() {
 	// clear assert
 	v.clear();
 	assert(v.size(), 0);
+
+	// empty copy assert
+	ardui::vector<int> {ardui::vector<int>{}};
 }
 
 
@@ -193,6 +194,9 @@ void listAssert() {
 	assert(l1.front(), -1);
 	assert(l1.back(), 9);
 	assert(*--l1.end(), 9);
+
+	// empty copy assert
+	ardui::list<int> {ardui::list<int>{}};
 }
 
 
@@ -217,7 +221,7 @@ void mapAssert() {
 	assert(m.empty(), false);
 
 	// copy assert
-	ardui::map m1 {m};
+	ardui::map<int, double> m1 {m};
 	assert(m1.size(), 8);
 	assert(m1[0], 0.0);
 
@@ -229,6 +233,9 @@ void mapAssert() {
 	it = m.erase(m.find(-1), m.find(5));
 	assert(m.size(), 2);
 	assert(it, m.find(5));
+
+	// empty copy assert
+	ardui::map<int, double> {ardui::map<int, double>{}};
 }
 
 

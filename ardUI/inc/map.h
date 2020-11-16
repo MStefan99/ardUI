@@ -370,30 +370,32 @@ namespace ardui {
 
 	template <class Key, class T, class Comp>
 	map<Key, T, Comp>::map(const map& m) {
-		mapRoot = new element {{m.mapRoot->value}, nullptr};
-		mapSize = 1;
+		if (m.mapRoot) {
+			mapRoot = new element {{m.mapRoot->value}, nullptr};
+			mapSize = 1;
 
-		auto e {m.mapRoot};
-		while (e->left) {
-			e = e->left;
-			insert({e->value});
-		}
-		while (e != nullptr) {
-			if (e->right) {
-				e = e->right;
+			auto e {m.mapRoot};
+			while (e->left) {
+				e = e->left;
 				insert({e->value});
-				while (e->left) {
-					e = e->left;
+			}
+			while (e != nullptr) {
+				if (e->right) {
+					e = e->right;
 					insert({e->value});
-				}
-			} else if (e->parent) {
-				while (e->parent && e->parent->right == e) {
-					e = e->parent;
-				}
-				if (e->parent) {
-					e = e->parent;
-				} else {
-					e = nullptr;
+					while (e->left) {
+						e = e->left;
+						insert({e->value});
+					}
+				} else if (e->parent) {
+					while (e->parent && e->parent->right == e) {
+						e = e->parent;
+					}
+					if (e->parent) {
+						e = e->parent;
+					} else {
+						e = nullptr;
+					}
 				}
 			}
 		}

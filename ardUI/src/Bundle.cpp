@@ -53,3 +53,20 @@ float* Bundle::getFloatArray(const String& key) {
 String& Bundle::getString(const String& key) {
 	return *(String*)bundleMap[key];
 }
+
+
+void Bundle::remove(const String& key) {
+	bundleMap.erase(key);
+}
+
+
+template <class DataClass>
+void Bundle::put(const String& key, const DataClass& data) {
+	bundleMap[key] = &data;
+}
+
+
+template <class DataClass>
+DataClass& Bundle::get(const String& key) {
+	return *(DataClass*)bundleMap[key];
+}

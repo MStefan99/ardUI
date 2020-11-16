@@ -10,6 +10,8 @@ target_sources(ardUI PRIVATE
 		${SOURCE_DIRECTORY}/ViewGroup.cpp
 		${SOURCE_DIRECTORY}/ButtonView.cpp
 		${SOURCE_DIRECTORY}/LinearLayout.cpp
+		${SOURCE_DIRECTORY}/EventManager.cpp
+		${SOURCE_DIRECTORY}/ActivityManager.cpp
 		${SOURCE_DIRECTORY}/Activity.cpp
 		${SOURCE_DIRECTORY}/ardUI.cpp
 		)

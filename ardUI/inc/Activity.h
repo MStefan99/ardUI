@@ -6,13 +6,19 @@
 #define ARDUI_ACTIVITY_H
 
 
+#include "platform.h"
+#include LIST_H
+
 #include "Event.h"
+#include "Bundle.h"
 #include "View.h"
+#include "ActivityManager.h"
 
 
 class Activity {
 public:
 	Activity() = default;
+	explicit Activity(const Bundle& extras);
 	virtual ~Activity();
 
 	template <class compiledLayout>
@@ -26,10 +32,13 @@ public:
 	virtual void onPause();
 	virtual void onStop();
 	virtual void onDestroy();
+//	virtual void onActivityResult();
 
 	View* findViewById(int id);
 
-	friend class ardUI;
+	friend class EventManager;
+
+	friend class ActivityManager;
 
 private:
 	enum State {
@@ -57,8 +66,13 @@ private:
 	void handleEvent(const Event& event);
 	View* getRootView();
 
+	void rewindState(Activity::State targetState);
+
 	State currentState {LAUNCHED};
+	Bundle bundle {};
 	View* rootView {};
+	void (* resultCallback)(const Bundle& extras) {};
 };
+
 
 #endif //ARDUI_ACTIVITY_H

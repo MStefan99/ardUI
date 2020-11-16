@@ -12,9 +12,9 @@ LinearLayout::LinearLayout(bool vertical):
 void LinearLayout::onMeasure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec) {
 	for (const auto& v : viewList) {
 		v->measure(View::MeasureSpec::makeMeasureSpec(View::MeasureSpec::AT_MOST,
-													  View::MeasureSpec::getSize(widthMeasureSpec)),
-				   View::MeasureSpec::makeMeasureSpec(View::MeasureSpec::UNSPECIFIED,
-													  View::MeasureSpec::getSize(heightMeasureSpec)));
+																									View::MeasureSpec::getSize(widthMeasureSpec)),
+							 View::MeasureSpec::makeMeasureSpec(View::MeasureSpec::UNSPECIFIED,
+																									View::MeasureSpec::getSize(heightMeasureSpec)));
 	}
 }
 
