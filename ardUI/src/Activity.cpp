@@ -37,6 +37,11 @@ void Activity::setResult(int resultCode, const Bundle& data) {
 }
 
 
+void Activity::finish() {
+	ActivityManager::stopActivity(this);
+}
+
+
 void Activity::create() {
 	currentState = CREATED;
 	onCreate();

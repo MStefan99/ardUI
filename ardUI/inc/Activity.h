@@ -19,8 +19,8 @@ class Activity {
 public:
 	Activity() = default;
 	explicit Activity(const Bundle& extras,
-									 bool startedForResult = false,
-									 int requestCode = -1);
+										bool startedForResult = false,
+										int requestCode = -1);
 	virtual ~Activity();
 
 	template <class compiledLayout>
@@ -32,6 +32,7 @@ public:
 	template <class ActivityClass>
 	void startActivityForResult(int requestCode, const Bundle& extras = {});
 	void setResult(int resultCode, const Bundle& data = {});
+	void finish();
 
 	virtual void onCreate() = 0;
 	virtual void onStart();
@@ -41,7 +42,7 @@ public:
 	virtual void onStop();
 	virtual void onDestroy();
 	virtual void onActivityResult(int requestCode, int resultCode,
-															 const Bundle& results);
+																const Bundle& results);
 
 	View* findViewById(int id);
 
@@ -77,8 +78,6 @@ private:
 
 	void rewindState(Activity::State targetState);
 
-	void (* resultCallback)(const Bundle& extras) {};
-
 	State currentState {LAUNCHED};
 	View* rootView {};
 	Bundle bundle {};
@@ -99,6 +98,5 @@ template <class ActivityClass>
 void Activity::startActivityForResult(int requestCode, const Bundle& extras) {
 	ActivityManager::switchActivity<ActivityClass>(extras, true, requestCode);
 }
-
 
 #endif //ARDUI_ACTIVITY_H

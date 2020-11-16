@@ -29,6 +29,7 @@ void ActivityManager::switchActivity(const Bundle& extras,
 
 	currentActivity = new ActivityClass {extras, startedForResult, requestCode};
 	currentActivity->rewindState(Activity::State::RESUMED);
+	ActivityManager::cleanup();
 }
 
 

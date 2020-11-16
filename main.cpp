@@ -18,7 +18,7 @@ class ResultActivity: public Activity {
 		auto b = Bundle{};
 		b.putInt("someResult", 12354);
 		setResult(2, b);
-		ardUI::back();
+		finish();
 	}
 };
 
@@ -41,11 +41,11 @@ class MainActivity: public Activity {
 		ll->addView(b);
 		setRootView(ll);
 
-		ardUI::setViewName(t, "text_view");
+		ardUI().setViewName(t, "text_view");
 
 		b->setOnClickListener([](View* view) -> void {
 			Serial.println("Button pressed");
-			auto t = (TextView*)ardUI::getViewByName("text_view");
+			auto t = (TextView*)ardUI().getViewByName("text_view");
 			t->setText("Button pressed!");
 		});
 		b->setOnLongClickListener([](View* view) -> void {
@@ -77,7 +77,8 @@ class MainActivity: public Activity {
 
 void setup() {
 	Serial.begin(115200);
-	ardUI::startFirstActivity<MainActivity>();
+	ardUI().startFirstActivity<MainActivity>();
+	ardUI::reset();
 }
 
 

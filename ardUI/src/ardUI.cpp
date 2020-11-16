@@ -5,9 +5,6 @@
 #include "ardUI.h"
 
 
-MAP<String, View*> ardUI::viewMap {};
-
-
 void ardUI::setViewName(View* view, const String& name) {
 	viewMap[name] = view;
 }
@@ -23,6 +20,6 @@ void ardUI::back() {
 }
 
 
-void ardUI::exit() {
-	ActivityManager::exit();
+void ardUI::reset() {
+	ActivityManager::reset();
 }

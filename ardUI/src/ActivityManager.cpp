@@ -7,7 +7,13 @@
 
 
 Activity* ActivityManager::currentActivity {};
+LIST<Activity*> ActivityManager::activitiesToStop {};
 LIST<Activity*> ActivityManager::backList {};
+
+
+void ActivityManager::stopActivity(Activity* activityToStop) {
+	activitiesToStop.push_back(activityToStop);
+}
 
 
 void ActivityManager::back() {
@@ -27,10 +33,11 @@ void ActivityManager::back() {
 			currentActivity->rewindState(Activity::State::RESUMED);
 		}
 	}
+	cleanup();
 }
 
 
-void ActivityManager::exit() {
+void ActivityManager::reset() {
 	if (currentActivity) {
 		currentActivity->rewindState(Activity::State::DESTROYED);
 		delete currentActivity;
@@ -42,5 +49,21 @@ void ActivityManager::exit() {
 		activity->rewindState(Activity::State::DESTROYED);
 		delete activity;
 		backList.pop_front();
+	}
+}
+
+
+void ActivityManager::cleanup() {
+	for (const auto& a: activitiesToStop) {
+		if (a == currentActivity) {
+			back();
+		} else {
+			for (auto it = backList.begin(); it != backList.end(); ++it) {
+				if (a == *it) {
+					backList.erase(it);
+					break;
+				}
+			}
+		}
 	}
 }

@@ -9,6 +9,7 @@
 #include "platform.h"
 #include "llpi.h"
 #include "ardUI_config.h"
+#include "Singleton.h"
 
 #include "Event.h"
 #include "EventManager.h"
@@ -21,20 +22,20 @@
 #include MAP_H
 
 
-class ardUI final {
+class ardUI final: public Singleton<ardUI> {
 public:
-	ardUI() = delete;
+	ardUI() = default;
 
 	template <class ActivityClass>
-	static void startFirstActivity();
+	void startFirstActivity();
 	static void back();
-	static void exit();
+	static void reset();
 
-	static void setViewName(View* view, const String& name);
-	static View* getViewByName(const String& name);
+	void setViewName(View* view, const String& name);
+	View* getViewByName(const String& name);
 
 private:
-	static MAP<String, View*> viewMap;
+	MAP<String, View*> viewMap;
 };
 
 

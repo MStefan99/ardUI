@@ -12,40 +12,40 @@
 
 #if USE_STL
 
-#define VECTOR_H <vector>
-#define LIST_H <list>
-#define LESS_H <less>
-#define MAP_H <map>
-#define STACK_H <stack>
-#define QUEUE_H <queue>
+	#define VECTOR_H <vector>
+	#define LIST_H <list>
+	#define LESS_H <less>
+	#define MAP_H <map>
+	#define STACK_H <stack>
+	#define QUEUE_H <queue>
 
-#define VECTOR std::vector
-#define LIST std::list
-#define LESS std::less
-#define MAP std::map
-#define STACK std::stack
-#define QUEUE std::queue
+	#define VECTOR std::vector
+	#define LIST std::list
+	#define LESS std::less
+	#define MAP std::map
+	#define STACK std::stack
+	#define QUEUE std::queue
 
 #else
 
-#define VECTOR_H "vector.h"
-#define LIST_H "list.h"
-#define LESS_H "less.h"
-#define MAP_H "map.h"
-#define STACK_H "stack.h"
-#define QUEUE_H "queue.h"
+	#define VECTOR_H "vector.h"
+	#define LIST_H "list.h"
+	#define LESS_H "less.h"
+	#define MAP_H "map.h"
+	#define STACK_H "stack.h"
+	#define QUEUE_H "queue.h"
 
-#define VECTOR ardui::vector
-#define LIST ardui::list
-#define LESS ardui::less
-#define MAP ardui::map
-#define STACK ardui::stack
-#define QUEUE ardui::queue
+	#define VECTOR ardui::vector
+	#define LIST ardui::list
+	#define LESS ardui::less
+	#define MAP ardui::map
+	#define STACK ardui::stack
+	#define QUEUE ardui::queue
 
 #endif
 
 #if (!defined(Arduino_h) && ENABLE_DEBUG)
-#define DEBUG
+	#define DEBUG
 #endif
 
 #endif //ARDUI_PLATFORM_H

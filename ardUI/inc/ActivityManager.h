@@ -23,10 +23,14 @@ private:
 	static void switchActivity(const Bundle& extras = {},
 														 bool startedForResult = false,
 														 int requestCode = {});
+	static void stopActivity(Activity* activityToStop);
 	static void back();
-	static void exit();
+	static void reset();
+
+	static void cleanup();
 
 	static Activity* currentActivity;
+	static LIST<Activity*> activitiesToStop;
 	static LIST<Activity*> backList;
 
 	friend class EventManager;
