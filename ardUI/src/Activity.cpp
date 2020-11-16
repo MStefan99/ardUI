@@ -119,7 +119,7 @@ void Activity::onDestroy() {
 }
 
 
-void Activity::onActivityResult(int requestCode, int resultCode, const Bundle& results) {
+void Activity::onActivityResult(int requestCode, int resultCode, Bundle& results) {
 	// Nothing to do
 }
 

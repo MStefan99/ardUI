@@ -11,10 +11,11 @@ class Singleton {
 public:
 	Singleton() = default;
 	explicit Singleton(const Singleton<T>&) = delete;
+	virtual ~Singleton() = default;
 
-	Singleton<T>& operator=(const Singleton<T>) = delete;
-	T& operator()();
+	Singleton<T>& operator =(const Singleton<T>) = delete;
 
+	T& operator ()();
 	static T& getInstance();
 };
 

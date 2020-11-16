@@ -61,11 +61,9 @@ class MainActivity: public Activity {
 	}
 
 
-	void onActivityResult(int requestCode, int resultCode, const Bundle &results) override {
-		Serial.print("Received Activity result. Request code: ");
-		Serial.print(requestCode);
-		Serial.print(" , Result code: ");
-		Serial.println(resultCode);
+	void onActivityResult(int requestCode, int resultCode, Bundle &results) override {
+		Serial.print("Received Activity result: ");
+		Serial.println(results.getInt("someResult"));
 	}
 
 
@@ -78,7 +76,7 @@ class MainActivity: public Activity {
 void setup() {
 	Serial.begin(115200);
 	ardUI().startFirstActivity<MainActivity>();
-	ardUI::reset();
+//	ardUI::reset();
 }
 
 

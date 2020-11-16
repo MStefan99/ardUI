@@ -42,7 +42,7 @@ public:
 	virtual void onStop();
 	virtual void onDestroy();
 	virtual void onActivityResult(int requestCode, int resultCode,
-																const Bundle& results);
+																Bundle& results);
 
 	View* findViewById(int id);
 
