@@ -6,6 +6,8 @@
 #define ARDUI_MATCHER_H
 
 
+#include <cstring>
+
 #include "AssertException.h"
 
 
@@ -13,18 +15,26 @@ class Matcher {
 public:
 	Matcher() = default;
 
-	explicit Matcher(void* expression):
-			expression {expression} {}
+
+	explicit Matcher(void* exp, size_t size) {
+		expression = malloc(size);
+		memcpy(expression, exp, size);
+	}
+
+
+	~Matcher() {
+		free(expression);
+	}
+
 
 	template <class T>
 	void toEqual(T expected) {
 		T actual = *(T*)expression;
 		if (actual != expected) {
-			throw AssertException("Test failed. Expected: "
-														+ std::to_string(expected) + ", got: "
-														+ std::to_string(actual) + ".");
+			throw AssertException("Expected: " + std::to_string((T)expected) + ", got: " + std::to_string((T)actual));
 		}
 	}
+
 
 private:
 	void* expression {nullptr};
@@ -33,7 +43,8 @@ private:
 
 template <class T>
 Matcher expect(T actual) {
-	return Matcher {&actual};
+	return Matcher {&actual, sizeof(T)};
 }
+
 
 #endif //ARDUI_MATCHER_H

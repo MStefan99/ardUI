@@ -11,84 +11,121 @@
 
 #include "AssertException.h"
 #include "Test.h"
+#include "Terminal.h"
 
 
 class TestBlock {
 public:
 	TestBlock() = default;
 
-	explicit TestBlock(const std::string& name):
-			name {name} {}
+
+	TestBlock(const std::string& name, const std::function<void(TestBlock&)>& cb):
+		name {name}, blockCallback {cb} {
+		#if !DEFERRED_RUN
+		std::cout << BLUE << "Running suite \"" + name + "\"..." << NC << std::endl;
+		runBefore();
+		#endif
+	}
+
 
 	~TestBlock() {
 		run();
-	}
-
-	bool run() {
-		try {
-			blockCallback();
-			if (beforeCallback) {
-				beforeCallback();
-			}
-			for (const auto& test: tests) {
-				if (!test.run()) {
-					std::cout << "Test suite failed: " << test.name << std::endl;
-					return false;
-				};
-			}
-			if (afterCallback) {
-				afterCallback();
-			}
-		} catch (const AssertException& e) {
-			return false;
-		}
-		std::cout << "All tests in the block \"" << name
-							<< "\" passed successfully!" << std::endl;
-		return true;
+		#if !DEFERRED_RUN
+		runAfter();
+		printResults();
+		#endif
 	}
 
 
-	void setBeforeCallback(const std::function<void()>& callback) {
+	void beforeAll(const std::function<void()>& callback) {
 		beforeCallback = callback;
 	}
 
 
-	void setBlockCallback(const std::function<void()>& callback) {
+	void setBlockCallback(const std::function<void(TestBlock&)>& callback) {
 		blockCallback = callback;
 	}
 
-	void addTest(const Test& test) {
-		tests.push_back(test);
+
+	void test(const std::string& testName, const std::function<void()>& cb) {
+		#if DEFERRED_RUN
+		tests.emplace_back(testName, cb);
+		#else
+		runTest({testName, cb});
+		#endif
 	}
 
 
-	void setAfterCallback(const std::function<void()>& callback) {
+	void afterAll(const std::function<void()>& callback) {
 		afterCallback = callback;
 	}
 
-private:
+
+protected:
 	std::string name {};
 	std::function<void()> beforeCallback {};
-	std::function<void()> blockCallback {};
+	std::function<void(TestBlock&)> blockCallback {};
 	std::function<void()> afterCallback {};
+	bool passed = true;
+	#if DEFERRED_RUN
 	std::list<Test> tests;
+	#endif
+
+
+	void runBefore() {
+		try {
+			blockCallback(*this);
+			if (beforeCallback) {
+				beforeCallback();
+			}
+		} catch (const AssertException& e) {
+			passed = false;
+		}
+	}
+
+
+	void runAfter() {
+		try {
+			if (afterCallback) {
+				afterCallback();
+			}
+		} catch (const AssertException& e) {
+			passed = false;
+		}
+	}
+
+
+	void runTest(const Test& test) {
+		try {
+			if (!test.run()) {
+				passed = false;
+			}
+		} catch (const AssertException& e) {
+			passed = false;
+		}
+	}
+
+
+	void printResults() {
+		if (passed) {
+			std::cout << GREEN << "All tests in the suite \"" << name
+								<< "\" passed successfully!" << NC << std::endl;
+		} else {
+			std::cout << RED << "Test suite \"" << name << "\" failed." << NC << std::endl;
+		}
+	}
+
+
+	void run() {
+		#if DEFERRED_RUN
+		runBefore();
+		for (const auto& test: tests) {
+			runTest(test);
+		}
+		runAfter();
+		printResults();
+		#endif
+	}
 };
-
-#define describe(desc, cb) { \
-  TestBlock block{desc};      \
-  block.setBlockCallback([&]() -> void cb);  \
-}
-
-#define beforeAll(cb) { \
-  block.setBeforeCallback([&]() -> void cb); \
-}
-
-#define afterAll(cb) { \
-  block.setAfterCallback([&]() -> void cb);  \
-}
-
-#define test(name, cb) { \
-  block.addTest(Test{name, [&]() -> void cb});  \
-}
 
 #endif //ARDUI_TESTBLOCK_H

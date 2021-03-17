@@ -12,10 +12,11 @@
 class AssertException: public std::exception {
 public:
 	AssertException(const std::string& description) noexcept:
-			desc {description} {}
+		desc {description} {}
+
 
 	AssertException(const AssertException& e) noexcept:
-			desc {e.desc} {}
+		desc {e.desc} {}
 
 
 	~AssertException() override = default;
@@ -24,6 +25,7 @@ public:
 	const char* what() const noexcept override {
 		return desc.c_str();
 	}
+
 
 private:
 	std::string desc {};

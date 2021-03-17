@@ -10,21 +10,25 @@
 
 #include "AssertException.h"
 #include "Matcher.h"
+#include "Terminal.h"
 
 
 class Test {
 public:
 	Test() = delete;
 
-	explicit Test(const std::string& name, const std::function<void()>& callback):
-			name {name},
-			callback {callback} {}
+
+	Test(const std::string& name, const std::function<void()>& callback):
+		name {name},
+		callback {callback} {}
+
 
 	bool run() const {
 		try {
 			callback();
+			std::cout << GREEN << "Test passed: " << name << NC << std::endl;
 		} catch (const AssertException& e) {
-			std::cout << "Test failed: " << e.what() << std::endl;
+			std::cout << RED << "Test failed: " << name << ". " << e.what() << std::endl;
 			return false;
 		}
 		return true;
