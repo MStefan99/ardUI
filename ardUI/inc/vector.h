@@ -81,10 +81,7 @@ namespace ardui {
 
 
 	template <class T>
-	vector<T>::vector(const vector& v) {
-		vectorCapacity = v.vectorCapacity;
-		vectorSize = v.vectorSize;
-
+	vector<T>::vector(const vector& v) : vectorSize(v.vectorSize), vectorCapacity(v.vectorCapacity) {
 		resize(vectorCapacity);
 		for (int i {0}; i < v.vectorSize; ++i) {
 			vectorArray[i] = v.vectorArray[i];

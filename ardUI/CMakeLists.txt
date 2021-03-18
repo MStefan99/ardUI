@@ -15,5 +15,6 @@ target_sources(ardUI PRIVATE
 		${SOURCE_DIRECTORY}/Activity.cpp
 		${SOURCE_DIRECTORY}/ardUI.cpp
 		)
+
 target_include_directories(ardUI PUBLIC ${INCLUDE_DIRECTORY})
 target_link_libraries(ardUI arduinoEmulator)

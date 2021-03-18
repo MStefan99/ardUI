@@ -11,39 +11,38 @@
 #include "AssertException.h"
 
 
+template <class T>
 class Matcher {
 public:
-	Matcher() = default;
-
-
-	explicit Matcher(void* exp, size_t size) {
-		expression = malloc(size);
-		memcpy(expression, exp, size);
+	explicit Matcher(T expected):
+		actual(expected) {
 	}
 
 
-	~Matcher() {
-		free(expression);
+	Matcher Not() {
+		negated = !negated;
+		return *this;
 	}
 
 
-	template <class T>
 	void toEqual(T expected) {
-		T actual = *(T*)expression;
-		if (actual != expected) {
-			throw AssertException("Expected: " + std::to_string((T)expected) + ", got: " + std::to_string((T)actual));
+		if ((actual == expected) ^ negated) {
+			return;
+		} else {
+			throw AssertException("");
 		}
 	}
 
 
-private:
-	void* expression {nullptr};
+protected:
+	T actual;
+	bool negated = false;
 };
 
 
 template <class T>
-Matcher expect(T actual) {
-	return Matcher {&actual, sizeof(T)};
+Matcher<T> expect(T actual) {
+	return Matcher<T> {actual};
 }
 
 

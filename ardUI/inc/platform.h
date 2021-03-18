@@ -12,37 +12,38 @@
 
 #if USE_STL
 
+	#define LESS_H <functional>
+	#define PAIR_H <utility>
 	#define VECTOR_H <vector>
 	#define LIST_H <list>
-	#define LESS_H <less>
 	#define MAP_H <map>
 	#define STACK_H <stack>
 	#define QUEUE_H <queue>
 
-	#define VECTOR std::vector
-	#define LIST std::list
-	#define LESS std::less
-	#define MAP std::map
-	#define STACK std::stack
-	#define QUEUE std::queue
+	#define NAMESPACE std
 
 #else
 
+	#define LESS_H "less.h"
+	#define PAIR_H "pair.h"
 	#define VECTOR_H "vector.h"
 	#define LIST_H "list.h"
-	#define LESS_H "less.h"
 	#define MAP_H "map.h"
 	#define STACK_H "stack.h"
 	#define QUEUE_H "queue.h"
 
-	#define VECTOR ardui::vector
-	#define LIST ardui::list
-	#define LESS ardui::less
-	#define MAP ardui::map
-	#define STACK ardui::stack
-	#define QUEUE ardui::queue
+	#define NAMESPACE ardui
 
 #endif
+
+#define LESS NAMESPACE::less
+#define PAIR NAMESPACE::pair
+#define VECTOR NAMESPACE::vector
+#define LIST NAMESPACE::list
+#define LESS NAMESPACE::less
+#define MAP NAMESPACE::map
+#define STACK NAMESPACE::stack
+#define QUEUE NAMESPACE::queue
 
 #if (!defined(Arduino_h) && ENABLE_DEBUG)
 	#define DEBUG

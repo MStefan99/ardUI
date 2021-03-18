@@ -7,6 +7,7 @@
 
 
 #include <functional>
+#include <iostream>
 
 #include "AssertException.h"
 #include "Matcher.h"

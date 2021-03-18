@@ -3,9 +3,8 @@
 //
 
 #include <iostream>
-#include <string>
 
-#include "Tester/inc/Tester.h"
+#include "Tester.h"
 #include "vector.h"
 #include "list.h"
 #include "map.h"

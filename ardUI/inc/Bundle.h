@@ -11,19 +11,19 @@
 
 
 class Bundle {
+protected:
+	class Concept;
+
 public:
 	void putInt(const String& key, int value);
-	void putIntArray(const String& key, int* value);
 	void putFloat(const String& key, float value);
-	void putFloatArray(const String& key, float* value);
 	void putString(const String& key, String& value);
 
 	int getInt(const String& key);
-	int* getIntArray(const String& key);
 	float getFloat(const String& key);
-	float* getFloatArray(const String& key);
 	String& getString(const String& key);
 
+	template <class DataClass>
 	void remove(const String& key);
 
 	template <class DataClass>
@@ -32,8 +32,22 @@ public:
 	template <class DataClass>
 	DataClass& get(const String& key);
 
+	~Bundle();
+
 protected:
-	MAP<String, void*> bundleMap {};
+	MAP<String, Concept*> bundleMap {};
+
+	class Concept{
+	public:
+		virtual ~Concept() = default;
+	};
+
+	template <class T>
+	class Model: public Concept {
+	public:
+		explicit Model<T>(T dataToStore);
+		T object;
+	};
 };
 
 #endif //ARDUI_BUNDLE_H

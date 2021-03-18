@@ -37,14 +37,16 @@ public:
 	}
 
 
+	#if DEFERRED_RUN
 	void beforeAll(const std::function<void()>& callback) {
 		beforeCallback = callback;
 	}
 
 
-	void setBlockCallback(const std::function<void(TestBlock&)>& callback) {
-		blockCallback = callback;
+	void afterAll(const std::function<void()>& callback) {
+		afterCallback = callback;
 	}
+	#endif
 
 
 	void test(const std::string& testName, const std::function<void()>& cb) {
@@ -53,11 +55,6 @@ public:
 		#else
 		runTest({testName, cb});
 		#endif
-	}
-
-
-	void afterAll(const std::function<void()>& callback) {
-		afterCallback = callback;
 	}
 
 
@@ -77,6 +74,7 @@ protected:
 			blockCallback(*this);
 			if (beforeCallback) {
 				beforeCallback();
+				std::cout << GREEN << "Suite setup passed" << NC << std::endl;
 			}
 		} catch (const AssertException& e) {
 			passed = false;
@@ -88,6 +86,7 @@ protected:
 		try {
 			if (afterCallback) {
 				afterCallback();
+				std::cout << GREEN << "Suite teardown passed" << NC << std::endl;
 			}
 		} catch (const AssertException& e) {
 			passed = false;

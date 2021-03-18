@@ -5,57 +5,45 @@
 #include "Bundle.h"
 
 
-void Bundle::putInt(const String& key, int value) {
-	bundleMap[key] = &value;
+template <class T>
+Bundle::Model<T>::Model(T dataToStore):
+	object {dataToStore} {
 }
 
 
-void Bundle::putIntArray(const String& key, int* value) {
-	bundleMap[key] = value;
+void Bundle::putInt(const String& key, int value) {
+	bundleMap[key] = new Model<int>{value};
 }
 
 
 void Bundle::putFloat(const String& key, float value) {
-	bundleMap[key] = &value;
-}
-
-
-void Bundle::putFloatArray(const String& key, float* value) {
-	bundleMap[key] = value;
+	bundleMap[key] = new Model<float>(value);
 }
 
 
 void Bundle::putString(const String& key, String& value) {
-	bundleMap[key] = &value;
+	bundleMap[key] = new Model<String>(value);
 }
 
 
 int Bundle::getInt(const String& key) {
-	return *(int*)bundleMap[key];
-}
-
-
-int* Bundle::getIntArray(const String& key) {
-	return (int*)bundleMap[key];
+	return ((Model<int>*)bundleMap[key])->object;
 }
 
 
 float Bundle::getFloat(const String& key) {
-	return *(float*)bundleMap[key];
+	return ((Model<float>*)bundleMap[key])->object;
 }
 
 
-float* Bundle::getFloatArray(const String& key) {
-	return (float*)bundleMap[key];
-}
+//String& Bundle::getString(const String& key) {
+//	return;
+//}
 
 
-String& Bundle::getString(const String& key) {
-	return *(String*)bundleMap[key];
-}
-
-
+template <class DataClass>
 void Bundle::remove(const String& key) {
+	delete (DataClass)bundleMap[key];
 	bundleMap.erase(key);
 }
 
@@ -69,4 +57,12 @@ void Bundle::put(const String& key, const DataClass& data) {
 template <class DataClass>
 DataClass& Bundle::get(const String& key) {
 	return *(DataClass*)bundleMap[key];
+}
+
+
+Bundle::~Bundle() {
+	for (const auto& pair : bundleMap) {
+		auto concept = pair.second;
+		delete concept;
+	}
 }

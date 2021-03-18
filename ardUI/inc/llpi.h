@@ -12,7 +12,8 @@
 enum ReturnCode {
 	OK,
 	FAIL,
-	NOT_IMPLEMENTED
+	NOT_IMPLEMENTED,
+	NOT_SUPPORTED
 };
 
 

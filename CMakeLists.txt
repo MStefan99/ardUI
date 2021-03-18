@@ -22,6 +22,7 @@ set(TEST_DIRECTORY ${PROJECT_SOURCE_DIR}/${TESTS_DIRNAME})
 # Adding ardUI and Arduino emulator build lists
 add_subdirectory(${ARDUINO_DIRECTORY})
 add_subdirectory(${ARDUI_DIRECTORY})
+add_subdirectory(${TESTS_DIRNAME})
 
 
 # Creating run target
@@ -30,16 +31,8 @@ add_executable(
 		${PROJECT_SOURCE_DIR}/main.cpp
 )
 
-# Creating template library test target
-add_executable(
-		Test_template_library
-		${TEST_DIRECTORY}/tl.test.cpp
-)
-
 
 # Linking emulator and ardUI to main code
 target_link_libraries(Run ardUI)
 target_link_libraries(Run arduinoEmulator)
 
-# Linking emulator and ardUI to tests
-target_link_libraries(Test_template_library ardUI)

@@ -9,6 +9,7 @@
 #undef setup
 #undef loop
 
+
 void setup() {  // Default setup function will be used to initiate ardUI
 	arduiDisplayInit();
 	arduiUserSetup();  // Calling user setup function
@@ -38,10 +39,14 @@ void loop() {  // ardUI core functions will be added to the loop function
 
 	arduiUserLoop();  // Calling user loop function
 
+#ifdef VERBOSE
+	Serial.println("Loop iteration");
+#endif
 #ifdef DEBUG
 	delay(1000 / REFRESH_RATE + 100);
 #endif
 }
+
 
 void EventManager::checkForActions() {
 	static Event event {};
@@ -78,10 +83,10 @@ void EventManager::checkForActions() {
 			event.currentAction = Event::Action::LONG_CLICK;  // Register long click
 		}
 		if (event.currentAction == Event::Action::CLICK && (
-				(event.deltaX > SCROLL_SENSITIVITY) ||
-				(event.deltaX < -SCROLL_SENSITIVITY) ||
-				(event.deltaY > SCROLL_SENSITIVITY) ||
-				(event.deltaY < -SCROLL_SENSITIVITY))) {
+			(event.deltaX > SCROLL_SENSITIVITY) ||
+			(event.deltaX < -SCROLL_SENSITIVITY) ||
+			(event.deltaY > SCROLL_SENSITIVITY) ||
+			(event.deltaY < -SCROLL_SENSITIVITY))) {
 			event.currentAction = Event::Action::SCROLL;  // Register scroll
 		}
 	} else if (event.currentAction != Event::Action::NO_ACTION) {
@@ -98,6 +103,9 @@ void EventManager::checkForActions() {
 
 
 void EventManager::draw() {
+#ifdef VERBOSE
+	Serial.println("Draw call");
+#endif
 	if (ActivityManager::currentActivity) {
 		ActivityManager::currentActivity->measure();
 		ActivityManager::currentActivity->layout();
