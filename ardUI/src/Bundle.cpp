@@ -5,12 +5,6 @@
 #include "Bundle.h"
 
 
-template <class T>
-Bundle::Model<T>::Model(T dataToStore):
-	object {dataToStore} {
-}
-
-
 void Bundle::putInt(const String& key, int value) {
 	bundleMap[key] = new Model<int>{value};
 }
@@ -21,7 +15,7 @@ void Bundle::putFloat(const String& key, float value) {
 }
 
 
-void Bundle::putString(const String& key, String& value) {
+void Bundle::putString(const String& key, const String& value) {
 	bundleMap[key] = new Model<String>(value);
 }
 
@@ -36,27 +30,8 @@ float Bundle::getFloat(const String& key) {
 }
 
 
-//String& Bundle::getString(const String& key) {
-//	return;
-//}
-
-
-template <class DataClass>
-void Bundle::remove(const String& key) {
-	delete (DataClass)bundleMap[key];
-	bundleMap.erase(key);
-}
-
-
-template <class DataClass>
-void Bundle::put(const String& key, const DataClass& data) {
-	bundleMap[key] = &data;
-}
-
-
-template <class DataClass>
-DataClass& Bundle::get(const String& key) {
-	return *(DataClass*)bundleMap[key];
+String& Bundle::getString(const String& key) {
+	return ((Model<String>*)bundleMap[key])->object;
 }
 
 

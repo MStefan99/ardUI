@@ -17,20 +17,20 @@ protected:
 public:
 	void putInt(const String& key, int value);
 	void putFloat(const String& key, float value);
-	void putString(const String& key, String& value);
+	void putString(const String& key, const String& value);
 
 	int getInt(const String& key);
 	float getFloat(const String& key);
 	String& getString(const String& key);
 
-	template <class DataClass>
+	template <class T>
+	void put(const String& key, const T& value);
+
+	template <class T>
+	T& get(const String& key);
+
+	template <class T>
 	void remove(const String& key);
-
-	template <class DataClass>
-	void put(const String& key, const DataClass& data);
-
-	template <class DataClass>
-	DataClass& get(const String& key);
 
 	~Bundle();
 
@@ -45,9 +45,34 @@ protected:
 	template <class T>
 	class Model: public Concept {
 	public:
-		explicit Model<T>(T dataToStore);
+		explicit Model<T>(T value);
 		T object;
 	};
 };
+
+
+template <class T>
+Bundle::Model<T>::Model(T value):
+	object {value} {
+}
+
+
+template <class T>
+void Bundle::put(const String& key, const T& value) {
+	bundleMap[key] = new Model<T>(value);
+}
+
+
+template <class T>
+T& Bundle::get(const String& key) {
+	return ((Model<T>*)bundleMap[key])->object;
+}
+
+
+template <class T>
+void Bundle::remove(const String& key) {
+	delete (T*)bundleMap[key];
+	bundleMap.erase(key);
+}
 
 #endif //ARDUI_BUNDLE_H
