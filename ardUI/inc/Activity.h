@@ -18,9 +18,8 @@
 class Activity {
 public:
 	Activity() = default;
-	explicit Activity(const Bundle& extras,
-										bool startedForResult = false,
-										int requestCode = -1);
+	Activity(const Bundle& extras,
+					 void (* onActivityResult)(int statusCode, Bundle resultData));
 	virtual ~Activity();
 
 	template <class compiledLayout>
@@ -30,8 +29,9 @@ public:
 	template <class ActivityClass>
 	void startActivity(const Bundle& extras);
 	template <class ActivityClass>
-	void startActivityForResult(int requestCode, const Bundle& extras = {});
-	void setResult(int resultCode, const Bundle& data = {});
+	void startActivityForResult(void (* onActivityResult)(int statusCode, Bundle resultData),
+															const Bundle& extras = {});
+	void setResult(int statusCode = 0, const Bundle& data = {});
 	void finish();
 
 	virtual void onCreate() = 0;
@@ -41,14 +41,15 @@ public:
 	virtual void onPause();
 	virtual void onStop();
 	virtual void onDestroy();
-	virtual void onActivityResult(int requestCode, int resultCode,
-																Bundle& results);
 
 	View* findViewById(int id);
 
 	friend class EventManager;
 
 	friend class ActivityManager;
+
+protected:
+	const Bundle& getExtras();
 
 private:
 	enum State {
@@ -81,10 +82,9 @@ private:
 	State currentState {LAUNCHED};
 	View* rootView {};
 	Bundle bundle {};
-	bool returnsResult {false};
 	Bundle resultData {};
-	int request {-1};
-	int result {-1};
+	int status {};
+	void (* resultCallback)(int statusCode, Bundle resultData) {nullptr};
 };
 
 
@@ -95,8 +95,10 @@ void Activity::startActivity(const Bundle& extras) {
 
 
 template <class ActivityClass>
-void Activity::startActivityForResult(int requestCode, const Bundle& extras) {
-	ActivityManager::switchActivity<ActivityClass>(extras, true, requestCode);
+void Activity::startActivityForResult(void (* onActivityResult)(int statusCode, Bundle resultData),
+																			const Bundle& extras) {
+	ActivityManager::switchActivity<ActivityClass>(onActivityResult, extras);
 }
+
 
 #endif //ARDUI_ACTIVITY_H

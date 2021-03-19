@@ -19,11 +19,9 @@ void ActivityManager::stopActivity(Activity* activityToStop) {
 void ActivityManager::back() {
 	if (currentActivity) {
 		if (!backList.empty()) {
-			auto prevActivity = backList.back();
-			if (currentActivity->returnsResult) {
-				prevActivity->onActivityResult(currentActivity->request,
-																	 currentActivity->result,
-																	 currentActivity->resultData);
+			if (currentActivity->resultCallback) {
+				currentActivity->resultCallback(currentActivity->status,
+																	 Bundle{currentActivity->resultData});
 			}
 			currentActivity->rewindState(Activity::State::DESTROYED);
 			delete currentActivity;

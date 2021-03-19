@@ -5,12 +5,6 @@ link_libraries(ardUI)
 set(TESTER_DIRECTORY ${TEST_DIRECTORY}/Tester/inc)
 include_directories(${TESTER_DIRECTORY})
 
-# Simple test file
-add_executable(
-		Tester
-		${TEST_DIRECTORY}/tests/test.cpp
-)
-
 # Template library test target
 add_executable(
 		Test_template_library
@@ -23,3 +17,8 @@ add_executable(
 		${TEST_DIRECTORY}/tests/bundle.test.cpp
 )
 
+# Bundle test target
+add_executable(
+		Test_Activity
+		${TEST_DIRECTORY}/tests/activity.test.cpp
+)

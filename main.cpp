@@ -51,19 +51,11 @@ class MainActivity: public Activity {
 		b->setOnLongClickListener([](View* view) -> void {
 			Serial.println("Button long pressed");
 		});
-
-		startActivityForResult<ResultActivity>(1);
 	}
 
 
 	void onResume() override {
 		t->setText("Press the button!");
-	}
-
-
-	void onActivityResult(int requestCode, int resultCode, Bundle &results) override {
-		Serial.print("Received Activity result: ");
-		Serial.println(results.getInt("someResult"));
 	}
 
 
@@ -75,7 +67,7 @@ class MainActivity: public Activity {
 
 void setup() {
 	Serial.begin(115200);
-	ardUI().startFirstActivity<MainActivity>();
+	ardUI::startFirstActivity<MainActivity>();
 //	ardUI::reset();
 }
 

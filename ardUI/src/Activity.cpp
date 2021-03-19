@@ -6,11 +6,9 @@
 
 
 Activity::Activity(const Bundle& extras,
-									 bool startedForResult,
-									 int requestCode):
-		bundle {extras},
-		returnsResult {startedForResult},
-		request {requestCode} {
+									 void (* onActivityResult)(int statusCode, Bundle resultData)):
+	bundle {extras},
+	resultCallback {onActivityResult} {
 	// Nothing to do
 }
 
@@ -31,8 +29,8 @@ void Activity::setRootView(View* view) {
 }
 
 
-void Activity::setResult(int resultCode, const Bundle& data) {
-	result = resultCode;
+void Activity::setResult(int statusCode, const Bundle& data) {
+	status = statusCode;
 	resultData = data;
 }
 
@@ -119,13 +117,13 @@ void Activity::onDestroy() {
 }
 
 
-void Activity::onActivityResult(int requestCode, int resultCode, Bundle& results) {
-	// Nothing to do
+View* Activity::findViewById(int id) {
+	return rootView->findViewById(id);
 }
 
 
-View* Activity::findViewById(int id) {
-	return rootView->findViewById(id);
+const Bundle& Activity::getExtras() {
+	return bundle;
 }
 
 

@@ -27,7 +27,7 @@ public:
 	ardUI() = default;
 
 	template <class ActivityClass>
-	void startFirstActivity();
+	static void startFirstActivity();
 	static void back();
 	static void reset();
 
