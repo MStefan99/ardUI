@@ -55,6 +55,14 @@ int main() {
 			expect(b.getString("string")).toEqual("test");
 			expect(b.get<A>("custom")).toEqual(A {1});
 		});
+		
+		block.test("Bundle copying", [&]() -> void {
+			Bundle b1 {b};
+			expect(b1.getInt("int")).toEqual(1);
+			expect(b1.getFloat("float")).toEqual(1.1);
+			expect(b1.getString("string")).toEqual("test");
+			expect(b1.get<A>("custom")).toEqual(A {1});
+		});
 	});
 }
 

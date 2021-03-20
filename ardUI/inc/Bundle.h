@@ -15,6 +15,9 @@ protected:
 	class Concept;
 
 public:
+	Bundle() = default;
+	Bundle(const Bundle& b);
+
 	void putInt(const String& key, int value);
 	void putFloat(const String& key, float value);
 	void putString(const String& key, const String& value);
@@ -37,15 +40,18 @@ public:
 protected:
 	MAP<String, Concept*> bundleMap {};
 
-	class Concept{
+	class Concept {
 	public:
 		virtual ~Concept() = default;
+		virtual Concept* copy() = 0;
 	};
 
 	template <class T>
 	class Model: public Concept {
 	public:
 		explicit Model<T>(T value);
+		Model<T>* copy() override;
+
 		T object;
 	};
 };
@@ -58,8 +64,14 @@ Bundle::Model<T>::Model(T value):
 
 
 template <class T>
+Bundle::Model<T>* Bundle::Model<T>::copy() {
+	return new Model<T>{object};
+}
+
+
+template <class T>
 void Bundle::put(const String& key, const T& value) {
-	bundleMap[key] = new Model<T>(value);
+	bundleMap[key] = new Model<T>{value};
 }
 
 
@@ -74,5 +86,6 @@ void Bundle::remove(const String& key) {
 	delete (T*)bundleMap[key];
 	bundleMap.erase(key);
 }
+
 
 #endif //ARDUI_BUNDLE_H
