@@ -26,10 +26,6 @@ public:
 
 	static void checkForActions();
 	static void draw();
-
-private:
-	const uint16_t screenHeight {arduiDisplayGetHeight()};
-	const uint16_t screenWidth {arduiDisplayGetWidth()};
 };
 
 #endif //ARDUI_EVENTMANAGER_H

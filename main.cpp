@@ -18,6 +18,8 @@ class ResultActivity: public Activity {
 		auto b = Bundle{};
 		b.putInt("someResult", 12354);
 		setResult(2, b);
+
+		Serial.println("Exiting and returning 12345 to calling Activity");
 		finish();
 	}
 };
@@ -51,6 +53,12 @@ class MainActivity: public Activity {
 		b->setOnLongClickListener([](View* view) -> void {
 			Serial.println("Button long pressed");
 		});
+
+		Serial.println("Starting ResultActivity for result");
+		startActivityForResult<ResultActivity>([](int code, Bundle results) -> void {
+			Serial.print("Got result from ResultActivity: ");
+			Serial.println(results.getInt("someResult"));
+		});
 	}
 
 
@@ -68,7 +76,6 @@ class MainActivity: public Activity {
 void setup() {
 	Serial.begin(115200);
 	ardUI::startFirstActivity<MainActivity>();
-//	ardUI::reset();
 }
 
 

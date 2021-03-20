@@ -1,3 +1,7 @@
+# Setting compiler flags
+SET(COMPILER_FLAGS -Wall)
+SET(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} ${COMPILER_FLAGS})
+
 # Adding ardUI framework
 add_library(ardUI SHARED)
 target_sources(ardUI PRIVATE
