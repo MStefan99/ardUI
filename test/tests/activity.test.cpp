@@ -13,7 +13,10 @@ class ResultActivity: public Activity {
 
 	void onCreate() override {
 		auto data = getExtras();
-		expect(data.getInt("request")).toEqual(1);
+
+		describe("Sending data", [&](TestBlock& block) -> void {
+			expect(data.getString("request")).toEqual("hello");
+		});
 
 		Bundle result {};
 		result.putString("result", "success");
@@ -30,11 +33,13 @@ class TestActivity: public Activity {
 
 	void onCreate() override {
 		Bundle data {};
-		data.putInt("request", 1);
+		data.putString("request", "hello");
 
 		startActivityForResult<ResultActivity>([](int code, Bundle results) -> void {
-			expect(code).toEqual(0);
-			expect(results.getString("result")).toEqual("success");
+			describe("Returning data", [&](TestBlock& block) -> void {
+				expect(code).toEqual(0);
+				expect(results.getString("result")).toEqual("success");
+			});
 		}, data);
 	}
 };

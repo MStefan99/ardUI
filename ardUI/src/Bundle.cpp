@@ -12,6 +12,14 @@ Bundle::Bundle(const Bundle& b): bundleMap(b.bundleMap) {
 }
 
 
+Bundle& Bundle::operator =(const Bundle& other) {
+	for (const auto& e: other.bundleMap) {
+		bundleMap[e.first] = e.second->copy();
+	}
+	return *this;
+}
+
+
 void Bundle::putInt(const String& key, int value) {
 	bundleMap[key] = new Model<int>{value};
 }
@@ -43,8 +51,7 @@ String& Bundle::getString(const String& key) {
 
 
 Bundle::~Bundle() {
-	for (const auto& pair : bundleMap) {
-		auto concept = pair.second;
-		delete concept;
+	for (const auto& e : bundleMap) {
+		delete e.second;
 	}
 }
