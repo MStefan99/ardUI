@@ -23,7 +23,7 @@ typedef std::string String;
 
 void delay(int ms);
 
-uint16_t millis();
+uint32_t millis();
 
 void setup();
 

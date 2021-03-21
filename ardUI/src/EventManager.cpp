@@ -17,15 +17,14 @@ void setup() {  // Default setup function will be used to initiate ardUI
 
 
 void loop() {  // ardUI core functions will be added to the loop function
-	static uint16_t lastDisplayRefresh, lastTouchRefresh;
+	static uint32_t lastTouchRefresh, lastDisplayRefresh;
+	uint32_t currentTime = millis();
 
-	uint16_t currentTime = millis();
-
-	if (currentTime < lastDisplayRefresh) {
-		lastDisplayRefresh = 0;
-	}
 	if (currentTime < lastTouchRefresh) {
 		lastTouchRefresh = 0;
+	}
+	if (currentTime < lastDisplayRefresh) {
+		lastDisplayRefresh = 0;
 	}
 
 	if (currentTime - lastDisplayRefresh > 1000 / REFRESH_RATE) {
@@ -37,7 +36,13 @@ void loop() {  // ardUI core functions will be added to the loop function
 		lastTouchRefresh = currentTime;
 	}
 
+	currentTime = millis();
+
 	arduiUserLoop();  // Calling user loop function
+
+	if (millis() - currentTime > 1000 / REFRESH_RATE) {
+		Serial.println("Skipping frames, please ensure your loop doesn't perform any long operations");
+	}
 
 #ifdef VERBOSE
 	Serial.println("Loop iteration");

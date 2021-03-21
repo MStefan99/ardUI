@@ -15,7 +15,7 @@ void delay(int delay) {
 }
 
 
-uint16_t millis() {
+uint32_t millis() {
 	timespec time {};
 
 	clock_gettime(CLOCK_MONOTONIC, &time);
