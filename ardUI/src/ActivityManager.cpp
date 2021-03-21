@@ -21,7 +21,7 @@ void ActivityManager::back() {
 		if (!backList.empty()) {
 			if (currentActivity->resultCallback) {
 				currentActivity->resultCallback(currentActivity->status,
-																	 Bundle{currentActivity->resultData});
+																				Bundle {currentActivity->resultData});
 			}
 			currentActivity->rewindState(Activity::State::DESTROYED);
 			delete currentActivity;

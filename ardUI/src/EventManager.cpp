@@ -66,8 +66,8 @@ void EventManager::checkForActions() {
 			Serial.println("Event registered");
 #endif
 		} else {
-			event.deltaX = lastX - event.targetX;
-			event.deltaY = lastY - event.targetY;
+			event.deltaX = (int16_t)(lastX - event.targetX);
+			event.deltaY = (int16_t)(lastY - event.targetY);
 		}
 		if (event.currentAction == Event::Action::SCROLL) {
 			// Handle scroll event every tick

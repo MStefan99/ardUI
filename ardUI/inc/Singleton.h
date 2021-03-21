@@ -5,7 +5,6 @@
 #ifndef ARDUI_SINGLETON_H
 #define ARDUI_SINGLETON_H
 
-
 template <class T>
 class Singleton {
 public:
@@ -31,5 +30,6 @@ template <class T>
 T& Singleton<T>::operator ()() {
 	return getInstance();
 }
+
 
 #endif //ARDUI_SINGLETON_H

@@ -5,6 +5,9 @@
 #include "Bundle.h"
 
 
+Bundle::Concept::~Concept() = default;
+
+
 Bundle::Bundle(const Bundle& b): bundleMap(b.bundleMap) {
 	for (auto& e: bundleMap) {
 		e.second = e.second->copy();
@@ -21,17 +24,17 @@ Bundle& Bundle::operator =(const Bundle& other) {
 
 
 void Bundle::putInt(const String& key, int value) {
-	bundleMap[key] = new Model<int>{value};
+	bundleMap[key] = new Model<int> {value};
 }
 
 
 void Bundle::putFloat(const String& key, float value) {
-	bundleMap[key] = new Model<float>{value};
+	bundleMap[key] = new Model<float> {value};
 }
 
 
 void Bundle::putString(const String& key, const String& value) {
-	bundleMap[key] = new Model<String>{value};
+	bundleMap[key] = new Model<String> {value};
 }
 
 

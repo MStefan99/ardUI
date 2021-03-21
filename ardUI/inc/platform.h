@@ -36,7 +36,6 @@
 
 #endif
 
-#define LESS NAMESPACE::less
 #define PAIR NAMESPACE::pair
 #define VECTOR NAMESPACE::vector
 #define LIST NAMESPACE::list

@@ -17,7 +17,7 @@ protected:
 public:
 	Bundle() = default;
 	Bundle(const Bundle& b);
-	Bundle& operator=(const Bundle& other);
+	Bundle& operator =(const Bundle& other);
 
 	void putInt(const String& key, int value);
 	void putFloat(const String& key, float value);
@@ -43,7 +43,7 @@ protected:
 
 	class Concept {
 	public:
-		virtual ~Concept() = default;
+		virtual ~Concept();
 		virtual Concept* copy() = 0;
 	};
 
@@ -66,13 +66,13 @@ Bundle::Model<T>::Model(T value):
 
 template <class T>
 Bundle::Model<T>* Bundle::Model<T>::copy() {
-	return new Model<T>{object};
+	return new Model<T> {object};
 }
 
 
 template <class T>
 void Bundle::put(const String& key, const T& value) {
-	bundleMap[key] = new Model<T>{value};
+	bundleMap[key] = new Model<T> {value};
 }
 
 

@@ -75,7 +75,7 @@ class MainActivity: public Activity {
 
 void setup() {
 	Serial.begin(115200);
-	ardUI::startFirstActivity<MainActivity>();
+	ardUI().startFirstActivity<MainActivity>();
 }
 
 

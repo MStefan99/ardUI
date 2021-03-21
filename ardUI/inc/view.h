@@ -32,10 +32,10 @@ public:
 	};
 
 	View();
-	virtual ~View() = default;
+	~View() override = default;
 
 	virtual View* findViewById(int id);
-	int getId();
+	int getId() const;
 
 	void measure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec) final;
 	void layout(uint16_t left, uint16_t top, uint16_t right, uint16_t bottom) final;
@@ -49,8 +49,8 @@ public:
 	void setRight(uint16_t right);
 	void setBottom(uint16_t bottom);
 
-	uint16_t getMeasuredWidth();
-	uint16_t getMeasuredHeight();
+	uint16_t getMeasuredWidth() const;
+	uint16_t getMeasuredHeight() const;
 
 	uint16_t getWidth();
 	uint16_t getHeight();

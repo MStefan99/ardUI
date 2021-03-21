@@ -112,8 +112,8 @@ namespace ardui {
 
 	template <class Key, class T, class Comp>
 	map<Key, T, Comp>::iterator::iterator(element* currentElement, element* lastElement):
-			currentElement(currentElement),
-			lastElement(lastElement) {
+		currentElement(currentElement),
+		lastElement(lastElement) {
 	}
 
 
@@ -228,15 +228,15 @@ namespace ardui {
 
 	template <class Key, class T, class Comp>
 	map<Key, T, Comp>::element::element(const pair<const Key, T>& value, element* parent):
-			value(value),
-			parent(parent) {
+		value(value),
+		parent(parent) {
 	}
 
 
 	template <class Key, class T, class Comp>
 	map<Key, T, Comp>::element::element(const Key& k, element* parent):
-			value(k, T {}),
-			parent(parent) {
+		value(k, T {}),
+		parent(parent) {
 	}
 
 

@@ -13,6 +13,7 @@ class Rect {
 public:
 	Rect() = default;
 	Rect(uint16_t left, uint16_t top, uint16_t right, uint16_t bottom);
+	Rect(const Rect& r) = default;
 
 	bool contains(uint16_t left, uint16_t top, uint16_t right, uint16_t bottom) const;
 	bool contains(const Rect& r) const;
@@ -38,7 +39,7 @@ public:
 	void set(const Rect& r);
 
 	Rect& operator =(const Rect& r);
-	operator bool() const;
+	explicit operator bool() const;
 
 	uint16_t left {0};
 	uint16_t top {0};

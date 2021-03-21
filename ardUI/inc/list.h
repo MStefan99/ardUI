@@ -95,7 +95,7 @@ namespace ardui {
 
 	template <class T>
 	list<T>::element::element(const T& value, element* prev, element* next):
-			elementValue(value), prevElement(prev), nextElement(next) {}
+		elementValue(value), prevElement(prev), nextElement(next) {}
 
 
 	template <class T>
@@ -343,13 +343,13 @@ namespace ardui {
 
 	template <class T>
 	list<T>& list<T>::operator =(const list& l) {
-		if (this == &l) {
-			return *this;
+		if (this != &l) {
+			clear();
+			for (auto p = l.first; p != nullptr; p = p->nextElement) {
+				push_back(p->elementValue);
+			}
 		}
-		clear();
-		for (auto p = l.first; p != nullptr; p = p->nextElement) {
-			push_back(p->elementValue);
-		}
+		return *this;
 	}
 
 

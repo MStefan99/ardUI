@@ -36,6 +36,7 @@ namespace ardui {
 			first = p.first;
 			second = p.second;
 		}
+		return *this;
 	}
 }
 

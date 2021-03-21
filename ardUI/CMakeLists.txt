@@ -1,5 +1,7 @@
 # Setting compiler flags
-SET(COMPILER_FLAGS -Wall)
+SET(COMPILER_FLAGS "-Wno-padded -Weverything -Wextra -pedantic -Wno-c++98-compat -Wno-c++98-compat-pedantic \
+-Wno-unused-parameter -Wno-shadow-field -Wno-shadow-field-in-constructor -Wno-old-style-cast \
+-Wno-global-constructors -Wno-exit-time-destructors")
 SET(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} ${COMPILER_FLAGS})
 
 # Adding ardUI framework

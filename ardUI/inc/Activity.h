@@ -97,7 +97,7 @@ void Activity::startActivity(const Bundle& extras) {
 template <class ActivityClass>
 void Activity::startActivityForResult(void (* onActivityResult)(int statusCode, Bundle resultData),
 																			const Bundle& extras) {
-	ActivityManager::switchActivity<ActivityClass>(onActivityResult, extras);
+	ActivityManager::switchActivity<ActivityClass>(extras, onActivityResult);
 }
 
 

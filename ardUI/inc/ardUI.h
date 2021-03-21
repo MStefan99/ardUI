@@ -27,9 +27,9 @@ public:
 	ardUI() = default;
 
 	template <class ActivityClass>
-	static void startFirstActivity();
-	static void back();
-	static void reset();
+	void startFirstActivity();
+	void back();
+	void reset();
 
 	void setViewName(View* view, const String& name);
 	View* getViewByName(const String& name);

@@ -15,7 +15,7 @@
 class Drawable {
 public:
 	Drawable() = default;
-	~Drawable() = default;
+	virtual ~Drawable() = default;
 
 	virtual void measure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec) = 0;
 	virtual void layout(uint16_t left, uint16_t top, uint16_t right, uint16_t bottom) = 0;
@@ -28,7 +28,7 @@ public:
 	void setBounds(uint16_t left, uint16_t top, uint16_t right, uint16_t bottom);
 	void setBounds(const Rect& bounds);
 
-	int getLevel();
+	int getLevel() const;
 	bool setLevel(uint16_t level);
 
 	void setPadding(uint16_t left, uint16_t top, uint16_t right, uint16_t bottom);

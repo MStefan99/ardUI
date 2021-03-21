@@ -20,8 +20,8 @@ public:
 
 private:
 	template <class ActivityClass>
-	static void switchActivity(void (* onActivityResult)(int statusCode, Bundle resultData) = {},
-														 const Bundle& extras = {});
+	static void switchActivity(const Bundle& extras = {},
+														 void (* onActivityResult)(int statusCode, Bundle resultData) = {});
 	static void stopActivity(Activity* activityToStop);
 	static void back();
 	static void reset();

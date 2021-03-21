@@ -23,7 +23,7 @@ uint16_t View::MeasureSpec::getSize(uint16_t measureSpec) {
 int View::lastViewId {0};
 
 
-View::View(): viewId(++lastViewId) {
+View::View(): viewId {++lastViewId} {
 	// Nothing to do
 }
 
@@ -37,7 +37,7 @@ View* View::findViewById(int id) {
 }
 
 
-int View::getId() {
+int View::getId() const {
 	return viewId;
 }
 
@@ -125,12 +125,12 @@ void View::setBottom(uint16_t bottom) {
 }
 
 
-uint16_t View::getMeasuredHeight() {
+uint16_t View::getMeasuredHeight() const {
 	return measuredHeight;
 }
 
 
-uint16_t View::getMeasuredWidth() {
+uint16_t View::getMeasuredWidth() const {
 	return measuredWidth;
 }
 

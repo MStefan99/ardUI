@@ -6,7 +6,7 @@
 
 
 LinearLayout::LinearLayout(bool vertical):
-		isVertical(vertical) {}
+	isVertical {vertical} {}
 
 
 void LinearLayout::onMeasure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec) {
@@ -20,10 +20,10 @@ void LinearLayout::onMeasure(uint16_t widthMeasureSpec, uint16_t heightMeasureSp
 
 
 void LinearLayout::onLayout(bool changed, uint16_t l, uint16_t t, uint16_t r, uint16_t b) {
-	int viewLeft {0};
-	int viewTop {0};
-	int layoutRight {arduiDisplayGetWidth()};
-	int layoutBottom {arduiDisplayGetHeight()};
+	uint16_t viewLeft {0};
+	uint16_t viewTop {0};
+	uint16_t layoutRight {arduiDisplayGetWidth()};
+	uint16_t layoutBottom {arduiDisplayGetHeight()};
 
 	for (const auto& v : viewList) {
 		v->setTop(viewTop);

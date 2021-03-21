@@ -22,7 +22,7 @@ void Drawable::setBounds(const Rect& bounds) {
 }
 
 
-int Drawable::getLevel() {
+int Drawable::getLevel() const {
 	return level;
 }
 
@@ -40,7 +40,7 @@ bool Drawable::setLevel(uint16_t l) {
 
 
 bool Drawable::getPadding(Rect& p) const {
-	bool paddingExists {p};
+	bool paddingExists {(bool)p};
 	if (paddingExists) {
 		p = padding;
 	} else {

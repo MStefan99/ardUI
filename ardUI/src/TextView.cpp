@@ -6,7 +6,7 @@
 
 
 TextView::TextView(const String& text):
-		text(text) {
+	text {text} {
 	// Nothing to do
 }
 

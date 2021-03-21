@@ -197,9 +197,8 @@ namespace ardui {
 			for (int i {0}; i < vectorSize; ++i) {
 				vectorArray[i] = vector.vectorArray[i];
 			}
-		} else {
-			return *this;
 		}
+		return *this;
 	}
 
 
@@ -301,6 +300,7 @@ namespace ardui {
 	template <class T>
 	typename vector<T>::iterator& vector<T>::iterator::operator =(const T& value) {
 		*elementPointer = value;
+		return *this;
 	}
 
 

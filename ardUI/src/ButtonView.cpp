@@ -6,7 +6,7 @@
 
 
 ButtonView::ButtonView(const String& text):
-		TextView(text) {
+	TextView {text} {
 	// Nothing to do
 }
 

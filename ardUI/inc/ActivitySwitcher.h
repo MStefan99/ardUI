@@ -10,8 +10,8 @@
 
 
 template <class ActivityClass>
-void ActivityManager::switchActivity(void (* onActivityResult)(int statusCode, Bundle resultData),
-																		 const Bundle& extras) {
+void ActivityManager::switchActivity(const Bundle& extras,
+																		 void (* onActivityResult)(int statusCode, Bundle resultData)) {
 	if (currentActivity) {
 		currentActivity->rewindState(Activity::State::STOPPED);
 		backList.push_back(currentActivity);
