@@ -12,13 +12,12 @@
 
 class MainActivity: public Activity {
 	using Activity::Activity;
-	TextView* t;
 
 
 	void onCreate() override {
 		Serial.println("Hi, I am MainActivity!");
 
-		t = new TextView();
+		auto t = new TextView();
 		auto ll = new LinearLayout();
 		auto b = new ButtonView();
 
@@ -28,19 +27,19 @@ class MainActivity: public Activity {
 		ll->addView(b);
 		setRootView(ll);
 
-		ardUI::setViewName(b, "button_view");
-	}
+		ardUI::setViewName(t, "hello_text");
 
-
-	void onResume() override {
-		t->setText("Press the button!");
+		b->setOnClickListener([](View* b) -> void {
+			auto t = (TextView*)ardUI::getViewByName("hello_text");
+			t->setText("Pressed!");
+		});
 	}
 
 
 	void onDestroy() override {
-		auto b = (ButtonView*)ardUI::getViewByName("button_view");
-		Serial.print("Button text: ");
-		Serial.println(b->getText());
+		auto t = (TextView*)ardUI::getViewByName("hello_text");
+		Serial.print("Main text: ");
+		Serial.println(t->getText());
 		Serial.println("MainActivity has been destroyed");
 	}
 };
@@ -49,9 +48,9 @@ class MainActivity: public Activity {
 void setup() {
 	Serial.begin(115200);
 	ardUI::startFirstActivity<MainActivity>();
-	ardUI::reset();
 }
 
 
 void loop() {
+	ardUI::reset();
 }

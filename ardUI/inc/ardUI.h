@@ -24,9 +24,6 @@
 
 class ardUI final: public Singleton<ardUI> {
 public:
-	ardUI() = default;
-	~ardUI() = default;
-
 	template <class ActivityClass>
 	static void startFirstActivity();
 	static void back();
@@ -35,7 +32,11 @@ public:
 	static void setViewName(View* view, const String& name);
 	static View* getViewByName(const String& name);
 
+	friend class Singleton<ardUI>;
+
 private:
+	ardUI() = default;
+	~ardUI() = default;
 	MAP<String, View*> viewMap;
 };
 
