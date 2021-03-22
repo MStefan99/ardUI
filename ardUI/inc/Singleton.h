@@ -8,14 +8,15 @@
 template <class T>
 class Singleton {
 public:
-	Singleton() = default;
 	explicit Singleton(const Singleton<T>&) = delete;
-	virtual ~Singleton() = default;
 
 	Singleton<T>& operator =(const Singleton<T>) = delete;
 
-	T& operator ()();
 	static T& getInstance();
+
+protected:
+	Singleton() = default;
+	~Singleton() = default;
 };
 
 
@@ -23,12 +24,6 @@ template <class T>
 T& Singleton<T>::getInstance() {
 	static T instance;
 	return instance;
-}
-
-
-template <class T>
-T& Singleton<T>::operator ()() {
-	return getInstance();
 }
 
 

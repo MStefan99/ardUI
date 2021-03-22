@@ -25,14 +25,15 @@
 class ardUI final: public Singleton<ardUI> {
 public:
 	ardUI() = default;
+	~ardUI() = default;
 
 	template <class ActivityClass>
-	void startFirstActivity();
-	void back();
-	void reset();
+	static void startFirstActivity();
+	static void back();
+	static void reset();
 
-	void setViewName(View* view, const String& name);
-	View* getViewByName(const String& name);
+	static void setViewName(View* view, const String& name);
+	static View* getViewByName(const String& name);
 
 private:
 	MAP<String, View*> viewMap;

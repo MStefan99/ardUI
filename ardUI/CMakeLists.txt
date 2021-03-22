@@ -4,10 +4,10 @@ SET(COMPILER_FLAGS "-Weverything -Wextra -pedantic -Wno-padded -Wno-c++98-compat
 -Wno-global-constructors -Wno-exit-time-destructors")
 SET(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} ${COMPILER_FLAGS})
 
+
 # Adding ardUI framework
 add_library(ardUI SHARED)
 target_sources(ardUI PRIVATE
-		${SOURCE_DIRECTORY}/llpi.cpp
 		${SOURCE_DIRECTORY}/Bundle.cpp
 		${SOURCE_DIRECTORY}/Rect.cpp
 		${SOURCE_DIRECTORY}/Drawable.cpp
@@ -21,6 +21,7 @@ target_sources(ardUI PRIVATE
 		${SOURCE_DIRECTORY}/Activity.cpp
 		${SOURCE_DIRECTORY}/ardUI.cpp
 		)
+
 
 target_include_directories(ardUI PUBLIC ${INCLUDE_DIRECTORY})
 target_link_libraries(ardUI arduinoEmulator)

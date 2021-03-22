@@ -6,12 +6,12 @@
 
 
 void ardUI::setViewName(View* view, const String& name) {
-	viewMap[name] = view;
+	ardUI::getInstance().viewMap[name] = view;
 }
 
 
 View* ardUI::getViewByName(const String& name) {
-	return viewMap[name];
+	return ardUI::getInstance().viewMap[name];
 }
 
 

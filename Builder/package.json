@@ -1,0 +1,15 @@
+{
+  "name": "ardui-builder",
+  "version": "0.0.1-alpha",
+  "description": "A graphical tool for building ardUI interfaces",
+  "main": "builder.js",
+  "dependencies": {},
+  "devDependencies": {
+    "electron": "^12.0.1"
+  },
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "",
+  "license": "GPL"
+}

@@ -1,9 +1,12 @@
 # Linking ardUI library to all targets below
 link_libraries(ardUI)
+target_sources(ardUI PRIVATE ${SOURCE_DIRECTORY}/llpi.cpp)
+
 
 # Including Tester library
 set(TESTER_DIRECTORY ${TEST_DIRECTORY}/Tester/inc)
 include_directories(${TESTER_DIRECTORY})
+
 
 # Template library test target
 add_executable(
