@@ -1,7 +1,7 @@
 # Setting compiler flags
-SET(COMPILER_FLAGS "-Weverything -Wextra -pedantic -Wno-padded -Wno-c++98-compat -Wno-c++98-compat-pedantic \
+SET(COMPILER_FLAGS " -Weverything -Wextra -pedantic -Wno-padded -Wno-c++98-compat -Wno-c++98-compat-pedantic \
 -Wno-unused-parameter -Wno-shadow-field -Wno-shadow-field-in-constructor -Wno-old-style-cast \
--Wno-global-constructors -Wno-exit-time-destructors")
+-Wno-global-constructors -Wno-exit-time-destructors -Wno-unknown-pragmas")
 SET(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} ${COMPILER_FLAGS})
 
 

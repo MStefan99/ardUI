@@ -10,19 +10,6 @@ void ArduinoSerial::begin(long baud) {
 }
 
 
-void delay(int delay) {
-	usleep(delay * 1000);
-}
-
-
-uint32_t millis() {
-	timespec time {};
-
-	clock_gettime(CLOCK_MONOTONIC, &time);
-	return time.tv_nsec / 1.0e6;
-}
-
-
 int main() {
 	setup();
 
@@ -30,3 +17,28 @@ int main() {
 		loop();
 	}
 }
+
+
+
+#ifndef _WIN32
+
+void delay(int ms) {
+	usleep(ms * 1000);
+}
+
+#else
+
+void delay(int ms) {
+	Sleep(ms);
+}
+
+#endif
+
+uint32_t millis() {
+	auto currentTime {std::chrono::system_clock::now()};
+	auto duration = currentTime - startTime;
+
+	return std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
+}
+
+

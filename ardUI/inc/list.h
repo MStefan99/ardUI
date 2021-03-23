@@ -81,8 +81,8 @@ namespace ardui {
 			element& operator =(const T& value);
 
 			T elementValue;
-			element* nextElement {nullptr};
 			element* prevElement {nullptr};
+			element* nextElement {nullptr};
 		};
 
 		element* first {nullptr};

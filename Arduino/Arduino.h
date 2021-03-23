@@ -5,14 +5,24 @@
 #ifndef ARDUI_ARDUINO_H
 #define ARDUI_ARDUINO_H
 
-
 #include <iostream>
 #include <cstdio>
 #include <cstdint>
 #include <ctime>
 #include <string>
-#include <unistd.h>
+#include <chrono>
+#include <ctime>
 
+
+#ifdef _WIN32
+
+	#include "windows.h"
+#else
+
+	#include <unistd.h>
+
+
+#endif
 
 #define LOOP_ITERATIONS 3
 #define DEC 1
@@ -65,5 +75,6 @@ void ArduinoSerial::println(const C& data, int type) {
 
 
 static ArduinoSerial Serial {};
+static auto startTime {std::chrono::system_clock::now()};
 
 #endif //ARDUI_ARDUINO_H
