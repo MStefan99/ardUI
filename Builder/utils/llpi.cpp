@@ -1,4 +1,8 @@
 //
+// Created by MStefan99 on 7.4.21.
+//
+
+//
 // Created by MStefan99 on 16.12.19.
 //
 
@@ -9,15 +13,26 @@
 #include "llpi.h"
 
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wgnu-zero-variadic-macro-arguments"
+#pragma clang diagnostic ignored "-Wgnu-statement-expression"
+#pragma clang diagnostic ignored "-Wdollar-in-identifier-extension"
+#ifdef __EMSCRIPTEN__
+
+#include <emscripten.h>
+
+
 uint16_t arduiDisplayGetHeight() {
-	// Has to be implemented by the user
-	return 480;
+	return (uint16_t)EM_ASM_INT(
+		return display.getHeight();
+	);
 }
 
 
 uint16_t arduiDisplayGetWidth() {
-	// Has to be implemented by the user
-	return 320;
+	return (uint16_t)EM_ASM_INT(
+		return display.getWidth();
+	);
 }
 
 
@@ -34,20 +49,23 @@ uint16_t arduiDisplayGetFontWidth() {
 
 
 bool arduiDisplayIsClicked() {
-	// Has to be implemented by the user
-	return false;
+	return EM_ASM_INT(
+		return display.isClicked();
+	);
 }
 
 
 uint16_t arduiDisplayGetClickX() {
-	// Has to be implemented by the user
-	return 0;
+	return (uint16_t)EM_ASM_INT(
+		return display.getClickX();
+	);
 }
 
 
 uint16_t arduiDisplayGetClickY() {
-	// Has to be implemented by the user
-	return 0;
+	return (uint16_t)EM_ASM_INT(
+		return display.getClickY();
+	);
 }
 
 
@@ -122,6 +140,9 @@ ReturnCode arduiDisplayDrawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t 
 	Serial.print(y2);
 	Serial.println(")");
 #endif
+	EM_ASM({
+					 display.drawLine($0, $1, $2, $3);
+				 }, x1, y1, x2, y2);
 	// Has to be implemented by the user
 	return NOT_IMPLEMENTED;
 }
@@ -152,6 +173,9 @@ ReturnCode arduiDisplayDrawText(uint16_t x, uint16_t y, uint16_t height, const S
 	Serial.print(y);
 	Serial.println(")");
 #endif
+	EM_ASM({
+					 display.drawText($0, $1, UTF8ToString($2));
+				 }, x, y, text.c_str());
 	// Has to be implemented by the user
 	return NOT_IMPLEMENTED;
 }
@@ -274,3 +298,7 @@ ReturnCode arduiDisplayDrawBitmap(uint16_t x, uint16_t y, uint16_t* bitmap) {
 	return NOT_IMPLEMENTED;
 }
 
+
+#endif
+
+#pragma clang diagnostic pop

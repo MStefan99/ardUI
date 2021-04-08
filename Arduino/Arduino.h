@@ -16,7 +16,7 @@
 
 #ifdef _WIN32
 
-	#include "windows.h"
+	#include "Windows.h"
 #else
 
 	#include <unistd.h>
@@ -30,14 +30,19 @@
 
 typedef std::string String;
 
+#if defined(__EMSCRIPTEN__) && defined(__cplusplus)
+extern "C" {
+#endif
+void setup();
+
+void loop();
+#if defined(__EMSCRIPTEN__) && defined(__cplusplus)
+}
+#endif
 
 void delay(int ms);
 
 uint32_t millis();
-
-void setup();
-
-void loop();
 
 
 class ArduinoSerial {

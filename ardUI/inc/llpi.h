@@ -5,7 +5,6 @@
 #ifndef ARDUI_LLPI_H
 #define ARDUI_LLPI_H
 
-
 #include "platform.h"
 
 
@@ -27,7 +26,9 @@ uint16_t arduiDisplayGetFontWidth();
 
 bool arduiDisplayIsClicked();
 
-void arduiDisplayGetClickLocation(uint16_t& x, uint16_t& y);
+uint16_t arduiDisplayGetClickX();
+
+uint16_t arduiDisplayGetClickY();
 
 ReturnCode arduiDisplayInit();
 

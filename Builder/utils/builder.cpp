@@ -1,20 +1,15 @@
 //
-// Created by MStefan99 on 22.3.21.
+// Created by MStefan99 on 7.4.21.
 //
 
-#include <Arduino.h>
 #include "ardUI.h"
-
 #include "TextView.h"
 #include "ButtonView.h"
 #include "LinearLayout.h"
 
 
-class MainActivity: public Activity {
-	using Activity::Activity;
-
-
-	void onCreate() override {
+struct Layout {
+	static void fill(Activity* activity) {
 		Serial.println("Hi, I am MainActivity!");
 
 		auto t = new TextView();
@@ -25,7 +20,7 @@ class MainActivity: public Activity {
 		b->setText("Press me!");
 		ll->addView(t);
 		ll->addView(b);
-		setRootView(ll);
+		activity->setRootView(ll);
 
 		ardUI::setViewName(t, "hello_text");
 
@@ -34,22 +29,22 @@ class MainActivity: public Activity {
 			t->setText("Pressed!");
 		});
 	}
+};
 
 
-	void onDestroy() override {
-		auto t = (TextView*)ardUI::getViewByName("hello_text");
-		Serial.print("Main text: ");
-		Serial.println(t->getText());
-		Serial.println("MainActivity has been destroyed");
+class BuilderActivity: public Activity {
+	using Activity::Activity;
+
+	void onCreate() override {
+		setContentView<Layout>();
 	}
 };
 
 
 void setup() {
-	Serial.begin(115200);
-	ardUI::startFirstActivity<MainActivity>();
+	ardUI::startFirstActivity<BuilderActivity>();
 }
 
-
 void loop() {
+
 }

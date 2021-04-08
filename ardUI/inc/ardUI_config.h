@@ -56,7 +56,7 @@
  * The higher the value, the faster the user has to scroll to
  * switch into the scrolling mode.
  *
- * Enter the values in px since last touch refresh.
+ * Enter the values in px/s.
  */
 #define SCROLL_SENSITIVITY ( 50 )
 

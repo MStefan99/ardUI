@@ -23,7 +23,7 @@ public:
 	virtual ~Activity();
 
 	template <class compiledLayout>
-	void setContentView(compiledLayout layoutClass);
+	void setContentView();
 	void setRootView(View* view);
 
 	template <class ActivityClass>
@@ -98,6 +98,13 @@ template <class ActivityClass>
 void Activity::startActivityForResult(void (* onActivityResult)(int statusCode, Bundle resultData),
 																			const Bundle& extras) {
 	ActivityManager::switchActivity<ActivityClass>(extras, onActivityResult);
+}
+
+
+template <class compiledLayout>
+void Activity::setContentView() {
+	compiledLayout layout {};
+	layout.fill(this);  // "void fill(Activity*)" function must be present in the compiled layout
 }
 
 
