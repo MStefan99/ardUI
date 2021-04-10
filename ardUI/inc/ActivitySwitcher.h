@@ -13,6 +13,7 @@ template <class ActivityClass>
 void ActivityManager::switchActivity(const Bundle& extras,
 																		 void (* onActivityResult)(int statusCode, Bundle resultData)) {
 	if (currentActivity) {
+		currentActivity->rootView->invalidate();
 		currentActivity->rewindState(Activity::State::STOPPED);
 		backList.push_back(currentActivity);
 		Serial.println("Screen appended to the stack");

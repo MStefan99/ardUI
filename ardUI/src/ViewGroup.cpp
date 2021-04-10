@@ -36,6 +36,7 @@ void ViewGroup::invalidate() {
 
 
 void ViewGroup::draw() {
+	valid = true;
 	for (auto view: viewList) {
 		if (!view->isValid() && view->isVisible()) {
 			view->draw();

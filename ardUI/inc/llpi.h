@@ -38,7 +38,7 @@ ReturnCode arduiDisplayOff();
 
 ReturnCode arduiDisplaySetBrightness(uint8_t brightness);
 
-ReturnCode arduiDisplayFill(uint16_t color);
+ReturnCode arduiDisplayFill(uint32_t color);
 
 ReturnCode arduiDisplayDrawPixel(uint16_t x, uint16_t y,
 																 uint32_t color);

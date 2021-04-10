@@ -88,7 +88,7 @@ ReturnCode arduiDisplaySetBrightness(uint8_t brightness) {
 }
 
 
-ReturnCode arduiDisplayFill(uint16_t color) {
+ReturnCode arduiDisplayFill(uint32_t color) {
 #ifdef VERBOSE
 	Serial.println("Display filled");
 #endif

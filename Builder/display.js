@@ -31,6 +31,11 @@ const display = {
 		return canvas.height;
 	},
 
+	fill(colorCode) {
+		context.fillStyle = getColor(colorCode);
+		context.fillRect(0, 0, canvas.width, canvas.height);
+	},
+
 	drawLine(x1, y1, x2, y2, colorCode) {
 		context.beginPath();
 		context.moveTo(x1, y1);
@@ -42,7 +47,6 @@ const display = {
 	drawRect(x1, y1, x2, y2, colorCode) {
 		context.strokeStyle = getColor(colorCode);
 		context.strokeRect(x1, y1, x2 - x1, y2 - y1);
-		console.log(context.strokeStyle);
 	},
 
 	fillRect(x1, y1, x2, y2, colorCode) {

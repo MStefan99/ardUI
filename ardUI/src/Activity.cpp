@@ -128,6 +128,9 @@ View* Activity::getRootView() {
 
 void Activity::draw() const {
 	if (rootView) {
+		if (!rootView->valid) {
+			arduiDisplayFill(backgroundColor);
+		}
 		rootView->draw();
 	}
 }

@@ -96,9 +96,6 @@ void View::handleEvent(const Event& event) {
 
 
 void View::onDraw() {
-	// Fill view space
-	auto v {this->viewBox};
-	arduiDisplayFillRect(v.left, v.top, v.right - 1, v.bottom - 1, ~0u);
 	// Nothing to do
 }
 

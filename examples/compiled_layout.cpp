@@ -20,7 +20,7 @@ struct Layout {
 };
 
 
-class BuilderActivity: public Activity {
+class MainActivity: public Activity {
 	using Activity::Activity;
 
 
@@ -31,7 +31,7 @@ class BuilderActivity: public Activity {
 
 
 void setup() {
-	ardUI::startFirstActivity<BuilderActivity>();
+	ardUI::startActivity<MainActivity>();
 }
 
 

@@ -27,7 +27,7 @@ public:
 	void setRootView(View* view);
 
 	template <class ActivityClass>
-	void startActivity(const Bundle& extras);
+	void startActivity(const Bundle& extras = {});
 	template <class ActivityClass>
 	void startActivityForResult(void (* onActivityResult)(int statusCode, Bundle resultData),
 															const Bundle& extras = {});
@@ -85,6 +85,7 @@ private:
 	Bundle resultData {};
 	int status {};
 	void (* resultCallback)(int statusCode, Bundle resultData) {nullptr};
+	uint32_t backgroundColor {0xffffff};
 };
 
 

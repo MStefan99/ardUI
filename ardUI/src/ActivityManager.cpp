@@ -29,7 +29,11 @@ void ActivityManager::back() {
 			currentActivity = backList.back();
 			backList.pop_back();
 			currentActivity->rewindState(Activity::State::RESUMED);
+		} else {
+			Serial.println("This is the last saved activity");
 		}
+	} else {
+		Serial.println("No Activity open");
 	}
 	cleanup();
 }

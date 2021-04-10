@@ -106,12 +106,14 @@ ReturnCode arduiDisplaySetBrightness(uint8_t brightness) {
 }
 
 
-ReturnCode arduiDisplayFill(uint16_t color) {
+ReturnCode arduiDisplayFill(uint32_t color) {
 #ifdef VERBOSE
 	Serial.println("Display filled");
 #endif
-	// Has to be implemented by the user
-	return NOT_IMPLEMENTED;
+	EM_ASM({
+		display.fill($0);
+	}, color);
+	return OK;
 }
 
 

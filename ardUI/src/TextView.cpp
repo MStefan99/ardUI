@@ -50,6 +50,13 @@ uint32_t TextView::getTextColor() const {
 }
 
 
+void TextView::onMeasure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec) {
+	//TODO: add line breaks
+	setMeasuredDimensions(getDefaultSize(minWidth, widthMeasureSpec),
+											 getDefaultSize(textSize, heightMeasureSpec));
+}
+
+
 void TextView::onDraw() {
 	arduiDisplayFillRect(viewBox.left, viewBox.top, viewBox.right - 1, viewBox.bottom - 1, backgroundColor);
 	arduiDisplayDrawText(viewBox.left, viewBox.top, text, textSize, textColor);
