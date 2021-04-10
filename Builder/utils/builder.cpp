@@ -11,6 +11,7 @@
 class SecondActivity: public Activity {
 	using Activity::Activity;
 
+
 	void onCreate() override {
 		Serial.println("Hi, I am a second Activity!");
 
@@ -34,6 +35,7 @@ class SecondActivity: public Activity {
 class MainActivity: public Activity {
 	using Activity::Activity;
 
+
 	void onCreate() override {
 		Serial.println("Hi, I am a first Activity!");
 
@@ -55,7 +57,9 @@ class MainActivity: public Activity {
 		b->setOnClickListener([](View* b) -> void {
 			Serial.println("Button pressed!");
 			auto t = (TextView*)ardUI::getViewByName("hello_text");
-			t->setTextColor(!t->getTextColor()? 0xff : t->getTextColor() << 8u);
+			t->setTextColor(t->getTextColor() & 0xffff00u?
+											t->getTextColor() << 8u & 0xffffffu :
+											t->getTextColor() << 8u | 0xffu & 0xffffffu);
 		});
 
 		b2->setOnClickListener([](View* b) -> void {
@@ -69,6 +73,6 @@ void setup() {
 	ardUI::startActivity<MainActivity>();
 }
 
-void loop() {
 
+void loop() {
 }

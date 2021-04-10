@@ -57,7 +57,7 @@ void ActivityManager::reset() {
 
 void ActivityManager::cleanup() {
 	for (const auto& a: activitiesToStop) {
-		if (a == currentActivity) {
+		if (a == currentActivity && !backList.empty()) {
 			back();
 		} else {
 			for (auto it = backList.begin(); it != backList.end(); ++it) {
