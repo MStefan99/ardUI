@@ -141,10 +141,9 @@ ReturnCode arduiDisplayDrawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t 
 	Serial.println(")");
 #endif
 	EM_ASM({
-					 display.drawLine($0, $1, $2, $3);
-				 }, x1, y1, x2, y2);
-	// Has to be implemented by the user
-	return NOT_IMPLEMENTED;
+					 display.drawLine($0, $1, $2, $3, $4);
+				 }, x1, y1, x2, y2, color);
+	return OK;
 }
 
 
@@ -163,7 +162,7 @@ ReturnCode arduiDisplayDrawChar(uint16_t x, uint16_t y, uint16_t height, char c,
 }
 
 
-ReturnCode arduiDisplayDrawText(uint16_t x, uint16_t y, uint16_t height, const String& text, uint32_t color) {
+ReturnCode arduiDisplayDrawText(uint16_t x, uint16_t y, const String& text, uint16_t height, uint32_t color) {
 #ifdef VERBOSE
 	Serial.print("Drawn text \"");
 	Serial.print(text);
@@ -174,10 +173,9 @@ ReturnCode arduiDisplayDrawText(uint16_t x, uint16_t y, uint16_t height, const S
 	Serial.println(")");
 #endif
 	EM_ASM({
-					 display.drawText($0, $1, UTF8ToString($2));
-				 }, x, y, text.c_str());
-	// Has to be implemented by the user
-	return NOT_IMPLEMENTED;
+					 display.drawText($0, $1, UTF8ToString($2), $3, $4);
+				 }, x, y, text.c_str(), height, color);
+	return OK;
 }
 
 
@@ -222,8 +220,10 @@ ReturnCode arduiDisplayDrawRect(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t 
 	Serial.print(y2);
 	Serial.println(")");
 #endif
-	// Has to be implemented by the user
-	return NOT_IMPLEMENTED;
+	EM_ASM({
+					 display.drawRect($0, $1, $2, $3, $4);
+				 }, x1, y1, x2, y2, color);
+	return OK;
 }
 
 
@@ -240,8 +240,10 @@ ReturnCode arduiDisplayFillRect(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t 
 	Serial.print(y2);
 	Serial.println(")");
 #endif
-	// Has to be implemented by the user
-	return NOT_IMPLEMENTED;
+	EM_ASM({
+					 display.fillRect($0, $1, $2, $3, $4);
+				 }, x1, y1, x2, y2, color);
+	return OK;
 }
 
 

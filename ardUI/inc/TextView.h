@@ -30,8 +30,9 @@ protected:
 	void onDraw() override;
 
 	String text;
-	uint16_t textSize {10};
-	uint32_t textColor {0};
+	uint16_t textSize {20};
+	uint32_t textColor {0x0};
+	uint32_t backgroundColor {0xffffff};
 };
 
 #endif //ARDUI_TEXTVIEW_H

@@ -52,7 +52,7 @@ ReturnCode arduiDisplayDrawChar(uint16_t x, uint16_t y,
 																uint32_t color);
 
 ReturnCode arduiDisplayDrawText(uint16_t x, uint16_t y,
-																uint16_t height, const String& text,
+																const String& text, uint16_t height,
 																uint32_t color);
 
 ReturnCode arduiDisplayDrawCircle(uint16_t x, uint16_t y,

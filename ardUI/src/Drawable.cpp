@@ -6,7 +6,7 @@
 
 
 Rect Drawable::getBounds() const {
-	return Rect(viewBox);
+	return viewBox;
 }
 
 

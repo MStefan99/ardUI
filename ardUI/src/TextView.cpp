@@ -51,6 +51,6 @@ uint32_t TextView::getTextColor() const {
 
 
 void TextView::onDraw() {
-	arduiDisplayDrawText(getBounds().top, getBounds().left,
-											 textSize, text, textColor);
+	arduiDisplayFillRect(viewBox.left, viewBox.top, viewBox.right - 1, viewBox.bottom - 1, backgroundColor);
+	arduiDisplayDrawText(viewBox.left, viewBox.top, text, textSize, textColor);
 }

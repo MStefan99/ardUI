@@ -142,7 +142,7 @@ ReturnCode arduiDisplayDrawChar(uint16_t x, uint16_t y, uint16_t height, char c,
 }
 
 
-ReturnCode arduiDisplayDrawText(uint16_t x, uint16_t y, uint16_t height, const String& text, uint32_t color) {
+ReturnCode arduiDisplayDrawText(uint16_t x, uint16_t y, const String& text, uint16_t textSize, uint32_t color) {
 #ifdef VERBOSE
 	Serial.print("Drawn text \"");
 	Serial.print(text);
