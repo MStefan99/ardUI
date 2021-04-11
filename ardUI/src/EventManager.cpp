@@ -110,6 +110,7 @@ void EventManager::checkForActions(uint32_t deltaTime) {
 
 
 void EventManager::draw() {
+	ActivityManager::processWaitingActivities();
 #ifdef VERBOSE
 	Serial.println("Draw call");
 #endif

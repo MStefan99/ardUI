@@ -91,14 +91,14 @@ private:
 
 template <class ActivityClass>
 void Activity::startActivity(const Bundle& extras) {
-	ActivityManager::switchActivity<ActivityClass>(extras);
+	ActivityManager::startActivity<ActivityClass>(extras);
 }
 
 
 template <class ActivityClass>
 void Activity::startActivityForResult(void (* onActivityResult)(int statusCode, Bundle resultData),
 																			const Bundle& extras) {
-	ActivityManager::switchActivity<ActivityClass>(extras, onActivityResult);
+	ActivityManager::startActivity<ActivityClass>(extras, onActivityResult);
 }
 
 

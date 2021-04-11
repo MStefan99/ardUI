@@ -19,6 +19,10 @@ class ResultActivity: public Activity {
 		Serial.println(b.getInt("someResult"));
 		finish();
 	}
+
+	void onDestroy() override {
+		Serial.println("ResultActivity is destroyed");
+	}
 };
 
 
@@ -26,13 +30,22 @@ class MainActivity: public Activity {
 	using Activity::Activity;
 
 	void onCreate() override {
-		Serial.println("Hi, I am MainActivity!");
+		Serial.println("MainActivity is created");
 
 		Serial.println("Starting ResultActivity for result");
 		startActivityForResult<ResultActivity>([](int code, Bundle results) -> void {
 			Serial.print("Got result from ResultActivity: ");
 			Serial.println(results.getInt("someResult"));
 		});
+		Serial.println("Doing other things...");
+	}
+
+	void onResume() override {
+		Serial.println("MainActivity is resumed");
+	}
+
+	void onPause() override {
+		Serial.println("MainActivity is paused");
 	}
 };
 

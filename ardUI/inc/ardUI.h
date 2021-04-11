@@ -42,7 +42,7 @@ private:
 
 template <class ActivityClass>
 void ardUI::startActivity() {
-	ActivityManager::switchActivity<ActivityClass>();
+	ActivityManager::startActivity<ActivityClass>();
 }
 
 
