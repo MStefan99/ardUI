@@ -27,7 +27,7 @@ uint16_t arduiDisplayGetFontHeight() {
 }
 
 
-uint16_t arduiDisplayGetFontWidth() {
+uint16_t arduiDisplayGetCharWidth(char c, uint16_t height) {
 	// Has to be implemented by the user
 	return 5;
 }
@@ -127,7 +127,7 @@ ReturnCode arduiDisplayDrawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t 
 }
 
 
-ReturnCode arduiDisplayDrawChar(uint16_t x, uint16_t y, uint16_t height, char c, uint32_t color) {
+ReturnCode arduiDisplayDrawChar(uint16_t x, uint16_t y, char c, uint16_t height, uint32_t color) {
 #ifdef VERBOSE
 	Serial.print("Drawn char ");
 	Serial.print(c);

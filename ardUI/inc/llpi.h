@@ -22,7 +22,7 @@ uint16_t arduiDisplayGetWidth();
 
 uint16_t arduiDisplayGetFontHeight();
 
-uint16_t arduiDisplayGetFontWidth();
+uint16_t arduiDisplayGetCharWidth(char c, uint16_t height);
 
 bool arduiDisplayIsClicked();
 
@@ -48,7 +48,7 @@ ReturnCode arduiDisplayDrawLine(uint16_t x1, uint16_t y1,
 																uint32_t color);
 
 ReturnCode arduiDisplayDrawChar(uint16_t x, uint16_t y,
-																uint16_t height, char c,
+																char c, uint16_t height,
 																uint32_t color);
 
 ReturnCode arduiDisplayDrawText(uint16_t x, uint16_t y,

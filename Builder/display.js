@@ -60,6 +60,11 @@ const display = {
 		context.fillText(text, x, y);
 	},
 
+	getTextWidth(text, height) {
+		context.font = height + 'px sans-serif';
+		return Math.ceil(context.measureText(text).width);
+	},
+
 	isClicked() {
 		return click.down;
 	},

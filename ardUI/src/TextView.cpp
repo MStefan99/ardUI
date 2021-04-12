@@ -51,13 +51,54 @@ uint32_t TextView::getTextColor() const {
 
 
 void TextView::onMeasure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec) {
-	//TODO: add line breaks
-	setMeasuredDimensions(getDefaultSize(minWidth, widthMeasureSpec),
-											 getDefaultSize(textSize, heightMeasureSpec));
+	auto width = getDefaultSize(minWidth, widthMeasureSpec);
+	setMeasuredDimensions(width, getDefaultSize(textSize, heightMeasureSpec)
+															 * (uint16_t)getLines(width).size());
 }
 
 
 void TextView::onDraw() {
 	arduiDisplayFillRect(viewBox.left, viewBox.top, viewBox.right - 1, viewBox.bottom - 1, backgroundColor);
-	arduiDisplayDrawText(viewBox.left, viewBox.top, text, textSize, textColor);
+
+	uint16_t line {0};
+	for (const auto& l : getLines(viewBox.width())) {
+		arduiDisplayDrawText(viewBox.left, viewBox.top + textSize * line++, l, textSize, textColor);
+	}
+}
+
+
+LIST<String> TextView::getLines(uint16_t maxWidth) const {
+	LIST<String> lines {};
+	auto s {text.c_str()};
+	uint16_t lineStart {0};
+	uint16_t lastSpace {0};
+	uint16_t currentWidth {0};
+
+	for (uint16_t i {0}; s[i]; ++i) {
+		currentWidth += arduiDisplayGetCharWidth(s[i], textSize);
+		if (s[i] == ' ') {
+			lastSpace = i + 1;
+		}
+		if (currentWidth > maxWidth) {
+			if (lineStart == lastSpace) {
+				lastSpace = i;
+			}
+			#ifdef Arduino_h
+			lines.push_back(text.substring(lineStart, lastSpace));
+			#else
+			lines.push_back(text.substr(lineStart, lastSpace - lineStart - 1));
+			#endif
+			i = lineStart = lastSpace;
+			currentWidth = 0;
+		}
+	}
+
+	if (lineStart != text.length()) {
+		#ifdef Arduino_h
+		lines.push_back(text.substring(lineStart, text.length()));
+		#else
+		lines.push_back(text.substr(lineStart, text.length() - lineStart));
+		#endif
+	}
+	return lines;
 }

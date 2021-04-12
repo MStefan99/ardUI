@@ -42,9 +42,11 @@ uint16_t arduiDisplayGetFontHeight() {
 }
 
 
-uint16_t arduiDisplayGetFontWidth() {
-	// Has to be implemented by the user
-	return 5;
+uint16_t arduiDisplayGetCharWidth(char c, uint16_t height) {
+	char s[2] = {c};
+	return (uint16_t)EM_ASM_INT({
+																return display.getTextWidth(UTF8ToString($0), $1);
+															}, s, height);
 }
 
 
@@ -111,8 +113,8 @@ ReturnCode arduiDisplayFill(uint32_t color) {
 	Serial.println("Display filled");
 #endif
 	EM_ASM({
-		display.fill($0);
-	}, color);
+					 display.fill($0);
+				 }, color);
 	return OK;
 }
 
@@ -149,7 +151,7 @@ ReturnCode arduiDisplayDrawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t 
 }
 
 
-ReturnCode arduiDisplayDrawChar(uint16_t x, uint16_t y, uint16_t height, char c, uint32_t color) {
+ReturnCode arduiDisplayDrawChar(uint16_t x, uint16_t y, char c, uint16_t height, uint32_t color) {
 #ifdef VERBOSE
 	Serial.print("Drawn char ");
 	Serial.print(c);

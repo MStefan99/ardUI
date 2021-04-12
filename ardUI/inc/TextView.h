@@ -8,6 +8,7 @@
 
 #include "platform.h"
 #include "View.h"
+#include LIST_H
 
 
 class TextView: public View {
@@ -28,6 +29,8 @@ public:
 protected:
 	void onMeasure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec) override;
 	void onDraw() override;
+
+	LIST<String> getLines(uint16_t maxWidth) const;
 
 	String text;
 	uint16_t textSize {20};

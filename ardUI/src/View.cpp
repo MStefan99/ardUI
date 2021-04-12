@@ -51,17 +51,21 @@ void View::draw() {
 
 
 void View::measure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec) {
-	onMeasure(widthMeasureSpec, heightMeasureSpec);
+	if (!valid) {
+		onMeasure(widthMeasureSpec, heightMeasureSpec);
+	}
 }
 
 
 void View::layout(uint16_t left, uint16_t top, uint16_t right, uint16_t bottom) {
-	auto b = getBounds();
-	bool changed = left == b.left && top == b.top && bottom == b.bottom && right == b.right;
-	if (changed) {
-		invalidate();
+	if (!valid) {
+		auto b = getBounds();
+		bool changed = left == b.left && top == b.top && bottom == b.bottom && right == b.right;
+		if (changed) {
+			invalidate();
+		}
+		onLayout(changed, left, top, right, bottom);
 	}
-	onLayout(changed, left, top, right, bottom);
 }
 
 
