@@ -86,7 +86,7 @@ LIST<String> TextView::getLines(uint16_t maxWidth) const {
 			#ifdef Arduino_h
 			lines.push_back(text.substring(lineStart, lastSpace));
 			#else
-			lines.push_back(text.substr(lineStart, lastSpace - lineStart - 1));
+			lines.push_back(text.substr(lineStart, lastSpace - lineStart));
 			#endif
 			i = lineStart = lastSpace;
 			currentWidth = 0;

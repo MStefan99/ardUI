@@ -16,6 +16,17 @@ const click = {
 
 context.textBaseline = 'top';
 
+addEventListener('load', () => {
+	const params = new URLSearchParams(window.location.search);
+	if (params.has('width')) {
+		canvas.width = +params.get('width');
+	}
+	if (params.has('height')) {
+		canvas.height = +params.get('height');
+	}
+	context.textBaseline = 'top';
+});
+
 
 function getColor(colorCode) {
 	return '#' + colorCode.toString(16).padStart(6, '0');

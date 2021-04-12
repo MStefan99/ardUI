@@ -15,5 +15,9 @@ void ButtonView::onDraw() {
 	arduiDisplayFillRect(viewBox.left, viewBox.top, viewBox.right - 1, viewBox.bottom - 1, backgroundColor);
 
 	arduiDisplayDrawRect(viewBox.left, viewBox.top, viewBox.right - 1, viewBox.bottom - 1, borderColor);
-	arduiDisplayDrawText(viewBox.left, viewBox.top, text, textSize, textColor);
+
+	uint16_t line {0};
+	for (const auto& l : getLines(viewBox.width())) {
+		arduiDisplayDrawText(viewBox.left, viewBox.top + textSize * line++, l, textSize, textColor);
+	}
 }
