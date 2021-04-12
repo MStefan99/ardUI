@@ -24,12 +24,13 @@
 class ardUI final: public Singleton<ardUI> {
 public:
 	template <class ActivityClass>
-	static void startActivity();
+	static void startActivity(const Bundle& extras = {});
 	static void back();
 	static void reset();
 
 	static void setViewName(View* view, const String& name);
 	static View* getViewByName(const String& name);
+	static Activity& getCurrentActivity();
 
 	friend class Singleton<ardUI>;
 
@@ -41,8 +42,8 @@ private:
 
 
 template <class ActivityClass>
-void ardUI::startActivity() {
-	ActivityManager::startActivity<ActivityClass>();
+void ardUI::startActivity(const Bundle& extras) {
+	ActivityManager::startActivity<ActivityClass>(extras);
 }
 
 

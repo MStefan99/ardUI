@@ -23,3 +23,8 @@ void ardUI::setViewName(View* view, const String& name) {
 View* ardUI::getViewByName(const String& name) {
 	return ardUI::getInstance().viewMap[name];
 }
+
+
+Activity& ardUI::getCurrentActivity() {
+	return *ActivityManager::currentActivity;
+}

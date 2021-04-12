@@ -36,6 +36,7 @@ class MainActivity: public Activity {
 		startActivityForResult<ResultActivity>([](int code, Bundle results) -> void {
 			Serial.print("Got result from ResultActivity: ");
 			Serial.println(results.getInt("someResult"));
+			ardUI::getCurrentActivity().finish();
 		});
 		Serial.println("Doing other things...");
 	}
@@ -46,6 +47,10 @@ class MainActivity: public Activity {
 
 	void onPause() override {
 		Serial.println("MainActivity is paused");
+	}
+
+	void onDestroy() override {
+		Serial.println("MainActivity is destroyed");
 	}
 };
 

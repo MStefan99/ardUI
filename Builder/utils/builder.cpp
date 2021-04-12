@@ -20,6 +20,9 @@ class SecondActivity: public Activity {
 		auto b = new ButtonView("Click to return");
 		auto ll = new LinearLayout();
 
+		auto data = getExtras();
+		title->setTextColor(data.get<uint32_t>("color"));
+
 		ll->addView(title);
 		ll->addView(b);
 		setRootView(ll);
@@ -63,7 +66,10 @@ class MainActivity: public Activity {
 		});
 
 		b2->setOnClickListener([](View* b) -> void {
-			ardUI::startActivity<SecondActivity>();
+			Bundle data {};
+			auto t = (TextView*)ardUI::getViewByName("hello_text");
+			data.put<uint32_t>("color", t->getTextColor());
+			ardUI::startActivity<SecondActivity>(data);
 		});
 	}
 };

@@ -31,14 +31,14 @@ void ActivityManager::reset() {
 
 void ActivityManager::finishActivity(Activity* activity) {
 	if (activity) {
-		if (activity->resultCallback) {
-			activity->resultCallback(activity->status,
-															 Bundle {activity->resultData});
-		}
 		activity->rewindState(Activity::State::DESTROYED);
 
 		if (activity == currentActivity && !backList.empty()) {
 			currentActivity = backList.back();
+			if (activity->resultCallback) {
+				activity->resultCallback(activity->status,
+																 Bundle {activity->resultData});
+			}
 			backList.pop_back();
 			currentActivity->rewindState(Activity::State::RESUMED);
 		}
@@ -83,10 +83,13 @@ void ActivityManager::startupActivities() {
 void ActivityManager::cleanupActivities() {
 	for (auto a: stoppingActivities) {
 		finishActivity(a);
-		for (auto it = backList.begin(); it != backList.end(); ++it) {
+
+		auto it = backList.begin();
+		while (it != backList.end()) {
 			if (a == *it) {
-				backList.erase(it);
-				break;
+				it = backList.erase(it);
+			} else {
+				++it;
 			}
 		}
 	}
