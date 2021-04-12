@@ -24,7 +24,7 @@ class EventManager {
 public:
 	EventManager() = delete;
 
-	static void checkForActions();
+	static void checkForActions(uint32_t deltaTime);
 	static void draw();
 };
 

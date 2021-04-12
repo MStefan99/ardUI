@@ -18,12 +18,6 @@ Activity::~Activity() {
 }
 
 
-template <class compiledLayout>
-void Activity::setContentView(compiledLayout layoutClass) {
-	layoutClass.fill();  // "fill()" function must be present in the compiled layout
-}
-
-
 void Activity::setRootView(View* view) {
 	rootView = view;
 }
@@ -134,6 +128,9 @@ View* Activity::getRootView() {
 
 void Activity::draw() const {
 	if (rootView) {
+		if (!rootView->valid) {
+			arduiDisplayFill(backgroundColor);
+		}
 		rootView->draw();
 	}
 }

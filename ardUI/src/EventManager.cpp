@@ -9,10 +9,13 @@
 #undef setup
 #undef loop
 
+#define ABS(x) (x > 0? x : -x)
+
 
 void setup() {  // Default setup function will be used to initiate ardUI
 	arduiDisplayInit();
 	arduiUserSetup();  // Calling user setup function
+	EventManager::draw();
 }
 
 
@@ -32,7 +35,7 @@ void loop() {  // ardUI core functions will be added to the loop function
 		lastDisplayRefresh = currentTime;
 	}
 	if (currentTime - lastTouchRefresh > 1000 / TOUCH_RATE) {
-		EventManager::checkForActions();  // Checking for user interaction
+		EventManager::checkForActions(currentTime - lastTouchRefresh);  // Checking for user interaction
 		lastTouchRefresh = currentTime;
 	}
 
@@ -53,14 +56,14 @@ void loop() {  // ardUI core functions will be added to the loop function
 }
 
 
-void EventManager::checkForActions() {
+void EventManager::checkForActions(uint32_t deltaTime) {
 	static Event event {};
-	static uint16_t actionTicks {0};
+	static uint32_t actionTime {0};
 
 	if (arduiDisplayIsClicked()) {  // Detecting actions
 		static uint16_t lastX {event.targetX}, lastY {event.targetY};
-		arduiDisplayGetClickLocation(event.targetX, event.targetY);
-		++actionTicks;
+		event.targetX = arduiDisplayGetClickX();
+		event.targetY = arduiDisplayGetClickY();
 
 		if (event.currentAction == Event::Action::NO_ACTION) {
 			event.currentAction = Event::Action::CLICK;  // Register click
@@ -71,11 +74,12 @@ void EventManager::checkForActions() {
 			Serial.println("Event registered");
 #endif
 		} else {
+			actionTime += deltaTime;
 			event.deltaX = (int16_t)(lastX - event.targetX);
 			event.deltaY = (int16_t)(lastY - event.targetY);
 		}
 		if (event.currentAction == Event::Action::SCROLL) {
-			// Handle scroll event every tick
+			// Handle scroll event every update
 			if (ActivityManager::currentActivity) {
 #if VERBOSE
 				Serial.println("Scroll event dispatched");
@@ -84,14 +88,12 @@ void EventManager::checkForActions() {
 					ActivityManager::currentActivity->handleEvent(event);
 				}
 			}
-		} else if (actionTicks == LONG_CLICK_TIME * TOUCH_RATE / 1000) {
+		} else if (actionTime >= LONG_CLICK_TIME) {
 			event.currentAction = Event::Action::LONG_CLICK;  // Register long click
 		}
 		if (event.currentAction == Event::Action::CLICK && (
-			(event.deltaX > SCROLL_SENSITIVITY) ||
-			(event.deltaX < -SCROLL_SENSITIVITY) ||
-			(event.deltaY > SCROLL_SENSITIVITY) ||
-			(event.deltaY < -SCROLL_SENSITIVITY))) {
+			((uint32_t)ABS(event.deltaX) * 1000 / deltaTime > SCROLL_SENSITIVITY) ||
+			((uint32_t)ABS(event.deltaY) * 1000 / deltaTime > SCROLL_SENSITIVITY))) {
 			event.currentAction = Event::Action::SCROLL;  // Register scroll
 		}
 	} else if (event.currentAction != Event::Action::NO_ACTION) {
@@ -102,12 +104,13 @@ void EventManager::checkForActions() {
 			ActivityManager::currentActivity->handleEvent(event);
 		}
 		event.currentAction = Event::Action::NO_ACTION;
-		actionTicks = 0;
+		actionTime = 0;
 	}
 }
 
 
 void EventManager::draw() {
+	ActivityManager::processWaitingActivities();
 #ifdef VERBOSE
 	Serial.println("Draw call");
 #endif

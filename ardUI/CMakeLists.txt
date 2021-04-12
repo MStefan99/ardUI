@@ -6,7 +6,7 @@ SET(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} ${COMPILER_FLAGS})
 
 
 # Adding ardUI framework
-add_library(ardUI SHARED)
+add_library(ardUI STATIC)
 target_sources(ardUI PRIVATE
 		${SOURCE_DIRECTORY}/Bundle.cpp
 		${SOURCE_DIRECTORY}/Rect.cpp

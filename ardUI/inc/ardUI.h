@@ -5,7 +5,6 @@
 #ifndef ARDUI_H
 #define ARDUI_H
 
-
 #include "platform.h"
 #include "llpi.h"
 #include "ardUI_config.h"
@@ -25,12 +24,13 @@
 class ardUI final: public Singleton<ardUI> {
 public:
 	template <class ActivityClass>
-	static void startFirstActivity();
+	static void startActivity(const Bundle& extras = {});
 	static void back();
 	static void reset();
 
 	static void setViewName(View* view, const String& name);
 	static View* getViewByName(const String& name);
+	static Activity& getCurrentActivity();
 
 	friend class Singleton<ardUI>;
 
@@ -42,10 +42,8 @@ private:
 
 
 template <class ActivityClass>
-void ardUI::startFirstActivity() {
-	if (!ActivityManager::currentActivity) {
-		ActivityManager::switchActivity<ActivityClass>();
-	}
+void ardUI::startActivity(const Bundle& extras) {
+	ActivityManager::startActivity<ActivityClass>(extras);
 }
 
 

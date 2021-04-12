@@ -26,12 +26,13 @@ public:
 	uint32_t getTextColor() const;
 
 protected:
-	// TODO: add onMeasure
+	void onMeasure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec) override;
 	void onDraw() override;
 
 	String text;
-	uint16_t textSize {10};
-	uint32_t textColor {0};
+	uint16_t textSize {20};
+	uint32_t textColor {0x0};
+	uint32_t backgroundColor {0xffffff};
 };
 
 #endif //ARDUI_TEXTVIEW_H

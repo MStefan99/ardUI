@@ -5,6 +5,16 @@
 #include "ardUI.h"
 
 
+void ardUI::back() {
+	ActivityManager::back();
+}
+
+
+void ardUI::reset() {
+	ActivityManager::reset();
+}
+
+
 void ardUI::setViewName(View* view, const String& name) {
 	ardUI::getInstance().viewMap[name] = view;
 }
@@ -15,11 +25,6 @@ View* ardUI::getViewByName(const String& name) {
 }
 
 
-void ardUI::back() {
-	ActivityManager::back();
-}
-
-
-void ardUI::reset() {
-	ActivityManager::reset();
+Activity& ardUI::getCurrentActivity() {
+	return *ActivityManager::currentActivity;
 }

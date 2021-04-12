@@ -1,4 +1,8 @@
 //
+// Created by MStefan99 on 7.4.21.
+//
+
+//
 // Created by MStefan99 on 16.12.19.
 //
 
@@ -9,15 +13,26 @@
 #include "llpi.h"
 
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wgnu-zero-variadic-macro-arguments"
+#pragma clang diagnostic ignored "-Wgnu-statement-expression"
+#pragma clang diagnostic ignored "-Wdollar-in-identifier-extension"
+#ifdef __EMSCRIPTEN__
+
+#include <emscripten.h>
+
+
 uint16_t arduiDisplayGetHeight() {
-	// Has to be implemented by the user
-	return 480;
+	return (uint16_t)EM_ASM_INT(
+		return display.getHeight();
+	);
 }
 
 
 uint16_t arduiDisplayGetWidth() {
-	// Has to be implemented by the user
-	return 320;
+	return (uint16_t)EM_ASM_INT(
+		return display.getWidth();
+	);
 }
 
 
@@ -34,20 +49,23 @@ uint16_t arduiDisplayGetFontWidth() {
 
 
 bool arduiDisplayIsClicked() {
-	// Has to be implemented by the user
-	return false;
+	return EM_ASM_INT(
+		return display.isClicked();
+	);
 }
 
 
 uint16_t arduiDisplayGetClickX() {
-	// Has to be implemented by the user
-	return 0;
+	return (uint16_t)EM_ASM_INT(
+		return display.getClickX();
+	);
 }
 
 
 uint16_t arduiDisplayGetClickY() {
-	// Has to be implemented by the user
-	return 0;
+	return (uint16_t)EM_ASM_INT(
+		return display.getClickY();
+	);
 }
 
 
@@ -92,8 +110,10 @@ ReturnCode arduiDisplayFill(uint32_t color) {
 #ifdef VERBOSE
 	Serial.println("Display filled");
 #endif
-	// Has to be implemented by the user
-	return NOT_IMPLEMENTED;
+	EM_ASM({
+		display.fill($0);
+	}, color);
+	return OK;
 }
 
 
@@ -122,8 +142,10 @@ ReturnCode arduiDisplayDrawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t 
 	Serial.print(y2);
 	Serial.println(")");
 #endif
-	// Has to be implemented by the user
-	return NOT_IMPLEMENTED;
+	EM_ASM({
+					 display.drawLine($0, $1, $2, $3, $4);
+				 }, x1, y1, x2, y2, color);
+	return OK;
 }
 
 
@@ -142,7 +164,7 @@ ReturnCode arduiDisplayDrawChar(uint16_t x, uint16_t y, uint16_t height, char c,
 }
 
 
-ReturnCode arduiDisplayDrawText(uint16_t x, uint16_t y, const String& text, uint16_t textSize, uint32_t color) {
+ReturnCode arduiDisplayDrawText(uint16_t x, uint16_t y, const String& text, uint16_t height, uint32_t color) {
 #ifdef VERBOSE
 	Serial.print("Drawn text \"");
 	Serial.print(text);
@@ -152,8 +174,10 @@ ReturnCode arduiDisplayDrawText(uint16_t x, uint16_t y, const String& text, uint
 	Serial.print(y);
 	Serial.println(")");
 #endif
-	// Has to be implemented by the user
-	return NOT_IMPLEMENTED;
+	EM_ASM({
+					 display.drawText($0, $1, UTF8ToString($2), $3, $4);
+				 }, x, y, text.c_str(), height, color);
+	return OK;
 }
 
 
@@ -198,8 +222,10 @@ ReturnCode arduiDisplayDrawRect(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t 
 	Serial.print(y2);
 	Serial.println(")");
 #endif
-	// Has to be implemented by the user
-	return NOT_IMPLEMENTED;
+	EM_ASM({
+					 display.drawRect($0, $1, $2, $3, $4);
+				 }, x1, y1, x2, y2, color);
+	return OK;
 }
 
 
@@ -216,8 +242,10 @@ ReturnCode arduiDisplayFillRect(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t 
 	Serial.print(y2);
 	Serial.println(")");
 #endif
-	// Has to be implemented by the user
-	return NOT_IMPLEMENTED;
+	EM_ASM({
+					 display.fillRect($0, $1, $2, $3, $4);
+				 }, x1, y1, x2, y2, color);
+	return OK;
 }
 
 
@@ -274,3 +302,7 @@ ReturnCode arduiDisplayDrawBitmap(uint16_t x, uint16_t y, uint16_t* bitmap) {
 	return NOT_IMPLEMENTED;
 }
 
+
+#endif
+
+#pragma clang diagnostic pop

@@ -23,11 +23,11 @@ public:
 	virtual ~Activity();
 
 	template <class compiledLayout>
-	void setContentView(compiledLayout layoutClass);
+	void setContentView();
 	void setRootView(View* view);
 
 	template <class ActivityClass>
-	void startActivity(const Bundle& extras);
+	void startActivity(const Bundle& extras = {});
 	template <class ActivityClass>
 	void startActivityForResult(void (* onActivityResult)(int statusCode, Bundle resultData),
 															const Bundle& extras = {});
@@ -85,19 +85,27 @@ private:
 	Bundle resultData {};
 	int status {};
 	void (* resultCallback)(int statusCode, Bundle resultData) {nullptr};
+	uint32_t backgroundColor {0xffffff};
 };
 
 
 template <class ActivityClass>
 void Activity::startActivity(const Bundle& extras) {
-	ActivityManager::switchActivity<ActivityClass>(extras);
+	ActivityManager::startActivity<ActivityClass>(extras);
 }
 
 
 template <class ActivityClass>
 void Activity::startActivityForResult(void (* onActivityResult)(int statusCode, Bundle resultData),
 																			const Bundle& extras) {
-	ActivityManager::switchActivity<ActivityClass>(extras, onActivityResult);
+	ActivityManager::startActivity<ActivityClass>(extras, onActivityResult);
+}
+
+
+template <class compiledLayout>
+void Activity::setContentView() {
+	compiledLayout layout {};
+	layout.fill(this);  // "void fill(Activity*)" function must be present in the compiled layout
 }
 
 

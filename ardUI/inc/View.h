@@ -5,7 +5,6 @@
 #ifndef ARDUI_VIEW_H
 #define ARDUI_VIEW_H
 
-
 #include "platform.h"
 #include "ardUI_config.h"
 #include "Event.h"
@@ -67,12 +66,11 @@ protected:
 
 	void setMeasuredDimensions(uint16_t measuredWidth, uint16_t measuredHeight);
 
+	uint16_t getDefaultSize(uint16_t size, uint16_t measureSpec);
 private:
 	void (* onClick)(View* view) {nullptr};
 	void (* onLongClick)(View* view) {nullptr};
 	void (* onScroll)(View* view) {nullptr};
-
-	uint16_t getDefaultSize(uint16_t size, uint16_t measureSpec);
 
 	static int lastViewId;
 	int viewId {++lastViewId};

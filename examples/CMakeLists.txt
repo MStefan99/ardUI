@@ -15,3 +15,9 @@ add_executable(
 		activity_result.cpp
 )
 
+
+add_executable(
+		Compiled_Layout
+		compiled_layout.cpp
+)
+

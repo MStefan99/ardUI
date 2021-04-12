@@ -19,8 +19,10 @@
 
 // User Interface
 /*
- * How many back actions to save.
- * Higher values improve user experience but require more memory.
+ * How many previous activities to save.
+ * If a new activity is opened while previous one is still active,
+ * it will be saved to memory so that the user can navigate back to it.
+ * Higher values improve user experience but will use significantly more memory.
  */
 #define BACK_STACK_DEPTH ( 3 )
 
@@ -56,7 +58,7 @@
  * The higher the value, the faster the user has to scroll to
  * switch into the scrolling mode.
  *
- * Enter the values in px since last touch refresh.
+ * Enter the values in px/s.
  */
 #define SCROLL_SENSITIVITY ( 50 )
 
@@ -73,7 +75,7 @@
 /*
  * Enable verbose logging.
  * Verbose logging may be useful for debugging
- * but may impact performance with low baud rates.
+ * but may impact performance with slow serial connections.
  */
 #define VERBOSE ( true )
 

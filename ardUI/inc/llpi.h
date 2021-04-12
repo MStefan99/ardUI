@@ -5,7 +5,6 @@
 #ifndef ARDUI_LLPI_H
 #define ARDUI_LLPI_H
 
-
 #include "platform.h"
 
 
@@ -27,7 +26,9 @@ uint16_t arduiDisplayGetFontWidth();
 
 bool arduiDisplayIsClicked();
 
-void arduiDisplayGetClickLocation(uint16_t& x, uint16_t& y);
+uint16_t arduiDisplayGetClickX();
+
+uint16_t arduiDisplayGetClickY();
 
 ReturnCode arduiDisplayInit();
 
@@ -37,7 +38,7 @@ ReturnCode arduiDisplayOff();
 
 ReturnCode arduiDisplaySetBrightness(uint8_t brightness);
 
-ReturnCode arduiDisplayFill(uint16_t color);
+ReturnCode arduiDisplayFill(uint32_t color);
 
 ReturnCode arduiDisplayDrawPixel(uint16_t x, uint16_t y,
 																 uint32_t color);
@@ -51,7 +52,7 @@ ReturnCode arduiDisplayDrawChar(uint16_t x, uint16_t y,
 																uint32_t color);
 
 ReturnCode arduiDisplayDrawText(uint16_t x, uint16_t y,
-																uint16_t height, const String& text,
+																const String& text, uint16_t height,
 																uint32_t color);
 
 ReturnCode arduiDisplayDrawCircle(uint16_t x, uint16_t y,

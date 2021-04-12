@@ -5,7 +5,6 @@
 #ifndef ARDUI_PLATFORM_H
 #define ARDUI_PLATFORM_H
 
-
 #include <Arduino.h>
 #include "ardUI_config.h"
 
