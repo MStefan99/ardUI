@@ -17,6 +17,16 @@ html
 		justify-content space-between
 		min-height 100vh
 
+		header
+			display flex
+			flex-flow row nowrap
+			justify-content space-between
+			padding 1em
+			margin-bottom 1em
+
+			#logo
+				height 2em
+
 		#dashboard
 			display flex
 			flex-flow row wrap
@@ -25,9 +35,9 @@ html
 
 			& > div
 				card()
-				margin 0 2em
+				margin 0 2em 2em
 
-			#center-pane, #right-pane
+			#left-pane, #right-pane
 				flex 1 0 0
 
 			#canvas-wrapper
@@ -42,4 +52,4 @@ html
 
 		footer
 			padding 1em 2em
-			background-color #eee
+			background-color #f0f0f0

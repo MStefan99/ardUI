@@ -2,24 +2,32 @@
 
 
 addEventListener('load', () => {
-	const form = document.getElementById('dim-form');
-	const resetButton = document.getElementById('dim-reset');
+	const form = document.getElementById('res-form');
+	const resetButton = document.getElementById('res-reset');
 	const canvas = document.getElementById('builder-canvas');
+	const resList = document.getElementById('res-list');
 	const params = new URLSearchParams(location.search);
 
 
-	form['dim-width'].value = params.get('width') || canvas.width;
-	form['dim-height'].value = params.get('height') || canvas.height;
+	form['res-width'].value = params.get('width') || canvas.width;
+	form['res-height'].value = params.get('height') || canvas.height;
 
 	resetButton.addEventListener('click', () => {
 		window.location.search = '';
 	});
 
 
+	resList.addEventListener('change', e => {
+		const option = resList.selectedOptions[0];
+		form['res-width'].value = option.getAttribute('data-w');
+		form['res-height'].value = option.getAttribute('data-h');
+	});
+
+
 	form.addEventListener('submit', e => {
 		e.preventDefault();
-		const width = form['dim-width'].value;
-		const height = form['dim-height'].value;
+		const width = form['res-width'].value;
+		const height = form['res-height'].value;
 
 		if (!+width || !+height) {
 			alert('Please check that both width and height are a number.');

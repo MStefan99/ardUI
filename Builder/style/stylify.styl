@@ -471,7 +471,6 @@ html
 
 				&[type=email], &[type=password], &[type=number]
 				&[type=search], &[type=text], &[type=email],
-				textarea, select
 					display block
 					width 100%
 					padding .7em
@@ -491,6 +490,16 @@ html
 						background-color darken(color-light, 10%)
 						border 1px solid darken(color-light, 30%)
 						pointer-events none
+
+			textarea, select
+				display block
+				width 100%
+				padding .7em
+				font-size 1em
+				border-radius 5px
+				border 1px solid darken(color-light, 15%)
+				transition box-shadow .2s ease-in,
+				border-color .2s ease-in
 
 			input, div
 				& ~ .valid-feedback, & ~ .invalid-feedback

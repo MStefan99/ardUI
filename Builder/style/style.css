@@ -9,6 +9,16 @@ html body {
   justify-content: space-between;
   min-height: 100vh;
 }
+html body header {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  padding: 1em;
+  margin-bottom: 1em;
+}
+html body header #logo {
+  height: 2em;
+}
 html body #dashboard {
   display: flex;
   flex-flow: row wrap;
@@ -21,9 +31,9 @@ html body #dashboard > div {
   border-radius: 1em;
   box-shadow: 0 0 0.5em rgba(0,0,0,0.333);
   display: block;
-  margin: 0 2em;
+  margin: 0 2em 2em;
 }
-html body #dashboard #center-pane,
+html body #dashboard #left-pane,
 html body #dashboard #right-pane {
   flex: 1 0 0;
 }
@@ -39,5 +49,5 @@ html body #dashboard #canvas-wrapper #mouse-coords {
 }
 html body footer {
   padding: 1em 2em;
-  background-color: #eee;
+  background-color: #f0f0f0;
 }

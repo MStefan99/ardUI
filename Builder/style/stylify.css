@@ -3916,9 +3916,7 @@ html body form input[type=password],
 html body form input[type=number],
 html body form input[type=search],
 html body form input[type=text],
-html body form input textarea,
-html body form input select {
-  display: block;
+html body form input display block {
   width: 100%;
   padding: 0.7em;
   font-size: 1em;
@@ -3931,8 +3929,7 @@ html body form input[type=password]:focus,
 html body form input[type=number]:focus,
 html body form input[type=search]:focus,
 html body form input[type=text]:focus,
-html body form input textarea:focus,
-html body form input select:focus {
+html body form input display block:focus {
   outline: none;
   border: 1px solid #66b0ff;
   box-shadow: 0 0 0 3px rgba(0,123,255,0.4);
@@ -3942,19 +3939,27 @@ html body form input[type=password][readonly],
 html body form input[type=number][readonly],
 html body form input[type=search][readonly],
 html body form input[type=text][readonly],
-html body form input textarea[readonly],
-html body form input select[readonly],
+html body form input display block[readonly],
 html body form input[type=email][disabled],
 html body form input[type=password][disabled],
 html body form input[type=number][disabled],
 html body form input[type=search][disabled],
 html body form input[type=text][disabled],
-html body form input textarea[disabled],
-html body form input select[disabled] {
+html body form input display block[disabled] {
   color: #4e5861;
   background-color: #dbe0e5;
   border: 1px solid #a1aebc;
   pointer-events: none;
+}
+html body form textarea,
+html body form select {
+  display: block;
+  width: 100%;
+  padding: 0.7em;
+  font-size: 1em;
+  border-radius: 5px;
+  border: 1px solid #ccd4db;
+  transition: box-shadow 0.2s cubic-bezier(0, 0.6, 0.4, 1), border-color 0.2s cubic-bezier(0, 0.6, 0.4, 1);
 }
 html body form input ~ .valid-feedback,
 html body form div ~ .valid-feedback,
