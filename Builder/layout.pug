@@ -1,19 +1,21 @@
 doctype html
-head
-	meta(charset='UTF-8')
-	block head
-		title ardUI Builder
-	link(rel='icon' href='./img/ardUI_logo.svg')
-	link(rel='stylesheet' href='./style/stylify.css')
-	link(rel='stylesheet' href='./style/style.css')
 
-body
-	div.mb-3
-		header
-			include header
+html(lang='en')
+	head
+		meta(charset='UTF-8')
+		block head
+			title ardUI Builder
+		link(rel='icon' href='./img/ardUI_logo.svg')
+		link(rel='stylesheet' href='./style/stylify.css')
+		link(rel='stylesheet' href='./style/style.css')
 
-		main
-			block main
+	body
+		div.mb-3
+			header
+				include header
 
-	footer
-		include footer
+			main
+				block main
+
+		footer
+			include footer

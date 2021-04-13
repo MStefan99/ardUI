@@ -3,9 +3,10 @@
 
 addEventListener('load', () => {
 	const form = document.getElementById('res-form');
-	const resetButton = document.getElementById('res-reset');
 	const canvas = document.getElementById('builder-canvas');
 	const resList = document.getElementById('res-list');
+	const resetButton = document.getElementById('res-reset');
+	const flipButton = document.getElementById('res-flip');
 	const params = new URLSearchParams(location.search);
 
 
@@ -14,6 +15,15 @@ addEventListener('load', () => {
 
 	resetButton.addEventListener('click', () => {
 		window.location.search = '';
+	});
+
+
+	flipButton.addEventListener('click', () => {
+		const width = form['res-width'].value;
+		const height = form['res-height'].value;
+
+		form['res-height'].value = width;
+		form['res-width'].value = height;
 	});
 
 
