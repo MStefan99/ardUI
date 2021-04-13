@@ -1,0 +1,31 @@
+extends layout
+
+block head
+	title Builder Dashboard
+
+block main
+	div#dashboard
+		div#left-pane
+			h2 Navigation
+		div#center-pane
+			h2 Display
+			div#canvas-wrapper
+				canvas#builder-canvas(width=480 height=320)
+				span#mouse-coords
+		div#right-pane
+			h2 Properties
+			h4 Display size
+			form#dim-form
+				div.form-group
+					label(for='dim-width') Display width (in px)
+					input#dim-width(type='number' min='50')
+				div.form-group
+					label(for='dim-height') Display height (in px)
+					input#dim-height(type='number' min='50')
+				input.btn.btn-outline-success#dim-set(type='submit' value='Set display size')
+				input.btn.btn-outline-primary#dim-reset(type='button' value='Reset to default')
+
+
+	script(src='../cmake-build-emscripten/Builder/Builder.js')
+	script(async src='./js/display.js')
+	script(async src='./js/properties.js')

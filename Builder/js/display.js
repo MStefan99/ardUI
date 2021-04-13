@@ -1,10 +1,8 @@
 'use strict';
 
-const canvas = document.getElementById('builder_canvas');
+const canvas = document.getElementById('builder-canvas');
 const context = canvas.getContext('2d');
-const mouseInput = document.getElementById('mouse-input');
-const spanX = document.getElementById('mouse-x');
-const spanY = document.getElementById('mouse-y');
+const mouseCoords = document.getElementById('mouse-coords');
 
 
 const click = {
@@ -15,6 +13,28 @@ const click = {
 
 
 context.textBaseline = 'top';
+
+
+function showMouseCoords(x, y) {
+	mouseCoords.innerText = 'Mouse down at (' + x + ', ' + y + ')';
+	mouseCoords.style.visibility = 'visible';
+}
+
+function hideMouseCoords() {
+	mouseCoords.style.visibility = 'hidden';
+}
+
+
+addEventListener('load', () => {
+	const params = new URLSearchParams(window.location.search);
+	if (params.has('width')) {
+		canvas.width = +params.get('width');
+	}
+	if (params.has('height')) {
+		canvas.height = +params.get('height');
+	}
+	context.textBaseline = 'top';
+});
 
 
 function getColor(colorCode) {
@@ -60,6 +80,11 @@ const display = {
 		context.fillText(text, x, y);
 	},
 
+	getTextWidth(text, height) {
+		context.font = height + 'px sans-serif';
+		return Math.ceil(context.measureText(text).width);
+	},
+
 	isClicked() {
 		return click.down;
 	},
@@ -84,16 +109,17 @@ ardUI().then((ardUI) => {
 
 	canvas.addEventListener('mousedown', e => {
 		click.down = true;
-		mouseInput.style.display = 'block';
-		spanX.innerText = (click.x = e.offsetX).toString();
-		spanY.innerText = (click.y = e.offsetY).toString();
+		click.x = e.offsetX;
+		click.y = e.offsetY;
+		showMouseCoords(click.x, click.y);
 		ardUI._loop();
 	});
 
 	canvas.addEventListener('mousemove', e => {
 		if (click.down) {
-			spanX.innerText = (click.x = e.offsetX).toString();
-			spanY.innerText = (click.y = e.offsetY).toString();
+			click.x = e.offsetX;
+			click.y = e.offsetY;
+			showMouseCoords(click.x, click.y);
 			ardUI._loop();
 		}
 	});
@@ -101,7 +127,7 @@ ardUI().then((ardUI) => {
 	'mouseup mouseleave'.split(' ').forEach(event => {
 		canvas.addEventListener(event, e => {
 			click.down = false;
-			mouseInput.style.display = 'none';
+			hideMouseCoords();
 			ardUI._loop();
 		})
 	});

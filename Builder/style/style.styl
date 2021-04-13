@@ -1,0 +1,45 @@
+card()
+	padding 1em
+	border 1px solid #ccc
+	border-radius 1em
+	box-shadow 0 0 .5em #0005
+	display block
+
+
+html
+	font-family sans-serif
+	scroll-behavior smooth
+
+	body
+		margin 0
+		display flex
+		flex-flow column
+		justify-content space-between
+		min-height 100vh
+
+		#dashboard
+			display flex
+			flex-flow row wrap
+			justify-content center
+			align-items stretch
+
+			& > div
+				card()
+				margin 0 2em
+
+			#center-pane, #right-pane
+				flex 1 0 0
+
+			#canvas-wrapper
+				width max-content
+
+				#builder-canvas
+					border 1px dashed #ddd
+
+				#mouse-coords
+					display block
+					visibility hidden
+
+		footer
+			padding 1em 2em
+			background-color #eee

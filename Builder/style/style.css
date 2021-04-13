@@ -1,0 +1,43 @@
+html {
+  font-family: sans-serif;
+  scroll-behavior: smooth;
+}
+html body {
+  margin: 0;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  min-height: 100vh;
+}
+html body #dashboard {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: stretch;
+}
+html body #dashboard > div {
+  padding: 1em;
+  border: 1px solid #ccc;
+  border-radius: 1em;
+  box-shadow: 0 0 0.5em rgba(0,0,0,0.333);
+  display: block;
+  margin: 0 2em;
+}
+html body #dashboard #center-pane,
+html body #dashboard #right-pane {
+  flex: 1 0 0;
+}
+html body #dashboard #canvas-wrapper {
+  width: max-content;
+}
+html body #dashboard #canvas-wrapper #builder-canvas {
+  border: 1px dashed #ddd;
+}
+html body #dashboard #canvas-wrapper #mouse-coords {
+  display: block;
+  visibility: hidden;
+}
+html body footer {
+  padding: 1em 2em;
+  background-color: #eee;
+}
