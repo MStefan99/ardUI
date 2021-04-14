@@ -12,6 +12,7 @@ target_sources(ardUI PRIVATE
 		${SOURCE_DIRECTORY}/Rect.cpp
 		${SOURCE_DIRECTORY}/Drawable.cpp
 		${SOURCE_DIRECTORY}/View.cpp
+		${SOURCE_DIRECTORY}/ProgressBar.cpp
 		${SOURCE_DIRECTORY}/TextView.cpp
 		${SOURCE_DIRECTORY}/ViewGroup.cpp
 		${SOURCE_DIRECTORY}/ButtonView.cpp

@@ -6,6 +6,7 @@
 #include "TextView.h"
 #include "ButtonView.h"
 #include "LinearLayout.h"
+#include "ProgressBar.h"
 
 
 class SecondActivity: public Activity {
@@ -18,17 +19,17 @@ class SecondActivity: public Activity {
 		auto title = new TextView("Second Activity!");
 		title->setTextSize(30);
 		auto t = new TextView(
-			"this is a very long text that will definitely need to be broken into a few lines on the screen and even this is not enough to test whether the text will be broken correctly, so I just decided to add this part to this piece of text too just to check that my code is working properly and doesn't have any bugs which I'm sure it does because why would I do this to myself otherwise?");
+				"this is a very long text that will definitely need to be broken into a few lines on the screen and even this is not enough to test whether the text will be broken correctly, so I just decided to add this part to this piece of text too just to check that my code is working properly and doesn't have any bugs which I'm sure it does because why would I do this to myself otherwise?");
 		auto b = new ButtonView("Click to return");
 		auto ll = new LinearLayout();
 
 		auto data = getExtras();
 		t->setTextColor(data.get<uint32_t>("color"));
 
+		setRootView(ll);
 		ll->addView(title);
 		ll->addView(t);
 		ll->addView(b);
-		setRootView(ll);
 
 		b->setOnClickListener([](View* b) -> void {
 			Serial.println("Back pressed");
@@ -51,14 +52,17 @@ class MainActivity: public Activity {
 		auto b = new ButtonView("Update text");
 		auto b2 = new ButtonView("Open another Activity");
 		auto ll = new LinearLayout();
+		auto p = new ProgressBar();
 
+		setRootView(ll);
 		ll->addView(title);
 		ll->addView(t);
 		ll->addView(b);
 		ll->addView(b2);
-		setRootView(ll);
+		ll->addView(p);
 
 		ardUI::setViewName(t, "hello_text");
+		ardUI::setViewName(p, "progress");
 
 		b->setOnClickListener([](View* b) -> void {
 			Serial.println("Button pressed!");
@@ -84,4 +88,10 @@ void setup() {
 
 
 void loop() {
+	auto p = (ProgressBar*)ardUI::getViewByName("progress");
+
+	auto pr = p->getProgress();
+	if (pr < 100) {
+		p->setProgress(p->getProgress() + 1);
+	}
 }
