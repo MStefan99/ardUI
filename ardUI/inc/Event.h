@@ -5,7 +5,6 @@
 #ifndef ARDUI_EVENT_H
 #define ARDUI_EVENT_H
 
-
 #include "platform.h"
 
 

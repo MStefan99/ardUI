@@ -5,7 +5,6 @@
 #ifndef ARDUI_ACTIVITY_H
 #define ARDUI_ACTIVITY_H
 
-
 #include "platform.h"
 #include LIST_H
 

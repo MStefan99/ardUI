@@ -5,7 +5,6 @@
 #ifndef ARDUI_BUTTONVIEW_H
 #define ARDUI_BUTTONVIEW_H
 
-
 #include "platform.h"
 #include "llpi.h"
 #include "TextView.h"

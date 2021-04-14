@@ -5,7 +5,6 @@
 #ifndef ARDUI_DRAWABLE_H
 #define ARDUI_DRAWABLE_H
 
-
 #include "platform.h"
 #include "llpi.h"
 #include "Event.h"

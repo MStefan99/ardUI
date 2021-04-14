@@ -5,7 +5,6 @@
 #ifndef ARDUI_LINEARLAYOUT_H
 #define ARDUI_LINEARLAYOUT_H
 
-
 #include "Event.h"
 #include "ViewGroup.h"
 

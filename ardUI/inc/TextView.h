@@ -5,7 +5,6 @@
 #ifndef ARDUI_TEXTVIEW_H
 #define ARDUI_TEXTVIEW_H
 
-
 #include "platform.h"
 #include "View.h"
 #include LIST_H

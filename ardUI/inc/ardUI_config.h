@@ -5,7 +5,6 @@
 #ifndef ARDUI_CONFIG_H
 #define ARDUI_CONFIG_H
 
-
 #include <Arduino.h>
 
 

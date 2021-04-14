@@ -52,8 +52,9 @@ uint32_t TextView::getTextColor() const {
 
 void TextView::onMeasure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec) {
 	auto width = getDefaultSize(minWidth, widthMeasureSpec);
-	setMeasuredDimensions(width, getDefaultSize(textSize, heightMeasureSpec)
-															 * (uint16_t)getLines(width).size());
+	setMeasuredDimensions(width + padding.left + padding.right,
+												getDefaultSize(textSize, heightMeasureSpec)
+												* (uint16_t)getLines(width).size() + padding.top + padding.bottom);
 }
 
 
@@ -62,7 +63,8 @@ void TextView::onDraw() {
 
 	uint16_t line {0};
 	for (const auto& l : getLines(viewBox.width())) {
-		arduiDisplayDrawText(viewBox.left, viewBox.top + textSize * line++, l, textSize, textColor);
+		arduiDisplayDrawText(viewBox.left + padding.left, viewBox.top + padding.top + textSize * line++,
+												 l, textSize, textColor);
 	}
 }
 

@@ -5,7 +5,6 @@
 #ifndef ARDUI_EVENTMANAGER_H
 #define ARDUI_EVENTMANAGER_H
 
-
 #include "platform.h"
 #include "llpi.h"
 #include "Event.h"

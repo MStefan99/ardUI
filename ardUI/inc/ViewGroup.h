@@ -5,7 +5,6 @@
 #ifndef ARDUI_VIEWGROUP_H
 #define ARDUI_VIEWGROUP_H
 
-
 #include "platform.h"
 #include "View.h"
 
