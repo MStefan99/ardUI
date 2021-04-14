@@ -20,7 +20,7 @@ protected:
 
 	void handleEvent(const Event& event) override;
 
-	bool isVertical {true};
+	bool _isVertical {true};
 };
 
 #endif //ARDUI_LINEARLAYOUT_H

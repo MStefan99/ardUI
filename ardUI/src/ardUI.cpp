@@ -16,15 +16,15 @@ void ardUI::reset() {
 
 
 void ardUI::setViewName(View* view, const String& name) {
-	ardUI::getInstance().viewMap[name] = view;
+	ardUI::getInstance()._viewMap[name] = view;
 }
 
 
 View* ardUI::getViewByName(const String& name) {
-	return ardUI::getInstance().viewMap[name];
+	return ardUI::getInstance()._viewMap[name];
 }
 
 
 Activity& ardUI::getCurrentActivity() {
-	return *ActivityManager::currentActivity;
+	return *ActivityManager::_currentActivity;
 }

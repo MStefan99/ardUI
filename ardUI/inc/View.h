@@ -68,14 +68,14 @@ protected:
 
 	uint16_t getDefaultSize(uint16_t size, uint16_t measureSpec);
 private:
-	void (* onClick)(View* view) {nullptr};
-	void (* onLongClick)(View* view) {nullptr};
-	void (* onScroll)(View* view) {nullptr};
+	void (* _onClick)(View* view) {nullptr};
+	void (* _onLongClick)(View* view) {nullptr};
+	void (* _onScroll)(View* view) {nullptr};
 
-	static int lastViewId;
-	int viewId {++lastViewId};
-	uint16_t measuredHeight {0};
-	uint16_t measuredWidth {0};
+	static int _lastViewId;
+	int _viewId {++_lastViewId};
+	uint16_t _measuredHeight {0};
+	uint16_t _measuredWidth {0};
 };
 
 #endif //ARDUI_VIEW_H

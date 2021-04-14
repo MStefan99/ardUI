@@ -78,13 +78,13 @@ private:
 
 	void rewindState(Activity::State targetState);
 
-	State currentState {LAUNCHED};
-	View* rootView {};
-	Bundle bundle {};
-	Bundle resultData {};
-	int status {};
-	void (* resultCallback)(int statusCode, Bundle resultData) {nullptr};
-	uint32_t backgroundColor {0xffffff};
+	State _currentState {LAUNCHED};
+	View* _rootView {};
+	Bundle _bundle {};
+	Bundle _resultData {};
+	int _status {};
+	void (* _resultCallback)(int statusCode, Bundle resultData) {nullptr};
+	uint32_t _backgroundColor {0xffffff};
 };
 
 

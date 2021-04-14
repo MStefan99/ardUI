@@ -6,78 +6,78 @@
 
 
 TextView::TextView(const String& text):
-	text {text} {
+	_text {text} {
 	// Nothing to do
 }
 
 
 void TextView::setText(const String& textToSet) {
-	text = textToSet;
+	_text = textToSet;
 	invalidate();
 }
 
 
 void TextView::append(const String& textToAppend) {
-	text += textToAppend;
+	_text += textToAppend;
 	invalidate();
 }
 
 
 void TextView::setTextSize(uint16_t size) {
-	textSize = size;
+	_textSize = size;
 	invalidate();
 }
 
 
 void TextView::setTextColor(uint32_t color) {
-	textColor = color;
+	_textColor = color;
 	invalidate();
 }
 
 
 String TextView::getText() const {
-	return text;
+	return _text;
 }
 
 
 uint16_t TextView::getTextSize() const {
-	return textSize;
+	return _textSize;
 }
 
 
 uint32_t TextView::getTextColor() const {
-	return textColor;
+	return _textColor;
 }
 
 
 void TextView::onMeasure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec) {
-	auto width = getDefaultSize(minWidth, widthMeasureSpec);
-	setMeasuredDimensions(width + padding.left + padding.right,
-												getDefaultSize(textSize, heightMeasureSpec)
-												* (uint16_t)getLines(width).size() + padding.top + padding.bottom);
+	auto width = getDefaultSize(_minWidth, widthMeasureSpec);
+	setMeasuredDimensions(width + _padding._left + _padding._right,
+												getDefaultSize(_textSize, heightMeasureSpec)
+												* (uint16_t)getLines(width).size() + _padding._top + _padding._bottom);
 }
 
 
 void TextView::onDraw() {
-	arduiDisplayFillRect(viewBox.left, viewBox.top, viewBox.right - 1, viewBox.bottom - 1, backgroundColor);
+	arduiDisplayFillRect(_viewBox._left, _viewBox._top, _viewBox._right - 1, _viewBox._bottom - 1, _backgroundColor);
 
 	uint16_t line {0};
-	for (const auto& l : getLines(viewBox.width())) {
-		arduiDisplayDrawText(viewBox.left + padding.left, viewBox.top + padding.top + textSize * line++,
-												 l, textSize, textColor);
+	for (const auto& l : getLines(_viewBox.width())) {
+		arduiDisplayDrawText(_viewBox._left + _padding._left, _viewBox._top + _padding._top + _textSize * line++,
+												 l, _textSize, _textColor);
 	}
 }
 
 
 LIST<String> TextView::getLines(uint16_t maxWidth) const {
 	LIST<String> lines {};
-	auto s {text.c_str()};
+	auto s {_text.c_str()};
 	uint16_t lineStart {0};
 	uint16_t lastSpace {0};
 	uint16_t currentWidth {0};
 
 	for (uint16_t i {0}; s[i]; ++i) {
-		currentWidth += arduiDisplayGetCharWidth(s[i], textSize);
+		currentWidth += arduiDisplayGetCharWidth(s[i], _textSize);
 		if (s[i] == ' ') {
 			lastSpace = i + 1;
 		}
@@ -88,18 +88,18 @@ LIST<String> TextView::getLines(uint16_t maxWidth) const {
 			#ifdef Arduino_h
 			lines.push_back(text.substring(lineStart, lastSpace));
 			#else
-			lines.push_back(text.substr(lineStart, lastSpace - lineStart));
+			lines.push_back(_text.substr(lineStart, lastSpace - lineStart));
 			#endif
 			i = lineStart = lastSpace;
 			currentWidth = 0;
 		}
 	}
 
-	if (lineStart != text.length()) {
+	if (lineStart != _text.length()) {
 		#ifdef Arduino_h
 		lines.push_back(text.substring(lineStart, text.length()));
 		#else
-		lines.push_back(text.substr(lineStart, text.length() - lineStart));
+		lines.push_back(_text.substr(lineStart, _text.length() - lineStart));
 		#endif
 	}
 	return lines;

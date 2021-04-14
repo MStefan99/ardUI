@@ -6,11 +6,11 @@
 
 
 LinearLayout::LinearLayout(bool vertical):
-	isVertical {vertical} {}
+	_isVertical {vertical} {}
 
 
 void LinearLayout::onMeasure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec) {
-	for (const auto& v : viewList) {
+	for (const auto& v : _viewList) {
 		v->measure(View::MeasureSpec::makeMeasureSpec(View::MeasureSpec::AT_MOST,
 																									View::MeasureSpec::getSize(widthMeasureSpec)),
 							 View::MeasureSpec::makeMeasureSpec(View::MeasureSpec::UNSPECIFIED,
@@ -25,11 +25,11 @@ void LinearLayout::onLayout(bool changed, uint16_t l, uint16_t t, uint16_t r, ui
 	uint16_t layoutRight {arduiDisplayGetWidth()};
 	uint16_t layoutBottom {arduiDisplayGetHeight()};
 
-	for (const auto& v : viewList) {
+	for (const auto& v : _viewList) {
 		v->setTop(viewTop);
 		v->setLeft(viewLeft);
 
-		if (isVertical) {
+		if (_isVertical) {
 			viewTop += v->getMeasuredHeight();
 			v->setBottom(viewTop);
 			v->setRight(layoutRight);
@@ -43,15 +43,15 @@ void LinearLayout::onLayout(bool changed, uint16_t l, uint16_t t, uint16_t r, ui
 
 
 void LinearLayout::onDraw() {
-	for (const auto& v : viewList) {
+	for (const auto& v : _viewList) {
 		v->draw();
 	}
 }
 
 
 void LinearLayout::handleEvent(const Event& event) {
-	for (auto view: viewList) {
-		if (view->getBounds().contains(event.targetX, event.targetY)) {
+	for (auto view: _viewList) {
+		if (view->getBounds().contains(event._targetX, event._targetY)) {
 			view->handleEvent(event);
 		}
 	}

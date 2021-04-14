@@ -6,19 +6,19 @@
 
 
 ViewGroup::~ViewGroup() {
-	for (auto e : viewList) {
+	for (auto e : _viewList) {
 		delete e;
 	}
 }
 
 
 void ViewGroup::addView(View* view) {
-	viewList.push_back(view);
+	_viewList.push_back(view);
 }
 
 
 View* ViewGroup::findViewById(int id) {
-	for (const auto& view : viewList) {
+	for (const auto& view : _viewList) {
 		if (view->findViewById(id)) {
 			return view->findViewById(id);
 		}
@@ -29,15 +29,15 @@ View* ViewGroup::findViewById(int id) {
 
 void ViewGroup::invalidate() {
 	invalidateSelf();
-	for (auto view : viewList) {
+	for (auto view : _viewList) {
 		view->invalidate();
 	}
 }
 
 
 void ViewGroup::draw() {
-	valid = true;
-	for (auto view: viewList) {
+	_valid = true;
+	for (auto view: _viewList) {
 		if (!view->isValid() && view->isVisible()) {
 			view->draw();
 		}

@@ -40,10 +40,10 @@ public:
 	Rect& operator =(const Rect& r);
 	explicit operator bool() const;
 
-	uint16_t left {0};
-	uint16_t top {0};
-	uint16_t right {0};
-	uint16_t bottom {0};
+	uint16_t _left {0};
+	uint16_t _top {0};
+	uint16_t _right {0};
+	uint16_t _bottom {0};
 };
 
 #endif //ARDUI_RECT_H

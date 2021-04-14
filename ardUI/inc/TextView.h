@@ -31,10 +31,10 @@ protected:
 
 	LIST<String> getLines(uint16_t maxWidth) const;
 
-	String text;
-	uint16_t textSize {20};
-	uint32_t textColor {0x0};
-	uint32_t backgroundColor {0xffffff};
+	String _text;
+	uint16_t _textSize {20};
+	uint32_t _textColor {0x0};
+	uint32_t _backgroundColor {0xffffff};
 };
 
 #endif //ARDUI_TEXTVIEW_H
