@@ -25,9 +25,6 @@ public:
 		static uint16_t getSize(uint16_t measureSpec);
 
 		static uint16_t makeMeasureSpec(uint16_t mode, uint16_t size);
-
-	protected:
-		uint16_t size;
 	};
 
 	View();

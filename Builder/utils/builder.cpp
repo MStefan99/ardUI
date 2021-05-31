@@ -22,6 +22,7 @@ class SecondActivity: public Activity {
 				"this is a very long text that will definitely need to be broken into a few lines on the screen and even this is not enough to test whether the text will be broken correctly, so I just decided to add this part to this piece of text too just to check that my code is working properly and doesn't have any bugs which I'm sure it does because why would I do this to myself otherwise?");
 		auto b = new ButtonView("Click to return");
 		auto ll = new LinearLayout();
+		ll->setOrientation(LinearLayout::Orientation::VERTICAL);
 
 		auto data = getExtras();
 		t->setTextColor(data.get<uint32_t>("color"));
@@ -52,6 +53,7 @@ class MainActivity: public Activity {
 		auto b = new ButtonView("Update text");
 		auto b2 = new ButtonView("Open another Activity");
 		auto ll = new LinearLayout();
+		ll->setOrientation(LinearLayout::Orientation::VERTICAL);
 		auto p = new ProgressBar();
 
 		setRootView(ll);

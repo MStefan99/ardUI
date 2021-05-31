@@ -25,6 +25,8 @@ public:
 	uint16_t getTextSize() const;
 	uint32_t getTextColor() const;
 
+	// TODO: add alignment options
+
 protected:
 	void onMeasure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec) override;
 	void onDraw() override;

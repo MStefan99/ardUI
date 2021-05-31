@@ -14,8 +14,8 @@ target_sources(ardUI PRIVATE
 		${SOURCE_DIRECTORY}/View.cpp
 		${SOURCE_DIRECTORY}/ProgressBar.cpp
 		${SOURCE_DIRECTORY}/TextView.cpp
-		${SOURCE_DIRECTORY}/ViewGroup.cpp
 		${SOURCE_DIRECTORY}/ButtonView.cpp
+		${SOURCE_DIRECTORY}/ViewGroup.cpp
 		${SOURCE_DIRECTORY}/LinearLayout.cpp
 		${SOURCE_DIRECTORY}/EventManager.cpp
 		${SOURCE_DIRECTORY}/ActivityManager.cpp

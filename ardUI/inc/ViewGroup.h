@@ -6,9 +6,8 @@
 #define ARDUI_VIEWGROUP_H
 
 #include "platform.h"
-#include "View.h"
-
 #include LIST_H
+#include "View.h"
 
 
 class ViewGroup: public View {
@@ -18,6 +17,14 @@ public:
 
 	void addView(View* view);
 	View* findViewById(int id) override;
+
+	View* getChildAt(int index) const;
+	int getChildCount() const;
+
+	void removeView(View* view);
+	void removeViewAt(int index);
+	void removeViews(int start, int count);
+	void removeAllViews();
 
 	void draw() override;
 	void invalidate() override;

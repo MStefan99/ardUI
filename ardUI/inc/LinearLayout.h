@@ -11,7 +11,15 @@
 
 class LinearLayout: public ViewGroup {
 public:
-	explicit LinearLayout(bool vertical = true);
+	enum Orientation {
+		HORIZONTAL,
+		VERTICAL
+	};
+
+	LinearLayout() = default;
+
+	Orientation getOrientation() const;
+	void setOrientation(Orientation orientation);
 
 protected:
 	void onMeasure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec) override;
@@ -20,7 +28,7 @@ protected:
 
 	void handleEvent(const Event& event) override;
 
-	bool _isVertical {true};
+	Orientation _orientation {Orientation::HORIZONTAL};
 };
 
 #endif //ARDUI_LINEARLAYOUT_H
