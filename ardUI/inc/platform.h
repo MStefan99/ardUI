@@ -43,8 +43,16 @@
 #define STACK NAMESPACE::stack
 #define QUEUE NAMESPACE::queue
 
-#if (!defined(Arduino_h) && ENABLE_DEBUG)
-	#define DEBUG
+#if (!defined(Arduino_h) && DEBUGGING)
+	#define DEBUG_MODE ( true )
+#else
+	#define DEBUG_MODE ( false )
+#endif
+
+#if (VERBOSE && (!defined(__EMSCRIPTEN__) || SLOW_MODE))
+	#define VERBOSE_MODE ( true )
+#else
+	#define VERBOSE_MODE ( false )
 #endif
 
 #endif //ARDUI_PLATFORM_H

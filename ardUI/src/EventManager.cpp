@@ -5,11 +5,12 @@
 #include "EventManager.h"
 
 
-#undef ardUI
 #undef setup
 #undef loop
+#undef delay
 
-#define ABS(x) (x > 0? x : -x)
+#define ABS(x) ((x) > 0? (x) : -(x))
+#define MIN(x, y) ((x > y)? (x) : (y))
 
 
 void setup() {  // Default setup function will be used to initiate ardUI
@@ -20,39 +21,50 @@ void setup() {  // Default setup function will be used to initiate ardUI
 
 
 void loop() {  // ardUI core functions will be added to the loop function
+	update();
+}
+
+
+void update(bool callUserLoop) {
 	static uint32_t lastTouchRefresh, lastDisplayRefresh;
 	uint32_t currentTime = millis();
 
-	if (currentTime < lastTouchRefresh) {
-		lastTouchRefresh = 0;
-	}
-	if (currentTime < lastDisplayRefresh) {
-		lastDisplayRefresh = 0;
-	}
-
-	if (currentTime - lastDisplayRefresh > 1000 / REFRESH_RATE) {
+	if (ABS(currentTime - lastDisplayRefresh) > 1000 / REFRESH_RATE) {
 		EventManager::draw();  // Drawing UI elements
 		lastDisplayRefresh = currentTime;
 	}
-	if (currentTime - lastTouchRefresh > 1000 / TOUCH_RATE) {
+	if (ABS(currentTime - lastTouchRefresh) > 1000 / TOUCH_RATE) {
 		EventManager::checkForActions(currentTime - lastTouchRefresh);  // Checking for user interaction
 		lastTouchRefresh = currentTime;
 	}
 
 	currentTime = millis();
 
-	arduiUserLoop();  // Calling user loop function
+	if (callUserLoop) {
+		arduiUserLoop();  // Calling user loop function
+	}
 
 	if (millis() - currentTime > 1000 / REFRESH_RATE) {
 		Serial.println("Skipping frames, please ensure your loop doesn't perform any long operations");
 	}
 
-#ifdef VERBOSE
+#ifdef VERBOSE_MODE
 	Serial.println("Loop iteration");
 #endif
-#ifdef DEBUG
-	delay(1000 / REFRESH_RATE + 100);
+#ifdef SLOW_MODE
+	delay(MIN(1000 / TOUCH_RATE, 1000 / REFRESH_RATE));
 #endif
+}
+
+
+void arduiHybridSleep(uint32_t ms) {
+	Serial.println("Please be careful when using sleep!");
+	auto startTime = millis();
+
+	while (ABS(millis() - startTime) < ms) {
+		update(false);
+		delay(MIN(1000 / TOUCH_RATE, 1000 / REFRESH_RATE));
+	}
 }
 
 
@@ -70,7 +82,7 @@ void EventManager::checkForActions(uint32_t deltaTime) {
 
 			lastX = event._targetX;  // Set last coords to current
 			lastY = event._targetY;
-#if VERBOSE
+#if VERBOSE_MODE
 			Serial.println("Event registered");
 #endif
 		} else {
@@ -79,9 +91,9 @@ void EventManager::checkForActions(uint32_t deltaTime) {
 			event._deltaY = (int16_t)(lastY - event._targetY);
 		}
 		if (event._currentAction == Event::Action::SCROLL) {
-			// Handle scroll event every update
+			// Handle scroll event every Update
 			if (ActivityManager::_currentActivity) {
-#if VERBOSE
+#if VERBOSE_MODE
 				Serial.println("Scroll event dispatched");
 #endif
 				if (ActivityManager::_currentActivity) {
@@ -92,12 +104,12 @@ void EventManager::checkForActions(uint32_t deltaTime) {
 			event._currentAction = Event::Action::LONG_CLICK;  // Register long click
 		}
 		if (event._currentAction == Event::Action::CLICK && (
-																													((uint32_t)ABS(event._deltaX) * 1000 / deltaTime > SCROLL_SENSITIVITY) ||
-																													((uint32_t)ABS(event._deltaY) * 1000 / deltaTime > SCROLL_SENSITIVITY))) {
+				((uint32_t)ABS(event._deltaX) * 1000 / deltaTime > SCROLL_SENSITIVITY) ||
+				((uint32_t)ABS(event._deltaY) * 1000 / deltaTime > SCROLL_SENSITIVITY))) {
 			event._currentAction = Event::Action::SCROLL;  // Register scroll
 		}
 	} else if (event._currentAction != Event::Action::NO_ACTION) {
-#if VERBOSE
+#if VERBOSE_MODE
 		Serial.println("Event dispatched");
 #endif
 		if (ActivityManager::_currentActivity) {  // Touch over, handle event
@@ -111,7 +123,7 @@ void EventManager::checkForActions(uint32_t deltaTime) {
 
 void EventManager::draw() {
 	ActivityManager::processWaitingActivities();
-#ifdef VERBOSE
+#ifdef VERBOSE_MODE
 	Serial.println("Draw call");
 #endif
 	if (ActivityManager::_currentActivity) {

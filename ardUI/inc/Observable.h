@@ -14,7 +14,7 @@ class Observer;
 
 
 template <class T>
-class Observable final {
+class Observable {
 public:
 	~Observable();
 
@@ -44,7 +44,7 @@ void Observable<T>::attach(Observer<T>* observer) {
 
 template <class T>
 void Observable<T>::detach(Observer<T>* observer) {
-	_observers.remove(observer)
+	_observers.remove(observer);
 }
 
 

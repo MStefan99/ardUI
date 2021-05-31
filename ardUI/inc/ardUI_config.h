@@ -69,7 +69,7 @@
  * Debug mode is not guaranteed to run on Arduino
  * and will only turned on in a desktop environment.
  */
-#define ENABLE_DEBUG ( true )
+#define DEBUGGING ( true )
 
 /*
  * Enable verbose logging.
@@ -77,5 +77,12 @@
  * but may impact performance with slow serial connections.
  */
 #define VERBOSE ( true )
+
+/*
+ * Introduces delays between loop iterations.
+ * Can reduce the CPU load by only running the loop once per update.
+ * Does not affect UI performance but leaves less time for other operations.
+ */
+#define SLOW_MODE ( true )
 
 #endif //ARDUI_CONFIG_H

@@ -20,20 +20,16 @@ int main() {
 }
 #endif
 
-#ifndef _WIN32
+#ifdef _WIN32
 
-
-void delay(int ms) {
-	#ifndef __EMSCRIPTEN__
-	usleep(ms * 1000);
-	#endif
+void delay(uint32_t ms) {
+	Sleep(ms);
 }
-
 
 #else
 
-void delay(int ms) {
-	Sleep(ms);
+void delay(uint32_t ms) {
+	usleep(ms * 1000);
 }
 
 #endif
@@ -41,7 +37,7 @@ void delay(int ms) {
 
 uint32_t millis() {
 	auto currentTime {std::chrono::system_clock::now()};
-	auto duration = currentTime - startTime;
+	auto duration = currentTime - ProgramStartupTime;
 	auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
 
 	return ms;

@@ -96,7 +96,7 @@ ardUI().then((ardUI) => {
 
 	setInterval(() => {
 		ardUI._loop();
-	}, 500);
+	}, 1000 / 60);
 
 	canvas.addEventListener('mousedown', e => {
 		click.down = true;

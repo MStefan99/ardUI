@@ -7,6 +7,8 @@
 #include "ButtonView.h"
 #include "LinearLayout.h"
 #include "ProgressBar.h"
+#include "ListView.h"
+#include "ArrayAdapter.h"
 
 
 class SecondActivity: public Activity {
@@ -23,6 +25,8 @@ class SecondActivity: public Activity {
 		auto b = new ButtonView("Click to return");
 		auto ll = new LinearLayout();
 		ll->setOrientation(LinearLayout::Orientation::VERTICAL);
+//		auto lv = new ListView<int>();
+//		lv->setAdapter(new ArrayAdapter<int> {});
 
 		auto data = getExtras();
 		t->setTextColor(data.get<uint32_t>("color"));
@@ -95,5 +99,6 @@ void loop() {
 	auto pr = p->getProgress();
 	if (pr < 100) {
 		p->setProgress(p->getProgress() + 1);
+		delay(25);
 	}
 }

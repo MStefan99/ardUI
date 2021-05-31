@@ -11,14 +11,14 @@
 
 
 template <class T>
-class Observer final {
+class Observer {
 public:
 	~Observer();
 
 	void attachTo(Observable<T>* observable);
 	void detachFrom(Observable<T>* observable);
 
-	void (* onUpdate)(const T& newData) const {nullptr};
+	void (* onUpdate)(const T& newData) {nullptr};
 
 protected:
 	LIST<Observable<T>> _observables {};
