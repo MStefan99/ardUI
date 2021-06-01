@@ -6,9 +6,9 @@
 
 
 Activity::Activity(const Bundle& extras,
-									 void (* onActivityResult)(int statusCode, Bundle resultData)):
-	_bundle {extras},
-	_resultCallback {onActivityResult} {
+		void (* onActivityResult)(int statusCode, Bundle resultData)):
+		_bundle {extras},
+		_resultCallback {onActivityResult} {
 	// Nothing to do
 }
 
@@ -126,16 +126,6 @@ View* Activity::getRootView() {
 }
 
 
-void Activity::draw() const {
-	if (_rootView) {
-		if (!_rootView->_valid) {
-			arduiDisplayFill(_backgroundColor);
-		}
-		_rootView->draw();
-	}
-}
-
-
 void Activity::measure() {
 	if (_rootView) {
 		uint16_t widthSpec = View::MeasureSpec::makeMeasureSpec(View::MeasureSpec::EXACTLY, arduiDisplayGetWidth());
@@ -149,6 +139,16 @@ void Activity::layout() {
 	if (_rootView) {
 		Rect display {0, 0, arduiDisplayGetWidth(), arduiDisplayGetHeight()};
 		_rootView->layout(display);
+	}
+}
+
+
+void Activity::draw() const {
+	if (_rootView) {
+		if (!_rootView->_valid) {
+			arduiDisplayFill(_backgroundColor);
+		}
+		_rootView->draw();
 	}
 }
 

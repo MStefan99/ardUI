@@ -11,35 +11,15 @@
 #include "ArrayAdapter.h"
 
 
-class SecondActivity: public Activity {
-	using Activity::Activity;
+class SecondActivity;
 
 
-	void onCreate() override {
-		Serial.println("Hi, I am a second Activity!");
+class StringAdapter: public ArrayAdapter<String> {
+	using ArrayAdapter<String>::ArrayAdapter;
 
-		auto title = new TextView("Second Activity!");
-		title->setTextSize(30);
-		auto t = new TextView(
-				"this is a very long text that will definitely need to be broken into a few lines on the screen and even this is not enough to test whether the text will be broken correctly, so I just decided to add this part to this piece of text too just to check that my code is working properly and doesn't have any bugs which I'm sure it does because why would I do this to myself otherwise?");
-		auto b = new ButtonView("Click to return");
-		auto ll = new LinearLayout();
-		ll->setOrientation(LinearLayout::Orientation::VERTICAL);
-//		auto lv = new ListView<int>();
-//		lv->setAdapter(new ArrayAdapter<int> {});
-
-		auto data = getExtras();
-		t->setTextColor(data.get<uint32_t>("color"));
-
-		setRootView(ll);
-		ll->addView(title);
-		ll->addView(t);
-		ll->addView(b);
-
-		b->setOnClickListener([](View* b) -> void {
-			Serial.println("Back pressed");
-			ardUI::back();
-		});
+public:
+	View* getView(int position) const override {
+		return new TextView(getItem(position));
 	}
 };
 
@@ -59,6 +39,8 @@ class MainActivity: public Activity {
 		auto ll = new LinearLayout();
 		ll->setOrientation(LinearLayout::Orientation::VERTICAL);
 		auto p = new ProgressBar();
+		auto lv = new ListView<String>();
+		lv->setAdapter(new StringAdapter(new String[] {"a", "b", "c", "d"}, 4));
 
 		setRootView(ll);
 		ll->addView(title);
@@ -66,6 +48,7 @@ class MainActivity: public Activity {
 		ll->addView(b);
 		ll->addView(b2);
 		ll->addView(p);
+		ll->addView(lv);
 
 		ardUI::setViewName(t, "hello_text");
 		ardUI::setViewName(p, "progress");
@@ -83,6 +66,37 @@ class MainActivity: public Activity {
 			auto t = (TextView*)ardUI::getViewByName("hello_text");
 			data.put<uint32_t>("color", t->getTextColor());
 			ardUI::startActivity<SecondActivity>(data);
+		});
+	}
+};
+
+
+class SecondActivity: public Activity {
+	using Activity::Activity;
+
+
+	void onCreate() override {
+		Serial.println("Hi, I am a second Activity!");
+
+		auto title = new TextView("Second Activity!");
+		title->setTextSize(30);
+		auto t = new TextView(
+				"this is a very long text that will definitely need to be broken into a few lines on the screen and even this is not enough to test whether the text will be broken correctly, so I just decided to add this part to this piece of text too just to check that my code is working properly and doesn't have any bugs which I'm sure it does because why would I do this to myself otherwise?");
+		auto b = new ButtonView("Click to return");
+		auto ll = new LinearLayout();
+		ll->setOrientation(LinearLayout::Orientation::VERTICAL);
+
+		auto data = getExtras();
+		t->setTextColor(data.get<uint32_t>("color"));
+
+		setRootView(ll);
+		ll->addView(title);
+		ll->addView(t);
+		ll->addView(b);
+
+		b->setOnClickListener([](View* b) -> void {
+			Serial.println("Back pressed");
+			ardUI::back();
 		});
 	}
 };

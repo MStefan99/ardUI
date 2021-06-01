@@ -64,6 +64,7 @@ protected:
 	void setMeasuredDimensions(uint16_t measuredWidth, uint16_t measuredHeight);
 
 	uint16_t getDefaultSize(uint16_t size, uint16_t measureSpec);
+
 private:
 	void (* _onClick)(View* view) {nullptr};
 	void (* _onLongClick)(View* view) {nullptr};

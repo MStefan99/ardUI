@@ -44,6 +44,14 @@
 #define TOUCH_RATE ( 60 )
 
 /*
+ * Hybrid sleep prevents ardUI from pausing whenever you call the
+ * delay() function, so that the UI always remains dynamic and responsive.
+ * If this feature is disabled, no UI updates will happen during sleep(),
+ * which means all UI interactions will be paused as well.
+ */
+#define HYBRID_SLEEP ( true )
+
+/*
  * How long to wait for a long click.
  * The higher the value, the longer the user has to touch and
  * hold the screen to trigger a long click.

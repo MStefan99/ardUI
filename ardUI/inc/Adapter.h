@@ -5,20 +5,24 @@
 #ifndef ARDUI_ADAPTER_H
 #define ARDUI_ADAPTER_H
 
-#include "Observable.h"
+#include "platform.h"
+#include LIST_H
 
 
 template <class T>
-class Adapter: public Observable<T> {
+class AdapterView;
+
+
+template <class T>
+class Adapter {
 public:
 	virtual ~Adapter() = default;
 
 	virtual View* getView(int position) const = 0;
 
+	virtual const T& getItem(int position) const = 0;
 	virtual int getCount() const = 0;
 	virtual bool isEmpty() const = 0;
-
-	virtual void notifyDataSetChanged() const = 0;
 };
 
 

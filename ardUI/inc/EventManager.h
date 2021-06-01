@@ -15,12 +15,17 @@
 // Hiding standard Arduino functions for correct operation of ardUI
 void arduiUserSetup();  // User "setup()" function will be replaced by this custom function
 void arduiUserLoop();  // User "loop()" function will be replaced by this custom function
-void arduiHybridSleep(uint32_t ms);  // This method replaces the original "delay" function to let ardUI run when called
 void update(bool callUserLoop = true);
 
 #define setup() arduiUserSetup()
 #define loop() arduiUserLoop()
+
+// Hybrid sleep
+#if HYBRID_SLEEP
+void arduiHybridSleep(uint32_t ms);  // This method replaces the original "delay" function to let ardUI run when called
+
 #define delay(ms) arduiHybridSleep(ms)
+#endif
 
 class EventManager {
 public:

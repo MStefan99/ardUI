@@ -16,20 +16,28 @@ void LinearLayout::setOrientation(Orientation orientation) {
 
 
 void LinearLayout::onMeasure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec) {
+	uint16_t size = 0;
+
 	if (_orientation == Orientation::HORIZONTAL) {
 		for (const auto& v : _viewList) {
 			v->measure(View::MeasureSpec::makeMeasureSpec(View::MeasureSpec::UNSPECIFIED,
 					View::MeasureSpec::getSize(widthMeasureSpec)),
 					View::MeasureSpec::makeMeasureSpec(View::MeasureSpec::AT_MOST,
 							View::MeasureSpec::getSize(heightMeasureSpec)));
+			size += v->getMeasuredWidth();
 		}
+		setMeasuredDimensions(getDefaultSize(size + _padding.width(), widthMeasureSpec),
+				getDefaultSize(getMinimumHeight() + _padding.height(), heightMeasureSpec));
 	} else {
 		for (const auto& v : _viewList) {
 			v->measure(View::MeasureSpec::makeMeasureSpec(View::MeasureSpec::AT_MOST,
 					View::MeasureSpec::getSize(widthMeasureSpec)),
 					View::MeasureSpec::makeMeasureSpec(View::MeasureSpec::UNSPECIFIED,
 							View::MeasureSpec::getSize(heightMeasureSpec)));
+			size += v->getMeasuredHeight();
 		}
+		setMeasuredDimensions(getDefaultSize(getMinimumWidth() + _padding.width(), widthMeasureSpec),
+				getDefaultSize(size + _padding.height(), heightMeasureSpec));
 	}
 }
 
@@ -43,10 +51,12 @@ void LinearLayout::onLayout(bool changed, uint16_t l, uint16_t t, uint16_t r, ui
 		v->setLeft(nextViewLeft);
 
 		if (_orientation == Orientation::HORIZONTAL) {
+			v->layout(nextViewLeft, nextViewTop, nextViewLeft + v->getMeasuredWidth(), b);
 			nextViewLeft += v->getMeasuredWidth();
 			v->setRight(nextViewLeft);
 			v->setBottom(b);
 		} else {
+			v->layout(nextViewLeft, nextViewTop, r, nextViewTop + v->getMeasuredHeight());
 			nextViewTop += v->getMeasuredHeight();
 			v->setBottom(nextViewTop);
 			v->setRight(r);

@@ -8,50 +8,55 @@
 #include "Adapter.h"
 
 
-
 template <class T>
 class ArrayAdapter: public Adapter<T> {
 public:
 	ArrayAdapter() = default;
-	explicit ArrayAdapter(T data[]);
+	explicit ArrayAdapter(T data[], int length);
 	explicit ArrayAdapter(LIST<T> list);
 
+	const T& getItem(int position) const override;
 	int getCount() const override;
 	bool isEmpty() const override;
-	void notifyDataSetChanged() const override;
 
-protected:
-	LIST<T> _list;
+	LIST<T> list;
 };
 
 
 template <class T>
-ArrayAdapter<T>::ArrayAdapter(T data[]): _list {data} {
+ArrayAdapter<T>::ArrayAdapter(T data[], int length) {
+	for (int i {0}; i < length; ++i) {
+		list.push_back(data[i]);
+	}
 	// Nothing to do
 }
 
 
 template <class T>
-ArrayAdapter<T>::ArrayAdapter(LIST<T> list): _list{list} {
+ArrayAdapter<T>::ArrayAdapter(LIST<T> list): list {list} {
 	// Nothing to do
+}
+
+
+template <class T>
+const T& ArrayAdapter<T>::getItem(int position) const {
+	auto it = list.begin();
+	for (int i {0}; i < position; ++i) {
+		++it;
+	}
+	return *it;
 }
 
 
 template <class T>
 int ArrayAdapter<T>::getCount() const {
-	return _list.size();
+	return list.size();
 }
 
 
 template <class T>
 bool ArrayAdapter<T>::isEmpty() const {
 	return false;
-}
-
-
-template <class T>
-void ArrayAdapter<T>::notifyDataSetChanged() const {
-	Observable<T>::update();
 }
 
 

@@ -7,30 +7,30 @@
 
 #include "Adapter.h"
 #include "ViewGroup.h"
-#include "Observer.h"
 
 
 template <class T>
 class AdapterView: public ViewGroup {
 public:
 	AdapterView() = default;
+	explicit AdapterView(const Adapter<T>& adapter);
 
 	void setAdapter(Adapter<T>* adapter);
 	Adapter<T>* getAdapter() const;
 
 protected:
 	Adapter<T>* _adapter {nullptr};
-	Observer<T> _observer {};
 };
 
 
 template <class T>
+AdapterView<T>::AdapterView(const Adapter<T>& adapter): _adapter {adapter} {
+}
+
+
+template <class T>
 void AdapterView<T>::setAdapter(Adapter<T>* adapter) {
-	if (_adapter) {
-		_observer.detachFrom(adapter);
-	}
 	_adapter = adapter;
-	_observer.attachTo(adapter);
 }
 
 

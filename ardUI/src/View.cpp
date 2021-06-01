@@ -42,18 +42,15 @@ int View::getId() const {
 }
 
 
-void View::draw() {
-	if (!_valid && _visible) {
-		onDraw();
-		_valid = true;
-	}
-}
-
-
 void View::measure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec) {
 	if (!_valid) {
 		onMeasure(widthMeasureSpec, heightMeasureSpec);
 	}
+}
+
+
+void View::layout(const Rect& r) {
+	layout(r._left, r._top, r._right, r._bottom);
 }
 
 
@@ -69,8 +66,11 @@ void View::layout(uint16_t left, uint16_t top, uint16_t right, uint16_t bottom) 
 }
 
 
-void View::layout(const Rect& r) {
-	layout(r._left, r._top, r._right, r._bottom);
+void View::draw() {
+	if (!_valid && _visible) {
+		onDraw();
+		_valid = true;
+	}
 }
 
 
@@ -96,11 +96,6 @@ void View::handleEvent(const Event& event) {
 			}
 			break;
 	}
-}
-
-
-void View::onDraw() {
-	// Nothing to do
 }
 
 
@@ -176,6 +171,11 @@ void View::onLayout(bool changed, uint16_t left, uint16_t top, uint16_t right, u
 }
 
 
+void View::onDraw() {
+	// Nothing to do
+}
+
+
 uint16_t View::getDefaultSize(uint16_t size, uint16_t measureSpec) {
 	uint16_t result {0};
 
@@ -195,4 +195,3 @@ uint16_t View::getDefaultSize(uint16_t size, uint16_t measureSpec) {
 	}
 	return result;
 }
-

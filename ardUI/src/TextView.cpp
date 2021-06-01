@@ -53,8 +53,8 @@ uint32_t TextView::getTextColor() const {
 void TextView::onMeasure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec) {
 	auto width = getDefaultSize(_minWidth, widthMeasureSpec);
 	setMeasuredDimensions(width + _padding._left + _padding._right,
-												getDefaultSize(_textSize, heightMeasureSpec)
-												* (uint16_t)getLines(width).size() + _padding._top + _padding._bottom);
+												getDefaultSize(_textSize * (uint16_t)getLines(width).size() +
+												_padding._top + _padding._bottom, heightMeasureSpec));
 }
 
 
