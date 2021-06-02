@@ -49,7 +49,7 @@
  * If this feature is disabled, no UI updates will happen during sleep(),
  * which means all UI interactions will be paused as well.
  */
-#define HYBRID_SLEEP ( true )
+#define SMART_DELAY ( true )
 
 /*
  * How long to wait for a long click.

@@ -52,5 +52,5 @@ void arduiUserLoop() {}
 
 
 int main() {
-	ardUI::startFirstActivity<TestActivity>();
+	ardUI::startActivity<TestActivity>();
 }

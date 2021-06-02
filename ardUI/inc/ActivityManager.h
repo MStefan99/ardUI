@@ -20,7 +20,7 @@ public:
 private:
 	template <class ActivityClass>
 	static void startActivity(const Bundle& extras = {},
-														void (* onActivityResult)(int statusCode, Bundle resultData) = {});
+			void (* onActivityResult)(int statusCode, Bundle resultData) = {});
 	static void stopActivity(Activity* activityToStop);
 	static void back();
 	static void reset();

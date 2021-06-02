@@ -47,8 +47,8 @@ class MainActivity: public Activity {
 		ll->addView(t);
 		ll->addView(b);
 		ll->addView(b2);
-		ll->addView(p);
 		ll->addView(lv);
+		ll->addView(p);
 
 		ardUI::setViewName(t, "hello_text");
 		ardUI::setViewName(p, "progress");

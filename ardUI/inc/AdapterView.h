@@ -24,7 +24,7 @@ protected:
 
 
 template <class T>
-AdapterView<T>::AdapterView(const Adapter<T>& adapter): _adapter {adapter} {
+AdapterView<T>::AdapterView(const Adapter<T>& adapter): _adapter {&adapter} {
 }
 
 
@@ -38,5 +38,6 @@ template <class T>
 Adapter<T>* AdapterView<T>::getAdapter() const {
 	return _adapter;
 }
+
 
 #endif //ARDUI_ADAPTERVIEW_H

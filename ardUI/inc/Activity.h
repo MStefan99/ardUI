@@ -18,7 +18,7 @@ class Activity {
 public:
 	Activity() = default;
 	Activity(const Bundle& extras,
-					 void (* onActivityResult)(int statusCode, Bundle resultData));
+			void (* onActivityResult)(int statusCode, Bundle resultData));
 	virtual ~Activity();
 
 	template <class compiledLayout>
@@ -29,7 +29,7 @@ public:
 	void startActivity(const Bundle& extras = {});
 	template <class ActivityClass>
 	void startActivityForResult(void (* onActivityResult)(int statusCode, Bundle resultData),
-															const Bundle& extras = {});
+			const Bundle& extras = {});
 	void setResult(int statusCode = 0, const Bundle& data = {});
 	void finish();
 
@@ -96,7 +96,7 @@ void Activity::startActivity(const Bundle& extras) {
 
 template <class ActivityClass>
 void Activity::startActivityForResult(void (* onActivityResult)(int statusCode, Bundle resultData),
-																			const Bundle& extras) {
+		const Bundle& extras) {
 	ActivityManager::startActivity<ActivityClass>(extras, onActivityResult);
 }
 

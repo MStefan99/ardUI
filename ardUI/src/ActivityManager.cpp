@@ -37,7 +37,7 @@ void ActivityManager::finishActivity(Activity* activity) {
 			_currentActivity = _backList.back();
 			if (activity->_resultCallback) {
 				activity->_resultCallback(activity->_status,
-																	Bundle {activity->_resultData});
+						Bundle {activity->_resultData});
 			}
 			_backList.pop_back();
 			_currentActivity->rewindState(Activity::State::RESUMED);

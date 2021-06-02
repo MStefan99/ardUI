@@ -25,5 +25,4 @@ public:
 	virtual bool isEmpty() const = 0;
 };
 
-
 #endif //ARDUI_ADAPTER_H

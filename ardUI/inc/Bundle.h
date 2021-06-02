@@ -59,7 +59,7 @@ protected:
 
 template <class T>
 Bundle::Model<T>::Model(T value):
-	_object {value} {
+		_object {value} {
 }
 
 

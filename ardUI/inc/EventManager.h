@@ -21,10 +21,10 @@ void update(bool callUserLoop = true);
 #define loop() arduiUserLoop()
 
 // Hybrid sleep
-#if HYBRID_SLEEP
-void arduiHybridSleep(uint32_t ms);  // This method replaces the original "delay" function to let ardUI run when called
+#if SMART_DELAY
+void arduiSmartDelay(uint32_t ms);  // This method replaces the original "delay" function to let ardUI run when called
 
-#define delay(ms) arduiHybridSleep(ms)
+#define delay(ms) arduiSmartDelay(ms)
 #endif
 
 class EventManager {

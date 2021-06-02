@@ -162,7 +162,7 @@ void View::setOnLongClickListener(void (* l)(View*)) {
 
 void View::onMeasure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec) {
 	setMeasuredDimensions(getDefaultSize(getMinimumWidth() + _padding.width(), widthMeasureSpec),
-												getDefaultSize(getMinimumHeight() + _padding.height(), heightMeasureSpec));
+			getDefaultSize(getMinimumHeight() + _padding.height(), heightMeasureSpec));
 }
 
 

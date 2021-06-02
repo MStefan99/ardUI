@@ -6,7 +6,7 @@
 
 
 TextView::TextView(const String& text):
-	_text {text} {
+		_text {text} {
 	// Nothing to do
 }
 
@@ -53,8 +53,8 @@ uint32_t TextView::getTextColor() const {
 void TextView::onMeasure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec) {
 	auto width = getDefaultSize(_minWidth, widthMeasureSpec);
 	setMeasuredDimensions(width + _padding._left + _padding._right,
-												getDefaultSize(_textSize * (uint16_t)getLines(width).size() +
-												_padding._top + _padding._bottom, heightMeasureSpec));
+			getDefaultSize(_textSize * (uint16_t)getLines(width).size() +
+										 _padding._top + _padding._bottom, heightMeasureSpec));
 }
 
 
@@ -64,7 +64,7 @@ void TextView::onDraw() {
 	uint16_t line {0};
 	for (const auto& l : getLines(_viewBox.width())) {
 		arduiDisplayDrawText(_viewBox._left + _padding._left, _viewBox._top + _padding._top + _textSize * line++,
-												 l, _textSize, _textColor);
+				l, _textSize, _textColor);
 	}
 }
 

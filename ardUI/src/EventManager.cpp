@@ -48,16 +48,16 @@ void update(bool callUserLoop) {
 		Serial.println("Skipping frames, please ensure your loop doesn't perform any long operations");
 	}
 
-#ifdef VERBOSE_MODE
+#if VERBOSE_MODE
 	Serial.println("Loop iteration");
 #endif
-#ifdef SLOW_MODE
+#if SLOW_MODE
 	delay(MIN(1000 / TOUCH_RATE, 1000 / REFRESH_RATE));
 #endif
 }
 
 
-void arduiHybridSleep(uint32_t ms) {
+void arduiSmartDelay(uint32_t ms) {
 	Serial.println("Please be careful when using sleep!");
 	auto startTime = millis();
 
@@ -123,7 +123,7 @@ void EventManager::checkForActions(uint32_t deltaTime) {
 
 void EventManager::draw() {
 	ActivityManager::processWaitingActivities();
-#ifdef VERBOSE_MODE
+#if VERBOSE_MODE
 	Serial.println("Draw call");
 #endif
 	if (ActivityManager::_currentActivity) {

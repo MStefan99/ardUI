@@ -10,7 +10,7 @@
 
 template <class ActivityClass>
 void ActivityManager::startActivity(const Bundle& extras,
-																		void (* onActivityResult)(int, Bundle)) {
+		void (* onActivityResult)(int, Bundle)) {
 	_startingActivities.push_back(new ActivityClass {extras, onActivityResult});
 }
 

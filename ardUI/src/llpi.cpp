@@ -186,7 +186,7 @@ ReturnCode arduiDisplayFillCircle(uint16_t x, uint16_t y, uint16_t radius, uint3
 
 
 ReturnCode arduiDisplayDrawRect(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
-																uint32_t color) {
+		uint32_t color) {
 #ifdef VERBOSE_MODE
 	Serial.print("Drawn rect from (");
 	Serial.print(x1);
@@ -204,7 +204,7 @@ ReturnCode arduiDisplayDrawRect(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t 
 
 
 ReturnCode arduiDisplayFillRect(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
-																uint32_t color) {
+		uint32_t color) {
 #ifdef VERBOSE_MODE
 	Serial.print("Filled rect from (");
 	Serial.print(x1);
@@ -222,7 +222,7 @@ ReturnCode arduiDisplayFillRect(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t 
 
 
 ReturnCode arduiDisplayDrawTriangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
-																		uint16_t x3, uint16_t y3, uint32_t color) {
+		uint16_t x3, uint16_t y3, uint32_t color) {
 	// Has to be implemented by the user
 #ifdef VERBOSE_MODE
 	Serial.print("Drawn triangle between (");
@@ -243,7 +243,7 @@ ReturnCode arduiDisplayDrawTriangle(uint16_t x1, uint16_t y1, uint16_t x2, uint1
 
 
 ReturnCode arduiDisplayFillTriangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
-																		uint16_t x3, uint16_t y3, uint32_t color) {
+		uint16_t x3, uint16_t y3, uint32_t color) {
 	// Has to be implemented by the user
 #ifdef VERBOSE_MODE
 	Serial.print("Filled triangle between (");
