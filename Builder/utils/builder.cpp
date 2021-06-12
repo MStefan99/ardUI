@@ -121,6 +121,7 @@ class ConstraintActivity: public Activity {
 		auto bv = new ButtonView("back");
 		auto tv = new TextView("text");
 		auto tv2 = new TextView("other text");
+		bv->setPadding(2, 4, 8, 16);
 		bv->setOnClickListener([](View* v) -> void {
 			ardUI::back();
 		});

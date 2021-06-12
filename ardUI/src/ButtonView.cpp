@@ -17,7 +17,7 @@ void ButtonView::onDraw() {
 
 	uint16_t line {0};
 	for (const auto& l : getLines(_viewBox.width())) {
-		arduiDisplayDrawText(_viewBox.left + _padding.top, _viewBox.top + _padding.bottom + _textSize * line++,
+		arduiDisplayDrawText(_viewBox.left + _padding.left, _viewBox.top + _padding.top + _textSize * line++,
 				l, _textSize, _textColor);
 	}
 }
