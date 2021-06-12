@@ -120,18 +120,22 @@ class ConstraintActivity: public Activity {
 
 		auto bv = new ButtonView("back");
 		auto tv = new TextView("text");
+		auto tv2 = new TextView("other text");
 		bv->setOnClickListener([](View* v) -> void {
 			ardUI::back();
 		});
 		cl->addView(bv);
 		cl->addView(tv);
+		cl->addView(tv2);
 		setRootView(cl);
 
 		auto constraints = cl->getConstraints();
-		constraints->connect(bv, ConstraintLayout::LEFT, cl, ConstraintLayout::LEFT, 0);
-		constraints->connect(bv, ConstraintLayout::TOP, cl, ConstraintLayout::TOP, 0);
+		constraints->connect(bv, ConstraintLayout::LEFT, cl, ConstraintLayout::LEFT, 16);
+		constraints->connect(bv, ConstraintLayout::TOP, cl, ConstraintLayout::TOP, 32);
 		constraints->connect(tv, ConstraintLayout::LEFT, bv, ConstraintLayout::RIGHT, 8);
-		constraints->connect(tv, ConstraintLayout::TOP, bv, ConstraintLayout::BOTTOM, 8);
+		constraints->connect(tv, ConstraintLayout::TOP, bv, ConstraintLayout::BOTTOM, 4);
+		constraints->connect(tv2, ConstraintLayout::RIGHT, cl, ConstraintLayout::RIGHT, 32);
+		constraints->connect(tv2, ConstraintLayout::BOTTOM, cl, ConstraintLayout::BOTTOM, 16);
 	}
 };
 

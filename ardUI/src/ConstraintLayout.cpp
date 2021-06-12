@@ -44,16 +44,18 @@ void ConstraintLayout::applyConstraints(std::pair<Rect, std::list<ConstraintSet:
 	for (auto constraint: constraints->second) {
 		switch (constraint.startSide) {
 			case LEFT:
-				viewPos.left = getPos(constraint.endView, constraint.endSide) + constraint.margin;
+				viewPos.offsetTo(getPos(constraint.endView, constraint.endSide) + constraint.margin, viewPos.top);
 				break;
 			case TOP:
-				viewPos.top = getPos(constraint.endView, constraint.endSide) + constraint.margin;
+				viewPos.offsetTo(viewPos.left, getPos(constraint.endView, constraint.endSide) + constraint.margin);
 				break;
 			case RIGHT:
-				viewPos.right = getPos(constraint.endView, constraint.endSide) - constraint.margin;
+				viewPos.offsetTo(getPos(constraint.endView, constraint.endSide)
+				                 - constraint.margin - viewPos.width(), viewPos.top);
 				break;
 			case BOTTOM:
-				viewPos.bottom = getPos(constraint.endView, constraint.endSide) - constraint.margin;
+				viewPos.offsetTo(viewPos.left, getPos(constraint.endView, constraint.endSide)
+				                               - constraint.margin - viewPos.height());
 				break;
 		}
 	}
@@ -71,20 +73,12 @@ void ConstraintLayout::onMeasure(uint16_t widthMeasureSpec, uint16_t heightMeasu
 	_constraintSet->_constraints[this] = {{0, 0, getMeasuredWidth(), getMeasuredHeight()}, {}};
 
 	for (auto view: _viewList) {
-		applyConstraints(&_constraintSet->_constraints[view]);
-
-		auto viewBox = &_constraintSet->_constraints[view].first;
-		if (!viewBox->right) {
-			viewBox->right = View::MeasureSpec::getSize(widthMeasureSpec) - viewBox->left;
-		}
-		if (!viewBox->bottom) {
-			viewBox->bottom = View::MeasureSpec::getSize(heightMeasureSpec) - viewBox->top;
-		}
 		view->measure(
-				View::MeasureSpec::makeMeasureSpec(View::MeasureSpec::AT_MOST, viewBox->width()),
-				View::MeasureSpec::makeMeasureSpec(View::MeasureSpec::AT_MOST, viewBox->height()));
-		viewBox->right = viewBox->left + view->getMeasuredWidth();
-		viewBox->bottom = viewBox->top + view->getMeasuredHeight();
+				View::MeasureSpec::makeMeasureSpec(View::MeasureSpec::AT_MOST, getMeasuredWidth()),
+				View::MeasureSpec::makeMeasureSpec(View::MeasureSpec::AT_MOST, getMeasuredHeight()));
+
+		_constraintSet->_constraints[view].first = Rect(0, 0, view->getMeasuredWidth(), view->getMeasuredHeight());
+		applyConstraints(&_constraintSet->_constraints[view]);
 	}
 }
 
