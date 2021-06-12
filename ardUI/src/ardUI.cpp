@@ -5,6 +5,12 @@
 #include "ardUI.h"
 
 
+ardUI::~ardUI() {
+	ActivityManager::reset();
+	ActivityManager::processWaitingActivities();
+}
+
+
 void ardUI::back() {
 	ActivityManager::back();
 }

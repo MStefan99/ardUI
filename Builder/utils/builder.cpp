@@ -29,6 +29,8 @@ public:
 
 class MainActivity: public Activity {
 	using Activity::Activity;
+	String* _stringArray = new String[] {"a", "b", "c", "d", "e"};
+	StringAdapter* _stringAdapter = new StringAdapter(_stringArray, 4);
 
 
 	void onCreate() override {
@@ -44,7 +46,7 @@ class MainActivity: public Activity {
 		ll->setOrientation(LinearLayout::Orientation::VERTICAL);
 		auto p = new ProgressBar();
 		auto lv = new ListView<String>();
-		lv->setAdapter(new StringAdapter(new String[] {"a", "b", "c", "d"}, 4));
+		lv->setAdapter(_stringAdapter);
 
 		setRootView(ll);
 		ll->addView(title);
@@ -76,6 +78,13 @@ class MainActivity: public Activity {
 		b3->setOnClickListener([](View* b) -> void {
 			ardUI::startActivity<ConstraintActivity>();
 		});
+	}
+
+
+	void onDestroy() override {
+		// Destroying everything we've allocated
+		delete _stringAdapter;
+		delete[] _stringArray;
 	}
 };
 
@@ -142,7 +151,7 @@ class ConstraintActivity: public Activity {
 
 
 void setup() {
-	ardUI::startActivity<ConstraintActivity>();
+	ardUI::startActivity<MainActivity>();
 }
 
 

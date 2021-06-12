@@ -23,6 +23,10 @@ void ActivityManager::back() {
 
 
 void ActivityManager::reset() {
+	if (_currentActivity) {
+		stopActivity(_currentActivity);
+		_currentActivity = nullptr;
+	}
 	for (auto a : _backList) {
 		finishActivity(a);
 	}
@@ -83,15 +87,7 @@ void ActivityManager::startupActivities() {
 void ActivityManager::cleanupActivities() {
 	for (auto a: _stoppingActivities) {
 		finishActivity(a);
-
-		auto it = _backList.begin();
-		while (it != _backList.end()) {
-			if (a == *it) {
-				it = _backList.erase(it);
-			} else {
-				++it;
-			}
-		}
 	}
+
 	_stoppingActivities.clear();
 }
