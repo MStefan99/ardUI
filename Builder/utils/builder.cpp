@@ -6,12 +6,15 @@
 #include "TextView.h"
 #include "ButtonView.h"
 #include "LinearLayout.h"
+#include "ConstraintLayout.h"
 #include "ProgressBar.h"
 #include "ListView.h"
 #include "ArrayAdapter.h"
 
 
 class SecondActivity;
+
+class ConstraintActivity;
 
 
 class StringAdapter: public ArrayAdapter<String> {
@@ -36,6 +39,7 @@ class MainActivity: public Activity {
 		auto t = new TextView("Hello!");
 		auto b = new ButtonView("Update text");
 		auto b2 = new ButtonView("Open another Activity");
+		auto b3 = new ButtonView("See the miracles of constraints!");
 		auto ll = new LinearLayout();
 		ll->setOrientation(LinearLayout::Orientation::VERTICAL);
 		auto p = new ProgressBar();
@@ -47,6 +51,7 @@ class MainActivity: public Activity {
 		ll->addView(t);
 		ll->addView(b);
 		ll->addView(b2);
+		ll->addView(b3);
 		ll->addView(lv);
 		ll->addView(p);
 
@@ -57,8 +62,8 @@ class MainActivity: public Activity {
 			Serial.println("Button pressed!");
 			auto t = (TextView*)ardUI::getViewByName("hello_text");
 			t->setTextColor(t->getTextColor() & 0xffff00u?
-											t->getTextColor() << 8u & 0xffffffu :
-											t->getTextColor() << 8u | 0xffu & 0xffffffu);
+			                t->getTextColor() << 8u & 0xffffffu :
+			                t->getTextColor() << 8u | 0xffu & 0xffffffu);
 		});
 
 		b2->setOnClickListener([](View* b) -> void {
@@ -66,6 +71,10 @@ class MainActivity: public Activity {
 			auto t = (TextView*)ardUI::getViewByName("hello_text");
 			data.put<uint32_t>("color", t->getTextColor());
 			ardUI::startActivity<SecondActivity>(data);
+		});
+
+		b3->setOnClickListener([](View* b) -> void {
+			ardUI::startActivity<ConstraintActivity>();
 		});
 	}
 };
@@ -102,17 +111,44 @@ class SecondActivity: public Activity {
 };
 
 
+class ConstraintActivity: public Activity {
+	using Activity::Activity;
+
+
+	void onCreate() override {
+		auto cl = new ConstraintLayout();
+
+		auto bv = new ButtonView("back");
+		auto tv = new TextView("text");
+		bv->setOnClickListener([](View* v) -> void {
+			ardUI::back();
+		});
+		cl->addView(bv);
+		cl->addView(tv);
+		setRootView(cl);
+
+		auto constraints = cl->getConstraints();
+		constraints->connect(bv, ConstraintLayout::LEFT, cl, ConstraintLayout::LEFT, 0);
+		constraints->connect(bv, ConstraintLayout::TOP, cl, ConstraintLayout::TOP, 0);
+		constraints->connect(tv, ConstraintLayout::LEFT, bv, ConstraintLayout::RIGHT, 8);
+		constraints->connect(tv, ConstraintLayout::TOP, bv, ConstraintLayout::BOTTOM, 8);
+	}
+};
+
+
 void setup() {
-	ardUI::startActivity<MainActivity>();
+	ardUI::startActivity<ConstraintActivity>();
 }
 
 
 void loop() {
 	auto p = (ProgressBar*)ardUI::getViewByName("progress");
 
-	auto pr = p->getProgress();
-	if (pr < 100) {
-		p->setProgress(p->getProgress() + 1);
-		delay(25);
+	if (p) {
+		auto pr = p->getProgress();
+		if (pr < 100) {
+			p->setProgress(p->getProgress() + 1);
+			delay(25);
+		}
 	}
 }

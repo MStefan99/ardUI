@@ -50,17 +50,18 @@ void View::measure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec) {
 
 
 void View::layout(const Rect& r) {
-	layout(r._left, r._top, r._right, r._bottom);
+	layout(r.left, r.top, r.right, r.bottom);
 }
 
 
 void View::layout(uint16_t left, uint16_t top, uint16_t right, uint16_t bottom) {
 	if (!_valid) {
 		auto b = getBounds();
-		bool changed = left == b._left && top == b._top && bottom == b._bottom && right == b._right;
+		bool changed = left == b.left && top == b.top && bottom == b.bottom && right == b.right;
 		if (changed) {
 			invalidate();
 		}
+		_viewBox.set(left, top, right, bottom);
 		onLayout(changed, left, top, right, bottom);
 	}
 }
@@ -105,22 +106,22 @@ void View::invalidate() {
 
 
 void View::setLeft(uint16_t left) {
-	_viewBox._left = left;
+	_viewBox.left = left;
 }
 
 
 void View::setTop(uint16_t top) {
-	_viewBox._top = top;
+	_viewBox.top = top;
 }
 
 
 void View::setRight(uint16_t right) {
-	_viewBox._right = right;
+	_viewBox.right = right;
 }
 
 
 void View::setBottom(uint16_t bottom) {
-	_viewBox._bottom = bottom;
+	_viewBox.bottom = bottom;
 }
 
 
@@ -177,21 +178,13 @@ void View::onDraw() {
 
 
 uint16_t View::getDefaultSize(uint16_t size, uint16_t measureSpec) {
-	uint16_t result {0};
-
-	if (_visible) {
-		uint16_t specMode = View::MeasureSpec::getMode(measureSpec);
-
-		switch (specMode) {
-			case View::MeasureSpec::Sizing::UNSPECIFIED:
-			default:
-				result = size;
-				break;
-			case View::MeasureSpec::Sizing::AT_MOST:
-			case View::MeasureSpec::Sizing::EXACTLY:
-				result = View::MeasureSpec::getSize(measureSpec);
-				break;
-		}
+	switch (View::MeasureSpec::getMode(measureSpec)) {
+		case View::MeasureSpec::Sizing::UNSPECIFIED:
+		default:
+			return size;
+		case View::MeasureSpec::Sizing::AT_MOST:
+			return MIN(size, View::MeasureSpec::getSize(measureSpec));
+		case View::MeasureSpec::Sizing::EXACTLY:
+			return View::MeasureSpec::getSize(measureSpec);
 	}
-	return result;
 }

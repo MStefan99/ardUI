@@ -57,13 +57,16 @@ public:
 	friend class Activity;
 
 protected:
+	// Measure contents of the current view
 	virtual void onMeasure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec);
+	// Assign size and position to children
 	virtual void onLayout(bool changed, uint16_t left, uint16_t top, uint16_t right, uint16_t bottom);
+	// Draw current view
 	virtual void onDraw();
 
 	void setMeasuredDimensions(uint16_t measuredWidth, uint16_t measuredHeight);
 
-	uint16_t getDefaultSize(uint16_t size, uint16_t measureSpec);
+	static uint16_t getDefaultSize(uint16_t size, uint16_t measureSpec);
 
 private:
 	void (* _onClick)(View* view) {nullptr};

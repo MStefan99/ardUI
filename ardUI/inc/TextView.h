@@ -32,6 +32,7 @@ protected:
 	void onDraw() override;
 
 	LIST<String> getLines(uint16_t maxWidth) const;
+	uint16_t getMaxWidth();
 
 	String _text;
 	uint16_t _textSize {20};

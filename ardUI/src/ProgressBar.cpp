@@ -44,9 +44,9 @@ uint16_t ProgressBar::mapScale(uint16_t value, uint16_t oldMin, uint16_t oldMax,
 
 
 void ProgressBar::onDraw() {
-	arduiDisplayFillRect(_viewBox._left, _viewBox._top, _viewBox._right - 1, _viewBox._bottom - 1, _backgroundColor);
-	arduiDisplayDrawRect(_viewBox._left, _viewBox._top, _viewBox._right - 1, _viewBox._bottom - 1, _barColor);
+	arduiDisplayFillRect(_viewBox.left, _viewBox.top, _viewBox.right - 1, _viewBox.bottom - 1, _backgroundColor);
+	arduiDisplayDrawRect(_viewBox.left, _viewBox.top, _viewBox.right - 1, _viewBox.bottom - 1, _barColor);
 
-	arduiDisplayFillRect(_viewBox._left, _viewBox._top,
-			_viewBox._left + mapScale(_level, 0, 10000, _viewBox._left, _viewBox._right), _viewBox._bottom, _barColor);
+	arduiDisplayFillRect(_viewBox.left, _viewBox.top,
+			_viewBox.left + mapScale(_level, 0, 10000, _viewBox.left, _viewBox.right), _viewBox.bottom, _barColor);
 }

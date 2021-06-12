@@ -9,9 +9,6 @@
 #undef loop
 #undef delay
 
-#define ABS(x) ((x) > 0? (x) : -(x))
-#define MIN(x, y) ((x > y)? (x) : (y))
-
 
 void setup() {  // Default setup function will be used to initiate ardUI
 	arduiDisplayInit();

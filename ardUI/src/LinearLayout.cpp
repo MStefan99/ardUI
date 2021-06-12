@@ -53,13 +53,9 @@ void LinearLayout::onLayout(bool changed, uint16_t l, uint16_t t, uint16_t r, ui
 		if (_orientation == Orientation::HORIZONTAL) {
 			v->layout(nextViewLeft, nextViewTop, nextViewLeft + v->getMeasuredWidth(), b);
 			nextViewLeft += v->getMeasuredWidth();
-			v->setRight(nextViewLeft);
-			v->setBottom(b);
 		} else {
 			v->layout(nextViewLeft, nextViewTop, r, nextViewTop + v->getMeasuredHeight());
 			nextViewTop += v->getMeasuredHeight();
-			v->setBottom(nextViewTop);
-			v->setRight(r);
 		}
 	}
 }
