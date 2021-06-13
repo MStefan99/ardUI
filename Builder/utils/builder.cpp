@@ -130,13 +130,17 @@ class ConstraintActivity: public Activity {
 		auto bv = new ButtonView("back");
 		auto tv = new TextView("text");
 		auto tv2 = new TextView("other text");
+		auto bv2 = new ButtonView("also back");
 		bv->setPadding(2, 4, 8, 16);
-		bv->setOnClickListener([](View* v) -> void {
+		auto backCallback = [](View* v) -> void {
 			ardUI::back();
-		});
+		};
+		bv->setOnClickListener(backCallback);
+		bv2->setOnClickListener(backCallback);
 		cl->addView(bv);
 		cl->addView(tv);
 		cl->addView(tv2);
+		cl->addView(bv2);
 		setRootView(cl);
 
 		auto constraints = cl->getConstraints();
@@ -147,6 +151,10 @@ class ConstraintActivity: public Activity {
 		constraints->connect(tv, ConstraintLayout::TOP, bv, ConstraintLayout::BOTTOM, 4);
 		constraints->connect(tv2, ConstraintLayout::RIGHT, cl, ConstraintLayout::RIGHT, 32);
 		constraints->connect(tv2, ConstraintLayout::BOTTOM, cl, ConstraintLayout::BOTTOM, 16);
+		constraints->connect(bv2, ConstraintLayout::TOP, tv, ConstraintLayout::BOTTOM, 4);
+		constraints->connect(bv2, ConstraintLayout::RIGHT, tv2, ConstraintLayout::LEFT, 8);
+		constraints->connect(bv2, ConstraintLayout::BOTTOM, cl, ConstraintLayout::BOTTOM, 16);
+		constraints->connect(bv2, ConstraintLayout::LEFT, cl, ConstraintLayout::LEFT, 64);
 	}
 };
 
