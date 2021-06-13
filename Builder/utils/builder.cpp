@@ -142,6 +142,7 @@ class ConstraintActivity: public Activity {
 		auto constraints = cl->getConstraints();
 		constraints->connect(bv, ConstraintLayout::LEFT, cl, ConstraintLayout::LEFT, 16);
 		constraints->connect(bv, ConstraintLayout::TOP, cl, ConstraintLayout::TOP, 32);
+		constraints->connect(bv, ConstraintLayout::RIGHT, cl, ConstraintLayout::RIGHT, 200);
 		constraints->connect(tv, ConstraintLayout::LEFT, bv, ConstraintLayout::RIGHT, 8);
 		constraints->connect(tv, ConstraintLayout::TOP, bv, ConstraintLayout::BOTTOM, 4);
 		constraints->connect(tv2, ConstraintLayout::RIGHT, cl, ConstraintLayout::RIGHT, 32);

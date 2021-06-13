@@ -33,10 +33,15 @@ public:
 			Constraint(View* startView, Side startSide, View* endView, Side endSide, uint16_t margin);
 		};
 
-		struct ViewLayout {
-			uint16_t width {};
-			uint16_t height {};
-			Rect rect {};
+		struct LayoutInfo {
+			Rect viewBox {};
+			bool constrained {false};
+			bool leftConstrained {false};
+			bool topConstrained {false};
+			bool rightConstrained {false};
+			bool bottomConstrained {false};
+
+			void reset();
 		};
 
 	public:
@@ -47,7 +52,7 @@ public:
 		friend class ConstraintLayout;
 
 	protected:
-		MAP<View*, PAIR<Rect, LIST<Constraint>>> _constraints {};
+		MAP<View*, PAIR<LayoutInfo, LIST<Constraint>>> _constraints {};
 	};
 
 	ConstraintLayout() = default;
@@ -62,7 +67,7 @@ protected:
 	void handleEvent(const Event& event) override;
 
 	uint16_t getPos(View* view, Side side);
-	void applyConstraints(PAIR<Rect, LIST<ConstraintSet::Constraint>>* constraints);
+	void applyConstraints(PAIR<ConstraintSet::LayoutInfo, LIST<ConstraintSet::Constraint>>* constraints);
 
 	ConstraintSet* _constraintSet {new ConstraintSet({})};
 };

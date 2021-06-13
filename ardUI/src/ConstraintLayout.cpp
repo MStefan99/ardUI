@@ -23,42 +23,78 @@ ConstraintLayout::ConstraintSet::Constraint::Constraint(View* startView, Side st
 }
 
 
+void ConstraintLayout::ConstraintSet::LayoutInfo::reset() {
+	constrained = leftConstrained = topConstrained = rightConstrained = leftConstrained = false;
+}
+
+
 uint16_t ConstraintLayout::getPos(View* view, Side side) {
-	auto viewBox = &_constraintSet->_constraints[view].first;
+	auto layoutInfo = _constraintSet->_constraints[view].first;
 
 	switch (side) {
 		case LEFT:
-			return viewBox->left;
+			return layoutInfo.viewBox.left;
 		case TOP:
-			return viewBox->top;
+			return layoutInfo.viewBox.top;
 		case RIGHT:
-			return viewBox->right;
+			return layoutInfo.viewBox.right;
 		case BOTTOM:
-			return viewBox->bottom;
+			return layoutInfo.viewBox.bottom;
 	}
 }
 
 
-void ConstraintLayout::applyConstraints(std::pair<Rect, std::list<ConstraintSet::Constraint>>* constraints) {
-	auto& viewPos = constraints->first;
+void ConstraintLayout::applyConstraints(
+		std::pair<ConstraintSet::LayoutInfo, std::list<ConstraintSet::Constraint>>* constraints) {
+	auto& layoutInfo = constraints->first;
+
 	for (auto constraint: constraints->second) {
+		auto& endConstraints = _constraintSet->_constraints[constraint.endView];
+		if (!endConstraints.first.constrained) {
+			applyConstraints(&endConstraints);
+		}
+
+		// TODO: fix this mess
 		switch (constraint.startSide) {
 			case LEFT:
-				viewPos.offsetTo(getPos(constraint.endView, constraint.endSide) + constraint.margin, viewPos.top);
+				if (layoutInfo.rightConstrained) {
+					layoutInfo.viewBox.left = getPos(constraint.endView, constraint.endSide) + constraint.margin;
+				} else {
+					layoutInfo.viewBox.offsetTo(getPos(constraint.endView, constraint.endSide) + constraint.margin,
+							layoutInfo.viewBox.top);
+				}
+				layoutInfo.leftConstrained = true;
 				break;
 			case TOP:
-				viewPos.offsetTo(viewPos.left, getPos(constraint.endView, constraint.endSide) + constraint.margin);
+				if (layoutInfo.bottomConstrained) {
+					layoutInfo.viewBox.bottom = getPos(constraint.endView, constraint.endSide) + constraint.margin;
+				} else {
+					layoutInfo.viewBox.offsetTo(layoutInfo.viewBox.left, getPos(constraint.endView, constraint.endSide)
+							+ constraint.margin);
+				}
+				layoutInfo.topConstrained = true;
 				break;
 			case RIGHT:
-				viewPos.offsetTo(getPos(constraint.endView, constraint.endSide)
-				                 - constraint.margin - viewPos.width(), viewPos.top);
+				if (layoutInfo.leftConstrained) {
+					layoutInfo.viewBox.right = getPos(constraint.endView, constraint.endSide) - constraint.margin;
+				} else {
+					layoutInfo.viewBox.offsetTo(getPos(constraint.endView, constraint.endSide)
+							- constraint.margin - layoutInfo.viewBox.width(), layoutInfo.viewBox.top);
+				}
+				layoutInfo.rightConstrained = true;
 				break;
 			case BOTTOM:
-				viewPos.offsetTo(viewPos.left, getPos(constraint.endView, constraint.endSide)
-				                               - constraint.margin - viewPos.height());
+				if (layoutInfo.topConstrained) {
+					layoutInfo.viewBox.top = getPos(constraint.endView, constraint.endSide) - constraint.margin;
+				} else {
+					layoutInfo.viewBox.offsetTo(layoutInfo.viewBox.left, getPos(constraint.endView, constraint.endSide)
+							- constraint.margin - layoutInfo.viewBox.height());
+				}
+				layoutInfo.bottomConstrained = true;
 				break;
 		}
 	}
+	layoutInfo.constrained = true;
 }
 
 
@@ -70,24 +106,29 @@ ConstraintLayout::ConstraintSet* ConstraintLayout::getConstraints() {
 void ConstraintLayout::onMeasure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec) {
 	setMeasuredDimensions(getDefaultSize(getMinimumWidth() + _padding.width(), widthMeasureSpec),
 			getDefaultSize(getMinimumHeight() + _padding.height(), heightMeasureSpec));
-	_constraintSet->_constraints[this] = {{0, 0, getMeasuredWidth(), getMeasuredHeight()}, {}};
+	_constraintSet->_constraints[this].first.viewBox.set(0, 0, getMeasuredWidth(), getMeasuredHeight());
+	_constraintSet->_constraints[this].first.constrained = true;
 
 	for (auto view: _viewList) {
 		view->measure(
 				View::MeasureSpec::makeMeasureSpec(View::MeasureSpec::AT_MOST, getMeasuredWidth()),
 				View::MeasureSpec::makeMeasureSpec(View::MeasureSpec::AT_MOST, getMeasuredHeight()));
 
-		_constraintSet->_constraints[view].first = Rect(0, 0, view->getMeasuredWidth(), view->getMeasuredHeight());
-		applyConstraints(&_constraintSet->_constraints[view]);
+		_constraintSet->_constraints[view].first.viewBox = Rect(0, 0, view->getMeasuredWidth(), view->getMeasuredHeight());
 	}
 }
 
 
 void ConstraintLayout::onLayout(bool changed, uint16_t left, uint16_t top, uint16_t right, uint16_t bottom) {
+	for (auto c : _constraintSet->_constraints) {
+		c.second.first.reset();
+	}
+
 	for (auto view: _viewList) {
-		auto r {_constraintSet->_constraints[view].first};
-		r.offset(_viewBox.left, _viewBox.top);
-		view->layout(r);
+		auto constraints {_constraintSet->_constraints[view]};
+		applyConstraints(&constraints);
+
+		view->layout(constraints.first.viewBox);
 	}
 }
 
