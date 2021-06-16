@@ -6,62 +6,88 @@
 #include "ActivitySwitcher.h"
 
 
-Activity* ActivityManager::currentActivity {};
-LIST<Activity*> ActivityManager::activitiesToStop {};
-LIST<Activity*> ActivityManager::backList {};
+Activity* ActivityManager::_currentActivity {};
+LIST<Activity*> ActivityManager::_startingActivities {};
+LIST<Activity*> ActivityManager::_stoppingActivities {};
+LIST<Activity*> ActivityManager::_backList {};
 
 
 void ActivityManager::stopActivity(Activity* activityToStop) {
-	activitiesToStop.push_back(activityToStop);
+	_stoppingActivities.push_back(activityToStop);
 }
 
 
 void ActivityManager::back() {
-	if (currentActivity) {
-		if (!backList.empty()) {
-			if (currentActivity->resultCallback) {
-				currentActivity->resultCallback(currentActivity->status,
-																				Bundle {currentActivity->resultData});
-			}
-			currentActivity->rewindState(Activity::State::DESTROYED);
-			delete currentActivity;
-
-			currentActivity = backList.back();
-			backList.pop_back();
-			currentActivity->rewindState(Activity::State::RESUMED);
-		}
-	}
-	cleanup();
+	stopActivity(_currentActivity);
 }
 
 
 void ActivityManager::reset() {
-	if (currentActivity) {
-		currentActivity->rewindState(Activity::State::DESTROYED);
-		delete currentActivity;
-		currentActivity = nullptr;
+	if (_currentActivity) {
+		stopActivity(_currentActivity);
+		_currentActivity = nullptr;
 	}
-
-	while (!backList.empty()) {
-		auto activity = backList.front();
-		activity->rewindState(Activity::State::DESTROYED);
-		delete activity;
-		backList.pop_front();
+	for (auto a : _backList) {
+		finishActivity(a);
 	}
 }
 
 
-void ActivityManager::cleanup() {
-	for (const auto& a: activitiesToStop) {
-		if (a == currentActivity) {
-			back();
-		} else {
-			for (auto it = backList.begin(); it != backList.end(); ++it) {
-				if (a == *it) {
-					backList.erase(it);
-					break;
-				}
+void ActivityManager::finishActivity(Activity* activity) {
+	if (activity) {
+		activity->rewindState(Activity::State::DESTROYED);
+
+		if (activity == _currentActivity && !_backList.empty()) {
+			_currentActivity = _backList.back();
+			if (activity->_resultCallback) {
+				activity->_resultCallback(activity->_status,
+						Bundle {activity->_resultData});
+			}
+			_backList.pop_back();
+			_currentActivity->rewindState(Activity::State::RESUMED);
+		}
+		delete activity;
+	}
+}
+
+
+void ActivityManager::processWaitingActivities() {
+	while (!_stoppingActivities.empty() || !_startingActivities.empty()) {
+		cleanupActivities();
+		startupActivities();
+	}
+}
+
+
+void ActivityManager::startupActivities() {
+	for (auto activity : _startingActivities) {
+		if (_currentActivity) {
+			if (_currentActivity->_rootView) {
+				_currentActivity->_rootView->invalidate();
+			}
+			_currentActivity->rewindState(Activity::State::STOPPED);
+			_backList.push_back(_currentActivity);
+			Serial.println("Screen appended to the stack");
+
+			if (_backList.size() > BACK_STACK_DEPTH) {
+				Serial.println("Max stack depth reached, destroying oldest activity");
+				auto lastActivity {_backList.front()};
+				_backList.pop_front();
+				finishActivity(lastActivity);
 			}
 		}
+
+		_currentActivity = activity;
+		_currentActivity->rewindState(Activity::State::RESUMED);
 	}
+	_startingActivities.clear();
+}
+
+
+void ActivityManager::cleanupActivities() {
+	for (auto a: _stoppingActivities) {
+		finishActivity(a);
+	}
+
+	_stoppingActivities.clear();
 }

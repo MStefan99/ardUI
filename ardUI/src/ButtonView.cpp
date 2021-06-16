@@ -6,17 +6,18 @@
 
 
 ButtonView::ButtonView(const String& text):
-	TextView {text} {
+		TextView {text} {
 	// Nothing to do
 }
 
 
 void ButtonView::onDraw() {
-	auto b {getBounds()};
+	arduiDisplayFillRect(_viewBox.left, _viewBox.top, _viewBox.right - 1, _viewBox.bottom - 1, _backgroundColor);
+	arduiDisplayDrawRect(_viewBox.left, _viewBox.top, _viewBox.right - 1, _viewBox.bottom - 1, _borderColor);
 
-	arduiDisplayDrawLine(b.left, b.top, b.right - 1, b.top, borderColor);  // top
-	arduiDisplayDrawLine(b.left, b.top, b.left, b.bottom - 1, borderColor);  // left
-	arduiDisplayDrawLine(b.right - 1, b.top, b.right - 1, b.bottom - 1, borderColor);  // right
-	arduiDisplayDrawLine(b.left, b.bottom - 1, b.right - 1, b.bottom - 1, borderColor);  // bottom
-	arduiDisplayDrawText(b.left, b.top, getTextSize(), getText(), getTextColor());
+	uint16_t line {0};
+	for (const auto& l : getLines(_viewBox.width())) {
+		arduiDisplayDrawText(_viewBox.left + _padding.left, _viewBox.top + _padding.top + _textSize * line++,
+				l, _textSize, _textColor);
+	}
 }

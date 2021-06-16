@@ -5,7 +5,6 @@
 #ifndef ARDUI_ACTIVITYMANAGER_H
 #define ARDUI_ACTIVITYMANAGER_H
 
-
 #include "platform.h"
 #include LIST_H
 
@@ -20,17 +19,23 @@ public:
 
 private:
 	template <class ActivityClass>
-	static void switchActivity(const Bundle& extras = {},
-														 void (* onActivityResult)(int statusCode, Bundle resultData) = {});
+	static void startActivity(const Bundle& extras = {},
+			void (* onActivityResult)(int statusCode, Bundle resultData) = {});
 	static void stopActivity(Activity* activityToStop);
 	static void back();
 	static void reset();
 
-	static void cleanup();
+	static void processWaitingActivities();
 
-	static Activity* currentActivity;
-	static LIST<Activity*> activitiesToStop;
-	static LIST<Activity*> backList;
+	// Internal methods, don't use outside ActivityManager
+	static void finishActivity(Activity* activity);
+	static void cleanupActivities();
+	static void startupActivities();
+
+	static Activity* _currentActivity;
+	static LIST<Activity*> _startingActivities;
+	static LIST<Activity*> _stoppingActivities;
+	static LIST<Activity*> _backList;
 
 	friend class EventManager;
 

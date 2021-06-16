@@ -6,16 +6,18 @@ SET(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} ${COMPILER_FLAGS})
 
 
 # Adding ardUI framework
-add_library(ardUI SHARED)
+add_library(ardUI STATIC)
 target_sources(ardUI PRIVATE
 		${SOURCE_DIRECTORY}/Bundle.cpp
 		${SOURCE_DIRECTORY}/Rect.cpp
 		${SOURCE_DIRECTORY}/Drawable.cpp
 		${SOURCE_DIRECTORY}/View.cpp
+		${SOURCE_DIRECTORY}/ProgressBar.cpp
 		${SOURCE_DIRECTORY}/TextView.cpp
-		${SOURCE_DIRECTORY}/ViewGroup.cpp
 		${SOURCE_DIRECTORY}/ButtonView.cpp
+		${SOURCE_DIRECTORY}/ViewGroup.cpp
 		${SOURCE_DIRECTORY}/LinearLayout.cpp
+		${SOURCE_DIRECTORY}/ConstraintLayout.cpp
 		${SOURCE_DIRECTORY}/EventManager.cpp
 		${SOURCE_DIRECTORY}/ActivityManager.cpp
 		${SOURCE_DIRECTORY}/Activity.cpp

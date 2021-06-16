@@ -5,7 +5,6 @@
 #ifndef ARDUI_RECT_H
 #define ARDUI_RECT_H
 
-
 #include "platform.h"
 
 

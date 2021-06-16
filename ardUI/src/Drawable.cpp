@@ -6,24 +6,24 @@
 
 
 Rect Drawable::getBounds() const {
-	return Rect(viewBox);
+	return _viewBox;
 }
 
 
 void Drawable::setBounds(uint16_t l, uint16_t t, uint16_t r, uint16_t b) {
-	viewBox.set(l, t, r, b);
+	_viewBox.set(l, t, r, b);
 	onBoundsChange(Rect(l, t, r, b));
 }
 
 
 void Drawable::setBounds(const Rect& bounds) {
-	viewBox.set(bounds);
+	_viewBox.set(bounds);
 	onBoundsChange(bounds);
 }
 
 
 int Drawable::getLevel() const {
-	return level;
+	return _level;
 }
 
 
@@ -33,7 +33,7 @@ bool Drawable::setLevel(uint16_t l) {
 	}
 	auto changed {onLevelChange(l)};
 	if (changed) {
-		level = l;
+		_level = l;
 	}
 	return changed;
 }
@@ -42,7 +42,7 @@ bool Drawable::setLevel(uint16_t l) {
 bool Drawable::getPadding(Rect& p) const {
 	bool paddingExists {(bool)p};
 	if (paddingExists) {
-		p = padding;
+		p = _padding;
 	} else {
 		p.setEmpty();
 	}
@@ -51,31 +51,31 @@ bool Drawable::getPadding(Rect& p) const {
 
 
 void Drawable::setPadding(uint16_t left, uint16_t top, uint16_t right, uint16_t bottom) {
-	padding = Rect(left, top, right, bottom);
+	_padding = Rect(left, top, right, bottom);
 }
 
 
 bool Drawable::isVisible() const {
-	return visible;
+	return _visible;
 }
 
 
 bool Drawable::setVisible(bool v) {
-	auto changed {v != visible};
+	auto changed {v != _visible};
 	if (changed) {
-		visible = v;
+		_visible = v;
 	}
 	return changed;
 }
 
 
 bool Drawable::isValid() const {
-	return valid;
+	return _valid;
 }
 
 
 void Drawable::invalidateSelf() {
-	valid = false;
+	_valid = false;
 }
 
 
@@ -85,7 +85,7 @@ void Drawable::onBoundsChange(const Rect& bounds) {
 
 
 bool Drawable::onLevelChange(uint16_t l) {
-	auto changed {l != level};
+	auto changed {l != _level};
 	if (changed) {
 		draw();
 	}
@@ -94,20 +94,20 @@ bool Drawable::onLevelChange(uint16_t l) {
 
 
 uint16_t Drawable::getMinimumHeight() const {
-	return minHeight;
+	return _minHeight;
 }
 
 
 uint16_t Drawable::getMinimumWidth() const {
-	return minWidth;
+	return _minWidth;
 }
 
 
 void Drawable::setMinimumWidth(uint16_t w) {
-	minWidth = w;
+	_minWidth = w;
 }
 
 
 void Drawable::setMinimumHeight(uint16_t h) {
-	minHeight = h;
+	_minHeight = h;
 }

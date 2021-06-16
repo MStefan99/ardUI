@@ -16,13 +16,14 @@
 
 #ifdef _WIN32
 
-	#include "windows.h"
+	#include "Windows.h"
+
 #else
 
 	#include <unistd.h>
 
-
 #endif
+
 
 #define LOOP_ITERATIONS 3
 #define DEC 1
@@ -30,14 +31,19 @@
 
 typedef std::string String;
 
-
-void delay(int ms);
-
-uint32_t millis();
-
+#if defined(__EMSCRIPTEN__) && defined(__cplusplus)
+extern "C" {
+#endif
 void setup();
 
 void loop();
+#if defined(__EMSCRIPTEN__) && defined(__cplusplus)
+}
+#endif
+
+void delay(uint32_t ms);
+
+uint32_t millis();
 
 
 class ArduinoSerial {
@@ -75,6 +81,6 @@ void ArduinoSerial::println(const C& data, int type) {
 
 
 static ArduinoSerial Serial {};
-static auto startTime {std::chrono::system_clock::now()};
+static auto ProgramStartupTime {std::chrono::system_clock::now()};
 
 #endif //ARDUI_ARDUINO_H

@@ -10,6 +10,7 @@ void ArduinoSerial::begin(long baud) {
 }
 
 
+#ifndef __EMSCRIPTEN__
 int main() {
 	setup();
 
@@ -17,28 +18,27 @@ int main() {
 		loop();
 	}
 }
+#endif
 
+#ifdef _WIN32
 
-
-#ifndef _WIN32
-
-void delay(int ms) {
-	usleep(ms * 1000);
+void delay(uint32_t ms) {
+	Sleep(ms);
 }
 
 #else
 
-void delay(int ms) {
-	Sleep(ms);
+void delay(uint32_t ms) {
+	usleep(ms * 1000);
 }
 
 #endif
 
+
 uint32_t millis() {
 	auto currentTime {std::chrono::system_clock::now()};
-	auto duration = currentTime - startTime;
+	auto duration = currentTime - ProgramStartupTime;
+	auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
 
-	return std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
+	return ms;
 }
-
-
