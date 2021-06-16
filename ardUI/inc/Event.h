@@ -5,7 +5,6 @@
 #ifndef ARDUI_EVENT_H
 #define ARDUI_EVENT_H
 
-
 #include "platform.h"
 
 
@@ -18,11 +17,11 @@ struct Event {
 		SCROLL
 	};
 
-	Action currentAction {NO_ACTION};
-	uint16_t targetX {0};
-	uint16_t targetY {0};
-	int16_t deltaX {0};
-	int16_t deltaY {0};
+	Action _currentAction {NO_ACTION};
+	uint16_t _targetX {0};
+	uint16_t _targetY {0};
+	int16_t _deltaX {0};
+	int16_t _deltaY {0};
 };
 
 #endif //ARDUI_EVENT_H

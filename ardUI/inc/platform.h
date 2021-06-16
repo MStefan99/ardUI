@@ -43,8 +43,19 @@
 #define STACK NAMESPACE::stack
 #define QUEUE NAMESPACE::queue
 
-#if (!defined(Arduino_h) && ENABLE_DEBUG)
-	#define DEBUG
+
+#define ABS(a) ((a > 0)? (a) : -(a))
+#define MIN(a, b) ((a < b)? (a) : (b))
+#define MAX(a, b) ((a > b)? (a) : (b))
+
+#if (!defined(Arduino_h) && DEBUGGING)
+	#define DEBUG_MODE ( true )
+#else
+	#define DEBUG_MODE ( false )
 #endif
+
+#define VERBOSE_MODE VERBOSE
+
+// TODO: disable slow mode on emscripten, figure out what to do with logging
 
 #endif //ARDUI_PLATFORM_H

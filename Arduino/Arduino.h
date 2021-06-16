@@ -17,12 +17,13 @@
 #ifdef _WIN32
 
 	#include "Windows.h"
+
 #else
 
 	#include <unistd.h>
 
-
 #endif
+
 
 #define LOOP_ITERATIONS 3
 #define DEC 1
@@ -40,7 +41,7 @@ void loop();
 }
 #endif
 
-void delay(int ms);
+void delay(uint32_t ms);
 
 uint32_t millis();
 
@@ -80,6 +81,6 @@ void ArduinoSerial::println(const C& data, int type) {
 
 
 static ArduinoSerial Serial {};
-static auto startTime {std::chrono::system_clock::now()};
+static auto ProgramStartupTime {std::chrono::system_clock::now()};
 
 #endif //ARDUI_ARDUINO_H

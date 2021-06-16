@@ -14,6 +14,17 @@ const click = {
 
 context.textBaseline = 'top';
 
+addEventListener('load', () => {
+	const params = new URLSearchParams(window.location.search);
+	if (params.has('width')) {
+		canvas.width = +params.get('width');
+	}
+	if (params.has('height')) {
+		canvas.height = +params.get('height');
+	}
+	context.textBaseline = 'top';
+});
+
 
 function showMouseCoords(x, y) {
 	mouseCoords.innerText = 'Mouse down at (' + x + ', ' + y + ')';
@@ -105,7 +116,7 @@ ardUI().then((ardUI) => {
 
 	setInterval(() => {
 		ardUI._loop();
-	}, 500);
+	}, 1000 / 10);
 
 	canvas.addEventListener('mousedown', e => {
 		click.down = true;

@@ -36,8 +36,8 @@ public:
 
 private:
 	ardUI() = default;
-	~ardUI() = default;
-	MAP<String, View*> viewMap;
+	~ardUI();
+	MAP<String, View*> _viewMap;
 };
 
 

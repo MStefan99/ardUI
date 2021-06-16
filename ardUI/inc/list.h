@@ -95,7 +95,7 @@ namespace ardui {
 
 	template <class T>
 	list<T>::element::element(const T& value, element* prev, element* next):
-		elementValue(value), prevElement(prev), nextElement(next) {}
+			elementValue(value), prevElement(prev), nextElement(next) {}
 
 
 	template <class T>

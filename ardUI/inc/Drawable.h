@@ -5,7 +5,6 @@
 #ifndef ARDUI_DRAWABLE_H
 #define ARDUI_DRAWABLE_H
 
-
 #include "platform.h"
 #include "llpi.h"
 #include "Event.h"
@@ -49,16 +48,16 @@ protected:
 	virtual void onBoundsChange(const Rect& bounds);
 	virtual bool onLevelChange(uint16_t level);
 
-	bool valid {false};
-	bool visible {true};
+	bool _valid {false};
+	bool _visible {true};
 
 	void invalidateSelf();
 
-	Rect viewBox {};
-	Rect padding {};
-	uint16_t minHeight {20};
-	uint16_t minWidth {20};
-	uint16_t level {0};
+	Rect _viewBox {};
+	Rect _padding {};
+	uint16_t _minHeight {20};
+	uint16_t _minWidth {20};
+	uint16_t _level {0};
 };
 
 #endif //ARDUI_DRAWABLE_H

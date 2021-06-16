@@ -6,26 +6,26 @@
 
 
 Activity::Activity(const Bundle& extras,
-									 void (* onActivityResult)(int statusCode, Bundle resultData)):
-	bundle {extras},
-	resultCallback {onActivityResult} {
+		void (* onActivityResult)(int statusCode, Bundle resultData)):
+		_bundle {extras},
+		_resultCallback {onActivityResult} {
 	// Nothing to do
 }
 
 
 Activity::~Activity() {
-	delete rootView;
+	delete _rootView;
 }
 
 
 void Activity::setRootView(View* view) {
-	rootView = view;
+	_rootView = view;
 }
 
 
 void Activity::setResult(int statusCode, const Bundle& data) {
-	status = statusCode;
-	resultData = data;
+	_status = statusCode;
+	_resultData = data;
 }
 
 
@@ -35,43 +35,43 @@ void Activity::finish() {
 
 
 void Activity::create() {
-	currentState = CREATED;
+	_currentState = CREATED;
 	onCreate();
 }
 
 
 void Activity::restart() {
-	currentState = RESTARTED;
+	_currentState = RESTARTED;
 	onRestart();
 }
 
 
 void Activity::start() {
-	currentState = STARTED;
+	_currentState = STARTED;
 	onStart();
 }
 
 
 void Activity::resume() {
-	currentState = RESUMED;
+	_currentState = RESUMED;
 	onResume();
 }
 
 
 void Activity::pause() {
-	currentState = PAUSED;
+	_currentState = PAUSED;
 	onPause();
 }
 
 
 void Activity::stop() {
-	currentState = STOPPED;
+	_currentState = STOPPED;
 	onStop();
 }
 
 
 void Activity::destroy() {
-	currentState = DESTROYED;
+	_currentState = DESTROYED;
 	onDestroy();
 }
 
@@ -112,57 +112,57 @@ void Activity::onDestroy() {
 
 
 View* Activity::findViewById(int id) {
-	return rootView->findViewById(id);
+	return _rootView->findViewById(id);
 }
 
 
 const Bundle& Activity::getExtras() {
-	return bundle;
+	return _bundle;
 }
 
 
 View* Activity::getRootView() {
-	return rootView;
-}
-
-
-void Activity::draw() const {
-	if (rootView) {
-		if (!rootView->valid) {
-			arduiDisplayFill(backgroundColor);
-		}
-		rootView->draw();
-	}
+	return _rootView;
 }
 
 
 void Activity::measure() {
-	if (rootView) {
+	if (_rootView) {
 		uint16_t widthSpec = View::MeasureSpec::makeMeasureSpec(View::MeasureSpec::EXACTLY, arduiDisplayGetWidth());
 		uint16_t heightSpec = View::MeasureSpec::makeMeasureSpec(View::MeasureSpec::EXACTLY, arduiDisplayGetHeight());
-		rootView->measure(widthSpec, heightSpec);
+		_rootView->measure(widthSpec, heightSpec);
 	}
 }
 
 
 void Activity::layout() {
-	if (rootView) {
+	if (_rootView) {
 		Rect display {0, 0, arduiDisplayGetWidth(), arduiDisplayGetHeight()};
-		rootView->layout(display);
+		_rootView->layout(display);
+	}
+}
+
+
+void Activity::draw() const {
+	if (_rootView) {
+		if (!_rootView->_valid) {
+			arduiDisplayFill(_backgroundColor);
+		}
+		_rootView->draw();
 	}
 }
 
 
 void Activity::handleEvent(const Event& event) {
-	if (rootView) {
-		rootView->handleEvent(event);
+	if (_rootView) {
+		_rootView->handleEvent(event);
 	}
 }
 
 
 void Activity::rewindState(Activity::State targetState) {
-	while (currentState != targetState) {
-		switch (currentState) {
+	while (_currentState != targetState) {
+		switch (_currentState) {
 			case Activity::State::LAUNCHED:
 				create();
 				break;

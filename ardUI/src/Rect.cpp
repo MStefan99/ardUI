@@ -6,10 +6,10 @@
 
 
 Rect::Rect(uint16_t left, uint16_t top, uint16_t right, uint16_t bottom):
-	left {left},
-	top {top},
-	right {right},
-	bottom {bottom} {}
+		left {left},
+		top {top},
+		right {right},
+		bottom {bottom} {}
 
 
 bool Rect::contains(const Rect& r) const {

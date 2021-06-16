@@ -5,7 +5,6 @@
 #ifndef ARDUI_BUTTONVIEW_H
 #define ARDUI_BUTTONVIEW_H
 
-
 #include "platform.h"
 #include "llpi.h"
 #include "TextView.h"
@@ -18,10 +17,9 @@ public:
 	~ButtonView() override = default;
 
 protected:
-	// TODO: add onMeasure
 	void onDraw() override;
 
-	uint32_t borderColor {0x0};
+	uint32_t _borderColor {0x0};
 };
 
 #endif //ARDUI_BUTTONVIEW_H

@@ -27,7 +27,7 @@ uint16_t arduiDisplayGetFontHeight() {
 }
 
 
-uint16_t arduiDisplayGetFontWidth() {
+uint16_t arduiDisplayGetCharWidth(char c, uint16_t height) {
 	// Has to be implemented by the user
 	return 5;
 }
@@ -52,7 +52,7 @@ uint16_t arduiDisplayGetClickY() {
 
 
 ReturnCode arduiDisplayInit() {
-#if defined(VERBOSE) && defined(DEBUG)
+#if defined(VERBOSE_MODE) && defined(DEBUG_MODE)
 	Serial.println("Display init");
 #endif
 	// Has to be implemented by the user
@@ -61,7 +61,7 @@ ReturnCode arduiDisplayInit() {
 
 
 ReturnCode arduiDisplayOn() {
-#ifdef VERBOSE
+#ifdef VERBOSE_MODE
 	Serial.println("Display on");
 #endif
 	// Has to be implemented by the user
@@ -70,7 +70,7 @@ ReturnCode arduiDisplayOn() {
 
 
 ReturnCode arduiDisplayOff() {
-#ifdef VERBOSE
+#ifdef VERBOSE_MODE
 	Serial.println("Display on");
 #endif
 	// Has to be implemented by the user
@@ -79,7 +79,7 @@ ReturnCode arduiDisplayOff() {
 
 
 ReturnCode arduiDisplaySetBrightness(uint8_t brightness) {
-#ifdef VERBOSE
+#ifdef VERBOSE_MODE
 	Serial.print("Display brightness set to ");
 	Serial.println(brightness);
 #endif
@@ -89,7 +89,7 @@ ReturnCode arduiDisplaySetBrightness(uint8_t brightness) {
 
 
 ReturnCode arduiDisplayFill(uint32_t color) {
-#ifdef VERBOSE
+#ifdef VERBOSE_MODE
 	Serial.println("Display filled");
 #endif
 	// Has to be implemented by the user
@@ -98,7 +98,7 @@ ReturnCode arduiDisplayFill(uint32_t color) {
 
 
 ReturnCode arduiDisplayDrawPixel(uint16_t x, uint16_t y, uint32_t color) {
-#ifdef VERBOSE
+#ifdef VERBOSE_MODE
 	Serial.print("Drawn pixel at (");
 	Serial.print(x);
 	Serial.print(", ");
@@ -111,7 +111,7 @@ ReturnCode arduiDisplayDrawPixel(uint16_t x, uint16_t y, uint32_t color) {
 
 
 ReturnCode arduiDisplayDrawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint32_t color) {
-#ifdef VERBOSE
+#ifdef VERBOSE_MODE
 	Serial.print("Drawn line from (");
 	Serial.print(x1);
 	Serial.print(", ");
@@ -127,8 +127,8 @@ ReturnCode arduiDisplayDrawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t 
 }
 
 
-ReturnCode arduiDisplayDrawChar(uint16_t x, uint16_t y, uint16_t height, char c, uint32_t color) {
-#ifdef VERBOSE
+ReturnCode arduiDisplayDrawChar(uint16_t x, uint16_t y, char c, uint16_t height, uint32_t color) {
+#ifdef VERBOSE_MODE
 	Serial.print("Drawn char ");
 	Serial.print(c);
 	Serial.print(" at (");
@@ -143,7 +143,7 @@ ReturnCode arduiDisplayDrawChar(uint16_t x, uint16_t y, uint16_t height, char c,
 
 
 ReturnCode arduiDisplayDrawText(uint16_t x, uint16_t y, const String& text, uint16_t textSize, uint32_t color) {
-#ifdef VERBOSE
+#ifdef VERBOSE_MODE
 	Serial.print("Drawn text \"");
 	Serial.print(text);
 	Serial.print("\" at (");
@@ -158,7 +158,7 @@ ReturnCode arduiDisplayDrawText(uint16_t x, uint16_t y, const String& text, uint
 
 
 ReturnCode arduiDisplayDrawCircle(uint16_t x, uint16_t y, uint16_t radius, uint32_t color) {
-#ifdef VERBOSE
+#ifdef VERBOSE_MODE
 	Serial.print("Drawn circle at (");
 	Serial.print(x);
 	Serial.print(", ");
@@ -172,7 +172,7 @@ ReturnCode arduiDisplayDrawCircle(uint16_t x, uint16_t y, uint16_t radius, uint3
 
 
 ReturnCode arduiDisplayFillCircle(uint16_t x, uint16_t y, uint16_t radius, uint32_t color) {
-#ifdef VERBOSE
+#ifdef VERBOSE_MODE
 	Serial.print("Filled circle at (");
 	Serial.print(x);
 	Serial.print(", ");
@@ -186,8 +186,8 @@ ReturnCode arduiDisplayFillCircle(uint16_t x, uint16_t y, uint16_t radius, uint3
 
 
 ReturnCode arduiDisplayDrawRect(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
-																uint32_t color) {
-#ifdef VERBOSE
+		uint32_t color) {
+#ifdef VERBOSE_MODE
 	Serial.print("Drawn rect from (");
 	Serial.print(x1);
 	Serial.print(", ");
@@ -204,8 +204,8 @@ ReturnCode arduiDisplayDrawRect(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t 
 
 
 ReturnCode arduiDisplayFillRect(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
-																uint32_t color) {
-#ifdef VERBOSE
+		uint32_t color) {
+#ifdef VERBOSE_MODE
 	Serial.print("Filled rect from (");
 	Serial.print(x1);
 	Serial.print(", ");
@@ -222,9 +222,9 @@ ReturnCode arduiDisplayFillRect(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t 
 
 
 ReturnCode arduiDisplayDrawTriangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
-																		uint16_t x3, uint16_t y3, uint32_t color) {
+		uint16_t x3, uint16_t y3, uint32_t color) {
 	// Has to be implemented by the user
-#ifdef VERBOSE
+#ifdef VERBOSE_MODE
 	Serial.print("Drawn triangle between (");
 	Serial.print(x1);
 	Serial.print(", ");
@@ -243,9 +243,9 @@ ReturnCode arduiDisplayDrawTriangle(uint16_t x1, uint16_t y1, uint16_t x2, uint1
 
 
 ReturnCode arduiDisplayFillTriangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
-																		uint16_t x3, uint16_t y3, uint32_t color) {
+		uint16_t x3, uint16_t y3, uint32_t color) {
 	// Has to be implemented by the user
-#ifdef VERBOSE
+#ifdef VERBOSE_MODE
 	Serial.print("Filled triangle between (");
 	Serial.print(x1);
 	Serial.print(", ");
@@ -265,7 +265,7 @@ ReturnCode arduiDisplayFillTriangle(uint16_t x1, uint16_t y1, uint16_t x2, uint1
 
 ReturnCode arduiDisplayDrawBitmap(uint16_t x, uint16_t y, uint16_t* bitmap) {
 	// Has to be implemented by the user
-#ifdef VERBOSE
+#ifdef VERBOSE_MODE
 	Serial.print("Drawn bitmap at (");
 	Serial.print(x);
 	Serial.print(", ");

@@ -20,7 +20,7 @@ public:
 private:
 	template <class ActivityClass>
 	static void startActivity(const Bundle& extras = {},
-														void (* onActivityResult)(int statusCode, Bundle resultData) = {});
+			void (* onActivityResult)(int statusCode, Bundle resultData) = {});
 	static void stopActivity(Activity* activityToStop);
 	static void back();
 	static void reset();
@@ -32,10 +32,10 @@ private:
 	static void cleanupActivities();
 	static void startupActivities();
 
-	static Activity* currentActivity;
-	static LIST<Activity*> startingActivities;
-	static LIST<Activity*> stoppingActivities;
-	static LIST<Activity*> backList;
+	static Activity* _currentActivity;
+	static LIST<Activity*> _startingActivities;
+	static LIST<Activity*> _stoppingActivities;
+	static LIST<Activity*> _backList;
 
 	friend class EventManager;
 

@@ -5,7 +5,6 @@
 #ifndef ARDUI_ACTIVITY_H
 #define ARDUI_ACTIVITY_H
 
-
 #include "platform.h"
 #include LIST_H
 
@@ -19,7 +18,7 @@ class Activity {
 public:
 	Activity() = default;
 	Activity(const Bundle& extras,
-					 void (* onActivityResult)(int statusCode, Bundle resultData));
+			void (* onActivityResult)(int statusCode, Bundle resultData));
 	virtual ~Activity();
 
 	template <class compiledLayout>
@@ -30,7 +29,7 @@ public:
 	void startActivity(const Bundle& extras = {});
 	template <class ActivityClass>
 	void startActivityForResult(void (* onActivityResult)(int statusCode, Bundle resultData),
-															const Bundle& extras = {});
+			const Bundle& extras = {});
 	void setResult(int statusCode = 0, const Bundle& data = {});
 	void finish();
 
@@ -79,13 +78,13 @@ private:
 
 	void rewindState(Activity::State targetState);
 
-	State currentState {LAUNCHED};
-	View* rootView {};
-	Bundle bundle {};
-	Bundle resultData {};
-	int status {};
-	void (* resultCallback)(int statusCode, Bundle resultData) {nullptr};
-	uint32_t backgroundColor {0xffffff};
+	State _currentState {LAUNCHED};
+	View* _rootView {};
+	Bundle _bundle {};
+	Bundle _resultData {};
+	int _status {};
+	void (* _resultCallback)(int statusCode, Bundle resultData) {nullptr};
+	uint32_t _backgroundColor {0xffffff};
 };
 
 
@@ -97,7 +96,7 @@ void Activity::startActivity(const Bundle& extras) {
 
 template <class ActivityClass>
 void Activity::startActivityForResult(void (* onActivityResult)(int statusCode, Bundle resultData),
-																			const Bundle& extras) {
+		const Bundle& extras) {
 	ActivityManager::startActivity<ActivityClass>(extras, onActivityResult);
 }
 

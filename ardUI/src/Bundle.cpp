@@ -8,53 +8,53 @@
 Bundle::Concept::~Concept() = default;
 
 
-Bundle::Bundle(const Bundle& b): bundleMap(b.bundleMap) {
-	for (auto& e: bundleMap) {
+Bundle::Bundle(const Bundle& b): _bundleMap(b._bundleMap) {
+	for (auto& e: _bundleMap) {
 		e.second = e.second->copy();
 	}
 }
 
 
 Bundle& Bundle::operator =(const Bundle& other) {
-	for (const auto& e: other.bundleMap) {
-		bundleMap[e.first] = e.second->copy();
+	for (const auto& e: other._bundleMap) {
+		_bundleMap[e.first] = e.second->copy();
 	}
 	return *this;
 }
 
 
 void Bundle::putInt(const String& key, int value) {
-	bundleMap[key] = new Model<int> {value};
+	_bundleMap[key] = new Model<int> {value};
 }
 
 
 void Bundle::putFloat(const String& key, float value) {
-	bundleMap[key] = new Model<float> {value};
+	_bundleMap[key] = new Model<float> {value};
 }
 
 
 void Bundle::putString(const String& key, const String& value) {
-	bundleMap[key] = new Model<String> {value};
+	_bundleMap[key] = new Model<String> {value};
 }
 
 
 int Bundle::getInt(const String& key) {
-	return ((Model<int>*)bundleMap[key])->object;
+	return ((Model<int>*)_bundleMap[key])->_object;
 }
 
 
 float Bundle::getFloat(const String& key) {
-	return ((Model<float>*)bundleMap[key])->object;
+	return ((Model<float>*)_bundleMap[key])->_object;
 }
 
 
 String& Bundle::getString(const String& key) {
-	return ((Model<String>*)bundleMap[key])->object;
+	return ((Model<String>*)_bundleMap[key])->_object;
 }
 
 
 Bundle::~Bundle() {
-	for (const auto& e : bundleMap) {
+	for (const auto& e : _bundleMap) {
 		delete e.second;
 	}
 }

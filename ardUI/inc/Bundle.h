@@ -5,7 +5,6 @@
 #ifndef ARDUI_BUNDLE_H
 #define ARDUI_BUNDLE_H
 
-
 #include "platform.h"
 #include MAP_H
 
@@ -39,7 +38,7 @@ public:
 	~Bundle();
 
 protected:
-	MAP<String, Concept*> bundleMap {};
+	MAP<String, Concept*> _bundleMap {};
 
 	class Concept {
 	public:
@@ -53,39 +52,39 @@ protected:
 		explicit Model<T>(T value);
 		Model<T>* copy() override;
 
-		T object;
+		T _object;
 	};
 };
 
 
 template <class T>
 Bundle::Model<T>::Model(T value):
-	object {value} {
+		_object {value} {
 }
 
 
 template <class T>
 Bundle::Model<T>* Bundle::Model<T>::copy() {
-	return new Model<T> {object};
+	return new Model<T> {_object};
 }
 
 
 template <class T>
 void Bundle::put(const String& key, const T& value) {
-	bundleMap[key] = new Model<T> {value};
+	_bundleMap[key] = new Model<T> {value};
 }
 
 
 template <class T>
 T& Bundle::get(const String& key) {
-	return ((Model<T>*)bundleMap[key])->object;
+	return ((Model<T>*)_bundleMap[key])->_object;
 }
 
 
 template <class T>
 void Bundle::remove(const String& key) {
-	delete (T*)bundleMap[key];
-	bundleMap.erase(key);
+	delete (T*)_bundleMap[key];
+	_bundleMap.erase(key);
 }
 
 
