@@ -7,14 +7,14 @@ addEventListener('load', () => {
 	const resList = document.getElementById('res-list');
 	const resetButton = document.getElementById('res-reset');
 	const flipButton = document.getElementById('res-flip');
-	const params = new URLSearchParams(location.search);
+	const url = new URL(location.href);
 
 
-	form['res-width'].value = params.get('width') || canvas.width;
-	form['res-height'].value = params.get('height') || canvas.height;
+	form['res-width'].value = url.searchParams.get('width') || canvas.width;
+	form['res-height'].value = url.searchParams.get('height') || canvas.height;
 
 	resetButton.addEventListener('click', () => {
-		window.location.search = '';
+		setCanvasSize();
 	});
 
 
@@ -44,8 +44,18 @@ addEventListener('load', () => {
 			return;
 		}
 
-		params.set('width', width);
-		params.set('height', height);
-		window.location.search = params;
+		setCanvasSize(width, height);
 	});
+
+
+	function setCanvasSize(width, height) {
+		width = width || 480;
+		height = height || 320;
+
+		url.searchParams.set('width', width);
+		url.searchParams.set('height', height);
+		canvas.width = +width;
+		canvas.height = +height;
+		history.pushState({}, "Display resize", url.toString());
+	}
 });
