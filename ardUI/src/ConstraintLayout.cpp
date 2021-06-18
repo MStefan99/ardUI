@@ -45,7 +45,7 @@ uint16_t ConstraintLayout::getPos(View* view, Side side) {
 
 
 void ConstraintLayout::applyConstraints(
-		std::pair<ConstraintSet::LayoutInfo, std::list<ConstraintSet::Constraint>>* constraints) {
+		PAIR<ConstraintSet::LayoutInfo, LIST<ConstraintSet::Constraint>>* constraints) {
 	auto& layoutInfo = constraints->first;
 
 	for (auto constraint: constraints->second) {

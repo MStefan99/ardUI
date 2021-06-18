@@ -53,7 +53,6 @@ addEventListener('load', () => {
 		url.searchParams.set('height', height);
 		canvas.width = +width;
 		canvas.height = +height;
-		history.pushState({}, "Display resize", url.toString());
 		redrawDisplay();
 	}
 });

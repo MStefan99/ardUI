@@ -9,6 +9,13 @@ function redrawDisplay() {
 }
 
 
+function cIterate(collection, cb) {
+	for (let it = collection.begin(); it.notEquals(collection.end()); it = it.increment()) {
+		cb(it.value());
+	}
+}
+
+
 if (typeof ardUI !== 'undefined') {
 	ardUI().then(ardUI => {
 		ardUIInstance = ardUI;
@@ -20,6 +27,9 @@ if (typeof ardUI !== 'undefined') {
 			splash.classList.add('invisible');
 
 			const builderInterface = new ardUI.BuilderInterface();
+			cIterate(builderInterface.getCurrentActivity().getRootView()._viewList, view => {
+				console.log(view);
+			});
 			console.log(builderInterface.getCurrentActivity().getRootView());
 
 			setInterval(() => {
@@ -53,9 +63,11 @@ if (typeof ardUI !== 'undefined') {
 		});
 	});
 } else {
-	const splashErrorText = document.getElementById('splash-load-error');
-	const splashAnimation = document.getElementById('splash-animation');
+	addEventListener('load', () => {
+		const splashErrorText = document.getElementById('splash-load-error');
+		const splashAnimation = document.getElementById('splash-animation');
 
-	splashErrorText.classList.remove('d-none');
-	splashAnimation.classList.add('d-none');
+		splashErrorText.classList.remove('d-none');
+		splashAnimation.classList.add('d-none');
+	});
 }

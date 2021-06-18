@@ -8,6 +8,8 @@
 
 #include <emscripten/bind.h>
 
+#include "platform.h"
+#include LIST_H
 #include "View.h"
 #include "Activity.h"
 #include "ActivityManager.h"
@@ -38,7 +40,22 @@ EMSCRIPTEN_BINDINGS(BuilderInterface) {
 			.property("_measuredHeight", &View::_measuredHeight)
 			.function("invalidate", &View::invalidate);
 
-	class_<LIST<View*>>("list");
+	#if !USE_STL
+	class_<LIST<View*>::iterator>("listIterator")
+			.function("value", &LIST<View*>::iterator::operator *)
+			.function("notEquals", &LIST<View*>::iterator::operator !=)
+			.function<internal::DeduceArgumentsTag,
+					LIST<View*>::iterator& (LIST<View*>::iterator::*)()>
+					("increment", &LIST<View*>::iterator::operator ++);
+
+	class_<LIST<View*>>("list")
+			.constructor()
+			.function("begin", &LIST<View*>::begin)
+			.function("end", &LIST<View*>::end);
+	#else
+	class_<LIST<View*>>("list")
+			.constructor();
+	#endif
 
 	class_<ViewGroup, base<View>>("ViewGroup")
 			.property("_viewList", &ViewGroup::_viewList);
