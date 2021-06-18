@@ -16,6 +16,31 @@ function cIterate(collection, cb) {
 }
 
 
+function addView(view) {
+	const container = document.getElementById('view-container');
+	const viewElement = document.createElement('div');
+
+	if (view._viewList) {
+		viewElement.classList.add('view', 'viewGroup')
+	} else {
+		viewElement.classList.add('view')
+	}
+
+	viewElement.style.left = view._viewBox.left + 'px';
+	viewElement.style.top = view._viewBox.top + 'px';
+	viewElement.style.width = (view._viewBox.right - view._viewBox.left) + 'px';
+	viewElement.style.height = (view._viewBox.bottom - view._viewBox.top) + 'px';
+
+	container.appendChild(viewElement);
+
+	if (view._viewList) {
+		cIterate(view._viewList, child => {
+			addView(child)
+		});
+	}
+}
+
+
 if (typeof ardUI !== 'undefined') {
 	ardUI().then(ardUI => {
 		ardUIInstance = ardUI;
@@ -27,10 +52,7 @@ if (typeof ardUI !== 'undefined') {
 			splash.classList.add('invisible');
 
 			const builderInterface = new ardUI.BuilderInterface();
-			cIterate(builderInterface.getCurrentActivity().getRootView()._viewList, view => {
-				console.log(view);
-			});
-			console.log(builderInterface.getCurrentActivity().getRootView());
+			addView(builderInterface.getCurrentActivity().getRootView());
 
 			setInterval(() => {
 				ardUI._loop();

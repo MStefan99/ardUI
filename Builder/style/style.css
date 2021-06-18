@@ -292,6 +292,18 @@ html body #dashboard #right-pane {
 html body #dashboard #canvas-wrapper {
   width: max-content;
 }
+html body #dashboard #canvas-wrapper #view-container {
+  position: relative;
+}
+html body #dashboard #canvas-wrapper #view-container div {
+  position: absolute;
+}
+html body #dashboard #canvas-wrapper #view-container div.view {
+  border: 1px solid #52dee2;
+}
+html body #dashboard #canvas-wrapper #view-container div.viewGroup {
+  border: 1px solid #eab33f;
+}
 html body #dashboard #canvas-wrapper #builder-canvas {
   border: 1px dashed #ddd;
 }

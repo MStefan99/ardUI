@@ -55,6 +55,7 @@ EMSCRIPTEN_BINDINGS(BuilderInterface) {
 	#else
 	class_<LIST<View*>>("list")
 			.constructor();
+	// TODO: add STL bindings
 	#endif
 
 	class_<ViewGroup, base<View>>("ViewGroup")
