@@ -2,7 +2,7 @@ set(UTILS_DIRECTORY ${BUILDER_DIRECTORY}/utils)
 
 # Setting compiler flags
 if (${CMAKE_C_COMPILER} MATCHES "emcc")
-	SET(COMPILER_FLAGS " -s MODULARIZE=1 -s EXPORT_NAME=\"ardUI\" -s EXPORTED_FUNCTIONS=\"['_setup','_loop']\"")
+	SET(COMPILER_FLAGS " --bind -s MODULARIZE=1 -s EXPORT_NAME=ardUI -s EXPORTED_RUNTIME_METHODS=[downcastPointer] -s EXPORTED_FUNCTIONS=[_setup,_loop]")
 	SET(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} ${COMPILER_FLAGS})
 endif ()
 

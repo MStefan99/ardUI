@@ -1,3 +1,6 @@
+@require animations
+
+
 card()
 	padding 1em
 	border 1px solid #ccc
@@ -20,12 +23,32 @@ html
 		header
 			display flex
 			flex-flow row nowrap
-			justify-content space-between
+			justify-content flex-start
 			padding 1em
 			margin-bottom 1em
 
 			#logo
 				height 2em
+
+			#tab-switcher
+				display flex
+				flex-flow row nowrap
+				align-items center
+
+				.tab
+					white-space nowrap
+					text-align center
+					user-select none
+					padding 0 1em
+					border-bottom 1px solid #ddd
+					border-radius 5px 5px 0 0
+					transition box-shadow .1s ease-in
+
+					&.selected
+						border 1px solid #ddd
+						border-bottom none
+						position relative
+						border-radius  5px 5px 0 0
 
 		#dashboard
 			display flex
@@ -49,6 +72,36 @@ html
 				#mouse-coords
 					display block
 					visibility hidden
+
+		div#splash
+			card()
+			position absolute
+			left 0
+			top 0
+			right 0
+			bottom 0
+			background-color #fff
+			animation splash .2s cubic-bezier(0, .3, .7, 1) backwards
+			transition transform .2s cubic-bezier(0, .3, .7, 1),
+				opacity .2s cubic-bezier(0, .3, .7, 1)
+
+			&.invisible
+				transform scale(.5)
+				opacity 0
+				pointer-events none
+
+			img#splash-logo
+				max-height 80vh
+
+			div#splash-animation
+				span.animation-dot
+					display inline-block
+					height 2.5em
+					width 2.5em
+					background-color #000
+					border-radius 50%
+					margin .5em
+					animation dot-animation 5s calc(var(--order) * .2s) infinite
 
 		footer
 			padding 1em 2em

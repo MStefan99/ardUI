@@ -56,6 +56,8 @@ public:
 
 	friend class Activity;
 
+	friend class EmscriptenBindingInitializer_BuilderInterface;
+
 protected:
 	// Measure contents of the current view
 	virtual void onMeasure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec);

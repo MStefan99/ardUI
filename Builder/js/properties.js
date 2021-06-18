@@ -1,6 +1,5 @@
 'use strict';
 
-
 addEventListener('load', () => {
 	const form = document.getElementById('res-form');
 	const canvas = document.getElementById('builder-canvas');
@@ -19,11 +18,9 @@ addEventListener('load', () => {
 
 
 	flipButton.addEventListener('click', () => {
-		const width = form['res-width'].value;
-		const height = form['res-height'].value;
-
-		form['res-height'].value = width;
-		form['res-width'].value = height;
+		// swapping width and height
+		// noinspection JSSuspiciousNameCombination
+		setCanvasSize(canvas.height, canvas.width);
 	});
 
 
@@ -57,5 +54,6 @@ addEventListener('load', () => {
 		canvas.width = +width;
 		canvas.height = +height;
 		history.pushState({}, "Display resize", url.toString());
+		redrawDisplay();
 	}
 });

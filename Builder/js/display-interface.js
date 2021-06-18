@@ -36,18 +36,6 @@ function hideMouseCoords() {
 }
 
 
-addEventListener('load', () => {
-	const params = new URLSearchParams(window.location.search);
-	if (params.has('width')) {
-		canvas.width = +params.get('width');
-	}
-	if (params.has('height')) {
-		canvas.height = +params.get('height');
-	}
-	context.textBaseline = 'top';
-});
-
-
 function getColor(colorCode) {
 	return '#' + colorCode.toString(16).padStart(6, '0');
 }
@@ -110,36 +98,3 @@ const display = {
 };
 
 
-ardUI().then((ardUI) => {
-	ardUI._setup();
-	ardUI._loop();
-
-	setInterval(() => {
-		ardUI._loop();
-	}, 1000 / 10);
-
-	canvas.addEventListener('mousedown', e => {
-		click.down = true;
-		click.x = e.offsetX;
-		click.y = e.offsetY;
-		showMouseCoords(click.x, click.y);
-		ardUI._loop();
-	});
-
-	canvas.addEventListener('mousemove', e => {
-		if (click.down) {
-			click.x = e.offsetX;
-			click.y = e.offsetY;
-			showMouseCoords(click.x, click.y);
-			ardUI._loop();
-		}
-	});
-
-	'mouseup mouseleave'.split(' ').forEach(event => {
-		canvas.addEventListener(event, e => {
-			click.down = false;
-			hideMouseCoords();
-			ardUI._loop();
-		})
-	});
-});

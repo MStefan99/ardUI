@@ -47,6 +47,8 @@ public:
 
 	friend class ActivityManager;
 
+	friend class EmscriptenBindingInitializer_BuilderInterface;
+
 protected:
 	const Bundle& getExtras();
 
