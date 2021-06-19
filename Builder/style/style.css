@@ -297,12 +297,16 @@ html body #dashboard #canvas-wrapper #view-container {
 }
 html body #dashboard #canvas-wrapper #view-container div {
   position: absolute;
+  transition: border-width 0.2s linear;
 }
 html body #dashboard #canvas-wrapper #view-container div.view {
   border: 1px solid #52dee2;
 }
 html body #dashboard #canvas-wrapper #view-container div.viewGroup {
   border: 1px solid #eab33f;
+}
+html body #dashboard #canvas-wrapper #view-container div:hover {
+  border-width: 5px;
 }
 html body #dashboard #canvas-wrapper #builder-canvas {
   border: 1px dashed #ddd;

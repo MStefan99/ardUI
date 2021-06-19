@@ -71,12 +71,16 @@ html
 
 					div
 						position absolute
+						transition border-width .2s linear
 
 						&.view
 							border 1px solid #52dee2
 
 						&.viewGroup
 							border 1px solid #eab33f
+
+						&:hover
+							border-width 5px
 
 				#builder-canvas
 					border 1px dashed #ddd

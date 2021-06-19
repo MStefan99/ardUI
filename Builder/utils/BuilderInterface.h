@@ -15,6 +15,13 @@
 #include "ActivityManager.h"
 
 
+template <class T>
+bool IteratorNotEquals(const typename LIST<T>::iterator& x,
+		const typename LIST<T>::iterator& y) {
+	return x != y;
+}
+
+
 class BuilderInterface {
 public:
 	Activity* getCurrentActivity() const {
@@ -25,6 +32,7 @@ public:
 using namespace emscripten;
 
 EMSCRIPTEN_BINDINGS(BuilderInterface) {
+
 	class_<Rect>("Rect")
 			.constructor()
 			.property("left", &Rect::left)
@@ -43,7 +51,7 @@ EMSCRIPTEN_BINDINGS(BuilderInterface) {
 	#if !USE_STL
 	class_<LIST<View*>::iterator>("listIterator")
 			.function("value", &LIST<View*>::iterator::operator *)
-			.function("notEquals", &LIST<View*>::iterator::operator !=)
+			.function("notEquals", &IteratorNotEquals<View*>)
 			.function<internal::DeduceArgumentsTag,
 					LIST<View*>::iterator& (LIST<View*>::iterator::*)()>
 					("increment", &LIST<View*>::iterator::operator ++);
@@ -53,9 +61,19 @@ EMSCRIPTEN_BINDINGS(BuilderInterface) {
 			.function("begin", &LIST<View*>::begin)
 			.function("end", &LIST<View*>::end);
 	#else
+	class_<LIST<View*>::iterator>("listIterator")
+			.function("value", &LIST<View*>::iterator::operator *)
+			.function("notEquals", &IteratorNotEquals<View*>)
+			.function<internal::DeduceArgumentsTag,
+					LIST<View*>::iterator& (LIST<View*>::iterator::*)()>
+					("increment", &LIST<View*>::iterator::operator ++);
+
 	class_<LIST<View*>>("list")
-			.constructor();
-	// TODO: add STL bindings
+			.constructor()
+			.function<internal::DeduceArgumentsTag,
+					LIST<View*>::iterator (LIST<View*>::*)()>("begin", &LIST<View*>::begin)
+			.function<internal::DeduceArgumentsTag,
+					LIST<View*>::iterator(LIST<View*>::*)()>("end", &LIST<View*>::end);
 	#endif
 
 	class_<ViewGroup, base<View>>("ViewGroup")

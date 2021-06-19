@@ -6,12 +6,25 @@ function redrawDisplay() {
 	const builderInterface = new ardUIInstance.BuilderInterface();
 	builderInterface.getCurrentActivity().getRootView().invalidate();
 	context.textBaseline = 'top';
+
+	ardUIInstance._loop();
+	removeViews();
+	addView(builderInterface.getCurrentActivity().getRootView());
 }
 
 
 function cIterate(collection, cb) {
 	for (let it = collection.begin(); it.notEquals(collection.end()); it = it.increment()) {
 		cb(it.value());
+	}
+}
+
+
+function removeViews() {
+	const container = document.getElementById('view-container');
+
+	while (container.firstChild) {
+		container.removeChild(container.firstChild);
 	}
 }
 
