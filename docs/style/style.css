@@ -1,0 +1,25 @@
+html {
+  font-family: sans-serif;
+  scroll-behavior: smooth;
+}
+html body {
+  margin: 0;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  min-height: 100vh;
+}
+html body header {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  padding: 1em;
+  margin-bottom: 1em;
+}
+html body header #logo {
+  height: 2em;
+}
+html body footer {
+  padding: 1em 2em;
+  background-color: #f0f0f0;
+}
