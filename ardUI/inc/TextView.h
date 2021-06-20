@@ -27,6 +27,8 @@ public:
 
 	// TODO: add alignment options
 
+	friend class EmscriptenBindingInitializer_BuilderInterface;
+
 protected:
 	void onMeasure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec) override;
 	void onDraw() override;

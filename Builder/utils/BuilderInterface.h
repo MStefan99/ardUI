@@ -57,6 +57,12 @@ EMSCRIPTEN_BINDINGS(BuilderInterface) {
 			.property("_measuredWidth", &View::_measuredWidth)
 			.function("invalidate", &View::invalidate);
 
+	class_<TextView, base<View>>("TextView")
+			.constructor<String>()
+			.property("_text", &TextView::_text)
+			.property("_textSize", &TextView::_textSize)
+			.property("_textColor", &TextView::_textColor);
+
 	#if !USE_STL
 	class_<LIST<View*>::iterator>("listIterator")
 			.function("value", &LIST<View*>::iterator::operator *)
@@ -78,7 +84,6 @@ EMSCRIPTEN_BINDINGS(BuilderInterface) {
 					("increment", &LIST<View*>::iterator::operator ++);
 
 	class_<LIST<View*>>("list")
-			.constructor()
 			.function<internal::DeduceArgumentsTag,
 					LIST<View*>::iterator (LIST<View*>::*)()>("begin", &LIST<View*>::begin)
 			.function<internal::DeduceArgumentsTag,
