@@ -46,7 +46,8 @@ ardUIInstance.then(ardUI => {
 	ardUI._loop();
 
 	const builderInterface = new ardUI.BuilderInterface();
-	addView(builderInterface.getCurrentActivity().getRootView());
+	const currentActivity = builderInterface.getCurrentActivity();
+	addView(currentActivity.getRootView());
 
 	setTimeout(() => {
 		const splash = document.getElementById('splash');
@@ -55,10 +56,10 @@ ardUIInstance.then(ardUI => {
 
 
 	setInterval(() => {
-		if (!builderInterface.getCurrentActivity().getRootView().isValid()) {
+		if (!currentActivity.getRootView()._valid) {
 			ardUI._loop();
 			removeViews();
-			addView(builderInterface.getCurrentActivity().getRootView());
+			addView(currentActivity.getRootView());
 		}
 	}, 100);
 });
