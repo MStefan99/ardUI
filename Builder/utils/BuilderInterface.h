@@ -41,7 +41,8 @@ EMSCRIPTEN_BINDINGS(BuilderInterface) {
 			.property("bottom", &Rect::bottom);
 
 	class_<Drawable>("Drawable")
-			.property("_viewBox", &View::_viewBox);
+			.property("_viewBox", &Drawable::_viewBox)
+			.function("isValid", &Drawable::isValid);
 
 	class_<View, base<Drawable>>("View")
 			.property("_measuredWidth", &View::_measuredWidth)

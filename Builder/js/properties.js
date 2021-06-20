@@ -1,13 +1,16 @@
 'use strict';
 
-addEventListener('load', () => {
+import {ardUIInstance} from "./ardui-interface.js";
+
+
+ardUIInstance.then(ardUI => {
 	const form = document.getElementById('res-form');
 	const canvas = document.getElementById('builder-canvas');
+	const context = canvas.getContext('2d');
 	const resList = document.getElementById('res-list');
 	const resetButton = document.getElementById('res-reset');
 	const flipButton = document.getElementById('res-flip');
 	const url = new URL(location.href);
-
 
 	form['res-width'].value = url.searchParams.get('width') || canvas.width;
 	form['res-height'].value = url.searchParams.get('height') || canvas.height;
@@ -53,6 +56,9 @@ addEventListener('load', () => {
 		url.searchParams.set('height', height);
 		canvas.width = +width;
 		canvas.height = +height;
-		redrawDisplay();
+
+		const builderInterface = new ardUI.BuilderInterface();
+		builderInterface.getCurrentActivity().getRootView().invalidate();
+		context.textBaseline = 'top';
 	}
 });

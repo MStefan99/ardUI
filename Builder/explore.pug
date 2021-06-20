@@ -7,13 +7,11 @@ block head
 
 block header
 	div#tab-switcher
-		span.tab.selected Explore
-		span.tab Build
+		a(href='./explore').tab.selected Explore
+		a(href='./build').tab Build
 
 block main
 	div#dashboard
-		div#left-pane
-			h2 Navigation
 		div#center-pane
 			h2 Display
 			div#canvas-wrapper
@@ -40,9 +38,9 @@ block main
 
 
 	script(src='../cmake-build-emscripten/Builder/Builder.js')
-	script(src='./js/display-interface.js')
-	script(src='./js/dashboard.js')
-	script(src='./js/properties.js')
+	script(type='module' src='./js/ardui-interface.js')
+	script(type='module' src='./js/explore.js')
+	script(type='module' src='./js/properties.js')
 
 
 block body
