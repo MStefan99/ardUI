@@ -81,7 +81,13 @@ EMSCRIPTEN_BINDINGS(BuilderInterface) {
 			.property("_viewList", &ViewGroup::_viewList);
 
 	class_<LinearLayout, base<ViewGroup>>("LinearLayout")
+			.constructor()
 			.property("_orientation", &LinearLayout::_orientation);
+
+	class_<ConstraintLayout, base<ViewGroup>>("ConstraintLayout")
+			.constructor()
+			.function("getConstraints", &ConstraintLayout::getConstraints,
+					allow_raw_pointers());
 
 	class_<Activity>("Activity")
 			.function("getRootView", &Activity::getRootView,
