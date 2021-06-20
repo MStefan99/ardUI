@@ -32,21 +32,29 @@ public:
 using namespace emscripten;
 
 EMSCRIPTEN_BINDINGS(BuilderInterface) {
-
 	class_<Rect>("Rect")
 			.constructor()
 			.property("left", &Rect::left)
 			.property("top", &Rect::top)
 			.property("right", &Rect::right)
-			.property("bottom", &Rect::bottom);
+			.property("bottom", &Rect::bottom)
+			.function("height", &Rect::height)
+			.function("width", &Rect::width);
 
 	class_<Drawable>("Drawable")
 			.property("_viewBox", &Drawable::_viewBox)
-			.function("isValid", &Drawable::isValid);
+			.property("_valid", &Drawable::_valid)
+			.property("_padding", &Drawable::_padding)
+			.property("_minHeight", &Drawable::_minHeight)
+			.property("_minWidth", &Drawable::_minWidth)
+			.property("_level", &Drawable::_level);
 
 	class_<View, base<Drawable>>("View")
 			.property("_measuredWidth", &View::_measuredWidth)
 			.property("_measuredHeight", &View::_measuredHeight)
+			.property("_viewId", &View::_viewId)
+			.property("_measuredHeight", &View::_measuredHeight)
+			.property("_measuredWidth", &View::_measuredWidth)
 			.function("invalidate", &View::invalidate);
 
 	#if !USE_STL
@@ -78,18 +86,34 @@ EMSCRIPTEN_BINDINGS(BuilderInterface) {
 	#endif
 
 	class_<ViewGroup, base<View>>("ViewGroup")
-			.property("_viewList", &ViewGroup::_viewList);
+			.property("_viewList", &ViewGroup::_viewList)
+			.function("addView", &ViewGroup::addView, allow_raw_pointers())
+			.function("removeView", &ViewGroup::removeView, allow_raw_pointers())
+			.function("removeViewAt", &ViewGroup::removeViewAt, allow_raw_pointers())
+			.function("removeViews", &ViewGroup::removeViews)
+			.function("removeAllViews", &ViewGroup::removeAllViews);
 
 	class_<LinearLayout, base<ViewGroup>>("LinearLayout")
 			.constructor()
 			.property("_orientation", &LinearLayout::_orientation);
+
+	class_<ConstraintLayout::ConstraintSet>("ConstraintSet")
+			.function("connect", &ConstraintLayout::ConstraintSet::connect,
+					allow_raw_pointers());
 
 	class_<ConstraintLayout, base<ViewGroup>>("ConstraintLayout")
 			.constructor()
 			.function("getConstraints", &ConstraintLayout::getConstraints,
 					allow_raw_pointers());
 
+	class_<Bundle>("Bundle")
+			.constructor();
+
 	class_<Activity>("Activity")
+			.property("_backgroundColor", &Activity::_backgroundColor)
+			.function("measure", &Activity::measure)
+			.function("layout", &Activity::layout)
+			.function("draw", &Activity::draw)
 			.function("getRootView", &Activity::getRootView,
 					allow_raw_pointers());
 
