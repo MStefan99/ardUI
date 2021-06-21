@@ -67,19 +67,48 @@ ardUIInstance.then(ardUI => {
 
 		viewPropIterate(view, (propName, prop) => {
 			const propNameElement = document.createElement('label');
-			let propElement = document.createElement('input');
+			const propElement = document.createElement('input');
 
 			switch (typeof prop) {
 				case "string":
 					propElement.setAttribute('type', 'text');
+					propElement.addEventListener('change', () => {
+						viewElement.view[propName] = propElement.value;
+						currentActivity.getRootView()._valid = false;
+					});
 					break;
 				case "number":
 					propElement.setAttribute('type', 'number');
+					propElement.addEventListener('change', () => {
+						viewElement.view[propName] = +propElement.value;
+						currentActivity.getRootView()._valid = false;
+					});
 					break;
 				case "boolean":
 					propElement.setAttribute('type', 'checkbox');
+					propElement.addEventListener('change', () => {
+						viewElement.view[propName] = !!propElement.value;
+						currentActivity.getRootView()._valid = false;
+					});
 					break;
 				case 'object':
+					const groupElement = document.createElement('div');
+					groupElement.classList.add('collapsable');
+					const id = 'prop_' + getFriendlyName(propName) + '_'
+							+ Math.random() * 0xffffff;
+
+					const radioElement = document.createElement('input');
+					radioElement.setAttribute('type', 'checkbox');
+					radioElement.id = radioElement.name = id;
+
+					const labelElement = document.createElement('label');
+					labelElement.innerText = getFriendlyName(propName);
+					labelElement.setAttribute('for', id);
+
+					groupElement.appendChild(labelElement);
+					groupElement.appendChild(radioElement);
+					container.appendChild(groupElement);
+
 					return;  // Needs to have a collapsable div
 			}
 
@@ -87,13 +116,6 @@ ardUIInstance.then(ardUI => {
 			propElement.value = prop;
 			container.appendChild(propNameElement);
 			container.appendChild(propElement);
-
-			propElement.addEventListener('change', () => {
-				viewElement.view[propName] = propElement.value;
-				currentActivity.getRootView()._valid = false;
-			});
-
-			console.log(propName, getFriendlyName(propName), prop, typeof prop);
 		});
 	}
 

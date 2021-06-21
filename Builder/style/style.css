@@ -301,6 +301,9 @@ html body #dashboard .collapsable:after {
 html body #dashboard .collapsable > input[type='checkbox'] {
   display: none;
 }
+html body #dashboard .collapsable > input[type='checkbox'] + * {
+  margin-left: 1em;
+}
 html body #dashboard .collapsable > input[type='checkbox']:not(:checked) + * {
   display: none;
 }
