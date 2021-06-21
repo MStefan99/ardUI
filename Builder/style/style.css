@@ -297,7 +297,8 @@ html body #dashboard #canvas-wrapper #view-container {
 }
 html body #dashboard #canvas-wrapper #view-container div {
   position: absolute;
-  transition: border-width 0.2s linear;
+  transition: transform 0.1s linear, border-width 0.1s linear;
+  box-sizing: content-box;
 }
 html body #dashboard #canvas-wrapper #view-container div.view {
   border: 1px solid #52dee2;
@@ -306,7 +307,8 @@ html body #dashboard #canvas-wrapper #view-container div.viewGroup {
   border: 1px solid #eab33f;
 }
 html body #dashboard #canvas-wrapper #view-container div:hover {
-  border-width: 5px;
+  transform: translate(-2px, -2px);
+  border-width: 4px;
 }
 html body #dashboard #canvas-wrapper #builder-canvas {
   border: 1px dashed #ddd;
@@ -321,7 +323,7 @@ html body div#splash {
   border-radius: 1em;
   box-shadow: 0 0 0.5em rgba(0,0,0,0.333);
   display: block;
-  position: absolute;
+  position: fixed;
   left: 0;
   top: 0;
   right: 0;

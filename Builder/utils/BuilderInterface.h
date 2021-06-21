@@ -58,10 +58,16 @@ EMSCRIPTEN_BINDINGS(BuilderInterface) {
 			.function("invalidate", &View::invalidate);
 
 	class_<TextView, base<View>>("TextView")
+			.constructor()
 			.constructor<String>()
 			.property("_text", &TextView::_text)
 			.property("_textSize", &TextView::_textSize)
 			.property("_textColor", &TextView::_textColor);
+
+	class_<ButtonView, base<TextView>>("ButtonView")
+			.constructor()
+			.constructor<String>()
+			.property("_borderColor", &ButtonView::_borderColor);
 
 	#if !USE_STL
 	class_<LIST<View*>::iterator>("listIterator")
@@ -97,6 +103,10 @@ EMSCRIPTEN_BINDINGS(BuilderInterface) {
 			.function("removeViewAt", &ViewGroup::removeViewAt, allow_raw_pointers())
 			.function("removeViews", &ViewGroup::removeViews)
 			.function("removeAllViews", &ViewGroup::removeAllViews);
+
+	enum_<LinearLayout::Orientation>("LinearLayoutOrientation")
+			.value("HORIZONTAL", LinearLayout::Orientation::HORIZONTAL)
+			.value("VERTICAL", LinearLayout::Orientation::VERTICAL);
 
 	class_<LinearLayout, base<ViewGroup>>("LinearLayout")
 			.constructor()

@@ -71,7 +71,8 @@ html
 
 					div
 						position absolute
-						transition border-width .2s linear
+						transition transform .1s linear, border-width .1s linear
+						box-sizing content-box
 
 						&.view
 							border 1px solid #52dee2
@@ -80,7 +81,8 @@ html
 							border 1px solid #eab33f
 
 						&:hover
-							border-width 5px
+							transform translate(-2px, -2px)
+							border-width 4px
 
 				#builder-canvas
 					border 1px dashed #ddd
@@ -91,7 +93,7 @@ html
 
 		div#splash
 			card()
-			position absolute
+			position fixed
 			left 0
 			top 0
 			right 0
