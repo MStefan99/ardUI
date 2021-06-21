@@ -319,21 +319,20 @@ html body #dashboard #canvas-wrapper #view-container {
 }
 html body #dashboard #canvas-wrapper #view-container div {
   position: absolute;
-  transition: transform 0.1s linear, border-width 0.1s linear;
+  transition: transform 0.1s linear, border-color 0.1s linear;
   box-sizing: content-box;
+  border: 2px solid transparent;
+  transform: translate(-1px, -1px);
 }
-html body #dashboard #canvas-wrapper #view-container div.view {
-  border: 1px solid #3feab4;
+html body #dashboard #canvas-wrapper #view-container div.view:hover {
+  border-color: #3feab4;
 }
-html body #dashboard #canvas-wrapper #view-container div.viewGroup {
-  border: 1px solid #7d52e2;
+html body #dashboard #canvas-wrapper #view-container div.viewGroup:hover {
+  border-color: #7d52e2;
 }
-html body #dashboard #canvas-wrapper #view-container div.selected {
-  border: 1px solid #ec6442;
-}
-html body #dashboard #canvas-wrapper #view-container div:hover {
-  transform: translate(-2px, -2px);
-  border-width: 4px;
+html body #dashboard #canvas-wrapper #view-container div.selected,
+html body #dashboard #canvas-wrapper #view-container div.selected:hover {
+  border-color: #ec6442;
 }
 html body #dashboard #canvas-wrapper #builder-canvas {
   border: 1px dashed #ddd;

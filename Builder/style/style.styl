@@ -93,21 +93,19 @@ html
 
 					div
 						position absolute
-						transition transform .1s linear, border-width .1s linear
+						transition transform .1s linear, border-color .1s linear
 						box-sizing content-box
+						border 2px solid transparent
+						transform translate(-1px, -1px)
 
-						&.view
-							border 1px solid #3feab4
+						&.view:hover
+							border-color #3feab4
 
-						&.viewGroup
-							border 1px solid #7d52e2
+						&.viewGroup:hover
+							border-color #7d52e2
 
-						&.selected
-							border 1px solid #ec6442
-
-						&:hover
-							transform translate(-2px, -2px)
-							border-width 4px
+						&.selected, &.selected:hover
+							border-color #ec6442
 
 				#builder-canvas
 					border 1px dashed #ddd

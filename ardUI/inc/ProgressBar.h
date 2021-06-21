@@ -23,6 +23,8 @@ public:
 	uint16_t getMax() const;
 	void setMax(uint16_t max);
 
+	friend class EmscriptenBindingInitializer_BuilderInterface;
+
 protected:
 	void onDraw() override;
 

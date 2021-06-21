@@ -34,6 +34,7 @@ using namespace emscripten;
 EMSCRIPTEN_BINDINGS(BuilderInterface) {
 	class_<Rect>("Rect")
 			.constructor()
+			.constructor<int, int, int, int>()
 			.property("left", &Rect::left)
 			.property("top", &Rect::top)
 			.property("right", &Rect::right)
@@ -42,8 +43,8 @@ EMSCRIPTEN_BINDINGS(BuilderInterface) {
 			.function("width", &Rect::width);
 
 	class_<Drawable>("Drawable")
-			.property("_viewBox", &Drawable::_viewBox)
 			.property("_valid", &Drawable::_valid)
+			.property("_viewBox", &Drawable::_viewBox)
 			.property("_padding", &Drawable::_padding)
 			.property("_minHeight", &Drawable::_minHeight)
 			.property("_minWidth", &Drawable::_minWidth)
@@ -57,12 +58,19 @@ EMSCRIPTEN_BINDINGS(BuilderInterface) {
 			.property("_measuredWidth", &View::_measuredWidth)
 			.function("invalidate", &View::invalidate);
 
+	class_<ProgressBar, base<View>>("ProgressBar")
+			.property("_min", &ProgressBar::_min)
+			.property("_max", &ProgressBar::_max)
+			.property("_barColor", &ProgressBar::_barColor)
+			.property("_backgroundColor", &ProgressBar::_backgroundColor);
+
 	class_<TextView, base<View>>("TextView")
 			.constructor()
 			.constructor<String>()
 			.property("_text", &TextView::_text)
 			.property("_textSize", &TextView::_textSize)
-			.property("_textColor", &TextView::_textColor);
+			.property("_textColor", &TextView::_textColor)
+			.property("_backgroundColor", &TextView::_backgroundColor);
 
 	class_<ButtonView, base<TextView>>("ButtonView")
 			.constructor()
