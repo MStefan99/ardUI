@@ -30,7 +30,7 @@ html
 			#logo
 				height 2em
 
-			#tab-switcher
+			.tabs
 				display flex
 				flex-flow row nowrap
 				align-items center
@@ -60,6 +60,25 @@ html
 				card()
 				margin 0 2em 2em
 
+			.collapsable
+				position relative
+
+				&:after
+					content ''
+					position absolute
+					top .5em
+					right 100%
+					margin-top -5px
+					border-width 5px
+					border-style solid
+					border-color transparent transparent transparent black
+
+				& > input[type='checkbox']
+					display none
+
+					&:not(:checked) + *
+						display none
+
 			#left-pane, #right-pane
 				flex 1 0 0
 
@@ -75,10 +94,13 @@ html
 						box-sizing content-box
 
 						&.view
-							border 1px solid #52dee2
+							border 1px solid #3feab4
 
 						&.viewGroup
-							border 1px solid #eab33f
+							border 1px solid #7d52e2
+
+						&.selected
+							border 1px solid #ec6442
 
 						&:hover
 							transform translate(-2px, -2px)

@@ -251,12 +251,12 @@ html body header {
 html body header #logo {
   height: 2em;
 }
-html body header #tab-switcher {
+html body header .tabs {
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
 }
-html body header #tab-switcher .tab {
+html body header .tabs .tab {
   white-space: nowrap;
   text-align: center;
   user-select: none;
@@ -265,7 +265,7 @@ html body header #tab-switcher .tab {
   border-radius: 5px 5px 0 0;
   transition: box-shadow 0.1s ease-in;
 }
-html body header #tab-switcher .tab.selected {
+html body header .tabs .tab.selected {
   border: 1px solid #ddd;
   border-bottom: none;
   position: relative;
@@ -285,6 +285,25 @@ html body #dashboard > div {
   display: block;
   margin: 0 2em 2em;
 }
+html body #dashboard .collapsable {
+  position: relative;
+}
+html body #dashboard .collapsable:after {
+  content: '';
+  position: absolute;
+  top: 0.5em;
+  right: 100%;
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent transparent #000;
+}
+html body #dashboard .collapsable > input[type='checkbox'] {
+  display: none;
+}
+html body #dashboard .collapsable > input[type='checkbox']:not(:checked) + * {
+  display: none;
+}
 html body #dashboard #left-pane,
 html body #dashboard #right-pane {
   flex: 1 0 0;
@@ -301,10 +320,13 @@ html body #dashboard #canvas-wrapper #view-container div {
   box-sizing: content-box;
 }
 html body #dashboard #canvas-wrapper #view-container div.view {
-  border: 1px solid #52dee2;
+  border: 1px solid #3feab4;
 }
 html body #dashboard #canvas-wrapper #view-container div.viewGroup {
-  border: 1px solid #eab33f;
+  border: 1px solid #7d52e2;
+}
+html body #dashboard #canvas-wrapper #view-container div.selected {
+  border: 1px solid #ec6442;
 }
 html body #dashboard #canvas-wrapper #view-container div:hover {
   transform: translate(-2px, -2px);
