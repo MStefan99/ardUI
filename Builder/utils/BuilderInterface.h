@@ -20,7 +20,7 @@
 #define LIST_VIEW(class) \
 	class_<Adapter<class>>(ENQUOTE(class Adapter)); \
 	class_<AdapterView<class>, base<ViewGroup>>(ENQUOTE(class AdapterView)); \
-	class_<ListView<class>, base<AdapterView<class>>>(ENQUOTE(class ListView)).constructor();
+	class_<ListView<class>, base<AdapterView<class>>>(ENQUOTE(class ListView)).constructor()
 
 
 template <class T>

@@ -47,7 +47,7 @@ ardUIInstance.then(ardUI => {
 			const prop = view[propName];
 			if (typeof prop !== 'function'
 					&& typeof cb === 'function') {
-				cb(propName, prop);
+				cb(propName, prop, view);
 			}
 			if (typeof prop === 'object') {
 				viewPropIterate(prop, cb);
@@ -65,7 +65,7 @@ ardUIInstance.then(ardUI => {
 		}
 
 
-		viewPropIterate(view, (propName, prop) => {
+		viewPropIterate(view, (propName, prop, obj) => {
 			const propNameElement = document.createElement('label');
 			const propElement = document.createElement('input');
 
@@ -73,7 +73,7 @@ ardUIInstance.then(ardUI => {
 				case "string":
 					propElement.setAttribute('type', 'text');
 					propElement.addEventListener('change', () => {
-						viewElement.view[propName] = propElement.value;
+						obj[propName] = propElement.value;
 						currentActivity.getRootView().invalidate();
 					});
 					break;
@@ -81,14 +81,14 @@ ardUIInstance.then(ardUI => {
 					if (propName.match(/color/i)) {
 						propElement.setAttribute('type', 'color');
 						propElement.addEventListener('change', () => {
-							viewElement.view[propName] = parseInt(propElement.value
+							obj[propName] = parseInt(propElement.value
 									.substr(1, 6), 16);
 							currentActivity.getRootView().invalidate();
 						});
 					} else {
 						propElement.setAttribute('type', 'number');
 						propElement.addEventListener('change', () => {
-							viewElement.view[propName] = +propElement.value;
+							obj[propName] = +propElement.value;
 							currentActivity.getRootView().invalidate();
 						});
 					}
@@ -96,7 +96,7 @@ ardUIInstance.then(ardUI => {
 				case "boolean":
 					propElement.setAttribute('type', 'checkbox');
 					propElement.addEventListener('change', () => {
-						viewElement.view[propName] = !!propElement.value;
+						obj[propName] = !!propElement.value;
 						currentActivity.getRootView().invalidate();
 					});
 					break;
