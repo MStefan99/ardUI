@@ -15,6 +15,14 @@
 #include "ActivityManager.h"
 
 
+#define ENQUOTE(a) #a
+
+#define LIST_VIEW(class) \
+	class_<Adapter<class>>(ENQUOTE(class Adapter)); \
+	class_<AdapterView<class>, base<ViewGroup>>(ENQUOTE(class AdapterView)); \
+	class_<ListView<class>, base<AdapterView<class>>>(ENQUOTE(class ListView)).constructor();
+
+
 template <class T>
 bool IteratorNotEquals(const typename LIST<T>::iterator& x,
 		const typename LIST<T>::iterator& y) {
@@ -111,6 +119,10 @@ EMSCRIPTEN_BINDINGS(BuilderInterface) {
 			.function("removeViewAt", &ViewGroup::removeViewAt, allow_raw_pointers())
 			.function("removeViews", &ViewGroup::removeViews)
 			.function("removeAllViews", &ViewGroup::removeAllViews);
+
+	LIST_VIEW(String);
+	LIST_VIEW(int);
+	LIST_VIEW(float);
 
 	enum_<LinearLayout::Orientation>("LinearLayoutOrientation")
 			.value("HORIZONTAL", LinearLayout::Orientation::HORIZONTAL)
