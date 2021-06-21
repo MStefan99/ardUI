@@ -74,21 +74,30 @@ ardUIInstance.then(ardUI => {
 					propElement.setAttribute('type', 'text');
 					propElement.addEventListener('change', () => {
 						viewElement.view[propName] = propElement.value;
-						currentActivity.getRootView()._valid = false;
+						currentActivity.getRootView().invalidate();
 					});
 					break;
 				case "number":
-					propElement.setAttribute('type', 'number');
-					propElement.addEventListener('change', () => {
-						viewElement.view[propName] = +propElement.value;
-						currentActivity.getRootView()._valid = false;
-					});
+					if (propName.match(/color/i)) {
+						propElement.setAttribute('type', 'color');
+						propElement.addEventListener('change', () => {
+							viewElement.view[propName] = parseInt(propElement.value
+									.substr(1, 6), 16);
+							currentActivity.getRootView().invalidate();
+						});
+					} else {
+						propElement.setAttribute('type', 'number');
+						propElement.addEventListener('change', () => {
+							viewElement.view[propName] = +propElement.value;
+							currentActivity.getRootView().invalidate();
+						});
+					}
 					break;
 				case "boolean":
 					propElement.setAttribute('type', 'checkbox');
 					propElement.addEventListener('change', () => {
 						viewElement.view[propName] = !!propElement.value;
-						currentActivity.getRootView()._valid = false;
+						currentActivity.getRootView().invalidate();
 					});
 					break;
 				case 'object':
@@ -171,7 +180,7 @@ ardUIInstance.then(ardUI => {
 
 		addText.addEventListener('click', () => {
 			currentActivity.getRootView().addView(new ardUI.TextView("text"));
-			currentActivity.getRootView()._valid = false;
+			currentActivity.getRootView().invalidate();
 		});
 	}
 });
