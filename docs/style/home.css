@@ -1,0 +1,45 @@
+html {
+  scroll-behavior: smooth;
+  font-family: sans-serif;
+}
+html body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: #e2f1f9;
+}
+html body #logo {
+  filter: invert(1);
+  margin: 1rem 0 0 1rem;
+  height: 3em;
+}
+html body #splash {
+  min-height: 80vh;
+  overflow: visible;
+  background-image: linear-gradient(to bottom right, #9ac1ff 0% 46%, #8ab1ff 46% 47%, #dae6ff 47%, transparent 50% 100%);
+}
+@media screen and (min-width: 1440px) {
+  html body #splash {
+    padding: 0 20vw;
+  }
+}
+html body #splash span {
+  display: block;
+}
+html body #splash #left {
+  color: #fff;
+  font-size: 10em;
+  margin: 1rem 0 0 5rem;
+  max-width: 50vw;
+  font-weight: bold;
+}
+html body #splash #right {
+  margin: 0 2rem 0 0;
+  text-align: right;
+  font-size: 8em;
+  position: relative;
+  top: 25vh;
+  color: #9ac1ff;
+}
+html body #splash #right #line2 {
+  font-weight: bold;
+}

@@ -1,12 +1,20 @@
-extends layout
+doctype html
 
+html(lang='en')
+	head
+		meta(charset='UTF-8')
+		block head
+			title ardUI
+		link(rel='icon' href='./img/ardUI_logo.svg')
+		link(rel='stylesheet' href='./style/stylify.css')
+		link(rel='stylesheet' href='./style/home.css')
 
-block head
-	title Welcome to ardUI!
-
-
-block main
-	h1 Welcome to ardUI!
-	h3 What is ardUI?
-	p ardUI is a simple yet powerful framework that allows you to quickly build complex,
-		|  interactive and beautiful interfaces for all your projects.
+	body
+		div#splash
+			img#logo(src='./img/ardUI_text.svg')
+			div.d-flex.justify-content-between
+				span#left A C++ UI
+				div#right
+					span#line1 for the
+					span#line2 modern
+					span#line3 age
