@@ -23,13 +23,15 @@ html
 			height 3em
 
 		#splash
-			min-height 80vh
 			overflow visible
 			background-image linear-gradient(to bottom right, --accent-color 0% 46%,
 			--accent-color-dark 46% 47%, lighten(--accent-color-dark, 50%) 47%, transparent 50% 100%)
 
 			@media screen and (min-width 1440px)
-				padding 0 20vw
+				padding 0 10vw
+
+			@media screen and (min-width 2560px)
+				padding 0 25vw
 
 			span
 				display block
@@ -41,27 +43,44 @@ html
 				max-width 50vw
 				font-weight bold
 
+				@media screen and (max-width 1440px)
+					font-size 7em
+
+				@media screen and (max-width 768px)
+					margin-left 1rem
+					font-size 5em
+
 			#right
-				margin 0 2rem 0 0
+				margin 25vh 2rem 0 0
 				text-align right
 				font-size 8em
 				position relative
-				top 25vh
 				color --accent-color
+
+				@media screen and (max-width 1440px)
+					font-size 5em
+
+				@media screen and (max-width 768px)
+					font-size 3em
 
 				#line2
 					font-weight bold
 
 			#buttons
-				font-size 3em
+				font-size 2em
 				padding 1rem
-				margin-left 25vw
+				margin-left 30vw
+
+				@media screen and (min-width 768px)
+					margin-left 30vw
+					font-size 3em
 
 				@media screen and (min-width 1440px)
-					margin-left 10vw
+					margin-left 15vw
 
 				.button
 					display inline-block
+					position relative
 					padding .75rem
 					border-radius 1em
 					background-color --background-color
@@ -71,6 +90,9 @@ html
 					margin-bottom 2rem
 					text-decoration none
 					box-shadow button()
+
+					@media screen and (min-width 1440px)
+						top -5vh
 
 					&#button-start
 						background-color --accent-color
