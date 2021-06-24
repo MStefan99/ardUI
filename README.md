@@ -24,8 +24,8 @@ Additionally, ardUI is:
 - **Efficient**, saving valuable memory
 - **Fast**, making sure you get the performance you expect
 
-### Quick start
-Visit the [ardUI documentation][docs] to find examples and start creating with ardUI right away!
+### Getting started
+Visit the [Getting started guide][get-started] to find examples and start creating with ardUI right away!
 
 ### What can you run ardUI on?
 ardUI is designed to run on Arduino out of the box, with no extra setup required. However, it can be easily ported over to
@@ -52,4 +52,5 @@ to get started, regardless of your experience.
 [homepage]: https://ardui.mstefan99.com
 [releases]: https://github.com/MStefan99/ardUI/releases
 [docs]: https://ardui.mstefan99.com/pages
+[get-started]: https://ardui.mstefan99.com/pages/tutorials/quickstart
 [porting]: https://ardui.mstefan99.com/pages/porting

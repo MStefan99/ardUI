@@ -23,7 +23,7 @@ html body #splash {
 }
 @media screen and (min-width: 2560px) {
   html body #splash {
-    padding: 0 25vw;
+    padding: 0 20vw;
   }
 }
 html body #splash span {
@@ -95,6 +95,12 @@ html body #splash #buttons .button {
   margin-bottom: 2rem;
   text-decoration: none;
   box-shadow: -0.5rem -0.5rem 1rem #f3f9fc , 0.5rem 0.5rem 1rem #c0e1f2;
+  transition: background-color 0.2s;
+}
+html body #splash #buttons .button:hover,
+html body #splash #buttons .button#button-start:hover {
+  background-color: #67a2ff;
+  color: #fff;
 }
 @media screen and (min-width: 1440px) {
   html body #splash #buttons .button {

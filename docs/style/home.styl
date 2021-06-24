@@ -31,7 +31,7 @@ html
 				padding 0 10vw
 
 			@media screen and (min-width 2560px)
-				padding 0 25vw
+				padding 0 20vw
 
 			span
 				display block
@@ -90,6 +90,11 @@ html
 					margin-bottom 2rem
 					text-decoration none
 					box-shadow button()
+					transition background-color .2s
+
+					&:hover, &#button-start:hover
+						background-color darken(--accent-color, 10)
+						color #fff
 
 					@media screen and (min-width 1440px)
 						top -5vh
