@@ -1,3 +1,13 @@
+--background-color = #E2F1F9
+--accent-color = #9AC1FF
+--accent-color-dark = #8AB1FF
+
+
+button()
+	-.5rem -.5rem 1rem lighten(--background-color, 4) \,
+	.5rem .5rem 1rem darken(--background-color, 8)
+
+
 html
 	scroll-behavior smooth
 	font-family sans-serif
@@ -5,7 +15,7 @@ html
 	body
 		margin 0
 		min-height 100vh
-		background-color #E2F1F9
+		background-color --background-color
 
 		#logo
 			filter invert(1)
@@ -15,8 +25,8 @@ html
 		#splash
 			min-height 80vh
 			overflow visible
-			background-image linear-gradient(to bottom right, #9AC1FF 0% 46%, #8AB1FF 46% 47%,
-			#dae6ff 47%, transparent 50% 100%)
+			background-image linear-gradient(to bottom right, --accent-color 0% 46%,
+			--accent-color-dark 46% 47%, lighten(--accent-color-dark, 50%) 47%, transparent 50% 100%)
 
 			@media screen and (min-width 1440px)
 				padding 0 20vw
@@ -37,7 +47,33 @@ html
 				font-size 8em
 				position relative
 				top 25vh
-				color #9AC1FF
+				color --accent-color
 
 				#line2
 					font-weight bold
+
+			#buttons
+				font-size 3em
+				padding 1rem
+				margin-left 25vw
+
+				@media screen and (min-width 1440px)
+					margin-left 10vw
+
+				.button
+					display inline-block
+					padding .75rem
+					border-radius 1em
+					background-color --background-color
+					color --accent-color
+					font-weight bold
+					font-variant small-caps
+					margin-bottom 2rem
+					text-decoration none
+					box-shadow button()
+
+					&#button-start
+						background-color --accent-color
+						box-shadow button()\, 0 0 1rem --accent-color
+						color #fff
+

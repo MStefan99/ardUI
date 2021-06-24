@@ -3,11 +3,11 @@ doctype html
 html(lang='en')
 	head
 		meta(charset='UTF-8')
-		block head
-			title ardUI
-		link(rel='icon' href='./img/ardUI_logo.svg')
-		link(rel='stylesheet' href='./style/stylify.css')
-		link(rel='stylesheet' href='./style/home.css')
+		title ardUI
+		meta(name='viewport' content='width=device-width, initial-scale=1.0')
+		link(rel='icon' href='/img/ardUI_logo.svg')
+		link(rel='stylesheet' href='/style/stylify.css')
+		link(rel='stylesheet' href='/style/home.css')
 
 	body
 		div#splash
@@ -18,3 +18,6 @@ html(lang='en')
 					span#line1 for the
 					span#line2 modern
 					span#line3 age
+			div#buttons.d-flex.flex-column.align-items-start
+				a(href='/pages/tutorials/quickstart')#button-start.button Get started
+				a(href='/pages')#button-docs.button Open docs

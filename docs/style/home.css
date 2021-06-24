@@ -15,7 +15,7 @@ html body #logo {
 html body #splash {
   min-height: 80vh;
   overflow: visible;
-  background-image: linear-gradient(to bottom right, #9ac1ff 0% 46%, #8ab1ff 46% 47%, #dae6ff 47%, transparent 50% 100%);
+  background-image: linear-gradient(to bottom right, #9ac1ff 0% 46%, #8ab1ff 46% 47%, #c5d8ff 47%, transparent 50% 100%);
 }
 @media screen and (min-width: 1440px) {
   html body #splash {
@@ -42,4 +42,31 @@ html body #splash #right {
 }
 html body #splash #right #line2 {
   font-weight: bold;
+}
+html body #splash #buttons {
+  font-size: 3em;
+  padding: 1rem;
+  margin-left: 25vw;
+}
+@media screen and (min-width: 1440px) {
+  html body #splash #buttons {
+    margin-left: 10vw;
+  }
+}
+html body #splash #buttons .button {
+  display: inline-block;
+  padding: 0.75rem;
+  border-radius: 1em;
+  background-color: #e2f1f9;
+  color: #9ac1ff;
+  font-weight: bold;
+  font-variant: small-caps;
+  margin-bottom: 2rem;
+  text-decoration: none;
+  box-shadow: -0.5rem -0.5rem 1rem #f3f9fc , 0.5rem 0.5rem 1rem #c0e1f2;
+}
+html body #splash #buttons .button#button-start {
+  background-color: #9ac1ff;
+  box-shadow: -0.5rem -0.5rem 1rem #f3f9fc , 0.5rem 0.5rem 1rem #c0e1f2 , 0 0 1rem #9ac1ff;
+  color: #fff;
 }
