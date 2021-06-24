@@ -1,9 +1,18 @@
+--accent-color = #9AC1FF
+
+
 card()
 	padding 1em
-	border 1px solid #ccc
+	border 1px solid #ddd
 	border-radius 1em
-	box-shadow 0 0 .5em #0005
+	box-shadow 0 0 .5em #0003
 	display block
+
+
+glass(color = #fffb)
+	background-color transparentify(color, #fff, .8)
+	backdrop-filter blur(12px)
+	border-bottom darken(color, 5%) 1px solid
 
 
 html
@@ -18,17 +27,40 @@ html
 		min-height 100vh
 
 		header
+			glass(--accent-color)
 			display flex
 			flex-flow row nowrap
 			justify-content flex-start
+			align-content center
 			padding 1em
+			padding-bottom .5em
 			margin-bottom 1em
+			border-radius 0 0 12px 12px
+			position sticky
+			top 0
 
 			#logo
 				height 3em
+				filter invert(1)
 
 		main
 			margin 1em 3em
+			min-height 200vh  // TODO: remove
+
+			#tab-layout
+				display flex
+				flex-flow row wrap
+				justify-content space-between
+				align-content flex-start
+
+				#nav-tab, #toc-tab
+					card()
+					min-width 15vw
+					min-height 50vh
+
+				#content
+					flex-grow 1
+					margin 0 2em
 
 		footer
 			padding 1em 2em

@@ -10,17 +10,47 @@ html body {
   min-height: 100vh;
 }
 html body header {
+  background-color: rgba(129,178,255,0.8);
+  backdrop-filter: blur(12px);
+  border-bottom: #86b4ff 1px solid;
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-start;
+  align-content: center;
   padding: 1em;
+  padding-bottom: 0.5em;
   margin-bottom: 1em;
+  border-radius: 0 0 12px 12px;
+  position: sticky;
+  top: 0;
 }
 html body header #logo {
   height: 3em;
+  filter: invert(1);
 }
 html body main {
   margin: 1em 3em;
+  min-height: 200vh;
+}
+html body main #tab-layout {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-content: flex-start;
+}
+html body main #tab-layout #nav-tab,
+html body main #tab-layout #toc-tab {
+  padding: 1em;
+  border: 1px solid #ddd;
+  border-radius: 1em;
+  box-shadow: 0 0 0.5em rgba(0,0,0,0.2);
+  display: block;
+  min-width: 15vw;
+  min-height: 50vh;
+}
+html body main #tab-layout #content {
+  flex-grow: 1;
+  margin: 0 2em;
 }
 html body footer {
   padding: 1em 2em;
