@@ -130,6 +130,9 @@ namespace ardui {
 			} else {
 				currentElement = nullptr;
 			}
+		} else {
+			lastElement = currentElement;
+			currentElement = nullptr;
 		}
 		return *this;
 	}
@@ -151,6 +154,8 @@ namespace ardui {
 			} else {
 				currentElement = nullptr;
 			}
+		} else {
+			currentElement = nullptr;
 		}
 		return temp;
 	}
@@ -169,6 +174,9 @@ namespace ardui {
 			if (currentElement->parent) {
 				currentElement = currentElement->parent;
 			}
+		} else {
+			lastElement = currentElement;
+			currentElement = nullptr;
 		}
 		return *this;
 	}
@@ -189,6 +197,9 @@ namespace ardui {
 			if (currentElement->parent) {
 				currentElement = currentElement->parent;
 			}
+		} else {
+			lastElement = currentElement;
+			currentElement = nullptr;
 		}
 		return temp;
 	}
