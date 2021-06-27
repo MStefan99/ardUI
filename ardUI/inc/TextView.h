@@ -26,6 +26,7 @@ public:
 	uint32_t getTextColor() const;
 
 	// TODO: add alignment options
+	// TODO: add background toggle
 
 	friend class EmscriptenBindingInitializer_BuilderInterface;
 

@@ -23,6 +23,8 @@ public:
 
 	template <class compiledLayout>
 	void setContentView();
+	uint32_t getBackgroundColor() const;
+	void setBackgroundColor(uint32_t backgroundColor);
 	void setRootView(View* view);
 
 	template <class ActivityClass>

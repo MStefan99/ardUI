@@ -48,6 +48,7 @@ addEventListener('load', () => {
 		},
 
 		drawLine(x1, y1, x2, y2, colorCode) {
+			context.strokeStyle = getColor(colorCode);
 			context.beginPath();
 			context.moveTo(x1, y1);
 			context.lineTo(x2, y2);

@@ -23,6 +23,12 @@ public:
 	uint16_t getMax() const;
 	void setMax(uint16_t max);
 
+	uint32_t getBarColor() const;
+	void setBarColor(uint32_t barColor);
+
+	uint32_t getBackgroundColor() const;
+	void setBackgroundColor(uint32_t backgroundColor);
+
 	friend class EmscriptenBindingInitializer_BuilderInterface;
 
 protected:
