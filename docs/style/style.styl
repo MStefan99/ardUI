@@ -1,4 +1,5 @@
 --accent-color = #9AC1FF
+--background-color = #f0f0f0
 
 
 card()
@@ -49,19 +50,44 @@ html
 
 			#tab-layout
 				display flex
-				flex-flow row wrap
+				flex-flow row nowrap
 				justify-content space-between
 				align-content flex-start
 
+				@media screen and (max-width 768px)
+					flex-wrap wrap
+
 				#nav-tab, #toc-tab
 					card()
-					min-width 15vw
-					min-height 50vh
+					flex 0 0 20%
 
-				#content
+
+				#content-tab
 					flex-grow 1
 					margin 0 2em
 
+			.tip-title
+				font-size 1.5em
+
+			code
+				display block
+				background-color darken(white, 3%)
+				border-radius 5px
+				padding 1em
+				counter-reset code-line
+
+				div
+					counter-increment code-line
+
+					&:before
+						content counter(code-line)
+						display inline-block
+						width 3.5ch
+						border-right 1px solid darken(white, 20%)
+
+				.empty
+					height 1em
+
 		footer
 			padding 1em 2em
-			background-color #f0f0f0
+			background-color --background-color

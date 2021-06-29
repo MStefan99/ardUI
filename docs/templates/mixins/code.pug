@@ -1,0 +1,7 @@
+mixin code(source)
+	code
+		each line in source.replace(/^\s/, ' ').replace(/\s*$/, '').split('\n')
+			if (line)
+				div= line
+			else
+				div.empty

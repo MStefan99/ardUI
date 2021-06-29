@@ -34,9 +34,14 @@ html body main {
 }
 html body main #tab-layout {
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: row nowrap;
   justify-content: space-between;
   align-content: flex-start;
+}
+@media screen and (max-width: 768px) {
+  html body main #tab-layout {
+    flex-wrap: wrap;
+  }
 }
 html body main #tab-layout #nav-tab,
 html body main #tab-layout #toc-tab {
@@ -45,12 +50,33 @@ html body main #tab-layout #toc-tab {
   border-radius: 1em;
   box-shadow: 0 0 0.5em rgba(0,0,0,0.2);
   display: block;
-  min-width: 15vw;
-  min-height: 50vh;
+  flex: 0 0 20%;
 }
-html body main #tab-layout #content {
+html body main #tab-layout #content-tab {
   flex-grow: 1;
   margin: 0 2em;
+}
+html body main .tip-title {
+  font-size: 1.5em;
+}
+html body main code {
+  display: block;
+  background-color: #f7f7f7;
+  border-radius: 5px;
+  padding: 1em;
+  counter-reset: code-line;
+}
+html body main code div {
+  counter-increment: code-line;
+}
+html body main code div:before {
+  content: counter(code-line);
+  display: inline-block;
+  width: 3.5ch;
+  border-right: 1px solid #ccc;
+}
+html body main code .empty {
+  height: 1em;
 }
 html body footer {
   padding: 1em 2em;
