@@ -85,6 +85,7 @@
  * but may impact performance with slow serial connections.
  */
 #define VERBOSE ( true )
+// TODO: add log levels
 
 /*
  * Introduces delays between loop iterations.

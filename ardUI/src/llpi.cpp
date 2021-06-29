@@ -236,7 +236,8 @@ ReturnCode arduiDisplayDrawTriangle(uint16_t x1, uint16_t y1, uint16_t x2, uint1
 	Serial.print(") and (");
 	Serial.print(x3);
 	Serial.print(", ");
-	Serial.println(y3);
+	Serial.print(y3);
+	Serial.println(")");
 #endif
 	return NOT_IMPLEMENTED;
 }
@@ -257,7 +258,8 @@ ReturnCode arduiDisplayFillTriangle(uint16_t x1, uint16_t y1, uint16_t x2, uint1
 	Serial.print(") and (");
 	Serial.print(x3);
 	Serial.print(", ");
-	Serial.println(y3);
+	Serial.print(y3);
+	Serial.println(")");
 #endif
 	return NOT_IMPLEMENTED;
 }
@@ -269,7 +271,8 @@ ReturnCode arduiDisplayDrawBitmap(uint16_t x, uint16_t y, uint16_t* bitmap) {
 	Serial.print("Drawn bitmap at (");
 	Serial.print(x);
 	Serial.print(", ");
-	Serial.println(y);
+	Serial.print(y);
+	Serial.println(")");
 #endif
 	return NOT_IMPLEMENTED;
 }
