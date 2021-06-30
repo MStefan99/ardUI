@@ -1,6 +1,20 @@
 mixin code(source)
+	- function processCode(text) {
+	- let match = text.replace(/^\s/, '').replace(/\s*$/, '').match(/^(\t)*/);
+	- let minIndent = match? match.length : 0;
+	-
+	- for (const line of text.split('\n')) {
+	- 	const indent = line.match(/^(\t)*/).length;
+	- 	if (indent < minIndent) {
+	- 		minIndent = indent;
+	- 	}
+	- }
+	-
+	- return text.replace(RegExp(`^\\t{${minIndent}}`, 'gm'), '');
+	- }
+
 	code
-		each line in source.replace(/^\s/, ' ').replace(/\s*$/, '').split('\n')
+		each line in processCode(source).split('\n')
 			if (line)
 				div= line
 			else

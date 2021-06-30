@@ -19,26 +19,26 @@ block content
 		|  working the moment you include it so you don't have to worry about calling it yourself.
 	p Okay, let's actually draw something now:
 	+code(`
-	#include <Arduino.h>
-	#include "ardUI.h"
-	#include "TextView.h"
-	#include "Activity.h"
+		#include <Arduino.h>
+		#include "ardUI.h"
+		#include "TextView.h"
+		#include "Activity.h"
 
-	class MainActivity: public Activity {
-		using Activity::Activity;
+		class MainActivity: public Activity {
+			using Activity::Activity;
 
-		void onCreate() override {
-			auto t = new TextView("Hello world!");
-			setRootView(ll);
+			void onCreate() override {
+				auto t = new TextView("Hello world!");
+				setRootView(ll);
+			}
+		};
+
+		void setup() {
+			ardUI::startActivity<MainActivity>();
 		}
-	};
 
-	void setup() {
-		ardUI::startActivity<MainActivity>();
-	}
-
-	void loop() {
-	}
+		void loop() {
+		}
 	`)
 	p As you can see, this example is a bit more involved. Let's see what it does line by line.
 		|  On line 3 we are including a TextView, a widgets for displaying text that we'll be using later.
