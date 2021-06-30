@@ -3,22 +3,35 @@
 
 addEventListener('load', () => {
 	const tocContainer = document.getElementById('toc-container');
-	const tocTargets = document.getElementsByClassName('toc');
+	const tocTargets = document.querySelectorAll('[data-anchor]');
 
-	if (!tocContainer) {
-		throw new Error('No TOC Container found!');
+
+	function insertAfter(newNode, referenceNode) {
+		referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
 	}
 
-	for (const element of tocTargets) {
-		if (!element.id) {
-			element.id = 'toc-' + Math.floor(Math.random() * 1000000);
+
+	{
+		if (!tocContainer) {
+			throw new Error('No TOC Container found!');
 		}
 
-		const tocElement = document.createElement('a');
-		tocElement.href = '#' + element.id;
-		tocElement.classList.add(element.tagName);
-		tocElement.innerText = element.innerText;
+		for (const element of tocTargets) {
+			const id = element.getAttribute('data-anchor') || 'toc-' + element.tagName.toLowerCase()
+					+ Number.parseInt(element.innerText.substr(0, 16), 36);
 
-		tocContainer.appendChild(tocElement);
+			const tocElement = document.createElement('a');
+			tocElement.href = '#' + id;
+			tocElement.classList.add('toc-' + element.tagName.toLowerCase(), 'toc-element');
+			tocElement.innerText = id.replaceAll('_', ' ');
+
+			const anchor = document.createElement('div');
+			anchor.classList.add('anchor');
+			anchor.id = id;
+
+			insertAfter(anchor, element);
+
+			tocContainer.appendChild(tocElement);
+		}
 	}
 });

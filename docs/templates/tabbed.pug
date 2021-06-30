@@ -1,13 +1,15 @@
 extends layout
 
+
 block main
 	div#tab-layout
-		div#nav-tab
-			h3 Navigation
+		div#nav-tab.tab
+			h3.tab-title Navigation
 			div#nav-container
 				block nav
 		div#content-tab
 			block content
-		div#toc-tab
-			h3 Table of contents
+		div#toc-tab.tab
+			h3.tab-title On this page
 			div#toc-container
+			script(async src='/js/toc.js')

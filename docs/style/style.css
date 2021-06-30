@@ -7,7 +7,11 @@ html body {
   display: flex;
   flex-flow: column;
   justify-content: space-between;
+  line-height: 1.5;
   min-height: 100vh;
+}
+html body .hidden {
+  visibility: hidden;
 }
 html body header {
   background-color: rgba(129,178,255,0.8);
@@ -19,49 +23,66 @@ html body header {
   align-content: center;
   padding: 1em;
   padding-bottom: 0.5em;
-  margin-bottom: 1em;
-  border-radius: 0 0 12px 12px;
   position: sticky;
+  z-index: 1;
   top: 0;
+  height: 8vh;
 }
 html body header #logo {
   height: 3em;
   filter: invert(1);
 }
-html body main {
-  margin: 1em 3em;
-  min-height: 200vh;
-}
 html body main #tab-layout {
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
-  align-content: flex-start;
+  align-content: stretch;
 }
 @media screen and (max-width: 768px) {
   html body main #tab-layout {
     flex-wrap: wrap;
   }
 }
-html body main #tab-layout #nav-tab,
-html body main #tab-layout #toc-tab {
-  padding: 1em;
-  border: 1px solid #ddd;
-  border-radius: 1em;
-  box-shadow: 0 0 0.5em rgba(0,0,0,0.2);
-  display: block;
-  flex: 0 0 20%;
+html body main #tab-layout .tab {
+  max-height: 92vh;
+  padding: 1em 3ch 0;
+  background-color: #f5f9ff;
+}
+html body main #tab-layout .tab#nav-tab {
+  border-right: 1px solid #cce0ff;
+}
+html body main #tab-layout .tab#toc-tab {
+  border-left: 1px solid #cce0ff;
+}
+@media screen and (min-width: 768px) {
+  html body main #tab-layout .tab {
+    flex: 0 0 15%;
+    position: sticky;
+    top: 8vh;
+  }
+}
+html body main #tab-layout .tab .tab-title {
+  width: 100%;
+  text-align: center;
 }
 html body main #tab-layout #content-tab {
   flex-grow: 1;
-  margin: 0 2em;
+  max-width: 768px;
+  padding: 0 2em;
+  margin: 1em auto;
+}
+html body main #tab-layout .toc-element {
+  display: block;
+  color: #000;
 }
 html body main .tip-title {
-  font-size: 1.5em;
+  font-size: 1.2em;
+  margin-bottom: 0.8em;
 }
 html body main code {
   display: block;
-  background-color: #f7f7f7;
+  background-color: #f5f9ff;
+  color: #004fcd;
   white-space: pre;
   border-radius: 5px;
   padding: 1em;
@@ -74,13 +95,23 @@ html body main code div:before {
   content: counter(code-line);
   display: inline-block;
   width: 3.2ch;
-  margin-right: 0.5ch;
-  border-right: 1px solid #ccc;
+  margin-right: 1ch;
+  border-right: 1px solid #9ac1ff;
 }
-html body main code .empty {
-  height: 1em;
+html body main .auto-reference {
+  color: #488fff;
+  background-color: #f0f6ff;
+  padding: 1px;
+  border-radius: 1px;
+}
+html body main .auto-reference:hover {
+  color: #003fa4;
+}
+html body main .anchor {
+  transform: translateY(-20vh);
 }
 html body footer {
   padding: 1em 2em;
-  background-color: #f0f0f0;
+  border-top: 1px solid #cce0ff;
+  background-color: #f5f9ff;
 }

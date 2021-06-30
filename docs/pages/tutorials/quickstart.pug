@@ -1,9 +1,12 @@
 extends ../../templates/tabbed
 include ../../templates/mixins/code
+include ../../templates/mixins/tips
 
 
 block content
-	h1 Getting started with ardUI
+	h1(data-anchor='Getting_started') Getting started with ardUI
+	+tip('A note about code examples', 'info')
+		span All code examples on this site are written in .cpp format instead of .ino used in Arduino for better compatibility.
 	p Starting out with ardUI is extremely easy! Consider this example:
 	+code(`
 		#include <Arduino.h>
@@ -15,9 +18,9 @@ block content
 		void loop() {
 		}
 	`)
-	p This might not look like much, but this is actually a functional ardUI program! This works because ardUI starts
+	p This might not look like much, but this is actually a functional ardUI program! This is because ardUI starts
 		|  working the moment you include it so you don't have to worry about calling it yourself.
-	p Okay, let's actually draw something now:
+	p(data-anchor='Drawing_elements') Okay, let's actually draw something now:
 	+code(`
 		#include <Arduino.h>
 		#include "ardUI.h"
@@ -44,3 +47,4 @@ block content
 		|  On line 3 we are including a TextView, a widgets for displaying text that we'll be using later.
 		|  On the next line we include an Activity, or "a screen" that we will place all our widgets on. ardUI allows you
 		|  to create multiple screens and switch between them at any time. We actually define our Activity on line 6.
+	script(async src='/js/referencer.js')
