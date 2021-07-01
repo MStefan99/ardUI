@@ -59,15 +59,17 @@ html
 				display flex
 				flex-flow row nowrap
 				justify-content space-between
-				align-content stretch
 
 				@media screen and (max-width 768px)
 					flex-wrap wrap
 
 				.tab
-					height 100vh - --header-height
-					padding 1em 3ch 0
 					background-color lighten(--accent-color, 90%)
+					width 100vw
+					padding 1em 3ch
+
+					@media screen and (min-width 768px)
+						height 100vh - --header-height
 
 					&#nav-tab
 						border-right 1px solid lighten(--accent-color, 50%)
@@ -101,6 +103,8 @@ html
 			code, pre
 				background-color lighten(--accent-color, 90%)
 				color darken(--accent-color, 70%)
+				white-space pre-wrap
+				word-break break-word
 				line-height 1.4
 				border-radius 5px
 				padding 1em
