@@ -6,8 +6,8 @@ addEventListener('load', () => {
 	const tocTargets = document.querySelectorAll('[data-anchor]');
 
 
-	function insertAfter(newNode, referenceNode) {
-		referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+	function insertBefore(newNode, referenceNode) {
+		referenceNode.parentNode.insertBefore(newNode, referenceNode);
 	}
 
 
@@ -29,7 +29,7 @@ addEventListener('load', () => {
 			anchor.classList.add('anchor');
 			anchor.id = id;
 
-			insertAfter(anchor, element);
+			insertBefore(anchor, element);
 
 			tocContainer.appendChild(tocElement);
 		}

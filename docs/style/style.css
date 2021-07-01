@@ -154,7 +154,7 @@ html body main .auto-reference:hover {
   color: #004fcd;
 }
 html body main .anchor {
-  transform: translateY(-20vh);
+  transform: translateY(-10vh);
 }
 html body footer {
   padding: 1em 2em;
