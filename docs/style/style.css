@@ -1,6 +1,7 @@
 html {
   font-family: sans-serif;
   scroll-behavior: smooth;
+  color: #020202;
 }
 html body {
   margin: 0;
@@ -44,7 +45,7 @@ html body main #tab-layout {
   }
 }
 html body main #tab-layout .tab {
-  max-height: 92vh;
+  height: 92vh;
   padding: 1em 3ch 0;
   background-color: #f5f9ff;
 }
@@ -82,11 +83,35 @@ html body main .tip-title {
 html body main code {
   display: block;
   background-color: #f5f9ff;
-  color: #004fcd;
+  color: #002f7b;
   white-space: pre;
   border-radius: 5px;
   padding: 1em;
   counter-reset: code-line;
+}
+html body main code .highlight.typename {
+  color: #7c550b;
+}
+html body main code .highlight.function {
+  color: #3c881b;
+}
+html body main code .highlight.string {
+  color: #7e1e0e;
+}
+html body main code .highlight.macro {
+  color: #500b94;
+}
+html body main code .highlight.template {
+  color: #8c8500;
+}
+html body main code .highlight.keyword {
+  color: #16886e;
+}
+html body main code .highlight.scope {
+  color: #47566b;
+}
+html body main code .highlight.modifier {
+  color: #758155;
 }
 html body main code div {
   counter-increment: code-line;
@@ -94,6 +119,7 @@ html body main code div {
 html body main code div:before {
   content: counter(code-line);
   display: inline-block;
+  color: #004fcd;
   width: 3.2ch;
   margin-right: 1ch;
   border-right: 1px solid #9ac1ff;

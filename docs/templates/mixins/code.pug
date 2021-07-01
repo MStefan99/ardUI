@@ -1,18 +1,39 @@
 mixin code(source)
-	- function processCode(text) {
-	- 	let match = text.match(/^(\t)*/);
-	- 	let minIndent = match? match.length : 0;
+	- function deIndent(text) {
+	-  text = text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+	-  let match = text.match(/^(\t)*/);
+	-  let minIndent = match? match.length : 0;
 	-
-	- 	for (const line of text.split('\n')) {
-	- 		const indent = line.match(/^(\t)*/).length;
-	- 		if (indent < minIndent) {
-	- 			minIndent = indent;
-	- 		}
-	- 	}
+	-  for (const line of text.split('\n')) {
+	-    const indent = line.match(/^(\t)*/).length;
+	-    if (indent < minIndent) {
+	-      minIndent = indent;
+	-    }
+	-  }
 	-
-	- 	return text.replace(/^\s*|\s*$/g, '').replace(RegExp(`^\\t{${minIndent}}`, 'gm'), '');
+	-  return text.replace(/^\s*|\s*$/g, '').replace(RegExp(`^\\t{${minIndent}}`, 'gm'), '');
 	- }
 
+
+	// TODO: add class keyword
+	- function formatCode(code) {
+	-  const rules = [];
+	-  rules.push({pattern: '([\'"].+["\'])|((?<=#include )&lt;.+&gt;)', type: 'string'});
+	-  rules.push({pattern: 'void|auto|bool|u?int(\\d+_t)?', type: 'typename'});
+	-  rules.push({pattern: 'new|delete|for|while|do|if|using|virtual', type: 'keyword'});
+	-  rules.push({pattern: 'public|protected|private', type: 'modifier'});
+	-  rules.push({pattern: '\\w+::', type: 'scope'});
+	-  rules.push({pattern: '#\\w+', type: 'macro'});
+	-  rules.push({pattern: '\\w+(&lt;.*&gt;)?\\(.*\\)', type: 'function'});
+	-  rules.push({pattern: '(?<!#.*)&lt;.+&gt;', type: 'template'});
+	-
+	-  for (const rule of rules) {
+	-    code = code.replace(RegExp(`(${rule.pattern})`, 'ig'), `<span class="highlight ${rule.type}">$1</span>`);
+	-  }
+	-  return code;
+	- }
+
+
 	code
-		each line in processCode(source).split('\n')
-			div= line
+		each line in formatCode(deIndent(source)).split('\n')
+			div.code-line!= line

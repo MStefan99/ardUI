@@ -1,6 +1,18 @@
 --accent-color = #9AC1FF
+--text-color = #020202
 --background-color = #f0f0f0
 --header-height = 8vh
+
+--types = 'typename' 'function' 'string' 'macro' 'template'\
+'keyword' 'scope' 'modifier'
+--color-typename = #7c550b
+--color-function = #3c881b
+--color-macro = #500b94
+--color-string = #7e1e0e
+--color-template = #8c8500
+--color-keyword = #16886e
+--color-scope = #47566b
+--color-modifier = #758155
 
 
 glass(color = #fffb)
@@ -12,6 +24,7 @@ glass(color = #fffb)
 html
 	font-family sans-serif
 	scroll-behavior smooth
+	color --text-color
 
 	body
 		margin 0
@@ -52,7 +65,7 @@ html
 					flex-wrap wrap
 
 				.tab
-					max-height 100vh - --header-height
+					height 100vh - --header-height
 					padding 1em 3ch 0
 					background-color lighten(--accent-color, 90%)
 
@@ -88,11 +101,16 @@ html
 			code
 				display block
 				background-color lighten(--accent-color, 90%)
-				color darken(--accent-color, 50%)
+				color darken(--accent-color, 70%)
 				white-space pre
 				border-radius 5px
 				padding 1em
 				counter-reset code-line
+
+				.highlight
+					for type in --types
+						&.{type}
+							color --color- + type
 
 				div
 					counter-increment code-line
@@ -100,6 +118,7 @@ html
 					&:before
 						content counter(code-line)
 						display inline-block
+						color darken(--accent-color, 50%)
 						width 3.2ch
 						margin-right 1ch
 						border-right 1px solid --accent-color
