@@ -43,8 +43,24 @@ block content
 		void loop() {
 		}
 	`)
-	p As you can see, this example is a bit more involved. Let's see what it does line by line.
+	p
+		|  As you can see, this example is a bit more involved. Let's see what it does line by line.
 		|  On line 3 we are including a TextView, a widgets for displaying text that we'll be using later.
 		|  On the next line we include an Activity, or "a screen" that we will place all our widgets on. ardUI allows you
-		|  to create multiple screens and switch between them at any time. We actually define our Activity on line 6.
+		|  to create multiple screens and switch between them at any time.
+	p
+		|  We actually define our Activity on line 6.
+		|  For this, we define a new class that extends a base Activity class (
+		a(href='/pages/tutorials/why_use_classes') why?
+		| ) which ardUI will then start for us. When creating an Activity, don't forget to add a #[code using]
+		|  directive (see line 7) or otherwise ardUI won't be able to start your Activity.
+		|  Your Activity is required to have a single method: #[code onCreate()]. This method will be called when ardUI
+		|  will be starting your Activity. This is also a good place to create and add your widgets to the Activity.
+	p
+		|  In our onCreate method we will start adding our widgets to the Activity we've just created. On line 10
+		|  we are creating a new TextView, a simple widget for just displaying text. On the next line we are adding this
+		|  newly created widget to our Activity so that ardUI can draw it when we start an Activity.
+	p
+		|  In the #[code setup()] function we then need to tell ardUI to start our Activity by calling
+		|  #[code ardUI::startActivity<>()] method. ardUI will then start the Activity and draw all the widgets on its own!
 	script(async src='/js/referencer.js')

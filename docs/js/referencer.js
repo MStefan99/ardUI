@@ -25,15 +25,15 @@ keywords.set('ViewGroup', '/pages/reference/ViewGroup');
 
 
 function reference(element) {
-	if (element.children.length) {
-		for (const child of element.children) {
-			if (child.tagName !== 'CODE') {
-				reference(child);
-			}
-		}
+	if (['CODE', 'PRE'].includes(element.tagName)) {
+		// skipping code blocks
+	} else if (['P', 'SPAN'].includes(element.tagName)) {  // TODO: find a better solution for iterating
+		element.innerHTML = element.innerHTML.split(/(\W)/).map(word =>
+				keywords.has(word) ? `<a href="${keywords.get(word)}" class="auto-reference">${word}</a>` : word).join('');
 	} else {
-			element.innerHTML = element.innerText.split(/(\W)/).map(word =>
-					keywords.has(word) ? `<a href="${keywords.get(word)}" class="auto-reference">${word}</a>` : word).join('');
+		for (const child of element.children) {
+			reference(child);
+		}
 	}
 }
 

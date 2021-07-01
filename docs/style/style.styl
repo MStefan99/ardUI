@@ -6,7 +6,7 @@
 --types = 'typename' 'function' 'string' 'macro' 'template'\
 'keyword' 'scope' 'modifier'
 --color-typename = #7c550b
---color-function = #3c881b
+--color-function = #448329
 --color-macro = #500b94
 --color-string = #7e1e0e
 --color-template = #8c8500
@@ -31,7 +31,7 @@ html
 		display flex
 		flex-flow column
 		justify-content space-between
-		line-height 1.5
+		line-height 1.7
 		min-height 100vh
 
 		.hidden
@@ -98,11 +98,10 @@ html
 				font-size 1.2em
 				margin-bottom .8em
 
-			code
-				display block
+			code, pre
 				background-color lighten(--accent-color, 90%)
 				color darken(--accent-color, 70%)
-				white-space pre
+				line-height 1.4
 				border-radius 5px
 				padding 1em
 				counter-reset code-line
@@ -123,14 +122,18 @@ html
 						margin-right 1ch
 						border-right 1px solid --accent-color
 
+			code
+				font-family monospace
+				display inline
+				padding 0
+
 			.auto-reference
-				color darken(--accent-color, 20%)
-				background-color lighten(--accent-color, 85%)
+				color darken(--accent-color, 80%)
 				padding 1px
 				border-radius 1px
 
 				&:hover
-					color darken(--accent-color, 60%)
+					color darken(--accent-color, 50%)
 
 			.anchor
 				transform translateY(-20vh)

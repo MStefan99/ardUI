@@ -8,7 +8,7 @@ html body {
   display: flex;
   flex-flow: column;
   justify-content: space-between;
-  line-height: 1.5;
+  line-height: 1.7;
   min-height: 100vh;
 }
 html body .hidden {
@@ -80,43 +80,53 @@ html body main .tip-title {
   font-size: 1.2em;
   margin-bottom: 0.8em;
 }
-html body main code {
-  display: block;
+html body main code,
+html body main pre {
   background-color: #f5f9ff;
   color: #002f7b;
-  white-space: pre;
+  line-height: 1.4;
   border-radius: 5px;
   padding: 1em;
   counter-reset: code-line;
 }
-html body main code .highlight.typename {
+html body main code .highlight.typename,
+html body main pre .highlight.typename {
   color: #7c550b;
 }
-html body main code .highlight.function {
-  color: #3c881b;
+html body main code .highlight.function,
+html body main pre .highlight.function {
+  color: #448329;
 }
-html body main code .highlight.string {
+html body main code .highlight.string,
+html body main pre .highlight.string {
   color: #7e1e0e;
 }
-html body main code .highlight.macro {
+html body main code .highlight.macro,
+html body main pre .highlight.macro {
   color: #500b94;
 }
-html body main code .highlight.template {
+html body main code .highlight.template,
+html body main pre .highlight.template {
   color: #8c8500;
 }
-html body main code .highlight.keyword {
+html body main code .highlight.keyword,
+html body main pre .highlight.keyword {
   color: #16886e;
 }
-html body main code .highlight.scope {
+html body main code .highlight.scope,
+html body main pre .highlight.scope {
   color: #47566b;
 }
-html body main code .highlight.modifier {
+html body main code .highlight.modifier,
+html body main pre .highlight.modifier {
   color: #758155;
 }
-html body main code div {
+html body main code div,
+html body main pre div {
   counter-increment: code-line;
 }
-html body main code div:before {
+html body main code div:before,
+html body main pre div:before {
   content: counter(code-line);
   display: inline-block;
   color: #004fcd;
@@ -124,14 +134,18 @@ html body main code div:before {
   margin-right: 1ch;
   border-right: 1px solid #9ac1ff;
 }
+html body main code {
+  font-family: monospace;
+  display: inline;
+  padding: 0;
+}
 html body main .auto-reference {
-  color: #488fff;
-  background-color: #f0f6ff;
+  color: #002052;
   padding: 1px;
   border-radius: 1px;
 }
 html body main .auto-reference:hover {
-  color: #003fa4;
+  color: #004fcd;
 }
 html body main .anchor {
   transform: translateY(-20vh);

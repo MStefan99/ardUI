@@ -34,6 +34,6 @@ mixin code(source)
 	- }
 
 
-	code
+	pre
 		each line in formatCode(deIndent(source)).split('\n')
 			div.code-line!= line
