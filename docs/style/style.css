@@ -70,15 +70,15 @@ html body main #tab-layout .tab .tab-title {
   width: 100%;
   text-align: center;
 }
+html body main #tab-layout .tab a {
+  display: block;
+  color: #000;
+}
 html body main #tab-layout #content-tab {
   flex-grow: 1;
   max-width: 768px;
   padding: 0 2em;
   margin: 1em auto;
-}
-html body main #tab-layout .toc-element {
-  display: block;
-  color: #000;
 }
 html body main .tip-title {
   font-size: 1.2em;
@@ -157,6 +157,9 @@ html body main .anchor {
   transform: translateY(-10vh);
 }
 html body footer {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
   padding: 1em 2em;
   border-top: 1px solid #cce0ff;
   background-color: #f5f9ff;

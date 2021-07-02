@@ -3,10 +3,15 @@ include ../../templates/mixins/code
 include ../../templates/mixins/tips
 
 
+block nav
+	include ../../templates/nav-tutorials
+
+
 block content
 	h1(data-anchor='Getting_started') Getting started with ardUI
 	+tip('A note about code examples', 'info')
-		span All code examples on this site are written in .cpp format instead of .ino used in Arduino for better compatibility.
+		span All code examples on this site are written in .cpp format instead of .ino used in Arduino
+			|  for better compatibility. Code in the .cpp format will run in Arduino IDE as well.
 	p Starting out with ardUI is extremely easy! Consider this example:
 	+code(`
 		#include <Arduino.h>
