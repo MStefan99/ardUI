@@ -27,7 +27,7 @@ html body header {
   position: sticky;
   z-index: 1;
   top: 0;
-  height: 8vh;
+  height: 4rem;
 }
 html body header #logo {
   height: 3em;
@@ -50,7 +50,7 @@ html body main #tab-layout .tab {
 }
 @media screen and (min-width: 768px) {
   html body main #tab-layout .tab {
-    height: 92vh;
+    height: 96vh;
   }
 }
 html body main #tab-layout .tab#nav-tab {
@@ -63,7 +63,7 @@ html body main #tab-layout .tab#toc-tab {
   html body main #tab-layout .tab {
     flex: 0 0 15%;
     position: sticky;
-    top: 8vh;
+    top: 4rem;
   }
 }
 html body main #tab-layout .tab .tab-title {
@@ -73,6 +73,13 @@ html body main #tab-layout .tab .tab-title {
 html body main #tab-layout .tab a {
   display: block;
   color: #000;
+}
+html body main #tab-layout img {
+  display: block;
+  max-height: 25vh;
+  border-radius: 10px;
+  padding: 5px;
+  box-shadow: 0 5px 15px #e6e6e6;
 }
 html body main #tab-layout #content-tab {
   flex-grow: 1;
@@ -126,6 +133,14 @@ html body main pre .highlight.scope {
 html body main code .highlight.modifier,
 html body main pre .highlight.modifier {
   color: #758155;
+}
+html body main code .highlight.number,
+html body main pre .highlight.number {
+  color: #81556c;
+}
+html body main code .highlight.comment,
+html body main pre .highlight.comment {
+  color: #858585;
 }
 html body main code div,
 html body main pre div {

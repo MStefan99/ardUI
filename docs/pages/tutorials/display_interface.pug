@@ -1,0 +1,61 @@
+extends ../../templates/tabbed
+include ../../templates/mixins/code
+
+
+block nav
+	include ../../templates/nav-tutorials
+
+
+block content
+	h1(data-anchor='Display interface') Display interface
+	p
+		|  In order to work on every display, ardUI needs to know how to talk to that specific display, but how does
+		|  ardUI know how to do that?
+	p
+		|  In short, it doesn't. In a bit more detail, ardUI has a common display interface to do just that.
+		|  This interface is just a set of functions ardUI can call to get information about a display and
+		|  draw basic shapes. Once you have installed ardUI, open the #[code llpi.cpp] file (LLPI stands
+		|  for Low-Level Programming Interface) and complete the functions there to work with your display.
+		|  Once that is done, ardUI will work with your exact display.
+	h2(data-anchor='Completing the interface') Completing the interface
+	p
+		|  ardUI architecture can be visualized like this, where your application is on the very top and your hardware
+		|  on the bottom:
+	img.mx-auto(src='/img/ardui_architecture.png' alt='ardUI architecture')
+	p
+		|  ardUI display interface is the third layer in this image and it allows ardUI to communicate with
+		|  your display (usually via a display library). Display interface was made to be very similar to many
+		|  ready display libraries so that creating an interface
+		|  is as simple as possible. This is what it might look like for a single function:
+	+code(`
+		ReturnCode arduiDisplayFillRect(uint16_t x1,
+				uint16_t y1,
+				uint16_t x2,
+				uint16_t y2,
+				uint32_t color) {
+			// This will depend on your display library
+			tft.fillRect(x1, y1, x2, y2, tft.color565(color));
+			return OK;
+		}
+	`)
+	p
+		|  The exact function for your display might be different but most display libraries have methods
+		|  for drawing text, rectangles, triangles, and more so you just have to find the matching function and test
+		|  that it works. You can do this by including a #[code llpi.h] file in your main program and manually
+		|  calling those functions to see if they work correctly:
+	+code(`
+		#include <Arduino.h>
+		#include <llpi.h>
+
+		void setup() {
+			arduiDisplayFillRect(0, 0, 100, 100, 0);
+		}
+
+		void loop() {
+		}
+	`)
+	p
+		|  Once you complete these functions, ardUI will start drawing on your display! If you want to test ardUI
+		|  without going through this process, you can enable verbose mode in ardUI settings (found in
+		|  #[code ardUI_config.h] file) and watch the draw calls in your serial monitor. This will not, however,
+		|  draw anything on the screen.

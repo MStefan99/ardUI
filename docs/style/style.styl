@@ -1,10 +1,10 @@
 --accent-color = #9AC1FF
 --text-color = #020202
 --background-color = #f0f0f0
---header-height = 8vh
+--header-height = 4rem
 
 --types = 'typename' 'function' 'string' 'macro' 'template'\
-'keyword' 'scope' 'modifier'
+'keyword' 'scope' 'modifier' 'number' 'comment'
 --color-typename = #7c550b
 --color-function = #448329
 --color-macro = #500b94
@@ -13,6 +13,8 @@
 --color-keyword = #16886e
 --color-scope = #47566b
 --color-modifier = #758155
+--color-number = #81556c
+--color-comment = #858585
 
 
 glass(color = #fffb)
@@ -89,6 +91,13 @@ html
 					a
 						display block
 						color #000
+
+				img
+					display block
+					max-height 25vh
+					border-radius 10px
+					padding 5px
+					box-shadow 0 5px 15px lighten(gray, 80%)
 
 				#content-tab
 					flex-grow 1

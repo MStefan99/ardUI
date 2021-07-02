@@ -20,12 +20,14 @@ mixin code(source)
 	-  const rules = [];
 	-  rules.push({pattern: '([\'"].+["\'])|((?<=#include )&lt;.+&gt;)', type: 'string'});
 	-  rules.push({pattern: 'void|auto|bool|u?int(\\d+_t)?', type: 'typename'});
-	-  rules.push({pattern: 'new|delete|for|while|do|if|using|virtual', type: 'keyword'});
-	-  rules.push({pattern: 'public|protected|private', type: 'modifier'});
-	-  rules.push({pattern: '\\w+::', type: 'scope'});
+	-  rules.push({pattern: '\\b(new|delete|for|while|do|if|using|virtual|override|return)\\b', type: 'keyword'});
+	-  rules.push({pattern: '\\b(public|protected|private)\\b', type: 'modifier'});
+	-  rules.push({pattern: '\\b\\w+::', type: 'scope'});
 	-  rules.push({pattern: '#\\w+', type: 'macro'});
-	-  rules.push({pattern: '\\w+(&lt;.*&gt;)?\\(.*\\)', type: 'function'});
+	-  rules.push({pattern: '\\w+(&lt;.*&gt;)?(?=\\(.*\\))', type: 'function'});
 	-  rules.push({pattern: '(?<!#.*)&lt;.+&gt;', type: 'template'});
+	-  rules.push({pattern: '\\b(\\d+)\\b', type: 'number'});
+	-  rules.push({pattern: '//.*', type: 'comment'});
 	-
 	-  for (const rule of rules) {
 	-    code = code.replace(RegExp(`(${rule.pattern})`, 'ig'), `<span class="highlight ${rule.type}">$1</span>`);
