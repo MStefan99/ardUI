@@ -7,6 +7,8 @@
 ![Repo size](https://img.shields.io/github/repo-size/mstefan99/ardui?style=flat-square)
 [![Releases](https://img.shields.io/github/downloads/MStefan99/ardUI/total?style=flat-square)](https://github.com/MStefan99/ardUI/releases)
 
+![Project card][project-card]
+
 _Note: ardUI is in pre-alpha now, many features are still in development_
 
 ### What is ardUI?
@@ -37,8 +39,6 @@ ardUI is designed with efficiency and performance in mind, so theoretically you 
 On lower-end boards, though, you can run out of RAM fairly quickly so at least 8K of RAM is recommended
 for building larger interfaces.
 
-_Arduino Mega or higher is recommended._
-
 ### Learn ardUI
 Many of the ardUI APIs are modeled after Android UI framework to make switching and learning easier so if you are 
 familiar with Android development, you already know a lot of ardUI! 
@@ -49,8 +49,9 @@ to get started, regardless of your experience.
 #### [Start using ardUI now!][releases]
 
 
+[project-card]: ./docs/img/project_card.png
 [homepage]: https://ardui.mstefan99.com
 [releases]: https://github.com/MStefan99/ardUI/releases
 [docs]: https://ardui.mstefan99.com/pages
-[get-started]: https://ardui.mstefan99.com/pages/tutorials/quickstart
+[get-started]: https://ardui.mstefan99.com/pages/tutorials/installation
 [porting]: https://ardui.mstefan99.com/pages/porting

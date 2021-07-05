@@ -11,7 +11,7 @@ mixin code(source)
 	-    }
 	-  }
 	-
-	-  return text.replace(/^\s*|\s*$/g, '').replace(RegExp(`^\\t{${minIndent}}`, 'gm'), '');
+	-  return text.replace(/^\s*|\s*$/g, '').replace(RegExp(`^\\t{${minIndent}}`, 'gm'), '').replace(/\t/g, '  ');
 	- }
 
 
