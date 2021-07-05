@@ -17,7 +17,8 @@ addEventListener('load', () => {
 		}
 
 		for (const element of tocTargets) {
-			const id = element.getAttribute('data-anchor') || 'toc-' + element.tagName.toLowerCase()
+			const id = element.getAttribute('data-anchor').replaceAll(' ', '_')
+					|| 'toc-' + element.tagName.toLowerCase()
 					+ Number.parseInt(element.innerText.substr(0, 16), 36);
 
 			const tocElement = document.createElement('a');

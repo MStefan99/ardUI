@@ -36,6 +36,10 @@ html
 		line-height 1.7
 		min-height 100vh
 
+		for size in (1..10)
+			.img-{size * 10}
+				max-height size * 10 vh
+
 		.hidden
 			visibility hidden
 
@@ -63,6 +67,7 @@ html
 				justify-content space-between
 
 				@media screen and (max-width 768px)
+					min-height 100vh
 					flex-wrap wrap
 
 				.tab
@@ -94,10 +99,11 @@ html
 
 				img
 					display block
-					max-height 25vh
+					margin 1em auto
+					max-width 100%
 					border-radius 10px
 					padding 5px
-					box-shadow 0 5px 15px lighten(gray, 80%)
+					box-shadow 0 5px 10px lighten(gray, 90%)
 
 				#content-tab
 					flex-grow 1
@@ -153,7 +159,7 @@ html
 
 		footer
 			display flex
-			flex-flow row nowrap
+			flex-flow row wrap
 			justify-content space-between
 			padding 1em 2em
 			border-top 1px solid lighten(--accent-color, 50%)

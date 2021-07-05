@@ -11,6 +11,36 @@ html body {
   line-height: 1.7;
   min-height: 100vh;
 }
+html body .img-10 {
+  max-height: 10vh;
+}
+html body .img-20 {
+  max-height: 20vh;
+}
+html body .img-30 {
+  max-height: 30vh;
+}
+html body .img-40 {
+  max-height: 40vh;
+}
+html body .img-50 {
+  max-height: 50vh;
+}
+html body .img-60 {
+  max-height: 60vh;
+}
+html body .img-70 {
+  max-height: 70vh;
+}
+html body .img-80 {
+  max-height: 80vh;
+}
+html body .img-90 {
+  max-height: 90vh;
+}
+html body .img-100 {
+  max-height: 100vh;
+}
 html body .hidden {
   visibility: hidden;
 }
@@ -40,6 +70,7 @@ html body main #tab-layout {
 }
 @media screen and (max-width: 768px) {
   html body main #tab-layout {
+    min-height: 100vh;
     flex-wrap: wrap;
   }
 }
@@ -76,10 +107,11 @@ html body main #tab-layout .tab a {
 }
 html body main #tab-layout img {
   display: block;
-  max-height: 25vh;
+  margin: 1em auto;
+  max-width: 100%;
   border-radius: 10px;
   padding: 5px;
-  box-shadow: 0 5px 15px #e6e6e6;
+  box-shadow: 0 5px 10px #f2f2f2;
 }
 html body main #tab-layout #content-tab {
   flex-grow: 1;
@@ -173,7 +205,7 @@ html body main .anchor {
 }
 html body footer {
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: row wrap;
   justify-content: space-between;
   padding: 1em 2em;
   border-top: 1px solid #cce0ff;

@@ -1,0 +1,32 @@
+extends ../../templates/tabbed
+include ../../templates/mixins/code
+include ../../templates/mixins/tips
+
+
+block nav
+	include ../../templates/nav-tutorials
+
+
+block content
+	h1(data-anchor='Activity') Activity basics
+	p
+		|  An Activity in ardUI is a single screen you can place widgets on. To create your own Activity, create a new
+		|  Activity class as follows: #[code class MyActivity: public Activity {...};]. Let's look at this declaration
+		|  more closely. A colon in this declaration means that your custom Activity extends a base Activity class.
+		|  In other words, it will have all the same fields and methods as any other Activity, while allowing
+		|  you to add your own ones. Let's take a look at some of the things an Activity can do for you.
+	p
+		|  The most important Activity methods are the Lifecycle methods. ardUI will call these
+		|  functions at appropriate times for you so that you can do certain things in your application. The only
+		|  required method in an Activity is #[code onCreate()]. This is the first function called before your
+		|  Activity becomes visible. This is also a good place to create and place all widgets your Activity will need.
+		|  Here is the chart of the entire Activity lifecycle:
+	img(src='/img/activity_lifecycle.png' alt='Activity lifecycle diagram' data-anchor='Lifecycle diagram')
+	p
+		|  This diagram may look quite complicated at first but you don't need to implement any functions other than
+		|  #[code onCreate()]. However, you might also want to take a look at the #[code onDestroy()]. This is the
+		|  function ardUI will call before deleting your Activity. This is the last chance for you to clean up
+		|  any resources you are using in your Activity and free all memory you have allocated for it. Otherwise, it might
+		|  result in a memory leak. Read more about memory management in ardUI
+		|  #[a(href='/pages/tutorials/memory_management') here].
+	script(async src='/js/referencer.js')
