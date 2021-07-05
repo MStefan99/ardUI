@@ -118,14 +118,17 @@ html
 			code, pre
 				background-color lighten(--accent-color, 90%)
 				color darken(--accent-color, 70%)
-				white-space pre-wrap
+				white-space pre-line
 				word-break break-word
 				line-height 1.4
 				border-radius 5px
 				padding 1em
 				counter-reset code-line
 
-				.highlight
+				@media screen and (min-width 768px)
+					white-space pre-wrap
+
+				:not(.comment) > .highlight  // TODO: fix nested
 					for type in --types
 						&.{type}
 							color --color- + type

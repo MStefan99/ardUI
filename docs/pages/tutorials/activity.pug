@@ -1,6 +1,5 @@
 extends ../../templates/tabbed
 include ../../templates/mixins/code
-include ../../templates/mixins/tips
 
 
 block nav
@@ -8,7 +7,7 @@ block nav
 
 
 block content
-	h1(data-anchor='Activity') Activity basics
+	h1(data-anchor='Activity basics') Activity basics
 	p
 		|  An Activity in ardUI is a single screen you can place widgets on. To create your own Activity, create a new
 		|  Activity class as follows: #[code class MyActivity: public Activity {...};]. Let's look at this declaration
@@ -23,10 +22,51 @@ block content
 		|  Here is the chart of the entire Activity lifecycle:
 	img(src='/img/activity_lifecycle.png' alt='Activity lifecycle diagram' data-anchor='Lifecycle diagram')
 	p
-		|  This diagram may look quite complicated at first but you don't need to implement any functions other than
-		|  #[code onCreate()]. However, you might also want to take a look at the #[code onDestroy()]. This is the
-		|  function ardUI will call before deleting your Activity. This is the last chance for you to clean up
+		|  This diagram may look quite complicated at first but you don't have to implement any functions other than
+		|  #[code onCreate()]. However, you might also want to take a look at the #[code onDestroy()] among others.
+		|  This is the function ardUI will call before deleting your Activity. This is the last chance for you to release
 		|  any resources you are using in your Activity and free all memory you have allocated for it. Otherwise, it might
 		|  result in a memory leak. Read more about memory management in ardUI
 		|  #[a(href='/pages/tutorials/memory_management') here].
+	h1(data-anchor='Switching Activities') Switching between Activities
+	p
+		|  You can open an Activity by calling #[code startActivity()] or #[code startActivityForResult()]. In both cases,
+		|  you may also pass an optional Bundle containing some data you'd like to pass to your new Activity. If you want to
+		|  get some data back from it (i.e. input a PIN code on another screen), you should also define a
+		|  callback, or a function that will be called once your started Activity finishes. To return a result,
+		|  make a call to #[code setResult()] from that Activity and, optionally, #[code finish()] if you want
+		|  that Activity to exit immediately.
+	img(src='/img/activity_result.png' alt='Activity result diagram')
+	p
+		|  In this example different Activities are starting PinActivity to get a PIN code from the user which is then
+		|  returned to a result callback. Here is a code example with one main Activity:
+	+code(`
+		#include <Arduino.h>
+		#include "ardUI.h"
+		#include "Activity.h"
+
+		public PinActivity: public Activity {
+			using Activity::Activity;
+
+			void onCreate() override {
+				// Obtaining a PIN from the user
+				auto b = Bundle {};  // Creating a new Bundle to return result in
+				b.putInt("pin", /*pin*/);  // Adding a pin to a Bundle
+				setResult(0, b);  // Setting the Bundle to be a result
+				finish();  // Exiting an Activity
+			}
+		}
+
+		class MainActivity: public Activity {
+			using Activity::Activity;
+
+			void onCreate() override {
+				// Adding widgets, performing setup, etc.
+				startActivityForResult<ResultActivity>([](int code, Bundle results) -> void {
+					// Bundle "results" now contains our PIN
+					Serial.println(results.getString("pin"));
+				});
+			}
+		}
+	`)
 	script(async src='/js/referencer.js')

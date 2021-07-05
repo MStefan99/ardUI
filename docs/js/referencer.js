@@ -39,5 +39,5 @@ function reference(element) {
 
 
 addEventListener('load', () => {
-	reference(document.documentElement);
+	reference(document.querySelector('article'));
 });
