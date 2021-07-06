@@ -23,7 +23,7 @@ mixin code(source)
 	-  rules.push({pattern: '\\b(public|protected|private)\\b', type: 'modifier'});
 	-  rules.push({pattern: '\\b\\w+::', type: 'scope'});
 	-  rules.push({pattern: '#\\w+?\\b', type: 'macro'});
-	-  rules.push({pattern: '\\b\\w+(&lt;.*&gt;)?\\b(?=\\(.*\\))', type: 'function'});
+	-  rules.push({pattern: '\\b\\w+(&lt;.*&gt;)?(?=\\(.*\\))', type: 'function'});
 	-  rules.push({pattern: '(?<!#.*)&lt;.+?&gt;', type: 'template'});
 	-  rules.push({pattern: '\\b(\\d+?)\\b', type: 'number'});
 	-  rules.push({pattern: '//.*|/\\*.*?\\*/', type: 'comment'});

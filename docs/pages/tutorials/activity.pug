@@ -69,4 +69,8 @@ block content
 			}
 		}
 	`)
+	p
+		|  If you want to stop all Activities immediately and return ardUI to its initial state, just make a call
+		|  to the #[code ardUI::reset()]. This will stop all Activities currently open and waiting to be reopened and
+		|  free all memory taken up by them. You can continue to use ardUI as usual afterwards.
 	script(async src='/js/referencer.js')
