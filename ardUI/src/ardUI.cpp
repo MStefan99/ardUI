@@ -6,8 +6,7 @@
 
 
 ardUI::~ardUI() {
-	ActivityManager::reset();
-	ActivityManager::processWaitingActivities();
+	reset();
 }
 
 
@@ -18,6 +17,7 @@ void ardUI::back() {
 
 void ardUI::reset() {
 	ActivityManager::reset();
+	ActivityManager::processWaitingActivities();
 }
 
 

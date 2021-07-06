@@ -15,12 +15,11 @@ mixin code(source)
 	- }
 
 
-	//- TODO: add class keyword
 	- function formatCode(code) {
 	-  const rules = [];
 	-  rules.push({pattern: '([\'"].+["\'])|((?<=#include )&lt;.+&gt;)', type: 'string'});
 	-  rules.push({pattern: '\\b(void|auto|bool|u?int(\\d+_t)?)\\b', type: 'typename'});
-	-  rules.push({pattern: '\\b(new|delete|for|while|do|if|using|virtual|override|return)\\b', type: 'keyword'});
+	-  rules.push({pattern: '\\b(new|delete|for|while|do|if|using|virtual|override|return|class(?!\\s*=))\\b', type: 'keyword'});
 	-  rules.push({pattern: '\\b(public|protected|private)\\b', type: 'modifier'});
 	-  rules.push({pattern: '\\b\\w+::', type: 'scope'});
 	-  rules.push({pattern: '#\\w+?\\b', type: 'macro'});
