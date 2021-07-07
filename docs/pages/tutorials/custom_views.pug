@@ -1,5 +1,6 @@
 extends ../../templates/tabbed
 include ../../templates/mixins/code
+include ../../templates/mixins/toc
 
 
 block nav
@@ -7,7 +8,8 @@ block nav
 
 
 block content
-	h1(data-anchor='Custom Views') Making custom Views
+	+toc('Custom Views')
+		h1() Making custom Views
 	p
 		|  One of the most important features of ardUI is extensibility. You are never limited by the set of widget
 		|  ardUI provides out of the box because you can always implement your own widgets to suit

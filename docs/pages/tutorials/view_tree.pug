@@ -1,5 +1,6 @@
 extends ../../templates/tabbed
 include ../../templates/mixins/code
+include ../../templates/mixins/toc
 
 
 block nav
@@ -7,7 +8,8 @@ block nav
 
 
 block content
-	h1(data-anchor='View tree') Introduction to View tree
+	+toc('View tree')
+		h1() Introduction to View tree
 	p
 		|  View tree in ardUI is a collection of objects that describes all Views added to a particular Activity.
 		|  Consider this simple Activity with a title text and three buttons:

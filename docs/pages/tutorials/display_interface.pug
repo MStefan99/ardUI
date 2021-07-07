@@ -1,5 +1,6 @@
 extends ../../templates/tabbed
 include ../../templates/mixins/code
+include ../../templates/mixins/toc
 
 
 block nav
@@ -7,7 +8,8 @@ block nav
 
 
 block content
-	h1(data-anchor='Display interface') Display interface
+	+toc('Display interface')
+		h1() Display interface
 	p
 		|  In order to work on every display, ardUI needs to know how to talk to that specific display, but how does
 		|  ardUI know how to do that?
@@ -17,7 +19,8 @@ block content
 		|  draw basic shapes. Once you have installed ardUI, open the #[code llpi.cpp] file (LLPI stands
 		|  for Low-Level Programming Interface) and complete the functions there to work with your display.
 		|  Once that is done, ardUI will work with your exact display.
-	h2(data-anchor='Completing the interface') Completing the interface
+	+toc('Completing the interface')
+		h2() Completing the interface
 	p
 		|  ardUI architecture can be visualized like this, where your application is on the very top and your hardware
 		|  on the bottom:

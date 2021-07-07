@@ -1,4 +1,5 @@
 extends ../../templates/tabbed
+include ../../templates/mixins/toc
 
 
 block nav
@@ -7,5 +8,6 @@ block nav
 
 //- TODO: add basic info and links to reference and tutorials
 block content
-	h1(data-anchor='Welcome') Welcome to ardUI tutorials!
+	+toc('Welcome')
+		h1() Welcome to ardUI tutorials!
 	p Use the panel on the left to choose the article you want to read

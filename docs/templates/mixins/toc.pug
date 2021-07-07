@@ -1,0 +1,4 @@
+mixin toc(anchorName)
+	if anchorName
+		div.anchor(id=anchorName.toString().replace(/ /g, '_'))
+	block
