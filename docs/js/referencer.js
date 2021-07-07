@@ -13,7 +13,6 @@ keywords.set('ConstraintLayout', '/pages/reference/ConstraintLayout');
 keywords.set('Drawable', '/pages/reference/Drawable');
 keywords.set('Event', '/pages/reference/Event');
 keywords.set('EventManager', '/pages/reference/EventManager');
-keywords.set('less', '/pages/reference/less');
 keywords.set('LinearLayout', '/pages/reference/LinearLayout');
 keywords.set('ListView', '/pages/reference/ListView');
 keywords.set('ProgressBar', '/pages/reference/ProgressBar');

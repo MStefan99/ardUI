@@ -7,15 +7,15 @@ block nav
 	include ../../templates/nav-tutorials
 
 
-block content
+block tab-content
 	+toc('View basics')
-		h1() View basics
+		h1 View basics
 	p
 		|  A View is a single widget you can place on your screen. As mentioned before in
 		|  #[a(href='/pages/tutorials/view_tree') view tree article], a single Activity can store an unlimited number
 		|  of Views by making use of different Layouts. Let's take a look at one of the most important ardUI concepts.
 	+toc('Pointers and memory')
-		h2() Pointers and memory management
+		h2 Pointers and memory management
 	p
 		|  From the previous examples you may have noticed that the Views in ardUI are usually handled by their pointers.
 		|  This is intentional and it is important to understand why it's done. Consider this example:
@@ -48,7 +48,7 @@ block content
 		|  is closed. However, you are still responsible for deleting everything not added to the view tree or any other
 		|  objects ardUI cannot handle.
 	+toc('Event callbacks')
-		h2() Event functions and callbacks
+		h2 Event functions and callbacks
 	p
 		|  If you have ever tried to make user interfaces yourself, you might agree that the one of the
 		|  most annoying things is constantly monitoring touchscreen input to make your buttons work as expected.

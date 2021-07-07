@@ -19,7 +19,7 @@ for all your projects.
 - ardUI is a **plug-and-play** Arduino framework with no setup required
 - ardUI is **platform-independent** and works with any displays through a simple API
 - ardUI includes a **robust set of widgets** out of the box and allows you to create your own ones
-- ardUI **runs in the background** so you can focus on building things that matter
+- ardUI **runs in the background**, so you can focus on building things that matter
 
 Additionally, ardUI is:
 - **Modular**, loading only what's needed
@@ -54,4 +54,4 @@ to get started, regardless of your experience.
 [releases]: https://github.com/MStefan99/ardUI/releases
 [docs]: https://ardui.mstefan99.com/pages
 [get-started]: https://ardui.mstefan99.com/pages/tutorials/installation
-[porting]: https://ardui.mstefan99.com/pages/porting
+[porting]: https://ardui.mstefan99.com/pages/guides/porting

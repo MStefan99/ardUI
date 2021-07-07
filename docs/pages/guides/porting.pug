@@ -1,0 +1,17 @@
+extends ../../templates/tabbed
+include ../../templates/mixins/code
+include ../../templates/mixins/toc
+
+
+block nav
+	include ../../templates/nav-guides
+
+
+block tab-content
+	+toc('Porting')
+		h1 Porting guide
+	p
+		|  Everything in ardUI is designed to be platform-independent and even though ardUI is designed for Arduino,
+		|  you can easily compile the code for Linux, Windows and even WebAssembly to run in your browser with
+		|  no changes to the code.
+	script(async src='/js/referencer.js')
