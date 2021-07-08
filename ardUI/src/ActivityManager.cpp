@@ -34,16 +34,20 @@ void ActivityManager::finishActivity(Activity* activity) {
 	if (activity) {
 		activity->rewindState(Activity::State::DESTROYED);
 
-		if (activity == _currentActivity && !_backList.empty()) {
-			_currentActivity = _backList.back();
-			if (activity->_resultCallback) {
-				activity->_resultCallback(activity->_status,
-						Bundle {activity->_resultData});
+		if (activity == _currentActivity) {
+			if (!_backList.empty()) {
+				_currentActivity = _backList.back();
+				if (activity->_resultCallback) {
+					activity->_resultCallback(activity->_status, Bundle {activity->_resultData});
+				}
+				_backList.pop_back();
+				_currentActivity->rewindState(Activity::State::RESUMED);
+			} else {
+				_currentActivity = nullptr;
 			}
-			_backList.pop_back();
-			_currentActivity->rewindState(Activity::State::RESUMED);
-			delete activity;
 		}
+		_backList.remove(activity);
+		delete activity;
 	}
 }
 
