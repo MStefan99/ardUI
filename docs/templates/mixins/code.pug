@@ -1,38 +1,41 @@
 mixin code(source)
-	- function deIndent(text) {
-	-  text = text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-	-  let match = text.match(/^(\t)*/);
-	-  let minIndent = match? match.length : 0;
 	-
-	-  for (const line of text.split('\n')) {
-	-    const indent = line.match(/^(\t)*/).length;
-	-    if (indent < minIndent) {
-	-      minIndent = indent;
-	-    }
-	-  }
-	-
-	-  return text.replace(/^\s*|\s*$/g, '').replace(RegExp(`^\\t{${minIndent}}`, 'gm'), '').replace(/\t/g, '  ');
-	- }
+		function deIndent(text) {
+			text = text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+			let match = text.match(/^(\t)*/);
+			let minIndent = match ? match.length : 0;
+
+			for (const line of text.split('\n')) {
+				const indent = line.match(/^(\t)*/).length;
+				if (indent < minIndent) {
+					minIndent = indent;
+				}
+			}
+
+			return text.replace(/^\s*|\s*$/g, '').replace(RegExp(`^\\t{${minIndent}}`, 'gm'), '').replace(/\t/g, '  ');
+		}
 
 
-	- function formatCode(code) {
-	-  const rules = [];
-	-  rules.push({pattern: '([\'"].+["\'])|((?<=#include )&lt;.+&gt;)', type: 'string'});
-	-  rules.push({pattern: '\\b(void|auto|bool|u?int(\\d+_t)?)\\b', type: 'typename'});
-	-  rules.push({pattern: '\\b(new|delete|for|while|do|if|using|virtual|override|return|class(?!\\s*=))\\b', type: 'keyword'});
-	-  rules.push({pattern: '\\b(public|protected|private)\\b', type: 'modifier'});
-	-  rules.push({pattern: '\\b\\w+::', type: 'scope'});
-	-  rules.push({pattern: '#\\w+?\\b', type: 'macro'});
-	-  rules.push({pattern: '\\b\\w+(&lt;.*&gt;)?(?=\\(.*\\))', type: 'function'});
-	-  rules.push({pattern: '(?<!#.*)&lt;.+?&gt;', type: 'template'});
-	-  rules.push({pattern: '\\b(\\d+?)\\b', type: 'number'});
-	-  rules.push({pattern: '//.*|/\\*.*?\\*/', type: 'comment'});
 	-
-	-  for (const rule of rules) {
-	-    code = code.replace(RegExp(rule.pattern, 'g'), `<span class="highlight ${rule.type}">$&</span>`);
-	-  }
-	-  return code;
-	- }
+		function formatCode(code) {
+			const rules = [
+				{pattern: '([\'"].+["\'])|((?<=#include )&lt;.+&gt;)', type: 'string'},
+				{pattern: '\\b(void|auto|bool|u?int(\\d+_t)?)|true|false\\b', type: 'typename'},
+				{pattern: '\\b(new|delete|for|while|do|if|using|virtual|override|return|class(?!\\s*=))\\b', type: 'keyword'},
+				{pattern: '\\b(public|protected|private)\\b', type: 'modifier'},
+				{pattern: '\\b\\w+::', type: 'scope'},
+				{pattern: '#\\w+?\\b', type: 'macro'},
+				{pattern: '\\b\\w+(&lt;.*&gt;)?(?=\\(.*\\))', type: 'function'},
+				{pattern: '(?<!#.*)&lt;.+?&gt;', type: 'template'},
+				{pattern: '\\b(\\d+?)\\b', type: 'number'},
+				{pattern: '//.*|/\\*.*?\\*/', type: 'comment'}
+			];
+
+			for (const rule of rules) {
+				code = code.replace(RegExp(rule.pattern, 'g'), `<span class="highlight ${rule.type}">$&</span>`);
+			}
+			return code;
+		}
 
 
 	pre
