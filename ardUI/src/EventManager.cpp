@@ -41,11 +41,13 @@ void update(bool callUserLoop) {
 		arduiUserLoop();  // Calling user loop function
 	}
 
-	if (millis() - currentTime > 1000 / REFRESH_RATE) {
-		Serial.println("Skipping frames, please ensure your loop doesn't perform any long operations");
-	}
+	#if LOG_LEVEL >= LOG_INFO
+		if (millis() - currentTime > 1000 / REFRESH_RATE) {
+			Serial.println("Skipping frames, please ensure your loop doesn't perform any long operations");
+		}
+	#endif
 
-#if VERBOSE_MODE
+#if LOG_LEVEL >= LOG_VERBOSE
 	Serial.println("Loop iteration");
 #endif
 #if SLOW_MODE
@@ -55,7 +57,9 @@ void update(bool callUserLoop) {
 
 
 void arduiSmartDelay(uint32_t ms) {
-	Serial.println("Please be careful when using sleep!");
+	#if LOG_LEVEL >= LOG_INFO
+		Serial.println("Please be careful when using sleep!");
+	#endif
 	auto startTime = millis();
 
 	while (ABS(millis() - startTime) < ms) {
@@ -79,7 +83,7 @@ void EventManager::checkForActions(uint32_t deltaTime) {
 
 			lastX = event._targetX;  // Set last coords to current
 			lastY = event._targetY;
-#if VERBOSE_MODE
+#if LOG_LEVEL >= LOG_VERBOSE
 			Serial.println("Event registered");
 #endif
 		} else {
@@ -90,7 +94,7 @@ void EventManager::checkForActions(uint32_t deltaTime) {
 		if (event._currentAction == Event::Action::SCROLL) {
 			// Handle scroll event every Update
 			if (ActivityManager::_currentActivity) {
-#if VERBOSE_MODE
+#if LOG_LEVEL >= LOG_VERBOSE
 				Serial.println("Scroll event dispatched");
 #endif
 				if (ActivityManager::_currentActivity) {
@@ -102,11 +106,11 @@ void EventManager::checkForActions(uint32_t deltaTime) {
 		}
 		if (event._currentAction == Event::Action::CLICK && (
 				((uint32_t)ABS(event._deltaX) * 1000 / deltaTime > SCROLL_SENSITIVITY) ||
-				((uint32_t)ABS(event._deltaY) * 1000 / deltaTime > SCROLL_SENSITIVITY))) {
+						((uint32_t)ABS(event._deltaY) * 1000 / deltaTime > SCROLL_SENSITIVITY))) {
 			event._currentAction = Event::Action::SCROLL;  // Register scroll
 		}
 	} else if (event._currentAction != Event::Action::NO_ACTION) {
-#if VERBOSE_MODE
+#if LOG_LEVEL >= LOG_VERBOSE
 		Serial.println("Event dispatched");
 #endif
 		if (ActivityManager::_currentActivity) {  // Touch over, handle event
@@ -120,7 +124,7 @@ void EventManager::checkForActions(uint32_t deltaTime) {
 
 void EventManager::draw() {
 	ActivityManager::processWaitingActivities();
-#if VERBOSE_MODE
+#if LOG_LEVEL >= LOG_VERBOSE
 	Serial.println("Draw call");
 #endif
 	if (ActivityManager::_currentActivity) {

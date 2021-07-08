@@ -5,6 +5,9 @@
 #include "Drawable.h"
 
 
+Drawable::~Drawable() = default;
+
+
 Rect Drawable::getBounds() const {
 	return _viewBox;
 }

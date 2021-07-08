@@ -14,7 +14,7 @@
 class Drawable {
 public:
 	Drawable() = default;
-	virtual ~Drawable() = default;
+	virtual ~Drawable();
 
 	virtual void measure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec) = 0;
 	virtual void layout(uint16_t left, uint16_t top, uint16_t right, uint16_t bottom) = 0;

@@ -1,0 +1,42 @@
+//
+// Created by MStefan99 on 8.7.21.
+//
+
+#ifndef ARDUI_CONFIG_ADV_H
+#define ARDUI_CONFIG_ADV_H
+
+
+/*
+ * Use standard template library.
+ * Disable if not supported on your platform.
+ */
+#define USE_STL ( true )
+
+
+/*
+ * Hybrid sleep prevents ardUI from pausing whenever you call the
+ * delay() function, so that the UI always remains dynamic and responsive.
+ * If this feature is disabled, no UI updates will happen during sleep(),
+ * which means all UI interactions will be paused as well.
+ */
+#define SMART_DELAY ( true )
+
+
+/*
+ * Enable debug mode.
+ * Can be useful during debugging.
+ * Debug mode is not guaranteed to run on Arduino
+ * and will only turned on in a desktop environment.
+ */
+#define DEBUGGING ( true )
+
+
+/*
+ * Introduces delays between loop iterations.
+ * Can reduce the CPU load by only running the loop once per update.
+ * Does not affect UI performance but leaves less time for other operations.
+ */
+#define SLOW_MODE ( false )
+
+
+#endif //ARDUI_CONFIG_ADV_H

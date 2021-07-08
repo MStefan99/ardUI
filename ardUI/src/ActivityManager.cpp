@@ -23,10 +23,7 @@ void ActivityManager::back() {
 
 
 void ActivityManager::reset() {
-	if (_currentActivity) {
-		stopActivity(_currentActivity);
-		_currentActivity = nullptr;
-	}
+	stopActivity(_currentActivity);
 	for (auto a : _backList) {
 		finishActivity(a);
 	}
@@ -45,8 +42,8 @@ void ActivityManager::finishActivity(Activity* activity) {
 			}
 			_backList.pop_back();
 			_currentActivity->rewindState(Activity::State::RESUMED);
+			delete activity;
 		}
-		delete activity;
 	}
 }
 
@@ -67,10 +64,11 @@ void ActivityManager::startupActivities() {
 			}
 			_currentActivity->rewindState(Activity::State::STOPPED);
 			_backList.push_back(_currentActivity);
-			Serial.println("Screen appended to the stack");
 
 			if (_backList.size() > BACK_STACK_DEPTH) {
+				#if LOG_LEVEL >= LOG_WARNING
 				Serial.println("Max stack depth reached, destroying oldest activity");
+				#endif
 				auto lastActivity {_backList.front()};
 				_backList.pop_front();
 				finishActivity(lastActivity);

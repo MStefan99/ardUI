@@ -6,7 +6,8 @@
 #define ARDUI_PLATFORM_H
 
 #include <Arduino.h>
-#include "ardUI_config.h"
+#include "config/config.h"
+#include "config/config_adv.h"
 
 
 #if USE_STL
@@ -54,7 +55,6 @@
 	#define DEBUG_MODE ( false )
 #endif
 
-#define VERBOSE_MODE VERBOSE
 
 // TODO: disable slow mode on emscripten, figure out what to do with logging
 

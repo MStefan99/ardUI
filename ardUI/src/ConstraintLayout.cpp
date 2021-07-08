@@ -9,7 +9,7 @@ void ConstraintLayout::ConstraintSet::connect(View* startView, ConstraintLayout:
 		View* endView, ConstraintLayout::Side endSide,
 		uint16_t margin) {
 	if ((startSide + endSide) % 2) {
-		Serial.println("Side mismatch");
+		Serial.println("ERROR: Side mismatch");
 	} else {
 		_constraints[startView].second.push_back({startView, startSide, endView, endSide, margin});
 	}

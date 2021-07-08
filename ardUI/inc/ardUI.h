@@ -7,7 +7,7 @@
 
 #include "platform.h"
 #include "llpi.h"
-#include "ardUI_config.h"
+#include "config/config.h"
 #include "Singleton.h"
 
 #include "Event.h"

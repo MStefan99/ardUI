@@ -6,7 +6,6 @@
 #define ARDUI_VIEW_H
 
 #include "platform.h"
-#include "ardUI_config.h"
 #include "Event.h"
 #include "Drawable.h"
 
