@@ -8,7 +8,7 @@ endif ()
 
 # Linking emulator and ardUI to main code
 link_libraries(ardUI)
-target_sources(ardUI PRIVATE ${UTILS_DIRECTORY}/llpi.cpp)
+target_sources(ardUI PRIVATE ${UTILS_DIRECTORY}/display.cpp)
 link_libraries(arduinoEmulator)
 
 

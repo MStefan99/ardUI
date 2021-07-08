@@ -1,6 +1,6 @@
 # Linking ardUI library to all targets below
 link_libraries(ardUI)
-target_sources(ardUI PRIVATE ${SOURCE_DIRECTORY}/llpi.cpp)
+target_sources(ardUI PRIVATE ${SOURCE_DIRECTORY}/display.cpp)
 
 
 # Including Tester library

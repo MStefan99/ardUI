@@ -59,11 +59,11 @@ void TextView::onMeasure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec) 
 
 
 void TextView::onDraw() {
-	arduiDisplayFillRect(_viewBox.left, _viewBox.top, _viewBox.right - 1, _viewBox.bottom - 1, _backgroundColor);
+	ardui::display::FillRect(_viewBox.left, _viewBox.top, _viewBox.right - 1, _viewBox.bottom - 1, _backgroundColor);
 
 	uint16_t line {0};
 	for (const auto& l : getLines(_viewBox.width())) {
-		arduiDisplayDrawText(_viewBox.left + _padding.left, _viewBox.top + _padding.top + _textSize * line++,
+		ardui::display::DrawText(_viewBox.left + _padding.left, _viewBox.top + _padding.top + _textSize * line++,
 				l, _textSize, _textColor);
 	}
 }
@@ -77,7 +77,7 @@ LIST<String> TextView::getLines(uint16_t maxWidth) const {
 	uint16_t currentWidth {0};
 
 	for (uint16_t i {0}; s[i]; ++i) {
-		currentWidth += arduiDisplayGetCharWidth(s[i], _textSize);
+		currentWidth += ardui::display::GetCharWidth(s[i], _textSize);
 		if (s[i] == ' ') {
 			lastSpace = i + 1;
 		}
@@ -111,7 +111,7 @@ uint16_t TextView::getMaxWidth() {
 	auto s {_text.c_str()};
 
 	for (uint16_t i {0}; s[i]; ++i) {
-		width += arduiDisplayGetCharWidth(s[i], _textSize);
+		width += ardui::display::GetCharWidth(s[i], _textSize);
 	}
 
 	return width;

@@ -6,7 +6,7 @@
 #define ARDUI_H
 
 #include "platform.h"
-#include "llpi.h"
+#include "display.h"
 #include "config/config.h"
 #include "Singleton.h"
 
