@@ -20,7 +20,7 @@
 #include MAP_H
 
 
-class ardUI final: public Singleton<ardUI> {
+class ardUI final {
 public:
 	template <class ActivityClass>
 	static void startActivity(const Bundle& extras = {});
@@ -34,9 +34,7 @@ public:
 	friend class Singleton<ardUI>;
 
 private:
-	ardUI() = default;
-	~ardUI();
-	MAP<String, View*> _viewMap;
+	static MAP<String, View*> _viewMap;
 };
 
 
