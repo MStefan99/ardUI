@@ -13,15 +13,13 @@ public:
 	Color() = default;
 	Color(const Color& color) = default;
 
-	Color(uint32_t color);
-	// TODO: fix ambiguity
-//	Color(uint16_t color);
+	// Implicit construction of Color class from hex code is fine
+	Color(uint32_t color);  // NOLINT(google-explicit-constructor)
 
 	uint32_t to888() const;
 	uint16_t to565() const;
 
 	Color& operator=(uint32_t color);
-	Color& operator=(uint16_t color);
 
 	bool operator==(const Color& c) const;
 	bool operator!=(const Color& c) const;

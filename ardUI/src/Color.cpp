@@ -111,19 +111,8 @@ uint32_t Color::to888() const {
 #endif
 
 
-//Color::Color(uint16_t color): _color {color} {
-// Nothing to do
-//}
-
-
 uint16_t Color::to565() const {
 	return (uint16_t)_color;
-}
-
-
-Color& Color::operator=(uint16_t color) {
-	_color = color;
-	return *this;
 }
 
 
