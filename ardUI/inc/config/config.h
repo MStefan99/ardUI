@@ -64,4 +64,11 @@
 #define LOG_LEVEL ( LOG_ERROR )
 
 
+/*
+ * Color mode.
+ * You can choose whether to use 24 or 16-bit colors.
+ * If your display doesn't support 24-bit colors, choose 16-bit mode to save memory.
+ */
+#define COLOR_MODE ( COLOR_888 )
+
 #endif //ARDUI_CONFIG_H

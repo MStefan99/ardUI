@@ -33,48 +33,48 @@ namespace ardui {
 		ReturnCode Off();
 		ReturnCode SetBrightness(uint8_t brightness);
 
-		ReturnCode Fill(uint32_t color);
+		ReturnCode Fill(Color color);
 
 		ReturnCode DrawPixel(uint16_t x, uint16_t y,
-				uint32_t color);
+				Color color);
 
 		ReturnCode DrawLine(uint16_t x1, uint16_t y1,
 				uint16_t x2, uint16_t y2,
-				uint32_t color);
+				Color color);
 
 		ReturnCode DrawChar(uint16_t x, uint16_t y,
 				char c, uint16_t height,
-				uint32_t color);
+				Color color);
 
 		ReturnCode DrawText(uint16_t x, uint16_t y,
 				const String& text, uint16_t height,
-				uint32_t color);
+				Color color);
 
 		ReturnCode DrawCircle(uint16_t x, uint16_t y,
 				uint16_t radius,
-				uint32_t color);
+				Color color);
 
 		ReturnCode FillCircle(uint16_t x, uint16_t y,
 				uint16_t radius,
-				uint32_t color);
+				Color color);
 
 		ReturnCode DrawRect(uint16_t x1, uint16_t y1,
 				uint16_t x2, uint16_t y2,
-				uint32_t color);
+				Color color);
 
 		ReturnCode FillRect(uint16_t x1, uint16_t y1,
 				uint16_t x2, uint16_t y2,
-				uint32_t color);
+				Color color);
 
 		ReturnCode DrawTriangle(uint16_t x1, uint16_t y1,
 				uint16_t x2, uint16_t y2,
 				uint16_t x3, uint16_t y3,
-				uint32_t color);
+				Color color);
 
 		ReturnCode FillTriangle(uint16_t x1, uint16_t y1,
 				uint16_t x2, uint16_t y2,
 				uint16_t x3, uint16_t y3,
-				uint32_t color);
+				Color color);
 
 		ReturnCode DrawBitmap(uint16_t x, uint16_t y,
 				uint16_t* bitmap);

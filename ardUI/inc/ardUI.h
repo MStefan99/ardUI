@@ -7,7 +7,6 @@
 
 #include "platform.h"
 #include "display.h"
-#include "config/config.h"
 #include "Singleton.h"
 
 #include "Event.h"

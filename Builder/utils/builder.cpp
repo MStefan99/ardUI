@@ -64,15 +64,16 @@ class MainActivity: public Activity {
 		b->setOnClickListener([](View* b) -> void {
 			Serial.println("Button pressed!");
 			auto t = (TextView*)ardUI::getViewByName("hello_text");
-			t->setTextColor(t->getTextColor() & 0xffff00u?
-			                t->getTextColor() << 8u & 0xffffffu :
-			                t->getTextColor() << 8u | 0xffu & 0xffffffu);
+			auto color {t->getTextColor().to888()};
+			t->setTextColor(color & 0xffff00u?
+			                color << 8u & 0xffffffu :
+			                color << 8u | 0xffu & 0xffffffu);
 		});
 
 		b2->setOnClickListener([](View* b) -> void {
 			Bundle data {};
 			auto t = (TextView*)ardUI::getViewByName("hello_text");
-			data.put<uint32_t>("color", t->getTextColor());
+			data.put<Color>("color", t->getTextColor());
 			ardUI::startActivity<SecondActivity>(data);
 		});
 
@@ -106,7 +107,7 @@ class SecondActivity: public Activity {
 		ll->setOrientation(LinearLayout::Orientation::VERTICAL);
 
 		auto data = getExtras();
-		t->setTextColor(data.get<uint32_t>("color"));
+		t->setTextColor(data.get<Color>("color"));
 
 		setRootView(ll);
 		ll->addView(title);

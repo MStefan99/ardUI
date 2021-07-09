@@ -23,11 +23,11 @@ public:
 	uint16_t getMax() const;
 	void setMax(uint16_t max);
 
-	uint32_t getBarColor() const;
-	void setBarColor(uint32_t barColor);
+	Color getBarColor() const;
+	void setBarColor(Color barColor);
 
-	uint32_t getBackgroundColor() const;
-	void setBackgroundColor(uint32_t backgroundColor);
+	Color getBackgroundColor() const;
+	void setBackgroundColor(Color backgroundColor);
 
 	friend class EmscriptenBindingInitializer_BuilderInterface;
 
@@ -36,8 +36,8 @@ protected:
 
 	static uint16_t mapScale(uint16_t value, uint16_t oldMin, uint16_t oldMax, uint16_t newMin, uint16_t newMax);
 
-	uint32_t _barColor {0x0};
-	uint32_t _backgroundColor {0xffffff};
+	Color _barColor {0x0};
+	Color _backgroundColor {0xffffff};
 
 	uint16_t _min {};
 	uint16_t _max {100};

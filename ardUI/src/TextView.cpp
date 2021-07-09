@@ -29,7 +29,7 @@ void TextView::setTextSize(uint16_t size) {
 }
 
 
-void TextView::setTextColor(uint32_t color) {
+void TextView::setTextColor(Color color) {
 	_textColor = color;
 	invalidate();
 }
@@ -45,7 +45,7 @@ uint16_t TextView::getTextSize() const {
 }
 
 
-uint32_t TextView::getTextColor() const {
+Color TextView::getTextColor() const {
 	return _textColor;
 }
 

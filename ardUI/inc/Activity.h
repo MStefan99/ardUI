@@ -23,8 +23,8 @@ public:
 
 	template <class compiledLayout>
 	void setContentView();
-	uint32_t getBackgroundColor() const;
-	void setBackgroundColor(uint32_t backgroundColor);
+	Color getBackgroundColor() const;
+	void setBackgroundColor(Color backgroundColor);
 	void setRootView(View* view);
 
 	template <class ActivityClass>
@@ -88,7 +88,7 @@ private:
 	Bundle _resultData {};
 	int _status {};
 	void (* _resultCallback)(int statusCode, Bundle resultData) {nullptr};
-	uint32_t _backgroundColor {0xffffff};
+	Color _backgroundColor {0xffffff};
 };
 
 

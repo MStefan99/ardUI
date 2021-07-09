@@ -198,11 +198,11 @@ void Activity::rewindState(Activity::State targetState) {
 }
 
 
-uint32_t Activity::getBackgroundColor() const {
+Color Activity::getBackgroundColor() const {
 	return _backgroundColor;
 }
 
 
-void Activity::setBackgroundColor(uint32_t backgroundColor) {
+void Activity::setBackgroundColor(Color backgroundColor) {
 	_backgroundColor = backgroundColor;
 }

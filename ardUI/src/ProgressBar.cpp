@@ -36,22 +36,22 @@ void ProgressBar::setMax(uint16_t max) {
 }
 
 
-uint32_t ProgressBar::getBarColor() const {
+Color ProgressBar::getBarColor() const {
 	return _barColor;
 }
 
 
-void ProgressBar::setBarColor(uint32_t barColor) {
+void ProgressBar::setBarColor(Color barColor) {
 	_barColor = barColor;
 }
 
 
-uint32_t ProgressBar::getBackgroundColor() const {
+Color ProgressBar::getBackgroundColor() const {
 	return _backgroundColor;
 }
 
 
-void ProgressBar::setBackgroundColor(uint32_t backgroundColor) {
+void ProgressBar::setBackgroundColor(Color backgroundColor) {
 	_backgroundColor = backgroundColor;
 }
 

@@ -12,13 +12,13 @@ bool DisplayController::isSupported(ardui::display::ReturnCode code) {
 }
 
 
-void DisplayController::fill(uint32_t color) {
+void DisplayController::fill(Color color) {
 }
 
 
 void DisplayController::drawLine(uint16_t x1, uint16_t y1,
 		uint16_t x2, uint16_t y2,
-		uint32_t color) {
+		Color color) {
 	if (_featureSupport.drawLine) {
 		ardui::display::DrawLine(x1, y1, x2, y2, color);
 	} else {
@@ -29,19 +29,19 @@ void DisplayController::drawLine(uint16_t x1, uint16_t y1,
 
 void DisplayController::drawCircle(uint16_t x, uint16_t y,
 		uint16_t radius,
-		uint32_t color) {
+		Color color) {
 }
 
 
 void DisplayController::fillCircle(uint16_t x, uint16_t y,
 		uint16_t radius,
-		uint32_t color) {
+		Color color) {
 }
 
 
 void DisplayController::drawRect(uint16_t x1, uint16_t y1,
 		uint16_t x2, uint16_t y2,
-		uint32_t color) {
+		Color color) {
 	if (_featureSupport.drawRect) {
 		ardui::display::DrawRect(x1, y1, x2, y2, color);
 	} else {
@@ -55,7 +55,7 @@ void DisplayController::drawRect(uint16_t x1, uint16_t y1,
 
 void DisplayController::fillRect(uint16_t x1, uint16_t y1,
 		uint16_t x2, uint16_t y2,
-		uint32_t color) {
+		Color color) {
 	if (_featureSupport.drawRect) {
 		ardui::display::DrawRect(x1, y1, x2, y2, color);
 	} else {
@@ -69,7 +69,7 @@ void DisplayController::fillRect(uint16_t x1, uint16_t y1,
 void DisplayController::drawTriangle(uint16_t x1, uint16_t y1,
 		uint16_t x2, uint16_t y2,
 		uint16_t x3, uint16_t y3,
-		uint32_t color) {
+		Color color) {
 	if (_featureSupport.drawTriangle) {
 		ardui::display::DrawTriangle(x1, y1, x2, y2, x3, y3, color);
 	} else {
@@ -83,7 +83,7 @@ void DisplayController::drawTriangle(uint16_t x1, uint16_t y1,
 void DisplayController::fillTriangle(uint16_t x1, uint16_t y1,
 		uint16_t x2, uint16_t y2,
 		uint16_t x3, uint16_t y3,
-		uint32_t color) {
+		Color color) {
 }
 
 

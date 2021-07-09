@@ -21,7 +21,7 @@ public:
 protected:
 	void onDraw() override;
 
-	uint32_t _borderColor {0x0};
+	Color _borderColor {0x0};
 };
 
 #endif //ARDUI_BUTTONVIEW_H

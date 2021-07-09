@@ -88,7 +88,7 @@ ardui::display::ReturnCode ardui::display::SetBrightness(uint8_t brightness) {
 }
 
 
-ardui::display::ReturnCode ardui::display::Fill(uint32_t color) {
+ardui::display::ReturnCode ardui::display::Fill(Color color) {
 #if LOG_LEVEL >= LOG_DRAW
 	Serial.println("Display filled");
 #endif
@@ -97,7 +97,7 @@ ardui::display::ReturnCode ardui::display::Fill(uint32_t color) {
 }
 
 
-ardui::display::ReturnCode ardui::display::DrawPixel(uint16_t x, uint16_t y, uint32_t color) {
+ardui::display::ReturnCode ardui::display::DrawPixel(uint16_t x, uint16_t y, Color color) {
 #if LOG_LEVEL >= LOG_DRAW
 	Serial.print("Drawn pixel at (");
 	Serial.print(x);
@@ -110,7 +110,7 @@ ardui::display::ReturnCode ardui::display::DrawPixel(uint16_t x, uint16_t y, uin
 }
 
 
-ardui::display::ReturnCode ardui::display::DrawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint32_t color) {
+ardui::display::ReturnCode ardui::display::DrawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, Color color) {
 #if LOG_LEVEL >= LOG_DRAW
 	Serial.print("Drawn line from (");
 	Serial.print(x1);
@@ -127,7 +127,7 @@ ardui::display::ReturnCode ardui::display::DrawLine(uint16_t x1, uint16_t y1, ui
 }
 
 
-ardui::display::ReturnCode ardui::display::DrawChar(uint16_t x, uint16_t y, char c, uint16_t height, uint32_t color) {
+ardui::display::ReturnCode ardui::display::DrawChar(uint16_t x, uint16_t y, char c, uint16_t height, Color color) {
 #if LOG_LEVEL >= LOG_DRAW
 	Serial.print("Drawn char ");
 	Serial.print(c);
@@ -142,7 +142,7 @@ ardui::display::ReturnCode ardui::display::DrawChar(uint16_t x, uint16_t y, char
 }
 
 
-ardui::display::ReturnCode ardui::display::DrawText(uint16_t x, uint16_t y, const String& text, uint16_t textSize, uint32_t color) {
+ardui::display::ReturnCode ardui::display::DrawText(uint16_t x, uint16_t y, const String& text, uint16_t textSize, Color color) {
 #if LOG_LEVEL >= LOG_DRAW
 	Serial.print("Drawn text \"");
 	Serial.print(text);
@@ -157,7 +157,7 @@ ardui::display::ReturnCode ardui::display::DrawText(uint16_t x, uint16_t y, cons
 }
 
 
-ardui::display::ReturnCode ardui::display::DrawCircle(uint16_t x, uint16_t y, uint16_t radius, uint32_t color) {
+ardui::display::ReturnCode ardui::display::DrawCircle(uint16_t x, uint16_t y, uint16_t radius, Color color) {
 #if LOG_LEVEL >= LOG_DRAW
 	Serial.print("Drawn circle at (");
 	Serial.print(x);
@@ -171,7 +171,7 @@ ardui::display::ReturnCode ardui::display::DrawCircle(uint16_t x, uint16_t y, ui
 }
 
 
-ardui::display::ReturnCode ardui::display::FillCircle(uint16_t x, uint16_t y, uint16_t radius, uint32_t color) {
+ardui::display::ReturnCode ardui::display::FillCircle(uint16_t x, uint16_t y, uint16_t radius, Color color) {
 #if LOG_LEVEL >= LOG_DRAW
 	Serial.print("Filled circle at (");
 	Serial.print(x);
@@ -186,7 +186,7 @@ ardui::display::ReturnCode ardui::display::FillCircle(uint16_t x, uint16_t y, ui
 
 
 ardui::display::ReturnCode ardui::display::DrawRect(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
-		uint32_t color) {
+		Color color) {
 #if LOG_LEVEL >= LOG_DRAW
 	Serial.print("Drawn rect from (");
 	Serial.print(x1);
@@ -204,7 +204,7 @@ ardui::display::ReturnCode ardui::display::DrawRect(uint16_t x1, uint16_t y1, ui
 
 
 ardui::display::ReturnCode ardui::display::FillRect(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
-		uint32_t color) {
+		Color color) {
 #if LOG_LEVEL >= LOG_DRAW
 	Serial.print("Filled rect from (");
 	Serial.print(x1);
@@ -222,7 +222,7 @@ ardui::display::ReturnCode ardui::display::FillRect(uint16_t x1, uint16_t y1, ui
 
 
 ardui::display::ReturnCode ardui::display::DrawTriangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
-		uint16_t x3, uint16_t y3, uint32_t color) {
+		uint16_t x3, uint16_t y3, Color color) {
 	// Has to be implemented by the user
 #if LOG_LEVEL >= LOG_DRAW
 	Serial.print("Drawn triangle between (");
@@ -244,7 +244,7 @@ ardui::display::ReturnCode ardui::display::DrawTriangle(uint16_t x1, uint16_t y1
 
 
 ardui::display::ReturnCode ardui::display::FillTriangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2,
-		uint16_t x3, uint16_t y3, uint32_t color) {
+		uint16_t x3, uint16_t y3, Color color) {
 	// Has to be implemented by the user
 #if LOG_LEVEL >= LOG_DRAW
 	Serial.print("Filled triangle between (");

@@ -13,5 +13,9 @@
 #define LOG_ERROR 1
 #define LOG_NONE 0
 
+// Color modes
+#define COLOR_888 0
+#define COLOR_565 1
+
 
 #endif //ARDUI_DEFINITIONS_H

@@ -8,6 +8,7 @@
 #include <Arduino.h>
 #include "config/config.h"
 #include "config/config_adv.h"
+#include "Color.h"
 
 
 #if USE_STL

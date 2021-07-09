@@ -10,51 +10,51 @@
 
 class DisplayController {
 public:
-	static void fill(uint32_t color);
+	static void fill(Color color);
 
 	static void drawLine(uint16_t x1, uint16_t y1,
 			uint16_t x2, uint16_t y2,
-			uint32_t color);
+			Color color);
 
 	static void drawCircle(uint16_t x, uint16_t y,
 			uint16_t radius,
-			uint32_t color);
+			Color color);
 
 	static void fillCircle(uint16_t x, uint16_t y,
 			uint16_t radius,
-			uint32_t color);
+			Color color);
 
 	static void drawRect(uint16_t x1, uint16_t y1,
 			uint16_t x2, uint16_t y2,
-			uint32_t color);
+			Color color);
 
 	static void fillRect(uint16_t x1, uint16_t y1,
 			uint16_t x2, uint16_t y2,
-			uint32_t color);
+			Color color);
 
 	static void drawTriangle(uint16_t x1, uint16_t y1,
 			uint16_t x2, uint16_t y2,
 			uint16_t x3, uint16_t y3,
-			uint32_t color);
+			Color color);
 
 	static void fillTriangle(uint16_t x1, uint16_t y1,
 			uint16_t x2, uint16_t y2,
 			uint16_t x3, uint16_t y3,
-			uint32_t color);
+			Color color);
 
 	static void drawBitmap(uint16_t x, uint16_t y,
 			uint16_t* bitmap);
 
 protected:
 	struct FeatureSupport {
-		bool fill {isSupported(ardui::display::Fill(0))};
-		bool drawLine {isSupported(ardui::display::DrawLine(0, 0, 0, 0, 0))};
-		bool drawCircle {isSupported(ardui::display::DrawCircle(0, 0, 0, 0))};
-		bool fillCircle {isSupported(ardui::display::FillCircle(0, 0, 0, 0))};
-		bool drawRect {isSupported(ardui::display::DrawRect(0, 0, 0, 0, 0))};
-		bool fillRect {isSupported(ardui::display::FillRect(0, 0, 0, 0, 0))};
-		bool drawTriangle {isSupported(ardui::display::DrawTriangle(0, 0, 0, 0, 0, 0, 0))};
-		bool fillTriangle {isSupported(ardui::display::FillTriangle(0, 0, 0, 0, 0, 0, 0))};
+		bool fill {isSupported(ardui::display::Fill({}))};
+		bool drawLine {isSupported(ardui::display::DrawLine(0, 0, 0, 0, {}))};
+		bool drawCircle {isSupported(ardui::display::DrawCircle(0, 0, 0, {}))};
+		bool fillCircle {isSupported(ardui::display::FillCircle(0, 0, 0, {}))};
+		bool drawRect {isSupported(ardui::display::DrawRect(0, 0, 0, 0, {}))};
+		bool fillRect {isSupported(ardui::display::FillRect(0, 0, 0, 0, {}))};
+		bool drawTriangle {isSupported(ardui::display::DrawTriangle(0, 0, 0, 0, 0, 0, {}))};
+		bool fillTriangle {isSupported(ardui::display::FillTriangle(0, 0, 0, 0, 0, 0, {}))};
 		bool drawBitmap {isSupported(ardui::display::DrawBitmap(0, 0, nullptr))};
 	};
 
