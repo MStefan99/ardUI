@@ -34,7 +34,6 @@ protected:
 		ColorData() = default;
 
 		explicit ColorData(uint32_t color);
-		explicit ColorData(uint16_t color);
 
 		ColorData& operator=(uint32_t color);
 		ColorData& operator=(uint16_t color);

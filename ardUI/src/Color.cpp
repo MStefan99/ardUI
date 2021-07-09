@@ -16,14 +16,6 @@ Color::ColorData::ColorData(uint32_t color):
 }
 
 
-Color::ColorData::ColorData(uint16_t color):
-		_r {(uint8_t)((color & 0xF80000ul) >> 8u)},
-		_g {(uint8_t)((color & 0xFC00u) >> 5u)},
-		_b {(uint8_t)((color & 0xF8u) >> 3u)} {
-	// Nothing to do
-}
-
-
 Color::ColorData& Color::ColorData::operator=(uint32_t color) {
 	_r = (uint8_t)(color & 0xFF0000ul) >> 16u;
 	_g = (uint8_t)(color & 0xFF00u) >> 8u;
@@ -77,6 +69,7 @@ uint32_t Color::to888() const {
 
 
 #else
+
 
 static uint32_t Expand(uint32_t number, uint8_t amount, uint8_t lsb) {
 	if (number >> lsb & 1u) {
