@@ -38,5 +38,12 @@
  */
 #define SLOW_MODE ( false )
 
+/*
+ * Enable Display fallback.
+ * This is is a utility for drawing using fallback shapes.
+ * Enable it if your display library does not support some of the shapes that ardUI uses.
+ */
+#define DISPLAY_FALLBACK ( false )
+
 
 #endif //ARDUI_CONFIG_ADV_H

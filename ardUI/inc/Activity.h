@@ -6,7 +6,8 @@
 #define ARDUI_ACTIVITY_H
 
 #include "platform.h"
-#include LIST_H
+#include DISPLAY_H
+#include "Color.h"
 
 #include "Event.h"
 #include "Bundle.h"

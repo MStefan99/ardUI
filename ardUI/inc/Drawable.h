@@ -6,9 +6,10 @@
 #define ARDUI_DRAWABLE_H
 
 #include "platform.h"
-#include "display.h"
-#include "Event.h"
+#include DISPLAY_H
+
 #include "Rect.h"
+#include "Event.h"
 
 
 class Drawable {

@@ -6,6 +6,8 @@
 #define ARDUI_PROGRESSBAR_H
 
 #include "platform.h"
+#include DISPLAY_H
+
 #include "View.h"
 
 

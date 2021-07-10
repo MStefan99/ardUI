@@ -128,8 +128,8 @@ View* Activity::getRootView() {
 
 void Activity::measure() {
 	if (_rootView) {
-		uint16_t widthSpec = View::MeasureSpec::makeMeasureSpec(View::MeasureSpec::EXACTLY, ardui::display::GetWidth());
-		uint16_t heightSpec = View::MeasureSpec::makeMeasureSpec(View::MeasureSpec::EXACTLY, ardui::display::GetHeight());
+		uint16_t widthSpec = View::MeasureSpec::makeMeasureSpec(View::MeasureSpec::EXACTLY, ardui::display::getWidth());
+		uint16_t heightSpec = View::MeasureSpec::makeMeasureSpec(View::MeasureSpec::EXACTLY, ardui::display::getHeight());
 		_rootView->measure(widthSpec, heightSpec);
 	}
 }
@@ -137,7 +137,7 @@ void Activity::measure() {
 
 void Activity::layout() {
 	if (_rootView) {
-		Rect display {0, 0, ardui::display::GetWidth(), ardui::display::GetHeight()};
+		Rect display {0, 0, ardui::display::getWidth(), ardui::display::getHeight()};
 		_rootView->layout(display);
 	}
 }
@@ -146,7 +146,7 @@ void Activity::layout() {
 void Activity::draw() const {
 	if (_rootView) {
 		if (!_rootView->_valid) {
-			ardui::display::Fill(_backgroundColor);
+			DISPLAY::fill(_backgroundColor);
 		}
 		_rootView->draw();
 	}

@@ -6,7 +6,7 @@
 #define ARDUI_BUTTONVIEW_H
 
 #include "platform.h"
-#include "display.h"
+
 #include "TextView.h"
 
 

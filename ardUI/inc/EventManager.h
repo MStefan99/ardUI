@@ -6,7 +6,8 @@
 #define ARDUI_EVENTMANAGER_H
 
 #include "platform.h"
-#include "display.h"
+#include DISPLAY_H
+
 #include "Event.h"
 #include "Activity.h"
 #include "ActivityManager.h"

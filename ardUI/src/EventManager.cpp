@@ -11,7 +11,7 @@
 
 
 void setup() {  // Default setup function will be used to initiate ardUI
-	ardui::display::Init();
+	ardui::display::init();
 	arduiUserSetup();  // Calling user setup function
 	EventManager::draw();
 }
@@ -73,10 +73,10 @@ void EventManager::checkForActions(uint32_t deltaTime) {
 	static Event event {};
 	static uint32_t actionTime {0};
 
-	if (ardui::display::IsClicked()) {  // Detecting actions
+	if (ardui::display::isClicked()) {  // Detecting actions
 		static uint16_t lastX {event._targetX}, lastY {event._targetY};
-		event._targetX = ardui::display::GetClickX();
-		event._targetY = ardui::display::GetClickY();
+		event._targetX = ardui::display::getClickX();
+		event._targetY = ardui::display::getClickY();
 
 		if (event._currentAction == Event::Action::NO_ACTION) {
 			event._currentAction = Event::Action::CLICK;  // Register click

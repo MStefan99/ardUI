@@ -5,6 +5,9 @@
 #ifndef ARDUI_ARRAYADAPTER_H
 #define ARDUI_ARRAYADAPTER_H
 
+#include "platform.h"
+#include LIST_H
+
 #include "Adapter.h"
 
 

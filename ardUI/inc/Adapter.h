@@ -5,8 +5,7 @@
 #ifndef ARDUI_ADAPTER_H
 #define ARDUI_ADAPTER_H
 
-#include "platform.h"
-#include LIST_H
+#include "View.h"
 
 
 template <class T>

@@ -7,6 +7,7 @@
 
 #include "platform.h"
 #include LIST_H
+
 #include "View.h"
 
 

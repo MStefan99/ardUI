@@ -5,10 +5,12 @@
 #ifndef ARDUI_CONSTRAINTLAYOUT_H
 #define ARDUI_CONSTRAINTLAYOUT_H
 
-#include "View.h"
-#include "ViewGroup.h"
+#include "platform.h"
 #include LIST_H
 #include MAP_H
+
+#include "View.h"
+#include "ViewGroup.h"
 
 
 class ConstraintLayout: public ViewGroup {

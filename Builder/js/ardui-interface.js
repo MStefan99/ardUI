@@ -47,6 +47,11 @@ addEventListener('load', () => {
 			context.fillRect(0, 0, canvas.width, canvas.height);
 		},
 
+		drawPixel(x, y, colorCode) {
+			context.fillStyle = getColor(colorCode);
+			context.fillRect(x, y, 1, 1);
+		},
+
 		drawLine(x1, y1, x2, y2, colorCode) {
 			context.strokeStyle = getColor(colorCode);
 			context.beginPath();
