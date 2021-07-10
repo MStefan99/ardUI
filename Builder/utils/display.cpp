@@ -36,12 +36,6 @@ uint16_t ardui::display::getWidth() {
 }
 
 
-uint16_t ardui::display::getFontHeight() {
-	// Has to be implemented by the user
-	return 8;
-}
-
-
 uint16_t ardui::display::getCharWidth(char c, uint16_t height) {
 	char s[2] = {c};
 	return (uint16_t)EM_ASM_INT({

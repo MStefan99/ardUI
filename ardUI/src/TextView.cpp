@@ -77,7 +77,7 @@ LIST<String> TextView::getLines(uint16_t maxWidth) const {
 	uint16_t currentWidth {0};
 
 	for (uint16_t i {0}; s[i]; ++i) {
-		currentWidth += ardui::display::getCharWidth(s[i], _textSize);
+		currentWidth += DISPLAY::getCharWidth(s[i], _textSize);
 		if (s[i] == ' ') {
 			lastSpace = i + 1;
 		}
@@ -111,7 +111,7 @@ uint16_t TextView::getMaxWidth() {
 	auto s {_text.c_str()};
 
 	for (uint16_t i {0}; s[i]; ++i) {
-		width += ardui::display::getCharWidth(s[i], _textSize);
+		width += DISPLAY::getCharWidth(s[i], _textSize);
 	}
 
 	return width;

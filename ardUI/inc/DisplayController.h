@@ -7,6 +7,7 @@
 
 #include "display.h"
 #include "Color.h"
+#include "font.h"
 
 
 class DisplayController {
@@ -16,6 +17,8 @@ public:
 	static void drawLine(uint16_t x1, uint16_t y1,
 			uint16_t x2, uint16_t y2,
 			Color color);
+
+	static uint16_t getCharWidth(char c, uint16_t height);
 
 	static void drawChar(uint16_t x, uint16_t y,
 			char c, uint16_t size,

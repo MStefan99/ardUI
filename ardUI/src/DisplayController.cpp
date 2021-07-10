@@ -122,11 +122,30 @@ void DisplayController::drawBitmap(uint16_t x, uint16_t y,
 }
 
 
+uint16_t DisplayController::getCharWidth(char c, uint16_t height) {
+	if (_featureSupport.drawChar) {
+		return ardui::display::getCharWidth(c, height);
+	} else {
+		return height;
+	}
+}
+
+
 void DisplayController::drawChar(uint16_t x, uint16_t y,
 		char c, uint16_t size,
 		Color color) {
 	if (_featureSupport.drawChar) {
 		ardui::display::drawChar(x, y, c, size, color);
+	} else {
+		auto pxSize = uint8_t(size / 8);
+
+		for (uint8_t j {0}; j < 8; ++j) {
+			for (uint8_t i {0}; i < 8; ++i) {
+				if (ardui::LETTERS[c][j] >> i & 1u) {
+					ardui::display::fillRect(x + pxSize * i, y + pxSize * j, x + pxSize * i + pxSize, y + pxSize * j + pxSize, color);
+				}
+			}
+		}
 	}
 }
 
@@ -136,5 +155,13 @@ void DisplayController::drawText(uint16_t x, uint16_t y,
 		Color color) {
 	if (_featureSupport.drawText) {
 		ardui::display::drawText(x, y, text, size, color);
+	} else {
+		auto str = text.c_str();
+		uint16_t i {0};
+
+		while (*str) {
+			drawChar(x + (size * i++), y, *str, size, color);
+			++str;
+		}
 	}
 }

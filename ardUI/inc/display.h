@@ -20,7 +20,6 @@ namespace ardui {
 		uint16_t getHeight();
 		uint16_t getWidth();
 
-		uint16_t getFontHeight();
 		uint16_t getCharWidth(char c, uint16_t height);
 
 		bool isClicked();
