@@ -141,7 +141,7 @@ void DisplayController::drawChar(uint16_t x, uint16_t y,
 
 		for (uint8_t j {0}; j < 8; ++j) {
 			for (uint8_t i {0}; i < 8; ++i) {
-				if (ardui::LETTERS[c][j] >> i & 1u) {
+				if (ardui::LETTERS[(unsigned char)c][j] >> i & 1u) {  // TODO: optimize, fix signedness
 					ardui::display::fillRect(x + pxSize * i, y + pxSize * j, x + pxSize * i + pxSize, y + pxSize * j + pxSize, color);
 				}
 			}

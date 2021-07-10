@@ -9,7 +9,7 @@
 
 
 /*
- * How many previous activities to save.
+ * How many previous Activities to save.
  * If a new activity is opened while previous one is still active,
  * it will be saved to memory so that the user can navigate back to it.
  * Higher values improve user experience but will use significantly more memory.
@@ -19,7 +19,7 @@
 /*
  * How often to update a display.
  * Higher values result in a smoother image
- * but may impact your main program performance.
+ * but may heavily impact performance.
  *
  * Enter the value in Hz.
  */

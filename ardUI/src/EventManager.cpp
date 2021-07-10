@@ -13,16 +13,15 @@
 void setup() {  // Default setup function will be used to initiate ardUI
 	ardui::display::init();
 	arduiUserSetup();  // Calling user setup function
-	EventManager::draw();
 }
 
 
 void loop() {  // ardUI core functions will be added to the loop function
-	update();
+	EventManager::update();
 }
 
 
-void update(bool callUserLoop) {
+void EventManager::update(bool callUserLoop) {
 	static uint32_t lastTouchRefresh, lastDisplayRefresh;
 	uint32_t currentTime = millis();
 
@@ -41,15 +40,16 @@ void update(bool callUserLoop) {
 		arduiUserLoop();  // Calling user loop function
 	}
 
-	#if LOG_LEVEL >= LOG_INFO
-		if (millis() - currentTime > 1000 / REFRESH_RATE) {
-			Serial.println("Skipping frames, please ensure your loop doesn't perform any long operations");
-		}
-	#endif
+#if LOG_LEVEL >= LOG_INFO
+	if (millis() - currentTime > 1000 / REFRESH_RATE) {
+		Serial.println("Skipping frames, please ensure your loop doesn't perform any long operations");
+	}
+#endif
 
 #if LOG_LEVEL >= LOG_VERBOSE
 	Serial.println("Loop iteration");
 #endif
+
 #if SLOW_MODE
 	delay(MIN(1000 / TOUCH_RATE, 1000 / REFRESH_RATE));
 #endif
@@ -58,12 +58,13 @@ void update(bool callUserLoop) {
 
 void arduiSmartDelay(uint32_t ms) {
 	#if LOG_LEVEL >= LOG_INFO
-		Serial.println("Please be careful when using sleep!");
+	Serial.println("Please be careful when using sleep!");
 	#endif
+
 	auto startTime = millis();
 
 	while (ABS(millis() - startTime) < ms) {
-		update(false);
+		EventManager::update(false);
 		delay(MIN(1000 / TOUCH_RATE, 1000 / REFRESH_RATE));
 	}
 }
@@ -128,8 +129,13 @@ void EventManager::draw() {
 	Serial.println("Draw call");
 #endif
 	if (ActivityManager::_currentActivity) {
-		ActivityManager::_currentActivity->measure();
-		ActivityManager::_currentActivity->layout();
+		auto displayWidth {ardui::display::getWidth()};
+		auto displayHeight {ardui::display::getHeight()};
+		
+		ActivityManager::_currentActivity->measure(
+				View::MeasureSpec::makeMeasureSpec(View::MeasureSpec::EXACTLY, displayWidth),
+				View::MeasureSpec::makeMeasureSpec(View::MeasureSpec::EXACTLY, displayHeight));
+		ActivityManager::_currentActivity->layout(0, 0, displayWidth, displayHeight);
 		ActivityManager::_currentActivity->draw();
 	}
 }

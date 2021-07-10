@@ -75,9 +75,9 @@ private:
 	void stop();
 	void destroy();
 
+	void measure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec);
+	void layout(uint16_t left, uint16_t top, uint16_t right, uint16_t bottom);
 	void draw() const;
-	void measure();
-	void layout();
 	void handleEvent(const Event& event);
 	View* getRootView();
 

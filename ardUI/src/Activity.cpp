@@ -126,19 +126,16 @@ View* Activity::getRootView() {
 }
 
 
-void Activity::measure() {
+void Activity::measure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec) {
 	if (_rootView) {
-		uint16_t widthSpec = View::MeasureSpec::makeMeasureSpec(View::MeasureSpec::EXACTLY, ardui::display::getWidth());
-		uint16_t heightSpec = View::MeasureSpec::makeMeasureSpec(View::MeasureSpec::EXACTLY, ardui::display::getHeight());
-		_rootView->measure(widthSpec, heightSpec);
+		_rootView->measure(widthMeasureSpec, heightMeasureSpec);
 	}
 }
 
 
-void Activity::layout() {
+void Activity::layout(uint16_t left, uint16_t top, uint16_t right, uint16_t bottom) {
 	if (_rootView) {
-		Rect display {0, 0, ardui::display::getWidth(), ardui::display::getHeight()};
-		_rootView->layout(display);
+		_rootView->layout(left, top, right, bottom);
 	}
 }
 
