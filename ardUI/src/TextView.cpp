@@ -50,7 +50,7 @@ Color TextView::getTextColor() const {
 }
 
 
-void TextView::onMeasure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec) {
+void TextView::onMeasure(MeasureSpec widthMeasureSpec, MeasureSpec heightMeasureSpec) {
 	auto width = getDefaultSize(getMaxWidth(), widthMeasureSpec);
 	setMeasuredDimensions(width + _padding.left + _padding.right,
 			getDefaultSize(_textSize * (uint16_t)getLines(width).size() +

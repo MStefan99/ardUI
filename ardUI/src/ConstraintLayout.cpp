@@ -7,7 +7,7 @@
 
 void ConstraintLayout::ConstraintSet::connect(View* startView, ConstraintLayout::Side startSide,
 		View* endView, ConstraintLayout::Side endSide,
-		uint16_t margin) {
+		int16_t margin) {
 	if ((startSide + endSide) % 2) {
 		Serial.println("ERROR: Side mismatch");
 	} else {
@@ -17,7 +17,7 @@ void ConstraintLayout::ConstraintSet::connect(View* startView, ConstraintLayout:
 
 
 ConstraintLayout::ConstraintSet::Constraint::Constraint(View* startView, Side startSide,
-		View* endView, Side endSide, uint16_t margin):
+		View* endView, Side endSide, int16_t margin):
 		startView {startView}, startSide {startSide}, endView {endView}, endSide {endSide}, margin {margin} {
 	// Nothing to do
 }
@@ -28,7 +28,7 @@ void ConstraintLayout::ConstraintSet::LayoutInfo::reset() {
 }
 
 
-uint16_t ConstraintLayout::getPos(View* view, Side side) {
+int16_t ConstraintLayout::getPos(View* view, Side side) {
 	auto layoutInfo = _constraintSet->_constraints[view].first;
 
 	switch (side) {
@@ -103,23 +103,22 @@ ConstraintLayout::ConstraintSet* ConstraintLayout::getConstraints() {
 }
 
 
-void ConstraintLayout::onMeasure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec) {
+void ConstraintLayout::onMeasure(MeasureSpec widthMeasureSpec, MeasureSpec heightMeasureSpec) {
 	setMeasuredDimensions(getDefaultSize(getMinimumWidth() + _padding.width(), widthMeasureSpec),
 			getDefaultSize(getMinimumHeight() + _padding.height(), heightMeasureSpec));
 	_constraintSet->_constraints[this].first.viewBox.set(0, 0, getMeasuredWidth(), getMeasuredHeight());
 	_constraintSet->_constraints[this].first.constrained = true;
 
 	for (auto view: _viewList) {
-		view->measure(
-				View::MeasureSpec::makeMeasureSpec(View::MeasureSpec::AT_MOST, getMeasuredWidth()),
-				View::MeasureSpec::makeMeasureSpec(View::MeasureSpec::AT_MOST, getMeasuredHeight()));
+		view->measure(MeasureSpec {static_cast<int16_t>(getMeasuredWidth()), MeasureSpec::AT_MOST},
+				MeasureSpec {static_cast<int16_t>(getMeasuredHeight()), MeasureSpec::AT_MOST});
 
 		_constraintSet->_constraints[view].first.viewBox = Rect(0, 0, view->getMeasuredWidth(), view->getMeasuredHeight());
 	}
 }
 
 
-void ConstraintLayout::onLayout(bool changed, uint16_t left, uint16_t top, uint16_t right, uint16_t bottom) {
+void ConstraintLayout::onLayout(bool changed, int16_t left, int16_t top, int16_t right, int16_t bottom) {
 	for (auto& c : _constraintSet->_constraints) {
 		c.second.first.reset();
 	}
@@ -136,14 +135,5 @@ void ConstraintLayout::onLayout(bool changed, uint16_t left, uint16_t top, uint1
 void ConstraintLayout::onDraw() {
 	for (auto view: _viewList) {
 		view->draw();
-	}
-}
-
-
-void ConstraintLayout::handleEvent(const Event& event) {
-	for (auto view: _viewList) {
-		if (view->getBounds().contains(event._targetX, event._targetY)) {
-			view->handleEvent(event);
-		}
 	}
 }

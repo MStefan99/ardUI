@@ -17,15 +17,19 @@ public:
 	class MeasureSpec {
 	public:
 		enum Sizing {
-			AT_MOST = 0x8000,
-			EXACTLY = 0x4000,
-			UNSPECIFIED = 0
+			AT_MOST,
+			EXACTLY,
+			UNSPECIFIED
 		};
 
-		static uint16_t getMode(uint16_t measureSpec);
-		static uint16_t getSize(uint16_t measureSpec);
+		explicit MeasureSpec(int16_t size, Sizing mode = UNSPECIFIED);
 
-		static uint16_t makeMeasureSpec(uint16_t mode, uint16_t size);
+		int16_t getSize() const;
+		int16_t getMode() const;
+
+	protected:
+		int16_t _size {};
+		Sizing _mode {};
 	};
 
 	View();
@@ -34,17 +38,17 @@ public:
 	virtual View* findViewById(int id);
 	int getId() const;
 
-	void measure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec) final;
-	void layout(uint16_t left, uint16_t top, uint16_t right, uint16_t bottom) final;
-	void layout(const Rect& rect) final;
+	void measure(MeasureSpec widthMeasureSpec, MeasureSpec heightMeasureSpec);
+	void layout(int16_t left, int16_t top, int16_t right, int16_t bottom);
+	void layout(const Rect& rect);
 	void draw() override;
 	void invalidate() override;
-	void handleEvent(const Event& event) override;
+	virtual View* handleEvent(const Event& event);
 
-	void setLeft(uint16_t left);
-	void setTop(uint16_t top);
-	void setRight(uint16_t right);
-	void setBottom(uint16_t bottom);
+	void setLeft(int16_t left);
+	void setTop(int16_t top);
+	void setRight(int16_t right);
+	void setBottom(int16_t bottom);
 
 	uint16_t getMeasuredWidth() const;
 	uint16_t getMeasuredHeight() const;
@@ -61,15 +65,15 @@ public:
 
 protected:
 	// Measure contents of the current view
-	virtual void onMeasure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec);
+	virtual void onMeasure(MeasureSpec widthMeasureSpec, MeasureSpec heightMeasureSpec);
 	// Assign size and position to children
-	virtual void onLayout(bool changed, uint16_t left, uint16_t top, uint16_t right, uint16_t bottom);
+	virtual void onLayout(bool changed, int16_t left, int16_t top, int16_t right, int16_t bottom);
 	// Draw current view
 	virtual void onDraw();
 
 	void setMeasuredDimensions(uint16_t measuredWidth, uint16_t measuredHeight);
 
-	static uint16_t getDefaultSize(uint16_t size, uint16_t measureSpec);
+	static uint16_t getDefaultSize(uint16_t size, MeasureSpec measureSpec);
 
 private:
 	void (* _onClick)(View* view) {nullptr};

@@ -50,8 +50,8 @@ void EventManager::update(bool callUserLoop) {
 	Serial.println("Loop iteration");
 #endif
 
-#if SLOW_MODE
-	delay(MIN(1000 / TOUCH_RATE, 1000 / REFRESH_RATE));
+#if SLOW_MODE && !defined(__EMSCRIPTEN__)
+	delay(MIN(1000 / TOUCH_RATE, 1000 / REFRESH_RATE) + 50);
 #endif
 }
 
@@ -75,7 +75,7 @@ void EventManager::checkForActions(uint32_t deltaTime) {
 	static uint32_t actionTime {0};
 
 	if (ardui::display::isClicked()) {  // Detecting actions
-		static uint16_t lastX {event._targetX}, lastY {event._targetY};
+		int16_t lastX {event._targetX}, lastY {event._targetY};
 		event._targetX = ardui::display::getClickX();
 		event._targetY = ardui::display::getClickY();
 
@@ -89,8 +89,8 @@ void EventManager::checkForActions(uint32_t deltaTime) {
 #endif
 		} else {
 			actionTime += deltaTime;
-			event._deltaX = (int16_t)(lastX - event._targetX);
-			event._deltaY = (int16_t)(lastY - event._targetY);
+			event._deltaX = (int16_t)(event._targetX - lastX);
+			event._deltaY = (int16_t)(event._targetY - lastY);
 		}
 		if (event._currentAction == Event::Action::SCROLL) {
 			// Handle scroll event every Update
@@ -131,10 +131,10 @@ void EventManager::draw() {
 	if (ActivityManager::_currentActivity) {
 		auto displayWidth {ardui::display::getWidth()};
 		auto displayHeight {ardui::display::getHeight()};
-		
+
 		ActivityManager::_currentActivity->measure(
-				View::MeasureSpec::makeMeasureSpec(View::MeasureSpec::EXACTLY, displayWidth),
-				View::MeasureSpec::makeMeasureSpec(View::MeasureSpec::EXACTLY, displayHeight));
+				View::MeasureSpec {displayWidth, View::MeasureSpec::EXACTLY},
+				View::MeasureSpec {displayHeight, View::MeasureSpec::EXACTLY});
 		ActivityManager::_currentActivity->layout(0, 0, displayWidth, displayHeight);
 		ActivityManager::_currentActivity->draw();
 	}

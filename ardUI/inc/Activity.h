@@ -75,10 +75,10 @@ private:
 	void stop();
 	void destroy();
 
-	void measure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec);
-	void layout(uint16_t left, uint16_t top, uint16_t right, uint16_t bottom);
+	void measure(View::MeasureSpec widthMeasureSpec, View::MeasureSpec heightMeasureSpec);
+	void layout(int16_t left, int16_t top, int16_t right, int16_t bottom);
 	void draw() const;
-	void handleEvent(const Event& event);
+	View* handleEvent(const Event& event);
 	View* getRootView();
 
 	void rewindState(Activity::State targetState);

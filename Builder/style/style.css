@@ -316,6 +316,7 @@ html body #dashboard #canvas-wrapper {
 }
 html body #dashboard #canvas-wrapper #view-container {
   position: relative;
+  user-select: none;
 }
 html body #dashboard #canvas-wrapper #view-container div {
   position: absolute;

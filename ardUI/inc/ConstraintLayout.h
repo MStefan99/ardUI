@@ -30,9 +30,9 @@ public:
 			Side startSide {LEFT};
 			View* endView {nullptr};
 			Side endSide {LEFT};
-			uint16_t margin {0};
+			int16_t margin {0};
 
-			Constraint(View* startView, Side startSide, View* endView, Side endSide, uint16_t margin);
+			Constraint(View* startView, Side startSide, View* endView, Side endSide, int16_t margin);
 		};
 
 		struct LayoutInfo {
@@ -49,7 +49,7 @@ public:
 	public:
 		ConstraintSet() = default;
 
-		void connect(View* startView, Side startSide, View* endView, Side endSide, uint16_t margin);
+		void connect(View* startView, Side startSide, View* endView, Side endSide, int16_t margin);
 
 		friend class ConstraintLayout;
 
@@ -62,13 +62,11 @@ public:
 	ConstraintSet* getConstraints();
 
 protected:
-	void onMeasure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec) override;
-	void onLayout(bool changed, uint16_t left, uint16_t top, uint16_t right, uint16_t bottom) override;
+	void onMeasure(MeasureSpec widthMeasureSpec, MeasureSpec heightMeasureSpec) override;
+	void onLayout(bool changed, int16_t left, int16_t top, int16_t right, int16_t bottom) override;
 	void onDraw() override;
 
-	void handleEvent(const Event& event) override;
-
-	uint16_t getPos(View* view, Side side);
+	int16_t getPos(View* view, Side side);
 	void applyConstraints(PAIR<ConstraintSet::LayoutInfo, LIST<ConstraintSet::Constraint>>* constraints);
 
 	ConstraintSet* _constraintSet {new ConstraintSet({})};

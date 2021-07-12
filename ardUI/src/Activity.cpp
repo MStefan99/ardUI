@@ -126,14 +126,14 @@ View* Activity::getRootView() {
 }
 
 
-void Activity::measure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec) {
+void Activity::measure(View::MeasureSpec widthMeasureSpec, View::MeasureSpec heightMeasureSpec) {
 	if (_rootView) {
 		_rootView->measure(widthMeasureSpec, heightMeasureSpec);
 	}
 }
 
 
-void Activity::layout(uint16_t left, uint16_t top, uint16_t right, uint16_t bottom) {
+void Activity::layout(int16_t left, int16_t top, int16_t right, int16_t bottom) {
 	if (_rootView) {
 		_rootView->layout(left, top, right, bottom);
 	}
@@ -150,10 +150,11 @@ void Activity::draw() const {
 }
 
 
-void Activity::handleEvent(const Event& event) {
+View* Activity::handleEvent(const Event& event) {
 	if (_rootView) {
-		_rootView->handleEvent(event);
+		return _rootView->handleEvent(event);
 	}
+	return nullptr;
 }
 
 

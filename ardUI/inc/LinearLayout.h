@@ -24,11 +24,9 @@ public:
 	friend class EmscriptenBindingInitializer_BuilderInterface;
 
 protected:
-	void onMeasure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec) override;
-	void onLayout(bool changed, uint16_t left, uint16_t top, uint16_t right, uint16_t bottom) override;
+	void onMeasure(MeasureSpec widthMeasureSpec, MeasureSpec heightMeasureSpec) override;
+	void onLayout(bool changed, int16_t left, int16_t top, int16_t right, int16_t bottom) override;
 	void onDraw() override;
-
-	void handleEvent(const Event& event) override;
 
 	Orientation _orientation {Orientation::HORIZONTAL};
 };

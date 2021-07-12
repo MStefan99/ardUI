@@ -16,14 +16,14 @@ public:
 	ProgressBar() = default;
 	~ProgressBar() override = default;
 
-	uint16_t getProgress() const;
-	void setProgress(uint16_t progress);
+	int16_t getProgress() const;
+	void setProgress(int16_t progress);
 
-	uint16_t getMin() const;
-	void setMin(uint16_t min);
+	int16_t getMin() const;
+	void setMin(int16_t min);
 
-	uint16_t getMax() const;
-	void setMax(uint16_t max);
+	int16_t getMax() const;
+	void setMax(int16_t max);
 
 	Color getBarColor() const;
 	void setBarColor(Color barColor);
@@ -36,13 +36,13 @@ public:
 protected:
 	void onDraw() override;
 
-	static uint16_t mapScale(uint16_t value, uint16_t oldMin, uint16_t oldMax, uint16_t newMin, uint16_t newMax);
+	static int16_t mapScale(int16_t value, int16_t oldMin, int16_t oldMax, int16_t newMin, int16_t newMax);
 
 	Color _barColor {0x0};
 	Color _backgroundColor {0xffffff};
 
-	uint16_t _min {};
-	uint16_t _max {100};
+	int16_t _min {};
+	int16_t _max {100};
 };
 
 #endif //ARDUI_PROGRESSBAR_H

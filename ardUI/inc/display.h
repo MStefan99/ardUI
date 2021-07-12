@@ -17,14 +17,14 @@ namespace ardui {
 			NOT_SUPPORTED
 		};
 
-		uint16_t getHeight();
-		uint16_t getWidth();
+		int16_t getHeight();
+		int16_t getWidth();
 
 		uint16_t getCharWidth(char c, uint16_t height);
 
 		bool isClicked();
-		uint16_t getClickX();
-		uint16_t getClickY();
+		int16_t getClickX();
+		int16_t getClickY();
 
 		ReturnCode init();
 
@@ -34,49 +34,49 @@ namespace ardui {
 
 		ReturnCode fill(Color color);
 
-		ReturnCode drawPixel(uint16_t x, uint16_t y,
+		ReturnCode drawPixel(int16_t x, int16_t y,
 				Color color);
 
-		ReturnCode drawLine(uint16_t x1, uint16_t y1,
-				uint16_t x2, uint16_t y2,
+		ReturnCode drawLine(int16_t x1, int16_t y1,
+				int16_t x2, int16_t y2,
 				Color color);
 
-		ReturnCode drawChar(uint16_t x, uint16_t y,
+		ReturnCode drawChar(int16_t x, int16_t y,
 				char c, uint16_t height,
 				Color color);
 
-		ReturnCode drawText(uint16_t x, uint16_t y,
+		ReturnCode drawText(int16_t x, int16_t y,
 				const String& text, uint16_t height,
 				Color color);
 
-		ReturnCode drawCircle(uint16_t x, uint16_t y,
-				uint16_t radius,
+		ReturnCode drawCircle(int16_t x, int16_t y,
+				int16_t radius,
 				Color color);
 
-		ReturnCode fillCircle(uint16_t x, uint16_t y,
-				uint16_t radius,
+		ReturnCode fillCircle(int16_t x, int16_t y,
+				int16_t radius,
 				Color color);
 
-		ReturnCode drawRect(uint16_t x1, uint16_t y1,
-				uint16_t x2, uint16_t y2,
+		ReturnCode drawRect(int16_t x1, int16_t y1,
+				int16_t x2, int16_t y2,
 				Color color);
 
-		ReturnCode fillRect(uint16_t x1, uint16_t y1,
-				uint16_t x2, uint16_t y2,
+		ReturnCode fillRect(int16_t x1, int16_t y1,
+				int16_t x2, int16_t y2,
 				Color color);
 
-		ReturnCode drawTriangle(uint16_t x1, uint16_t y1,
-				uint16_t x2, uint16_t y2,
-				uint16_t x3, uint16_t y3,
+		ReturnCode drawTriangle(int16_t x1, int16_t y1,
+				int16_t x2, int16_t y2,
+				int16_t x3, int16_t y3,
 				Color color);
 
-		ReturnCode fillTriangle(uint16_t x1, uint16_t y1,
-				uint16_t x2, uint16_t y2,
-				uint16_t x3, uint16_t y3,
+		ReturnCode fillTriangle(int16_t x1, int16_t y1,
+				int16_t x2, int16_t y2,
+				int16_t x3, int16_t y3,
 				Color color);
 
-		ReturnCode drawBitmap(uint16_t x, uint16_t y,
-				uint16_t* bitmap);
+		ReturnCode drawBitmap(int16_t x, int16_t y,
+				int16_t* bitmap);
 	}
 }
 

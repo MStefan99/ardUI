@@ -14,48 +14,48 @@ class DisplayController {
 public:
 	static void fill(Color color);
 
-	static void drawLine(uint16_t x1, uint16_t y1,
-			uint16_t x2, uint16_t y2,
+	static void drawLine(int16_t x1, int16_t y1,
+			int16_t x2, int16_t y2,
 			Color color);
 
 	static uint16_t getCharWidth(char c, uint16_t height);
 
-	static void drawChar(uint16_t x, uint16_t y,
+	static void drawChar(int16_t x, int16_t y,
 			char c, uint16_t size,
 			Color color);
 
-	static void drawText(uint16_t x, uint16_t y,
+	static void drawText(int16_t x, int16_t y,
 			const String& text, uint16_t size,
 			Color color);
 
-	static void drawCircle(uint16_t x, uint16_t y,
-			uint16_t radius,
+	static void drawCircle(int16_t x, int16_t y,
+			int16_t radius,
 			Color color);
 
-	static void fillCircle(uint16_t x, uint16_t y,
-			uint16_t radius,
+	static void fillCircle(int16_t x, int16_t y,
+			int16_t radius,
 			Color color);
 
-	static void drawRect(uint16_t x1, uint16_t y1,
-			uint16_t x2, uint16_t y2,
+	static void drawRect(int16_t x1, int16_t y1,
+			int16_t x2, int16_t y2,
 			Color color);
 
-	static void fillRect(uint16_t x1, uint16_t y1,
-			uint16_t x2, uint16_t y2,
+	static void fillRect(int16_t x1, int16_t y1,
+			int16_t x2, int16_t y2,
 			Color color);
 
-	static void drawTriangle(uint16_t x1, uint16_t y1,
-			uint16_t x2, uint16_t y2,
-			uint16_t x3, uint16_t y3,
+	static void drawTriangle(int16_t x1, int16_t y1,
+			int16_t x2, int16_t y2,
+			int16_t x3, int16_t y3,
 			Color color);
 
-	static void fillTriangle(uint16_t x1, uint16_t y1,
-			uint16_t x2, uint16_t y2,
-			uint16_t x3, uint16_t y3,
+	static void fillTriangle(int16_t x1, int16_t y1,
+			int16_t x2, int16_t y2,
+			int16_t x3, int16_t y3,
 			Color color);
 
-	static void drawBitmap(uint16_t x, uint16_t y,
-			uint16_t* bitmap);
+	static void drawBitmap(int16_t x, int16_t y,
+			int16_t* bitmap);
 
 protected:
 	struct FeatureSupport {

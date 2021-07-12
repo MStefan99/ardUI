@@ -22,8 +22,8 @@ void DisplayController::fill(Color color) {
 }
 
 
-void DisplayController::drawLine(uint16_t x1, uint16_t y1,
-		uint16_t x2, uint16_t y2,
+void DisplayController::drawLine(int16_t x1, int16_t y1,
+		int16_t x2, int16_t y2,
 		Color color) {
 	if (_featureSupport.drawLine) {
 		ardui::display::drawLine(x1, y1, x2, y2, color);
@@ -53,20 +53,20 @@ void DisplayController::drawLine(uint16_t x1, uint16_t y1,
 }
 
 
-void DisplayController::drawCircle(uint16_t x, uint16_t y,
-		uint16_t radius,
+void DisplayController::drawCircle(int16_t x, int16_t y,
+		int16_t radius,
 		Color color) {
 }
 
 
-void DisplayController::fillCircle(uint16_t x, uint16_t y,
-		uint16_t radius,
+void DisplayController::fillCircle(int16_t x, int16_t y,
+		int16_t radius,
 		Color color) {
 }
 
 
-void DisplayController::drawRect(uint16_t x1, uint16_t y1,
-		uint16_t x2, uint16_t y2,
+void DisplayController::drawRect(int16_t x1, int16_t y1,
+		int16_t x2, int16_t y2,
 		Color color) {
 	if (_featureSupport.drawRect) {
 		ardui::display::drawRect(x1, y1, x2, y2, color);
@@ -79,8 +79,8 @@ void DisplayController::drawRect(uint16_t x1, uint16_t y1,
 }
 
 
-void DisplayController::fillRect(uint16_t x1, uint16_t y1,
-		uint16_t x2, uint16_t y2,
+void DisplayController::fillRect(int16_t x1, int16_t y1,
+		int16_t x2, int16_t y2,
 		Color color) {
 	if (_featureSupport.drawRect) {
 		ardui::display::fillRect(x1, y1, x2, y2, color);
@@ -96,9 +96,9 @@ void DisplayController::fillRect(uint16_t x1, uint16_t y1,
 }
 
 
-void DisplayController::drawTriangle(uint16_t x1, uint16_t y1,
-		uint16_t x2, uint16_t y2,
-		uint16_t x3, uint16_t y3,
+void DisplayController::drawTriangle(int16_t x1, int16_t y1,
+		int16_t x2, int16_t y2,
+		int16_t x3, int16_t y3,
 		Color color) {
 	if (_featureSupport.drawTriangle) {
 		ardui::display::drawTriangle(x1, y1, x2, y2, x3, y3, color);
@@ -110,15 +110,15 @@ void DisplayController::drawTriangle(uint16_t x1, uint16_t y1,
 }
 
 
-void DisplayController::fillTriangle(uint16_t x1, uint16_t y1,
-		uint16_t x2, uint16_t y2,
-		uint16_t x3, uint16_t y3,
+void DisplayController::fillTriangle(int16_t x1, int16_t y1,
+		int16_t x2, int16_t y2,
+		int16_t x3, int16_t y3,
 		Color color) {
 }
 
 
-void DisplayController::drawBitmap(uint16_t x, uint16_t y,
-		uint16_t* bitmap) {
+void DisplayController::drawBitmap(int16_t x, int16_t y,
+		int16_t* bitmap) {
 }
 
 
@@ -131,7 +131,7 @@ uint16_t DisplayController::getCharWidth(char c, uint16_t height) {
 }
 
 
-void DisplayController::drawChar(uint16_t x, uint16_t y,
+void DisplayController::drawChar(int16_t x, int16_t y,
 		char c, uint16_t size,
 		Color color) {
 	if (_featureSupport.drawChar) {
@@ -150,14 +150,14 @@ void DisplayController::drawChar(uint16_t x, uint16_t y,
 }
 
 
-void DisplayController::drawText(uint16_t x, uint16_t y,
+void DisplayController::drawText(int16_t x, int16_t y,
 		const String& text, uint16_t size,
 		Color color) {
 	if (_featureSupport.drawText) {
 		ardui::display::drawText(x, y, text, size, color);
 	} else {
 		auto str = text.c_str();
-		uint16_t i {0};
+		int16_t i {0};
 
 		while (*str) {
 			drawChar(x + (size * i++), y, *str, size, color);
