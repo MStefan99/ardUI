@@ -5,7 +5,6 @@
 #ifndef ARDUI_CONSTRAINTLAYOUT_H
 #define ARDUI_CONSTRAINTLAYOUT_H
 
-
 #include "View.h"
 #include "ViewGroup.h"
 #include LIST_H
@@ -19,6 +18,7 @@ public:
 		TOP = 1,
 		RIGHT = 2,
 		BOTTOM = 3
+		// TODO: rename (conflicts with UTFT library)
 	};
 
 	class ConstraintSet {

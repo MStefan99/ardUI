@@ -80,10 +80,11 @@ void ViewGroup::invalidate() {
 
 
 void ViewGroup::draw() {
-	_valid = true;
+	onDraw();
 	for (auto view: _viewList) {
 		if (!view->isValid() && view->isVisible()) {
 			view->draw();
 		}
 	}
+	_valid = true;
 }

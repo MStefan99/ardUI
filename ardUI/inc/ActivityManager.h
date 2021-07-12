@@ -42,6 +42,8 @@ private:
 	friend class Activity;
 
 	friend class ardUI;
+
+	friend class BuilderInterface;
 };
 
 #endif //ARDUI_ACTIVITYMANAGER_H

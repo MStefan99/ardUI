@@ -10,6 +10,7 @@
 namespace ardui {
 	template <class T1, class T2>
 	struct pair {
+		pair() = default;
 		pair(const T1& x, const T2& y);
 		pair(const pair& p) = default;
 		pair& operator =(const pair& p);

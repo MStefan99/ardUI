@@ -12,13 +12,11 @@ Rect Drawable::getBounds() const {
 
 void Drawable::setBounds(uint16_t l, uint16_t t, uint16_t r, uint16_t b) {
 	_viewBox.set(l, t, r, b);
-	onBoundsChange(Rect(l, t, r, b));
 }
 
 
 void Drawable::setBounds(const Rect& bounds) {
 	_viewBox.set(bounds);
-	onBoundsChange(bounds);
 }
 
 
@@ -28,13 +26,8 @@ int Drawable::getLevel() const {
 
 
 bool Drawable::setLevel(uint16_t l) {
-	if (l > 10000) {
-		l = 10000;
-	}
-	auto changed {onLevelChange(l)};
-	if (changed) {
-		_level = l;
-	}
+	bool changed {l != _level};
+	_level = l;
 	return changed;
 }
 
@@ -62,9 +55,7 @@ bool Drawable::isVisible() const {
 
 bool Drawable::setVisible(bool v) {
 	auto changed {v != _visible};
-	if (changed) {
-		_visible = v;
-	}
+	_visible = v;
 	return changed;
 }
 
@@ -76,20 +67,6 @@ bool Drawable::isValid() const {
 
 void Drawable::invalidateSelf() {
 	_valid = false;
-}
-
-
-void Drawable::onBoundsChange(const Rect& bounds) {
-	invalidateSelf();
-}
-
-
-bool Drawable::onLevelChange(uint16_t l) {
-	auto changed {l != _level};
-	if (changed) {
-		draw();
-	}
-	return changed;
 }
 
 

@@ -1,0 +1,544 @@
+// Shared library by MStefan99
+
+ease-in = cubic-bezier(0, .6, .4, 1)
+
+color-white = #fff
+color-black = #000
+color-light = #f8f9fa
+color-dark = #343a40
+color-primary = #007bff
+color-secondary = #6c757d
+color-success = #28a745
+color-danger = #dc3545
+color-warning = #ffc107
+color-info = #17a2b8
+
+spacer = 1rem
+sizes = '' 'sm' 'md' 'lg' 'xl'
+displays = 'inline' 'inline-block' 'block' 'flex' 'inline-flex' \
+'table' 'table-row' 'table-cell' 'none'
+breakpoint-sm = 425px
+breakpoint-md = 768px
+breakpoint-lg = 1024px
+breakpoint-xl = 1440px
+colors = 'primary' 'secondary' 'success' 'danger' 'warning' 'info'\
+'light' 'dark'
+all-colors = 'primary' 'secondary' 'success' 'danger' 'warning' 'info'\
+'light' 'dark' 'white' 'black'
+
+
+negate(unit)
+	if unit is a 'unit' and unit != auto and unit != 0
+		- + unit
+	else
+		unit
+
+
+getPostfix(value)
+	if value != ''
+		\- + value
+
+
+getSize(size)
+	s = breakpoint- + size
+	if s is a 'unit'
+		s
+	else
+		100%
+
+
+media(size)
+	s = breakpoint- + size
+	if s is a 'unit' and s > 0
+		@media screen and (min-width s)
+			{block}
+	else
+		{block}
+
+
+flex-prefix(type)
+	if type == between or type == around
+		space- + type
+	else if type == start or type == end
+		flex- + type
+	else
+		type
+
+
+html
+	font-family sans-serif
+
+	*, ::after, ::before
+		box-sizing border-box
+
+	body
+		// Backgrounds
+
+		for clr in all-colors
+			.bg-{clr}
+				background color- + clr
+				if clr == 'warning' or clr == 'light'
+					color color-dark
+				else
+					color color-light
+
+		// Foregrounds
+
+		for clr in all-colors
+			.text-{clr}
+				color color- + clr
+
+		.text-muted
+			color lighten(color-dark, 25%)
+
+		.text-white-50
+			color #ffffff80
+
+		.text-black-50
+			color #00000080
+
+		// Alerts
+
+		.alert
+			margin 1em 0
+			padding 1em 1.5em
+			border-radius 5px
+			font-size 1em
+			font-weight normal
+
+			for clr in colors
+				&.alert-{clr}
+					background lighten(color- + clr, 80%)
+					color darken(color- + clr, 30%)
+					border 1.2px solid lighten(color- + clr, 70%)
+
+		.jumbotron
+			padding 2em
+			background-color darken(color-light, 10%)
+			border-radius 20px
+			margin-bottom 2em
+
+		// Text
+
+		.bold
+			font-weight bold
+
+		.light
+			font-weight normal
+
+		.user-select-none
+			user-select none
+
+		.user-select-all
+			user-select all
+
+		.user-select-auto
+			user-select auto
+
+		// Containers
+
+		for size in sizes
+			+media(size)
+				.container
+					width getSize(size)
+
+				for querySize in sizes
+					.container{getPostfix(querySize)}
+						if getSize(querySize) <= getSize(size) and querySize != ''
+							max-width getSize(querySize)
+
+		.container-fluid
+			width 100%
+
+		// Dimensions
+
+		for size in 25 50 75 100
+			.w-{size}
+				width size + '%'
+
+			.mw-{size}
+				max-width size + '%'
+
+			.min-vw-{size}
+				min-width size vw
+
+			.vw-{size}
+				max-width size vw
+
+			.h-{size}
+				height size + '%'
+
+			.mh-{size}
+				max-height size + '%'
+
+			.min-vh-{size}
+				min-height size vh
+
+			.vh-{size}
+				max-height size vh
+
+		// Spacing
+
+		for size in sizes
+			+media(size)
+				for side in '' 't' 'b' 'l' 'r' 'x' 'y'
+					for spacing in '0' '1' '2' '3' '4' '5' 'auto'
+						for type in 'm' 'p'
+							if type == 'm'
+								spacingType = margin
+							else if type == 'p'
+								spacingType = padding
+
+							if side == 't'
+								spacingSide = top
+							else if side == 'b'
+								spacingSide = bottom
+							else if side == 'l'
+								spacingSide = left
+							else if side == 'r'
+								spacingSide = right
+							else if side == 'x'
+								spacingSide = left right
+							else if side == 'y'
+								spacingSide = top bottom
+							else if !side
+								spacingSide = ''
+
+							if spacing == '0'
+								spacingSpace = 0
+							else if spacing == '1'
+								spacingSpace = spacer * .25
+							else if spacing == '2'
+								spacingSpace = spacer * .5
+							else if spacing == '3'
+								spacingSpace = spacer
+							else if spacing == '4'
+								spacingSpace = spacer * 1.5
+							else if spacing == '5'
+								spacingSpace = spacer * 3
+							else if spacing == 'auto'
+								spacingSpace = auto
+
+							.{type}{side}{getPostfix(size)}-{spacing}
+								for s in spacingSide
+									if spacingSide
+										{spacingType}-{s} spacingSpace
+									else
+										{spacingType} spacingSpace
+
+						if spacing != 'auto' and spacing != '0'
+							.m{side}{getPostfix(size)}-n{spacing}
+								for s in spacingSide
+									if spacingSide
+										margin-{s} negate(spacingSpace)
+									else
+										margin negate(spacingSpace)
+
+		// Grid
+
+		.row
+			display flex
+			flex-wrap wrap
+
+			.col
+				flex 1 0 0
+
+				for colSize in 1 2 3 4 5 6 7 8 9 10 11 12
+					&.col-{colSize}
+						flex 0 0 (colSize / 12 * 100) + '%'
+
+				for size in sizes
+					+media(size)
+						for colSize in 1 2 3 4 5 6 7 8 9 10 11 12
+							&.col{getPostfix(size)}-{colSize}
+								flex 0 0 (colSize / 12 * 100) + '%'
+								max-width (colSize / 12 * 100) + '%'
+
+		// Borders
+
+		.border
+			border 1px solid darken(color-light, 10%)
+
+		for side in top bottom left right
+			.border-{side}
+				border-{side} 1px solid darken(color-light, 10%)
+
+			.border-{side}-{0}
+				border-{side} none
+
+		for clr in all-colors
+			.border-{clr}
+				border-color color- + clr
+
+		// Display
+
+		for size in sizes
+			+media(size)
+				for display in displays
+					.d{getPostfix(size)}-{display}
+						display unquote(display) !important
+
+		// Flex
+
+		.flex-wrap
+			flex-wrap wrap
+
+		.flex-nowrap
+			flex-wrap nowrap
+
+		for size in sizes
+			+media(size)
+				for direction in row column
+					.flex{getPostfix(size)}-{direction}
+						flex-direction direction
+
+					.flex{getPostfix(size)}-{direction}-reverse
+						flex-direction direction + -reverse
+
+		for size in sizes
+			+media(size)
+				for type in start end center between around
+					.justify-content{getPostfix(size)}-{type}
+						justify-content flex-prefix(type)
+
+		for size in sizes
+			+media(size)
+				for type in start end center baseline stretch
+					.align-items{getPostfix(size)}-{type}
+						align-items flex-prefix(type)
+
+					.align-self{getPostfix(size)}-{type}
+						align-self flex-prefix(type)
+
+		.flex-fill
+			flex 1 1 auto
+
+		for size in sizes
+			+media(size)
+				for enabled in 0 1
+					.flex{getPostfix(size)}-grow-{enabled}
+						flex-grow enabled
+
+					.flex{getPostfix(size)}-shrink-{enabled}
+						flex-shrink enabled
+
+		// Floats
+
+		for size in sizes
+			+media(size)
+				for side in left right none
+					.float{getPostfix(size)}-{side}
+						float side
+
+		// Shadows
+
+		.shadow-none
+			box-shadow none
+
+		.shadow-sm
+			box-shadow 0 (spacer/ 8) (spacer / 4) #00000014
+
+		.shadow
+			box-shadow 0 (spacer / 2) spacer #00000028
+
+		.shadow-lg
+			box-shadow 0 spacer (spacer * 3) #0000003c
+
+		// Controls
+
+		button, .btn
+			display inline-block
+			background-color transparent
+			margin .6em
+			margin-left 0
+			padding .7em
+			font-weight bold
+			font-size inherit
+			border-radius 5px
+			border-width 1px
+			border-style solid
+			cursor pointer
+			transition color .2s ease-in,
+			border-color .2s ease-in,
+			background-color .2s ease-in,
+			box-shadow .2s ease-in
+
+			&:last-child
+				margin-right 0
+
+			&:focus
+				outline 1px
+
+			for clr in colors
+				&.btn-{clr}
+					background color- + clr
+					border-color color- + clr
+					if clr == 'warning' or clr == 'light'
+						color color-dark
+					else
+						color color-light
+
+					&:hover
+						background darken(color- + clr, 10%)
+
+					&:active
+						background darken(color- + clr, 15%)
+
+					&:focus
+						box-shadow 0 0 0 3px transparentify(color- + clr, color- + clr, 40%)
+
+					&[disabled]
+						pointer-events none
+						background lighten(color- + clr, 40%)
+						border-color lighten(color- + clr, 40%)
+
+			for clr in colors
+				&.btn-outline-{clr}
+					font-weight normal
+					color color- + clr
+					border-color color- + clr
+
+					&:hover
+						color color-light
+						background color- + clr
+
+					&:active
+						background darken(color- + clr, 15%)
+
+					&:focus
+						box-shadow 0 0 0 3px transparentify(color- + clr, color- + clr, 40%)
+
+					&[disabled]
+						pointer-events none
+						color lighten(color- + clr, 40%)
+						border-color lighten(color- + clr, 40%)
+
+			&:focus
+				box-shadow 0 0
+
+		// Forms
+
+		form
+			display block
+
+			&.form-inline
+				display flex
+				flex-flow row wrap
+
+			label
+				display inline-block
+				margin-bottom .75em
+				transition color .2s ease-in
+
+			.form-group
+				margin-bottom 1em
+
+			.col-form-label
+				padding-top calc(.7em + 1px)
+
+			.form-check
+				display block
+
+				& ~ .valid-feedback, & ~ .invalid-feedback
+					display none
+					padding-top .5em
+					font-size .8em
+
+				&.is-valid
+					& ~ .valid-feedback
+						display block
+						color color-success
+
+					label
+						color darken(color-success, 15%)
+
+				&.is-invalid
+					& ~ .invalid-feedback
+						display block
+						color color-danger
+
+					label
+						color darken(color-danger, 15%)
+
+			input
+				&[type=checkbox], &[type=radio]
+					margin 0 .5em 0 0
+
+				&[type=button], &[type=reset], &[type=submit]
+					width max-content
+					font-weight normal
+					margin-left 0
+
+				&[type=email], &[type=password], &[type=number]
+				&[type=search], &[type=text], &[type=email],
+					display block
+					width 100%
+					padding .7em
+					font-size 1em
+					border-radius 5px
+					border 1px solid darken(color-light, 15%)
+					transition box-shadow .2s ease-in,
+					border-color .2s ease-in
+
+					&:focus
+						outline none
+						border 1px solid lighten(color-primary, 40%)
+						box-shadow 0 0 0 3px transparentify(color-primary, color-primary, 40%)
+
+					&[readonly], &[disabled]
+						color lighten(color-dark, 15%)
+						background-color darken(color-light, 10%)
+						border 1px solid darken(color-light, 30%)
+						pointer-events none
+
+			textarea, select
+				display block
+				width 100%
+				padding .7em
+				font-size 1em
+				border-radius 5px
+				border 1px solid darken(color-light, 15%)
+				transition box-shadow .2s ease-in,
+				border-color .2s ease-in
+
+			input, div
+				& ~ .valid-feedback, & ~ .invalid-feedback
+					display none
+					padding-top .5em
+					font-size .8em
+
+				&.is-valid
+					border-color darken(color-success, 15%)
+
+					&:focus
+						border-color darken(color-success, 15%)
+						box-shadow 0 0 0 3px transparentify(color-success, color-success, 40%)
+
+					label
+						color darken(color-success, 15%)
+
+					& ~ .valid-feedback
+						display block
+						color color-success
+
+				&.is-invalid
+					border-color darken(color-danger, 15%)
+
+					&:focus
+						border-color darken(color-danger, 15%)
+						box-shadow 0 0 0 3px transparentify(color-danger, color-danger, 40%)
+
+					label
+						color darken(color-danger, 15%)
+
+					& ~ .invalid-feedback
+						display block
+						color color-danger
+
+			select[multiple]
+				overflow-y auto
+
+				option
+					display block
+					padding spacer * 0.5 0
+					border-bottom 1px solid darken(color-light, 10%)

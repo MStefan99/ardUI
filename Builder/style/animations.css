@@ -1,0 +1,232 @@
+@-moz-keyframes splash {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+    pointer-events: none;
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+}
+@-webkit-keyframes splash {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+    pointer-events: none;
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+}
+@-o-keyframes splash {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+    pointer-events: none;
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+}
+@keyframes splash {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+    pointer-events: none;
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+}
+@-moz-keyframes dot-animation {
+  0% {
+    transform: translate(0, 0);
+    background-color: #000;
+  }
+  10% {
+    transform: translate(0, 100%);
+    background-color: #ff674f;
+  }
+  20% {
+    transform: translate(0, 0);
+    background-color: #000;
+  }
+  30% {
+    transform: translate(0, 100%);
+    background-color: #e5e318;
+  }
+  40% {
+    transform: translate(0, 0);
+    background-color: #000;
+  }
+  50% {
+    transform: translate(0, 100%);
+    background-color: #a0dd18;
+  }
+  60% {
+    transform: translate(0, 0);
+    background-color: #000;
+  }
+  70% {
+    transform: translate(0, 100%);
+    background-color: #90d0ff;
+  }
+  80% {
+    transform: translate(0, 0);
+    background-color: #000;
+  }
+  90% {
+    transform: translate(0, 100%);
+    background-color: #b590ff;
+  }
+  100% {
+    transform: translate(0, 0);
+    background-color: #000;
+  }
+}
+@-webkit-keyframes dot-animation {
+  0% {
+    transform: translate(0, 0);
+    background-color: #000;
+  }
+  10% {
+    transform: translate(0, 100%);
+    background-color: #ff674f;
+  }
+  20% {
+    transform: translate(0, 0);
+    background-color: #000;
+  }
+  30% {
+    transform: translate(0, 100%);
+    background-color: #e5e318;
+  }
+  40% {
+    transform: translate(0, 0);
+    background-color: #000;
+  }
+  50% {
+    transform: translate(0, 100%);
+    background-color: #a0dd18;
+  }
+  60% {
+    transform: translate(0, 0);
+    background-color: #000;
+  }
+  70% {
+    transform: translate(0, 100%);
+    background-color: #90d0ff;
+  }
+  80% {
+    transform: translate(0, 0);
+    background-color: #000;
+  }
+  90% {
+    transform: translate(0, 100%);
+    background-color: #b590ff;
+  }
+  100% {
+    transform: translate(0, 0);
+    background-color: #000;
+  }
+}
+@-o-keyframes dot-animation {
+  0% {
+    transform: translate(0, 0);
+    background-color: #000;
+  }
+  10% {
+    transform: translate(0, 100%);
+    background-color: #ff674f;
+  }
+  20% {
+    transform: translate(0, 0);
+    background-color: #000;
+  }
+  30% {
+    transform: translate(0, 100%);
+    background-color: #e5e318;
+  }
+  40% {
+    transform: translate(0, 0);
+    background-color: #000;
+  }
+  50% {
+    transform: translate(0, 100%);
+    background-color: #a0dd18;
+  }
+  60% {
+    transform: translate(0, 0);
+    background-color: #000;
+  }
+  70% {
+    transform: translate(0, 100%);
+    background-color: #90d0ff;
+  }
+  80% {
+    transform: translate(0, 0);
+    background-color: #000;
+  }
+  90% {
+    transform: translate(0, 100%);
+    background-color: #b590ff;
+  }
+  100% {
+    transform: translate(0, 0);
+    background-color: #000;
+  }
+}
+@keyframes dot-animation {
+  0% {
+    transform: translate(0, 0);
+    background-color: #000;
+  }
+  10% {
+    transform: translate(0, 100%);
+    background-color: #ff674f;
+  }
+  20% {
+    transform: translate(0, 0);
+    background-color: #000;
+  }
+  30% {
+    transform: translate(0, 100%);
+    background-color: #e5e318;
+  }
+  40% {
+    transform: translate(0, 0);
+    background-color: #000;
+  }
+  50% {
+    transform: translate(0, 100%);
+    background-color: #a0dd18;
+  }
+  60% {
+    transform: translate(0, 0);
+    background-color: #000;
+  }
+  70% {
+    transform: translate(0, 100%);
+    background-color: #90d0ff;
+  }
+  80% {
+    transform: translate(0, 0);
+    background-color: #000;
+  }
+  90% {
+    transform: translate(0, 100%);
+    background-color: #b590ff;
+  }
+  100% {
+    transform: translate(0, 0);
+    background-color: #000;
+  }
+}

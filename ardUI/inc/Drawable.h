@@ -44,10 +44,9 @@ public:
 
 	bool isValid() const;
 
-protected:
-	virtual void onBoundsChange(const Rect& bounds);
-	virtual bool onLevelChange(uint16_t level);
+	friend class EmscriptenBindingInitializer_BuilderInterface;
 
+protected:
 	bool _valid {false};
 	bool _visible {true};
 

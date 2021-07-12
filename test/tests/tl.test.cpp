@@ -199,13 +199,23 @@ void mapAssert() {
 			expect(m.size()).toEqual(6);
 			it = m.erase(m.find(-1), m.find(5));
 			expect(m.size()).toEqual(2);
+			expect(it).toEqual(m.find(5));
 		});
 
-//	expect(it).toEqual(m.find(5));
+		block.test("Unbalanced iteration assert", [&]() -> void {
+			ardui::map<int, int> m2 {};
+			m2[2] = 2;
+			m2[1] = 1;
+
+			for (const auto& i : m2)
+				;
+		});
 
 		block.test("empty copy assert", [&]() -> void {
 			ardui::map<int, double> {ardui::map<int, double> {}};
 		});
+
+		//
 	});
 }
 

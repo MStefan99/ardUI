@@ -10,6 +10,7 @@
 #include "ProgressBar.h"
 #include "ListView.h"
 #include "ArrayAdapter.h"
+#include "BuilderInterface.h"
 
 
 class SecondActivity;

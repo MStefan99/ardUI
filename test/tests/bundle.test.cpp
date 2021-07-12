@@ -24,7 +24,7 @@ struct A {
 
 
 int main() {
-	describe("Bundle test", [](TestBlock& block) -> void {
+	describe("Bundle Test", [](TestBlock& block) -> void {
 		Bundle b {};
 
 		block.test("Testing int", [&]() -> void {
@@ -38,8 +38,8 @@ int main() {
 		});
 
 		block.test("Testing string", [&]() -> void {
-			b.putString("string", "test");
-			expect(b.getString("string")).toEqual("test");
+			b.putString("string", "Test");
+			expect(b.getString("string")).toEqual("Test");
 		});
 
 		block.test("Testing custom type", [&]() -> void {
@@ -52,7 +52,7 @@ int main() {
 		block.test("Out-of-scope retrieval", [&]() -> void {
 			expect(b.getInt("int")).toEqual(1);
 			expect(b.getFloat("float")).toEqual(1.1);
-			expect(b.getString("string")).toEqual("test");
+			expect(b.getString("string")).toEqual("Test");
 			expect(b.get<A>("custom")).toEqual(A {1});
 		});
 		
@@ -60,7 +60,7 @@ int main() {
 			Bundle b1 {b};
 			expect(b1.getInt("int")).toEqual(1);
 			expect(b1.getFloat("float")).toEqual(1.1);
-			expect(b1.getString("string")).toEqual("test");
+			expect(b1.getString("string")).toEqual("Test");
 			expect(b1.get<A>("custom")).toEqual(A {1});
 		});
 	});

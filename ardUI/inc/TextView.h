@@ -26,6 +26,9 @@ public:
 	uint32_t getTextColor() const;
 
 	// TODO: add alignment options
+	// TODO: add background toggle
+
+	friend class EmscriptenBindingInitializer_BuilderInterface;
 
 protected:
 	void onMeasure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec) override;

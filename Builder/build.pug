@@ -1,0 +1,68 @@
+extends layout
+
+
+block head
+	title Builder Dashboard
+
+
+block header
+	div.tabs
+		a(href='./explore').tab Explore
+		a(href='./build').tab.selected Build
+
+block main
+	div#dashboard
+		div#left-pane
+			h2 Widgets
+			span#add-text.btn.btn-outline-secondary Add a text view
+		div#center-pane
+			h2 Display
+			div#canvas-wrapper
+				div#view-container
+				canvas#builder-canvas(width=480 height=320)
+				span#mouse-coords Mouse
+		div#right-pane
+			h2 Properties
+			div.collapsable
+				label(for='display-props') Display
+				input(type='checkbox' name='props')#display-props
+
+				div
+					h4 Display size
+					form#res-form
+						div.form-group
+							label(for='res-width') Display width (in px)
+							input#res-width(type='number' min='50')
+						div.form-group
+							label(for='res-height') Display height (in px)
+							input#res-height(type='number' min='50')
+						div.form-group
+							label(for='res-list') Or select from common resolutions:
+							select#res-list
+								include resolutions
+						input.btn.btn-outline-success#res-set(type='submit' value='Set display size')
+						input.btn.btn-outline-primary#res-reset(type='button' value='Reset to default')
+						input.btn.btn-outline-primary#res-flip(type='button' value='Change orientation')
+			div.collapsable
+				label(for='view-props') View
+				input(type='checkbox' name='props' checked)#view-props
+
+				form#view-prop-container
+
+
+	script(src='../cmake-build-emscripten/Builder/Builder.js')
+	script(type='module' src='./js/ardui-interface.js')
+	script(type='module' src='./js/build.js')
+	script(type='module' src='./js/properties.js')
+
+
+block body
+	div#splash
+		img(src='./img/ardUI_text.svg')#splash-logo
+		div.d-flex.flex-column.align-items-center
+			span#splash-load-error.d-none.text-danger.bold Loading ardUI failed. Please check whether ardUI is compiled correctly.
+			noscript.text-danger.bold ardUI Builder requires JavaScript to work. Please enable it in your browser settings.
+			div#splash-animation
+				span.animation-dot(style="--order:1")
+				span.animation-dot(style="--order:2")
+				span.animation-dot(style="--order:3")

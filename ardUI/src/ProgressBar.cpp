@@ -12,7 +12,6 @@ uint16_t ProgressBar::getProgress() const {
 
 void ProgressBar::setProgress(uint16_t progress) {
 	_level = mapScale(progress, _min, _max, 0, 10000);
-	onLevelChange(_level);
 	invalidate();
 }
 
@@ -37,8 +36,29 @@ void ProgressBar::setMax(uint16_t max) {
 }
 
 
+uint32_t ProgressBar::getBarColor() const {
+	return _barColor;
+}
+
+
+void ProgressBar::setBarColor(uint32_t barColor) {
+	_barColor = barColor;
+}
+
+
+uint32_t ProgressBar::getBackgroundColor() const {
+	return _backgroundColor;
+}
+
+
+void ProgressBar::setBackgroundColor(uint32_t backgroundColor) {
+	_backgroundColor = backgroundColor;
+}
+
+
 uint16_t ProgressBar::mapScale(uint16_t value, uint16_t oldMin, uint16_t oldMax,
 		uint16_t newMin, uint16_t newMax) {
+	// TODO: fix overflow
 	return (newMax - newMin) * (value - oldMin) / (oldMax - oldMin) + newMin;
 }
 

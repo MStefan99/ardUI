@@ -21,6 +21,8 @@ public:
 	Orientation getOrientation() const;
 	void setOrientation(Orientation orientation);
 
+	friend class EmscriptenBindingInitializer_BuilderInterface;
+
 protected:
 	void onMeasure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec) override;
 	void onLayout(bool changed, uint16_t left, uint16_t top, uint16_t right, uint16_t bottom) override;
