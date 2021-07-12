@@ -13,7 +13,7 @@
 void setup() {  // Default setup function will be used to initiate ardUI
 	ardui::display::init();
 	arduiUserSetup();  // Calling user setup function
-	// TODO: add draw call for Builder
+	EventManager::update();
 }
 
 
@@ -23,7 +23,7 @@ void loop() {  // ardUI core functions will be added to the loop function
 
 
 void EventManager::update(bool callUserLoop) {
-	static uint32_t lastTouchRefresh, lastDisplayRefresh;
+	static uint32_t lastTouchRefresh, lastDisplayRefresh {1000 / REFRESH_RATE};
 	uint32_t currentTime = millis();
 
 	if (ABS(currentTime - lastDisplayRefresh) > 1000 / REFRESH_RATE) {
