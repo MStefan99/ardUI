@@ -17,14 +17,14 @@ namespace ardui {
 			NOT_SUPPORTED
 		};
 
-		int16_t getHeight();
-		int16_t getWidth();
+		uint16_t getHeight();
+		uint16_t getWidth();
 
 		uint16_t getCharWidth(char c, uint16_t height);
 
 		bool isClicked();
-		int16_t getClickX();
-		int16_t getClickY();
+		uint16_t getClickX();
+		uint16_t getClickY();
 
 		ReturnCode init();
 

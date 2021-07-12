@@ -77,8 +77,8 @@ void EventManager::checkForActions(uint32_t deltaTime) {
 
 	if (ardui::display::isClicked()) {  // Detecting actions
 		int16_t lastX {event._targetX}, lastY {event._targetY};
-		event._targetX = ardui::display::getClickX();
-		event._targetY = ardui::display::getClickY();
+		event._targetX = static_cast<int16_t>(ardui::display::getClickX());
+		event._targetY = static_cast<int16_t>(ardui::display::getClickY());
 
 		if (event._currentAction == Event::Action::NO_ACTION) {
 			event._currentAction = Event::Action::CLICK;  // Register click
@@ -90,8 +90,8 @@ void EventManager::checkForActions(uint32_t deltaTime) {
 #endif
 		} else {
 			actionTime += deltaTime;
-			event._deltaX = (int16_t)(event._targetX - lastX);
-			event._deltaY = (int16_t)(event._targetY - lastY);
+			event._deltaX = static_cast<int16_t>(event._targetX - lastX);
+			event._deltaY = static_cast<int16_t>(event._targetY - lastY);
 		}
 		if (event._currentAction == Event::Action::SCROLL) {
 			// Handle scroll event every Update
@@ -107,8 +107,8 @@ void EventManager::checkForActions(uint32_t deltaTime) {
 			event._currentAction = Event::Action::LONG_CLICK;  // Register long click
 		}
 		if (event._currentAction == Event::Action::CLICK && (
-				((uint32_t)ABS(event._deltaX) * 1000 / deltaTime > SCROLL_SENSITIVITY) ||
-						((uint32_t)ABS(event._deltaY) * 1000 / deltaTime > SCROLL_SENSITIVITY))) {
+				(static_cast<uint32_t>(ABS(event._deltaX) * 1000) / deltaTime > SCROLL_SENSITIVITY) ||
+						(static_cast<uint32_t>(ABS(event._deltaY)) * 1000 / deltaTime > SCROLL_SENSITIVITY))) {
 			event._currentAction = Event::Action::SCROLL;  // Register scroll
 		}
 	} else if (event._currentAction != Event::Action::NO_ACTION) {
@@ -136,7 +136,8 @@ void EventManager::draw() {
 		ActivityManager::_currentActivity->measure(
 				View::MeasureSpec {displayWidth, View::MeasureSpec::EXACTLY},
 				View::MeasureSpec {displayHeight, View::MeasureSpec::EXACTLY});
-		ActivityManager::_currentActivity->layout(0, 0, displayWidth, displayHeight);
+		ActivityManager::_currentActivity->layout(0, 0,
+				static_cast<int16_t>(displayWidth), static_cast<int16_t>(displayHeight));
 		ActivityManager::_currentActivity->draw();
 	}
 }

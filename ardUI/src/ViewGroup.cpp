@@ -27,7 +27,7 @@ View* ViewGroup::getChildAt(int index) const {
 
 
 int ViewGroup::getChildCount() const {
-	return (int)_viewList.size();
+	return static_cast<int>(_viewList.size());
 }
 
 

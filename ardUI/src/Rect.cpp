@@ -5,11 +5,11 @@
 #include "Rect.h"
 
 
-Rect::Rect(int16_t left, int16_t top, int16_t right, int16_t bottom):
-		left {left},
-		top {top},
-		right {right},
-		bottom {bottom} {}
+Rect::Rect(int16_t l, int16_t t, int16_t r, int16_t b):
+		left {l},
+		top {t},
+		right {r},
+		bottom {b} {}
 
 
 bool Rect::contains(const Rect& r) const {
@@ -48,12 +48,12 @@ int16_t Rect::centerY() const {
 
 
 uint16_t Rect::height() const {
-	return bottom - top;
+	return static_cast<uint16_t>(bottom - top);
 }
 
 
 uint16_t Rect::width() const {
-	return right - left;
+	return static_cast<uint16_t>(right - left);
 }
 
 

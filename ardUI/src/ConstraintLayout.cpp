@@ -16,9 +16,9 @@ void ConstraintLayout::ConstraintSet::connect(View* startView, ConstraintLayout:
 }
 
 
-ConstraintLayout::ConstraintSet::Constraint::Constraint(View* startView, Side startSide,
-		View* endView, Side endSide, int16_t margin):
-		startView {startView}, startSide {startSide}, endView {endView}, endSide {endSide}, margin {margin} {
+ConstraintLayout::ConstraintSet::Constraint::Constraint(View* sV, Side sS,
+		View* eV, Side eS, int16_t m):
+		startView {sV}, startSide {sS}, endView {eV}, endSide {eS}, margin {m} {
 	// Nothing to do
 }
 
@@ -78,8 +78,8 @@ void ConstraintLayout::applyConstraints(
 				if (layoutInfo.leftConstrained) {
 					layoutInfo.viewBox.right = getPos(constraint.endView, constraint.endSide) - constraint.margin;
 				} else {
-					layoutInfo.viewBox.offsetTo(getPos(constraint.endView, constraint.endSide)
-							- constraint.margin - layoutInfo.viewBox.width(), layoutInfo.viewBox.top);
+					layoutInfo.viewBox.offsetTo(static_cast<int16_t>(getPos(constraint.endView, constraint.endSide)
+							- constraint.margin - layoutInfo.viewBox.width()), layoutInfo.viewBox.top);
 				}
 				layoutInfo.rightConstrained = true;
 				break;
@@ -87,8 +87,9 @@ void ConstraintLayout::applyConstraints(
 				if (layoutInfo.topConstrained) {
 					layoutInfo.viewBox.bottom = getPos(constraint.endView, constraint.endSide) - constraint.margin;
 				} else {
-					layoutInfo.viewBox.offsetTo(layoutInfo.viewBox.left, getPos(constraint.endView, constraint.endSide)
-							- constraint.margin - layoutInfo.viewBox.height());
+					layoutInfo.viewBox.offsetTo(layoutInfo.viewBox.left,
+							static_cast<int16_t>(getPos(constraint.endView, constraint.endSide)
+									- constraint.margin - layoutInfo.viewBox.height()));
 				}
 				layoutInfo.bottomConstrained = true;
 				break;
@@ -106,14 +107,16 @@ ConstraintLayout::ConstraintSet* ConstraintLayout::getConstraints() {
 void ConstraintLayout::onMeasure(MeasureSpec widthMeasureSpec, MeasureSpec heightMeasureSpec) {
 	setMeasuredDimensions(getDefaultSize(getMinimumWidth() + _padding.width(), widthMeasureSpec),
 			getDefaultSize(getMinimumHeight() + _padding.height(), heightMeasureSpec));
-	_constraintSet->_constraints[this].first.viewBox.set(0, 0, getMeasuredWidth(), getMeasuredHeight());
+	_constraintSet->_constraints[this].first.viewBox.set(0, 0,
+			static_cast<int16_t>(getMeasuredWidth()), static_cast<int16_t>(getMeasuredHeight()));
 	_constraintSet->_constraints[this].first.constrained = true;
 
 	for (auto view: _viewList) {
-		view->measure(MeasureSpec {static_cast<int16_t>(getMeasuredWidth()), MeasureSpec::AT_MOST},
-				MeasureSpec {static_cast<int16_t>(getMeasuredHeight()), MeasureSpec::AT_MOST});
+		view->measure(MeasureSpec {static_cast<uint16_t>(getMeasuredWidth()), MeasureSpec::AT_MOST},
+				MeasureSpec {static_cast<uint16_t>(getMeasuredHeight()), MeasureSpec::AT_MOST});
 
-		_constraintSet->_constraints[view].first.viewBox = Rect(0, 0, view->getMeasuredWidth(), view->getMeasuredHeight());
+		_constraintSet->_constraints[view].first.viewBox = Rect(0, 0,
+				static_cast<int16_t>(view->getMeasuredWidth()), static_cast<int16_t>(view->getMeasuredHeight()));
 	}
 }
 

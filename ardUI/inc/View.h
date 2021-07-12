@@ -22,13 +22,13 @@ public:
 			UNSPECIFIED
 		};
 
-		explicit MeasureSpec(int16_t size, Sizing mode = UNSPECIFIED);
+		explicit MeasureSpec(uint16_t size, Sizing mode = UNSPECIFIED);
 
-		int16_t getSize() const;
-		int16_t getMode() const;
+		uint16_t getSize() const;
+		uint16_t getMode() const;
 
 	protected:
-		int16_t _size {};
+		uint16_t _size {};
 		Sizing _mode {};
 	};
 

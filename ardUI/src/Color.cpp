@@ -9,36 +9,40 @@
 
 
 Color::ColorData::ColorData(uint32_t color):
-		_r {(uint8_t)((color & 0xFF0000ul) >> 16u)},
-		_g {(uint8_t)((color & 0xFF00u) >> 8u)},
-		_b {(uint8_t)((color & 0xFFu))} {
+		_r {static_cast<uint8_t>((color & 0xFF0000ul) >> 16u)},
+		_g {static_cast<uint8_t>((color & 0xFF00u) >> 8u)},
+		_b {static_cast<uint8_t>(color & 0xFFu)} {
 	// Nothing to do
 }
 
 
 Color::ColorData& Color::ColorData::operator=(uint32_t color) {
-	_r = (uint8_t)(color & 0xFF0000ul) >> 16u;
-	_g = (uint8_t)(color & 0xFF00u) >> 8u;
-	_b = (uint8_t)(color & 0xFFu);
+	_r = static_cast<uint8_t>(color & 0xFF0000ul) >> 16u;
+	_g = static_cast<uint8_t>(color & 0xFF00u) >> 8u;
+	_b = static_cast<uint8_t>(color & 0xFFu);
 	return *this;
 }
 
 
 Color::ColorData& Color::ColorData::operator=(uint16_t color) {
-	_r = (uint8_t)(color & 0xF80000ul) >> 8u;
-	_g = (uint8_t)(color & 0xFC00u) >> 5u;
-	_b = (uint8_t)(color & 0xF8u) >> 3u;
+	_r = static_cast<uint8_t>(color & 0xF80000ul) >> 8u;
+	_g = static_cast<uint8_t>(color & 0xFC00u) >> 5u;
+	_b = static_cast<uint8_t>(color & 0xF8u) >> 3u;
 	return *this;
 }
 
 
 Color::ColorData::operator uint32_t() const {
-	return ((uint32_t)_r << 16u) | ((uint32_t)_g << 8u) | (uint32_t)_b;
+	return (static_cast<uint32_t>(_r) << 16u)
+			| (static_cast<uint32_t>(_g) << 8u)
+			| static_cast<uint32_t>(_b);
 }
 
 
 Color::ColorData::operator uint16_t() const {
-	return (uint16_t)(_r << 8u) | (uint16_t)(_g << 5u) | (uint16_t)_b;  // NOLINT(hicpp-signed-bitwise)
+	return static_cast<uint16_t>(_r << 8u)
+			| static_cast<uint16_t>(_g << 5u)
+			| static_cast<uint16_t>(_b);  // NOLINT(hicpp-signed-bitwise)
 }
 
 
@@ -64,7 +68,7 @@ Color& Color::operator=(uint32_t color) {
 
 
 uint32_t Color::to888() const {
-	return (uint32_t)_color;
+	return static_cast<uint32_t>(_color);
 }
 
 
@@ -105,7 +109,7 @@ uint32_t Color::to888() const {
 
 
 uint16_t Color::to565() const {
-	return (uint16_t)_color;
+	return static_cast<uint16_t>(_color);
 }
 
 

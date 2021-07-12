@@ -17,7 +17,9 @@ void DisplayController::fill(Color color) {
 	if (_featureSupport.fill) {
 		ardui::display::fill(color);
 	} else {
-		drawRect(0, 0, ardui::display::getWidth(), ardui::display::getHeight(), color);
+		drawRect(0, 0,
+				static_cast<int16_t>(ardui::display::getWidth()),
+				static_cast<int16_t>(ardui::display::getHeight()), color);
 	}
 }
 
@@ -141,7 +143,7 @@ void DisplayController::drawChar(int16_t x, int16_t y,
 
 		for (uint8_t j {0}; j < 8; ++j) {
 			for (uint8_t i {0}; i < 8; ++i) {
-				if (ardui::LETTERS[(unsigned char)c][j] >> i & 1u) {  // TODO: optimize, fix signedness
+				if (ardui::LETTERS[static_cast<unsigned char>(c)][j] >> i & 1u) {  // TODO: optimize, fix signedness
 					ardui::display::fillRect(x + pxSize * i, y + pxSize * j, x + pxSize * i + pxSize, y + pxSize * j + pxSize, color);
 				}
 			}
@@ -157,10 +159,10 @@ void DisplayController::drawText(int16_t x, int16_t y,
 		ardui::display::drawText(x, y, text, size, color);
 	} else {
 		auto str = text.c_str();
-		int16_t i {0};
+		uint16_t i {0};
 
 		while (*str) {
-			drawChar(x + (size * i++), y, *str, size, color);
+			drawChar(static_cast<int16_t>(x + (size * i++)), y, *str, size, color);
 			++str;
 		}
 	}

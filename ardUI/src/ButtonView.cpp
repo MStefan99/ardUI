@@ -17,7 +17,8 @@ void ButtonView::onDraw() {
 
 	uint16_t line {0};
 	for (const auto& l : getLines(_viewBox.width())) {
-		DISPLAY::drawText(_viewBox.left + _padding.left, _viewBox.top + _padding.top + _textSize * line++,
+		DISPLAY::drawText(_viewBox.left + _padding.left,
+				static_cast<int16_t>(_viewBox.top + _padding.top + _textSize * line++),
 				l, _textSize, _textColor);
 	}
 }

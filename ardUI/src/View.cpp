@@ -5,17 +5,17 @@
 #include "View.h"
 
 
-View::MeasureSpec::MeasureSpec(int16_t size, Sizing mode): _size {size}, _mode {mode} {
+View::MeasureSpec::MeasureSpec(uint16_t size, Sizing mode): _size {size}, _mode {mode} {
 	// Nothing to do
 }
 
 
-int16_t View::MeasureSpec::getSize() const {
+uint16_t View::MeasureSpec::getSize() const {
 	return _size;
 }
 
 
-int16_t View::MeasureSpec::getMode() const {
+uint16_t View::MeasureSpec::getMode() const {
 	return _mode;
 }
 

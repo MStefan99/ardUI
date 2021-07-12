@@ -9,13 +9,13 @@
 #include "display.h"
 
 
-int16_t ardui::display::getHeight() {
+uint16_t ardui::display::getHeight() {
 	// Has to be implemented by the user
 	return 480;
 }
 
 
-int16_t ardui::display::getWidth() {
+uint16_t ardui::display::getWidth() {
 	// Has to be implemented by the user
 	return 320;
 }
@@ -33,13 +33,13 @@ bool ardui::display::isClicked() {
 }
 
 
-int16_t ardui::display::getClickX() {
+uint16_t ardui::display::getClickX() {
 	// Has to be implemented by the user
 	return 0;
 }
 
 
-int16_t ardui::display::getClickY() {
+uint16_t ardui::display::getClickY() {
 	// Has to be implemented by the user
 	return 0;
 }

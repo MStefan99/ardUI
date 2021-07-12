@@ -47,10 +47,10 @@ void LinearLayout::onLayout(bool changed, int16_t l, int16_t t, int16_t r, int16
 		v->setLeft(nextViewLeft);
 
 		if (_orientation == Orientation::HORIZONTAL) {
-			v->layout(nextViewLeft, nextViewTop, nextViewLeft + v->getMeasuredWidth(), b);
+			v->layout(nextViewLeft, nextViewTop, static_cast<int16_t>(nextViewLeft + v->getMeasuredWidth()), b);
 			nextViewLeft += v->getMeasuredWidth();
 		} else {
-			v->layout(nextViewLeft, nextViewTop, r, nextViewTop + v->getMeasuredHeight());
+			v->layout(nextViewLeft, nextViewTop, r, static_cast<int16_t>(nextViewTop + v->getMeasuredHeight()));
 			nextViewTop += v->getMeasuredHeight();
 		}
 	}

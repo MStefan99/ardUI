@@ -36,7 +36,8 @@ bool Drawable::setLevel(int16_t l) {
 
 
 bool Drawable::getPadding(Rect& p) const {
-	bool paddingExists {(bool)p};
+	// TODO: replace with a normal getter
+	bool paddingExists {p};
 	if (paddingExists) {
 		p = _padding;
 	} else {

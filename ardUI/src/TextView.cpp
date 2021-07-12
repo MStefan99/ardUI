@@ -52,9 +52,9 @@ Color TextView::getTextColor() const {
 
 void TextView::onMeasure(MeasureSpec widthMeasureSpec, MeasureSpec heightMeasureSpec) {
 	auto width = getDefaultSize(getMaxWidth(), widthMeasureSpec);
-	setMeasuredDimensions(width + _padding.left + _padding.right,
-			getDefaultSize(_textSize * (uint16_t)getLines(width).size() +
-			               _padding.top + _padding.bottom, heightMeasureSpec));
+	setMeasuredDimensions(static_cast<uint16_t>(width + _padding.left + _padding.right),
+			getDefaultSize(static_cast<uint16_t>(_textSize * getLines(width).size() +
+					static_cast<uint16_t>(_padding.top + _padding.bottom)), heightMeasureSpec));
 }
 
 
@@ -63,8 +63,8 @@ void TextView::onDraw() {
 
 	uint16_t line {0};
 	for (const auto& l : getLines(_viewBox.width())) {
-		DISPLAY::drawText(_viewBox.left + _padding.left, _viewBox.top + _padding.top + _textSize * line++,
-				l, _textSize, _textColor);
+		DISPLAY::drawText(_viewBox.left + _padding.left,
+				static_cast<int16_t>(_viewBox.top + _padding.top + _textSize * line++), l, _textSize, _textColor);
 	}
 }
 
