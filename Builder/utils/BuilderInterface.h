@@ -18,9 +18,9 @@
 #define ENQUOTE(a) #a
 
 #define LIST_VIEW(class) \
-	class_<Adapter<class>>(ENQUOTE(class Adapter)); \
-	class_<AdapterView<class>, base<ViewGroup>>(ENQUOTE(class AdapterView)); \
-	class_<ListView<class>, base<AdapterView<class>>>(ENQUOTE(class ListView)).constructor()
+  class_<Adapter<class>>(ENQUOTE(class Adapter)); \
+  class_<AdapterView<class>, base<ViewGroup>>(ENQUOTE(class AdapterView)); \
+  class_<ListView<class>, base<AdapterView<class>>>(ENQUOTE(class ListView)).constructor()
 
 
 template <class T>
@@ -49,6 +49,18 @@ EMSCRIPTEN_BINDINGS(BuilderInterface) {
 			.property("bottom", &Rect::bottom)
 			.function("height", &Rect::height)
 			.function("width", &Rect::width);
+
+	#if COLOR_MODE == COLOR_888
+	class_<Color::ColorData>("ColorData")
+			.constructor()
+			.property("_r", &Color::ColorData::_r)
+			.property("_g", &Color::ColorData::_g)
+			.property("_b", &Color::ColorData::_b);
+	#endif
+
+	class_<Color>("Color")
+			.constructor()
+			.property("_color", &Color::_color);
 
 	class_<Drawable>("Drawable")
 			.property("_valid", &Drawable::_valid)
@@ -99,11 +111,11 @@ EMSCRIPTEN_BINDINGS(BuilderInterface) {
 			.function("end", &LIST<View*>::end);
 	#else
 	class_<LIST<View*>::iterator>("listIterator")
-			.function("value", &LIST<View*>::iterator::operator *)
+			.function("value", &LIST<View*>::iterator::operator*)
 			.function("notEquals", &IteratorNotEquals<View*>)
 			.function<internal::DeduceArgumentsTag,
 					LIST<View*>::iterator& (LIST<View*>::iterator::*)()>
-					("increment", &LIST<View*>::iterator::operator ++);
+					("increment", &LIST<View*>::iterator::operator++);
 
 	class_<LIST<View*>>("list")
 			.function<internal::DeduceArgumentsTag,
