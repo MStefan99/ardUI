@@ -4,8 +4,8 @@ target_sources(ardUI PRIVATE ${SOURCE_DIRECTORY}/display.cpp)
 
 
 # Including Tester library
-set(TESTER_DIRECTORY ${TEST_DIRECTORY}/Tester/inc)
-include_directories(${TESTER_DIRECTORY})
+add_subdirectory(${TEST_DIRECTORY}/Tester)
+link_libraries(Tester)
 
 
 # Template library Test target

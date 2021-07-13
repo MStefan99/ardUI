@@ -13,7 +13,7 @@
  *
  * Suite setup and teardown are only available with deferred run enabled.
  */
-#define DEFERRED_RUN false
+#define DEFERRED_RUN ( true )
 
 
 #include <string>
@@ -22,9 +22,8 @@
 #include "TestBlock.h"
 
 
-void describe(const std::string& desc, const std::function<void(TestBlock&)>& cb) {
-	TestBlock block {desc, cb};
-}
+void describe(const std::string& desc,
+		const std::function<void(TestBlock&)>& callback);
 
 
 #endif //ARDUI_TESTER_H

@@ -5,7 +5,6 @@
 #ifndef ARDUI_MATCHER_H
 #define ARDUI_MATCHER_H
 
-
 #include <cstring>
 
 #include "AssertException.h"
@@ -15,28 +14,28 @@ template <class T>
 class Matcher {
 public:
 	explicit Matcher(T expected):
-		actual(expected) {
+			_actual(expected) {
 	}
 
 
 	Matcher Not() {
-		negated = !negated;
+		_negated = !_negated;
 		return *this;
 	}
 
 
 	void toEqual(T expected) {
-		if ((actual == expected) ^ negated) {
+		if ((_actual == expected) ^ _negated) {
 			return;
 		} else {
-			throw AssertException("");
+			throw AssertException("toEqual error");
 		}
 	}
 
 
 protected:
-	T actual;
-	bool negated = false;
+	T _actual;
+	bool _negated = false;
 };
 
 

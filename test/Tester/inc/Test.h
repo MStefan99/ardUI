@@ -5,9 +5,9 @@
 #ifndef ARDUI_TEST_H
 #define ARDUI_TEST_H
 
-
 #include <functional>
 #include <iostream>
+#include <utility>
 
 #include "AssertException.h"
 #include "Matcher.h"
@@ -17,29 +17,13 @@
 class Test {
 public:
 	Test() = delete;
+	Test(std::string name, std::function<void()> callback);
 
-
-	Test(const std::string& name, const std::function<void()>& callback):
-		name {name},
-		callback {callback} {}
-
-
-	bool run() const {
-		try {
-			callback();
-			std::cout << GREEN << "Test passed: " << name << NC << std::endl;
-		} catch (const AssertException& e) {
-			std::cout << RED << "Test failed: " << name << ". " << e.what() << std::endl;
-			return false;
-		}
-		return true;
-	};
-
-	friend class TestBlock;
+	void run() const;
 
 private:
-	std::string name {};
-	std::function<void()> callback {};
+	std::string _name {};
+	std::function<void()> _callback {};
 };
 
 #endif //ARDUI_TEST_H

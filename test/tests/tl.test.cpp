@@ -20,8 +20,8 @@ void arduiUserLoop() {}
 
 
 void vectorAssert() {
+	ardui::vector<int> v {};
 	describe("Vector check", [&](TestBlock& block) -> void {
-		ardui::vector<int> v {};
 
 		block.test("push and subscribe", [&]() -> void {
 			expect(v.empty()).toEqual(true);
@@ -29,6 +29,7 @@ void vectorAssert() {
 				v.push_back(i);
 			}
 			expect(v.empty()).toEqual(false);
+			expect(v.size()).toEqual(10);
 
 			for (int j = 0; j < 10; ++j) {
 				expect(v[j]).toEqual(j);
@@ -38,8 +39,8 @@ void vectorAssert() {
 			expect(*--v.end()).toEqual(9);
 		});
 
-		auto it = v.erase(v.begin());
 		block.test("erase", [&]() -> void {
+			auto it = v.erase(v.begin());
 			expect(*it).toEqual(1);
 			v.erase(v.begin() + 5);
 			it = v.erase(v.begin() + 3, v.begin() + 4);
@@ -55,7 +56,7 @@ void vectorAssert() {
 
 		block.test("insert", [&]() -> void {
 			v.insert(v.begin() + 2, -2);
-			it = v.insert(v.begin() + 6, -1);
+			auto it = v.insert(v.begin() + 6, -1);
 			expect(*it).toEqual(-1);
 
 			expect(v[2]).toEqual(-2);
@@ -66,7 +67,7 @@ void vectorAssert() {
 		});
 
 		block.test("copy", [&]() -> void {
-			ardui::vector<int> v1 {v};
+			ardui::vector<int> v1 {v};  // NOLINT(performance-unnecessary-copy-initialization)
 			expect(v1.size()).toEqual(9);
 		});
 
@@ -88,8 +89,8 @@ void vectorAssert() {
 
 
 void listAssert() {
+	ardui::list<int> l {};
 	describe("List check", [&](TestBlock& block) -> void {
-		ardui::list<int> l {};
 
 		expect(l.empty()).toEqual(true);
 		block.test("push and subscript assert", [&]() -> void {
@@ -164,8 +165,8 @@ void listAssert() {
 
 
 void mapAssert() {
+	ardui::map<int, double> m {};
 	describe("Map check", [&](TestBlock& block) -> void {
-		ardui::map<int, double> m {};
 
 		block.test("insert assert", [&]() -> void {
 			expect(m.empty()).toEqual(true);
@@ -207,8 +208,7 @@ void mapAssert() {
 			m2[2] = 2;
 			m2[1] = 1;
 
-			for (const auto& i : m2)
-				;
+			for (const auto& i : m2) {}
 		});
 
 		block.test("empty copy assert", [&]() -> void {
@@ -221,8 +221,8 @@ void mapAssert() {
 
 
 void stackAssert() {
+	ardui::stack<int> s;
 	describe("Stack check", [&](TestBlock& block) -> void {
-		ardui::stack<int> s;
 
 		s.push(1);
 		s.push(2);
@@ -243,8 +243,8 @@ void stackAssert() {
 
 
 void queueAssert() {
+	ardui::queue<int> q;
 	describe("Queue check", [&](TestBlock& block) -> void {
-		ardui::queue<int> q;
 
 		q.push(1);
 		q.push(2);
