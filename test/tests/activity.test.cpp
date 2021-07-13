@@ -45,12 +45,11 @@ class TestActivity: public Activity {
 };
 
 
-void arduiUserSetup() {}
-
-
-void arduiUserLoop() {}
-
-
-int main() {
+void setup() {
 	ardUI::startActivity<TestActivity>();
+}
+
+
+void loop() {
+
 }
