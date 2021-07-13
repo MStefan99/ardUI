@@ -17,7 +17,12 @@ jobs:
           cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
           -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++
 
-      - name: Test
+      - name: Build project
         run: >-
           cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
           --target Test_template_library
+          --target Test_Activity
+          --target Test_Rect
+
+      - name: Run tests
+        run: find ${{github.workspace}}/build/test/ -maxdepth 1 -type f -name 'Test_*' -exec {} \;
