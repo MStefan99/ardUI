@@ -42,6 +42,7 @@ public:
 
 	Rect& operator =(const Rect& r);
 	explicit operator bool() const;
+	bool operator==(const Rect& r) const;
 
 	int16_t left {0};
 	int16_t top {0};

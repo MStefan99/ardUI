@@ -134,3 +134,8 @@ Rect& Rect::operator=(const Rect& r) {
 Rect::operator bool() const {
 	return isEmpty();
 }
+
+
+bool Rect::operator==(const Rect& r) const {
+	return r.left == left && r.top == top && r.right == right && r.bottom == bottom;
+}
