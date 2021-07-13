@@ -6,7 +6,7 @@ env:
   BUILD_TYPE: Release
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -21,8 +21,14 @@ jobs:
         run: >-
           cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
           --target Test_template_library
-          --target Test_Activity
           --target Test_Rect
+          --target Test_Activity
 
-      - name: Run tests
-        run: find ${{github.workspace}}/build/test/ -maxdepth 1 -type f -name 'Test_*' -exec {} \;
+      - name: Test template library
+        run: ${{github.workspace}}/build/test/Test_template_library
+
+      - name: Test Rect
+        run: ${{github.workspace}}/build/test/Test_Rect
+
+      - name: Test Activity
+        run: ${{github.workspace}}/build/test/Test_Activity
