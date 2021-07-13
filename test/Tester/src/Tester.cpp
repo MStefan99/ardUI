@@ -4,7 +4,6 @@
 
 #include "Tester.h"
 
-
 void describe(const std::string& desc, const std::function<void(TestBlock&)>& cb) {
 	TestBlock block {desc, cb};
 }

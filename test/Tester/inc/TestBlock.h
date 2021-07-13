@@ -10,13 +10,15 @@
 #include <sstream>
 
 #include "AssertException.h"
+#include "Tester_options.h"
+#include "TestCounter.h"
 #include "Test.h"
 #include "Terminal.h"
 
 
 class TestBlock {
 public:
-	TestBlock() = default;
+	TestBlock();
 	TestBlock(const std::string& name,
 			const std::function<void(TestBlock&)>& callback);
 
@@ -42,7 +44,7 @@ protected:
 	std::function<void()> _beforeCallback {};
 	std::function<void(TestBlock&)> _blockCallback {};
 	std::function<void()> _afterCallback {};
-	std::ostringstream _errors {};
+	std::list<std::pair<const Test, std::string>> _errors {};
 	bool _passed = true;
 	#if DEFERRED_RUN
 	std::list<Test> _tests {};

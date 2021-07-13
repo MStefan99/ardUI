@@ -14,14 +14,14 @@ class ResultActivity: public Activity {
 	void onCreate() override {
 		auto data = getExtras();
 
-		describe("Sending data", [&](TestBlock& block) -> void {
+		test("Sending data", [&]() -> void {
 			expect(data.getString("request")).toEqual("hello");
 		});
 
 		Bundle result {};
 		result.putString("result", "success");
 
-		setResult(0, result);
+		setResult(1, result);
 		finish();
 	}
 };
@@ -36,8 +36,8 @@ class TestActivity: public Activity {
 		data.putString("request", "hello");
 
 		startActivityForResult<ResultActivity>([](int code, Bundle results) -> void {
-			describe("Returning data", [&](TestBlock& block) -> void {
-				expect(code).toEqual(0);
+			test("Returning data", [&]() -> void {
+				expect(code).toEqual(1);
 				expect(results.getString("result")).toEqual("success");
 			});
 		}, data);

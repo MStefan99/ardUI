@@ -10,19 +10,23 @@
 #include <utility>
 
 #include "AssertException.h"
+#include "Tester_options.h"
+#include "TestCounter.h"
 #include "Matcher.h"
 #include "Terminal.h"
 
 
 class Test {
 public:
-	Test() = delete;
+	Test();
 	Test(std::string name, std::function<void()> callback);
 
 	void run() const;
+	const std::string& getName() const;
 
 private:
 	std::string _name {};
+private:
 	std::function<void()> _callback {};
 };
 
