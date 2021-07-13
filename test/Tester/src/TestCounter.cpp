@@ -16,14 +16,14 @@ TestCounter::~TestCounter() {
 		std::cout << FG_RED << _totalSuites - _passedSuites << " failed, " << RST;
 	}
 	std::cout << FG_GREEN << _passedSuites << " passed, " << RST;
-	std::cout << _passedSuites << " total.";
+	std::cout << _totalSuites << " total.";
 
 	std::cout << std::endl << BOLD << "Test cases:  " << RST;
 	if (_totalTests != _passedTests) {
 		std::cout << FG_RED << _totalTests - _passedTests << " failed, " << RST;
 	}
 	std::cout << FG_GREEN << _passedTests << " passed, " << RST;
-	std::cout << _passedTests << " total.";
+	std::cout << _totalTests << " total.";
 
 	std::cout << std::endl;
 
