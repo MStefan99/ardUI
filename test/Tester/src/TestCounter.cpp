@@ -26,4 +26,8 @@ TestCounter::~TestCounter() {
 	std::cout << _passedTests << " total.";
 
 	std::cout << std::endl;
+
+	if (_passedTests != _totalTests || _totalSuites != _passedSuites) {
+		exit(1);
+	}
 }
