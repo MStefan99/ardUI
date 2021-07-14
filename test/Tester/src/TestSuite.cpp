@@ -99,12 +99,14 @@ void TestSuite::runTest(const Test& test) {
 	} catch (const AssertException& e) {
 		_errors.emplace_back("Test setup", e.what());
 		_passed = false;
+		return;
 	}
 	try {
 		test.run();
 	} catch (const AssertException& e) {
 		_errors.emplace_back(test.getName(), e.what());
 		_passed = false;
+		return;
 	}
 	try {
 		if (_afterEachCb) {
@@ -113,6 +115,7 @@ void TestSuite::runTest(const Test& test) {
 	} catch (const AssertException& e) {
 		_errors.emplace_back("Test teardown", e.what());
 		_passed = false;
+		return;
 	}
 }
 
@@ -133,10 +136,14 @@ void TestSuite::printResults() const {
 void TestSuite::run() {
 	#if DEFERRED_RUN
 	runBefore();
-	for (const auto& test: _tests) {
-		runTest(test);
+	if (_passed) {
+		for (const auto& test: _tests) {
+			runTest(test);
+		}
 	}
-	runAfter();
+	if (_passed) {
+		runAfter();
+	}
 	printResults();
 	#endif
 	if (_passed) {

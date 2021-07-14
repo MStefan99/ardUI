@@ -18,6 +18,7 @@ Test::Test(std::string name, std::function<void()> callback):
 
 
 void Test::run() const {
+	++TestCounter::_ranTests;
 	if (_callback) {
 		try {
 			_callback();

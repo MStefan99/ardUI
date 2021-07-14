@@ -23,6 +23,7 @@ protected:
 	static size_t _totalSuites;
 	static size_t _passedSuites;
 	static size_t _totalTests;
+	static size_t _ranTests;
 	static size_t _passedTests;
 };
 

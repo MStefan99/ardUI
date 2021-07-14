@@ -8,6 +8,7 @@
 size_t TestCounter::_totalSuites {};
 size_t TestCounter::_passedSuites {};
 size_t TestCounter::_totalTests {};
+size_t TestCounter::_ranTests {};
 size_t TestCounter::_passedTests {};
 
 
@@ -20,7 +21,9 @@ TestCounter::~TestCounter() {
 	std::cout << _totalSuites << " total.";
 
 	std::cout << std::endl << BOLD << "Test cases:  " << RST;
-	if (_totalTests != _passedTests) {
+	if (_totalTests != _ranTests) {
+		std::cout << FG_RED << _ranTests << " ran, " << RST;
+	} else if (_totalTests != _passedTests) {
 		std::cout << FG_RED << _totalTests - _passedTests << " failed, " << RST;
 	}
 	std::cout << FG_GREEN << _passedTests << " passed, " << RST;
