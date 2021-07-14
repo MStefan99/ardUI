@@ -5,5 +5,4 @@
 #ifndef ARDUI_DEFAULTS_H
 #define ARDUI_DEFAULTS_H
 
-
 #endif //ARDUI_DEFAULTS_H

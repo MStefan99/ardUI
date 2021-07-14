@@ -44,11 +44,13 @@ private:
 	friend class ardUI;
 
 	#ifdef __EMSCRIPTEN__
-		friend class BuilderInterface;
+	friend class BuilderInterface;
 	#endif
 
 	#ifdef TEST
-		friend class TestWrapper;
+
+	friend class TestWrapper;
+
 	#endif
 };
 

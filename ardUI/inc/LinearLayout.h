@@ -22,7 +22,7 @@ public:
 	void setOrientation(Orientation orientation);
 
 	#ifdef __EMSCRIPTEN__
-		friend class EmscriptenBindingInitializer_BuilderInterface;
+	friend class EmscriptenBindingInitializer_BuilderInterface;
 	#endif
 
 protected:

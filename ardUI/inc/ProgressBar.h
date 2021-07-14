@@ -32,7 +32,7 @@ public:
 	void setBackgroundColor(Color backgroundColor);
 
 	#ifdef __EMSCRIPTEN__
-		friend class EmscriptenBindingInitializer_BuilderInterface;
+	friend class EmscriptenBindingInitializer_BuilderInterface;
 	#endif
 
 protected:

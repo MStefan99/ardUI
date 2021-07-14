@@ -136,7 +136,8 @@ ardui::display::ReturnCode ardui::display::drawChar(int16_t x, int16_t y, char c
 }
 
 
-ardui::display::ReturnCode ardui::display::drawText(int16_t x, int16_t y, const String& text, uint16_t textSize, Color color) {
+ardui::display::ReturnCode
+ardui::display::drawText(int16_t x, int16_t y, const String& text, uint16_t textSize, Color color) {
 #if LOG_LEVEL >= LOG_DRAW
 	Serial.print("Drawn text \"");
 	Serial.print(text);

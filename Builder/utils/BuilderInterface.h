@@ -18,9 +18,9 @@
 #define ENQUOTE(a) #a
 
 #define LIST_VIEW(class) \
-  class_<Adapter<class>>(ENQUOTE(class Adapter)); \
-  class_<AdapterView<class>, base<ViewGroup>>(ENQUOTE(class AdapterView)); \
-  class_<ListView<class>, base<AdapterView<class>>>(ENQUOTE(class ListView)).constructor()
+	class_<Adapter<class>>(ENQUOTE(class Adapter)); \
+	class_<AdapterView<class>, base<ViewGroup>>(ENQUOTE(class AdapterView)); \
+	class_<ListView<class>, base<AdapterView<class>>>(ENQUOTE(class ListView)).constructor()
 
 
 template <class T>
@@ -50,13 +50,13 @@ EMSCRIPTEN_BINDINGS(BuilderInterface) {
 			.function("height", &Rect::height)
 			.function("width", &Rect::width);
 
-	#if COLOR_MODE == COLOR_888
+#if COLOR_MODE == COLOR_888
 	class_<Color::ColorData>("ColorData")
 			.constructor()
 			.property("_r", &Color::ColorData::_r)
 			.property("_g", &Color::ColorData::_g)
 			.property("_b", &Color::ColorData::_b);
-	#endif
+#endif
 
 	class_<Color>("Color")
 			.constructor()
@@ -97,7 +97,7 @@ EMSCRIPTEN_BINDINGS(BuilderInterface) {
 			.constructor<String>()
 			.property("_borderColor", &ButtonView::_borderColor);
 
-	#if !USE_STL
+#if !USE_STL
 	class_<LIST<View*>::iterator>("listIterator")
 			.function("value", &LIST<View*>::iterator::operator *)
 			.function("notEquals", &IteratorNotEquals<View*>)
@@ -109,7 +109,7 @@ EMSCRIPTEN_BINDINGS(BuilderInterface) {
 			.constructor()
 			.function("begin", &LIST<View*>::begin)
 			.function("end", &LIST<View*>::end);
-	#else
+#else
 	class_<LIST<View*>::iterator>("listIterator")
 			.function("value", &LIST<View*>::iterator::operator*)
 			.function("notEquals", &IteratorNotEquals<View*>)
@@ -122,7 +122,7 @@ EMSCRIPTEN_BINDINGS(BuilderInterface) {
 					LIST<View*>::iterator (LIST<View*>::*)()>("begin", &LIST<View*>::begin)
 			.function<internal::DeduceArgumentsTag,
 					LIST<View*>::iterator(LIST<View*>::*)()>("end", &LIST<View*>::end);
-	#endif
+#endif
 
 	class_<ViewGroup, base<View>>("ViewGroup")
 			.property("_viewList", &ViewGroup::_viewList)

@@ -40,7 +40,7 @@ public:
 	void set(int16_t left, int16_t top, int16_t right, int16_t bottom);
 	void set(const Rect& r);
 
-	Rect& operator =(const Rect& r);
+	Rect& operator=(const Rect& r);
 	explicit operator bool() const;
 	bool operator==(const Rect& r) const;
 

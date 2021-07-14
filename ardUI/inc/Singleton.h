@@ -10,7 +10,7 @@ class Singleton {
 public:
 	explicit Singleton(const Singleton<T>&) = delete;
 
-	Singleton<T>& operator =(const Singleton<T>) = delete;
+	Singleton<T>& operator=(const Singleton<T>) = delete;
 
 	static T& getInstance();
 

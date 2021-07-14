@@ -17,7 +17,6 @@ function hideMouseCoords() {
 }
 
 
-
 ardUIInstance.then(ardUI => {
 	ardUI._setup();
 	ardUI._loop();

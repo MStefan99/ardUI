@@ -2,8 +2,6 @@
 // Created by MStefan99 on 29.1.20.
 //
 
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "OCInconsistentNamingInspection"
 #ifndef ARDUI_MAP_H
 #define ARDUI_MAP_H
 
@@ -44,33 +42,33 @@ namespace ardui {
 		public:
 			iterator() = default;
 
-			iterator& operator ++();
-			const iterator operator ++(int);
+			iterator& operator++();
+			const iterator operator++(int);
 
-			iterator& operator --();
-			const iterator operator --(int);
+			iterator& operator--();
+			const iterator operator--(int);
 
-			bool operator ==(const iterator& it) const;
-			bool operator !=(const iterator& it) const;
+			bool operator==(const iterator& it) const;
+			bool operator!=(const iterator& it) const;
 
-			iterator& operator =(const T&);
+			iterator& operator=(const T&);
 
-			pair<const Key, T>* operator ->() const;
-			pair<const Key, T>& operator *() const;
+			pair<const Key, T>* operator->() const;
+			pair<const Key, T>& operator*() const;
 
 			friend class map;
 
 		private:
 			explicit iterator(element* currentElement, element* lastElement = nullptr);
-			element* currentElement {nullptr};
-			element* lastElement {nullptr};
+			element* _currentElement {nullptr};
+			element* _lastElement {nullptr};
 		};
 
 		map() = default;
 		map(const map& m);
 		~map();
 
-		T& operator [](const Key& k);
+		T& operator[](const Key& k);
 
 		bool empty() const;
 		int size() const;
@@ -102,37 +100,37 @@ namespace ardui {
 		void destroyElement(element* e);
 		element* findElement(const Key& k) const;
 
-		element* mapRoot {nullptr};
-		Comp less {};
-		int mapSize {0};
-		bool balancingLeft {true};
+		element* _mapRoot {nullptr};
+		Comp _less {};
+		int _mapSize {0};
+		bool _balancingLeft {true};
 	};
 
 
 	template <class Key, class T, class Comp>
 	map<Key, T, Comp>::iterator::iterator(element* currentElement, element* lastElement):
-			currentElement(currentElement),
-			lastElement(lastElement) {
+			_currentElement(currentElement),
+			_lastElement(lastElement) {
 	}
 
 
 	template <class Key, class T, class Comp>
-	typename map<Key, T, Comp>::iterator& map<Key, T, Comp>::iterator::operator ++() {
-		if (currentElement->right) {
-			currentElement = leftmost(currentElement->right);
-			lastElement = currentElement;
-		} else if (currentElement->parent) {
-			while (currentElement->parent && currentElement->parent->right == currentElement) {
-				currentElement = currentElement->parent;
+	typename map<Key, T, Comp>::iterator& map<Key, T, Comp>::iterator::operator++() {
+		if (_currentElement->right) {
+			_currentElement = leftmost(_currentElement->right);
+			_lastElement = _currentElement;
+		} else if (_currentElement->parent) {
+			while (_currentElement->parent && _currentElement->parent->right == _currentElement) {
+				_currentElement = _currentElement->parent;
 			}
-			if (currentElement->parent) {
-				currentElement = currentElement->parent;
+			if (_currentElement->parent) {
+				_currentElement = _currentElement->parent;
 			} else {
-				currentElement = nullptr;
+				_currentElement = nullptr;
 			}
 		} else {
-			lastElement = currentElement;
-			currentElement = nullptr;
+			_lastElement = _currentElement;
+			_currentElement = nullptr;
 		}
 		return *this;
 	}
@@ -140,43 +138,43 @@ namespace ardui {
 
 	template <class Key, class T, class Comp>
 	const typename map<Key, T, Comp>::iterator  // NOLINT(readability-const-return-type)
-	map<Key, T, Comp>::iterator::operator ++(int) {
+	map<Key, T, Comp>::iterator::operator++(int) {
 		auto temp {*this};
-		if (currentElement->right) {
-			currentElement = leftmost(currentElement->right);
-			lastElement = currentElement;
-		} else if (currentElement->parent) {
-			while (currentElement->parent && currentElement->parent->right == currentElement) {
-				currentElement = currentElement->parent;
+		if (_currentElement->right) {
+			_currentElement = leftmost(_currentElement->right);
+			_lastElement = _currentElement;
+		} else if (_currentElement->parent) {
+			while (_currentElement->parent && _currentElement->parent->right == _currentElement) {
+				_currentElement = _currentElement->parent;
 			}
-			if (currentElement->parent) {
-				currentElement = currentElement->parent;
+			if (_currentElement->parent) {
+				_currentElement = _currentElement->parent;
 			} else {
-				currentElement = nullptr;
+				_currentElement = nullptr;
 			}
 		} else {
-			currentElement = nullptr;
+			_currentElement = nullptr;
 		}
 		return temp;
 	}
 
 
 	template <class Key, class T, class Comp>
-	typename map<Key, T, Comp>::iterator& map<Key, T, Comp>::iterator::operator --() {
-		if (!currentElement) {
-			currentElement = lastElement;
-		} else if (currentElement->left) {
-			currentElement = rightmost(currentElement->left);
-		} else if (currentElement->parent) {
-			while (currentElement->parent && currentElement->parent->left == currentElement) {
-				currentElement = currentElement->parent;
+	typename map<Key, T, Comp>::iterator& map<Key, T, Comp>::iterator::operator--() {
+		if (!_currentElement) {
+			_currentElement = _lastElement;
+		} else if (_currentElement->left) {
+			_currentElement = rightmost(_currentElement->left);
+		} else if (_currentElement->parent) {
+			while (_currentElement->parent && _currentElement->parent->left == _currentElement) {
+				_currentElement = _currentElement->parent;
 			}
-			if (currentElement->parent) {
-				currentElement = currentElement->parent;
+			if (_currentElement->parent) {
+				_currentElement = _currentElement->parent;
 			}
 		} else {
-			lastElement = currentElement;
-			currentElement = nullptr;
+			_lastElement = _currentElement;
+			_currentElement = nullptr;
 		}
 		return *this;
 	}
@@ -184,55 +182,55 @@ namespace ardui {
 
 	template <class Key, class T, class Comp>
 	const typename map<Key, T, Comp>::iterator  // NOLINT(readability-const-return-type)
-	map<Key, T, Comp>::iterator::operator --(int) {
+	map<Key, T, Comp>::iterator::operator--(int) {
 		auto temp {*this};
-		if (!currentElement) {
-			currentElement = lastElement;
-		} else if (currentElement->left) {
-			currentElement = rightmost(currentElement->left);
-		} else if (currentElement->parent) {
-			while (currentElement->parent && currentElement->parent->left == currentElement) {
-				currentElement = currentElement->parent;
+		if (!_currentElement) {
+			_currentElement = _lastElement;
+		} else if (_currentElement->left) {
+			_currentElement = rightmost(_currentElement->left);
+		} else if (_currentElement->parent) {
+			while (_currentElement->parent && _currentElement->parent->left == _currentElement) {
+				_currentElement = _currentElement->parent;
 			}
-			if (currentElement->parent) {
-				currentElement = currentElement->parent;
+			if (_currentElement->parent) {
+				_currentElement = _currentElement->parent;
 			}
 		} else {
-			lastElement = currentElement;
-			currentElement = nullptr;
+			_lastElement = _currentElement;
+			_currentElement = nullptr;
 		}
 		return temp;
 	}
 
 
 	template <class Key, class T, class Comp>
-	bool map<Key, T, Comp>::iterator::operator ==(const iterator& it) const {
-		return currentElement == it.currentElement;
+	bool map<Key, T, Comp>::iterator::operator==(const iterator& it) const {
+		return _currentElement == it._currentElement;
 	}
 
 
 	template <class Key, class T, class Comp>
-	bool map<Key, T, Comp>::iterator::operator !=(const iterator& it) const {
-		return currentElement != it.currentElement;
+	bool map<Key, T, Comp>::iterator::operator!=(const iterator& it) const {
+		return _currentElement != it._currentElement;
 	}
 
 
 	template <class Key, class T, class Comp>
-	typename map<Key, T, Comp>::iterator& map<Key, T, Comp>::iterator::operator =(const T& value) {
-		currentElement->value.second = value;
+	typename map<Key, T, Comp>::iterator& map<Key, T, Comp>::iterator::operator=(const T& value) {
+		_currentElement->value.second = value;
 		return *this;
 	}
 
 
 	template <class Key, class T, class Comp>
-	pair<const Key, T>* map<Key, T, Comp>::iterator::operator ->() const {
-		return &currentElement->value;
+	pair<const Key, T>* map<Key, T, Comp>::iterator::operator->() const {
+		return &_currentElement->value;
 	}
 
 
 	template <class Key, class T, class Comp>
-	pair<const Key, T>& map<Key, T, Comp>::iterator::operator *() const {
-		return currentElement->value;
+	pair<const Key, T>& map<Key, T, Comp>::iterator::operator*() const {
+		return _currentElement->value;
 	}
 
 
@@ -252,13 +250,13 @@ namespace ardui {
 
 	template <class Key, class T, class Comp>
 	bool map<Key, T, Comp>::empty() const {
-		return !mapRoot;
+		return !_mapRoot;
 	}
 
 
 	template <class Key, class T, class Comp>
 	int map<Key, T, Comp>::size() const {
-		return mapSize;
+		return _mapSize;
 	}
 
 
@@ -270,14 +268,14 @@ namespace ardui {
 
 	template <class Key, class T, class Comp>
 	pair<typename map<Key, T, Comp>::iterator, bool> map<Key, T, Comp>::insert(const pair<const Key, T>& value) {
-		element** node {&mapRoot};
-		element** parent {&mapRoot};
+		element** node {&_mapRoot};
+		element** parent {&_mapRoot};
 
 		while (*node) {
 			Key k = (*node)->value.first;
 			if (k == value.first) {
 				return {iterator(*node), false};
-			} else if (less(value.first, k)) {
+			} else if (_less(value.first, k)) {
 				parent = node;
 				node = &(*node)->left;
 			} else {
@@ -285,7 +283,7 @@ namespace ardui {
 				node = &(*node)->right;
 			}
 		}
-		++mapSize;
+		++_mapSize;
 		*node = new element {value, *parent};
 		return {iterator(*node), true};
 	}
@@ -295,8 +293,8 @@ namespace ardui {
 	typename map<Key, T, Comp>::iterator map<Key, T, Comp>::erase(iterator position) {
 		auto temp {position};
 		++position;
-		destroyElement(temp.currentElement);
-		--mapSize;
+		destroyElement(temp._currentElement);
+		--_mapSize;
 
 		return position;
 	}
@@ -308,7 +306,7 @@ namespace ardui {
 
 		if (e) {
 			destroyElement(e);
-			--mapSize;
+			--_mapSize;
 			return 1;
 		} else {
 			return 0;
@@ -318,12 +316,12 @@ namespace ardui {
 
 	template <class Key, class T, class Comp>
 	typename map<Key, T, Comp>::iterator map<Key, T, Comp>::erase(iterator first, iterator last) {
-		element* node {first.currentElement};
+		element* node {first._currentElement};
 		element* temp {node};
 		bool deleteRoot {false};
 
-		while (node != last.currentElement) {
-			if (node == mapRoot) {
+		while (node != last._currentElement) {
+			if (node == _mapRoot) {
 				deleteRoot = true;
 			}
 			if (node->right) {
@@ -333,18 +331,18 @@ namespace ardui {
 					temp = node;
 					node = node->parent;
 					destroyElement(temp);
-					--mapSize;
+					--_mapSize;
 				}
 				temp = node;
 				node = node->parent;
 				destroyElement(temp);
-				--mapSize;
+				--_mapSize;
 			}
 		}
-		if (deleteRoot && mapRoot) {
-			temp = mapRoot;
+		if (deleteRoot && _mapRoot) {
+			temp = _mapRoot;
 			destroyElement(temp);
-			--mapSize;
+			--_mapSize;
 		}
 		return last;
 	}
@@ -352,7 +350,7 @@ namespace ardui {
 
 	template <class Key, class T, class Comp>
 	void map<Key, T, Comp>::clear() {
-		element* node {leftmost(mapRoot)};
+		element* node {leftmost(_mapRoot)};
 		element* temp {node};
 
 		while (node) {
@@ -369,22 +367,22 @@ namespace ardui {
 				if (!temp->right) {
 					destroyElement(temp);
 				}
-			} else if (node == mapRoot && !node->right && !node->left) {
+			} else if (node == _mapRoot && !node->right && !node->left) {
 				destroyElement(node);
 				node = nullptr;
 			}
 		}
-		mapSize = 0;
+		_mapSize = 0;
 	}
 
 
 	template <class Key, class T, class Comp>
 	map<Key, T, Comp>::map(const map& m) {
-		if (m.mapRoot) {
-			mapRoot = new element {{m.mapRoot->value}, nullptr};
-			mapSize = 1;
+		if (m._mapRoot) {
+			_mapRoot = new element {{m._mapRoot->value}, nullptr};
+			_mapSize = 1;
 
-			auto e {m.mapRoot};
+			auto e {m._mapRoot};
 			while (e->left) {
 				e = e->left;
 				insert({e->value});
@@ -419,15 +417,15 @@ namespace ardui {
 
 
 	template <class Key, class T, class Comp>
-	T& map<Key, T, Comp>::operator [](const Key& k) {
-		element** node {&mapRoot};
-		element** parent {&mapRoot};
+	T& map<Key, T, Comp>::operator[](const Key& k) {
+		element** node {&_mapRoot};
+		element** parent {&_mapRoot};
 
 		while (*node) {
 			Key cKey = (*node)->value.first;
 			if (cKey == k) {
 				return (*node)->value.second;
-			} else if (less(k, cKey)) {
+			} else if (_less(k, cKey)) {
 				parent = node;
 				node = &(*node)->left;
 			} else {
@@ -435,7 +433,7 @@ namespace ardui {
 				node = &(*node)->right;
 			}
 		}
-		++mapSize;
+		++_mapSize;
 		*node = new element {k, *parent};
 		return (*node)->value.second;
 	}
@@ -443,13 +441,13 @@ namespace ardui {
 
 	template <class Key, class T, class Comp>
 	typename map<Key, T, Comp>::iterator map<Key, T, Comp>::begin() const {
-		return map::iterator(leftmost(mapRoot));
+		return map::iterator(leftmost(_mapRoot));
 	}
 
 
 	template <class Key, class T, class Comp>
 	typename map<Key, T, Comp>::iterator map<Key, T, Comp>::end() const {
-		return map::iterator(nullptr, rightmost(mapRoot));
+		return map::iterator(nullptr, rightmost(_mapRoot));
 	}
 
 
@@ -477,14 +475,14 @@ namespace ardui {
 		element* replacement {};
 
 		if (e->left && e->right) {
-			if (balancingLeft) {
+			if (_balancingLeft) {
 				replacement = rightmost(e->left);
 				replacement->right = e->right;
 			} else {
 				replacement = leftmost(e->right);
 				replacement->left = e->left;
 			}
-			balancingLeft = !balancingLeft;
+			_balancingLeft = !_balancingLeft;
 			replaceElement(e, replacement);
 		} else if (e->left) {
 			replaceElement(e, e->left);
@@ -499,8 +497,8 @@ namespace ardui {
 				}
 			}
 		}
-		if (e == mapRoot) {
-			mapRoot = replacement;
+		if (e == _mapRoot) {
+			_mapRoot = replacement;
 		}
 		delete (e);
 	}
@@ -508,12 +506,12 @@ namespace ardui {
 
 	template <class Key, class T, class Comp>
 	typename map<Key, T, Comp>::element* map<Key, T, Comp>::findElement(const Key& k) const {
-		element* node {mapRoot};
+		element* node {_mapRoot};
 
 		while (node) {
-			if (less(k, node->value.first)) {
+			if (_less(k, node->value.first)) {
 				node = node->left;
-			} else if (less(node->value.first, k)) {
+			} else if (_less(node->value.first, k)) {
 				node = node->right;
 			} else {
 				return node;
@@ -524,5 +522,3 @@ namespace ardui {
 }
 
 #endif //ARDUI_MAP_H
-
-#pragma clang diagnostic pop

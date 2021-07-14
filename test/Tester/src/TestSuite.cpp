@@ -124,7 +124,7 @@ void TestSuite::printResults() const {
 		std::cout << BG_RED << FG_BLACK << " FAIL " << RST << " " << _name << RST << std::endl;
 		for (const auto& e: _errors) {
 			std::cout << FG_RED << "● " << e.first << RST << std::endl
-			<< e.second << std::endl << std::endl;
+			          << e.second << std::endl << std::endl;
 		}
 	}
 }

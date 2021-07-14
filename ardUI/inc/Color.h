@@ -27,7 +27,7 @@ public:
 	Color& operator=(const Color& c) = default;
 
 	#ifdef __EMSCRIPTEN__
-		friend class EmscriptenBindingInitializer_BuilderInterface;
+	friend class EmscriptenBindingInitializer_BuilderInterface;
 	#endif
 
 protected:
@@ -49,7 +49,7 @@ protected:
 		explicit operator uint32_t() const;
 
 		#ifdef __EMSCRIPTEN__
-				friend class EmscriptenBindingInitializer_BuilderInterface;
+		friend class EmscriptenBindingInitializer_BuilderInterface;
 		#endif
 
 	protected:

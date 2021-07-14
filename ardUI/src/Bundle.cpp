@@ -15,7 +15,7 @@ Bundle::Bundle(const Bundle& b): _bundleMap(b._bundleMap) {
 }
 
 
-Bundle& Bundle::operator =(const Bundle& other) {
+Bundle& Bundle::operator=(const Bundle& other) {
 	for (const auto& e: other._bundleMap) {
 		_bundleMap[e.first] = e.second->copy();
 	}

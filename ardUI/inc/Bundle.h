@@ -16,7 +16,7 @@ protected:
 public:
 	Bundle() = default;
 	Bundle(const Bundle& b);
-	Bundle& operator =(const Bundle& other);
+	Bundle& operator=(const Bundle& other);
 
 	void putInt(const String& key, int value);
 	void putFloat(const String& key, float value);

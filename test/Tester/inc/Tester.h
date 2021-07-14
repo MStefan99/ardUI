@@ -5,7 +5,6 @@
 #ifndef ARDUI_TESTER_H
 #define ARDUI_TESTER_H
 
-
 #include <string>
 #include <functional>
 
@@ -19,6 +18,5 @@ void describe(const std::string& desc,
 
 void test(const std::string& desc,
 		const std::function<void()>& callback);
-
 
 #endif //ARDUI_TESTER_H

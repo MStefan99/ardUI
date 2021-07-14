@@ -11,6 +11,8 @@ void ArduinoSerial::begin(long baud) {
 
 
 #ifndef __EMSCRIPTEN__
+
+
 int main() {
 	setup();
 
@@ -18,6 +20,8 @@ int main() {
 		loop();
 	}
 }
+
+
 #endif
 
 #ifdef _WIN32
@@ -28,9 +32,11 @@ void delay(uint32_t ms) {
 
 #else
 
+
 void delay(uint32_t ms) {
 	usleep(ms * 1000);
 }
+
 
 #endif
 

@@ -45,5 +45,4 @@
  */
 #define DISPLAY_FALLBACK ( false )
 
-
 #endif //ARDUI_CONFIG_ADV_H

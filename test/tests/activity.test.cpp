@@ -22,16 +22,16 @@ struct TestWrapper {
 	static void run() {
 		Activity* activity {nullptr};
 		TextView* view {nullptr};
-				
+
 		describe("Activity tests", [&](TestSuite& suite) -> void {
-			
+
 			suite.beforeEach([&]() -> void {
 				activity = new TestActivity;
 				view = new TextView;
 
 				activity->setRootView(view);
 			});
-			
+
 			suite.afterEach([&]() -> void {
 				delete activity;
 			});
@@ -54,7 +54,7 @@ struct TestWrapper {
 				expect(activity->findViewById(view->getId())).toBeNull();
 				delete view;
 			});
-			
+
 			suite.test("Activity lifecycle", [&]() -> void {
 				activity->rewindState(Activity::CREATED);
 				expect(activity->_currentState).toEqual(Activity::CREATED);

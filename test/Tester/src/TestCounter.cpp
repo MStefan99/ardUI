@@ -4,6 +4,7 @@
 
 #include "TestCounter.h"
 
+
 size_t TestCounter::_totalSuites {};
 size_t TestCounter::_passedSuites {};
 size_t TestCounter::_totalTests {};

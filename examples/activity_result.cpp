@@ -9,9 +9,10 @@
 class ResultActivity: public Activity {
 	using Activity::Activity;
 
+
 	void onCreate() override {
 		Serial.println("Hi, I am ResultActivity!");
-		auto b = Bundle{};
+		auto b = Bundle {};
 		b.putInt("someResult", 12354);
 		setResult(2, b);
 
@@ -19,6 +20,7 @@ class ResultActivity: public Activity {
 		Serial.println(b.getInt("someResult"));
 		finish();
 	}
+
 
 	void onDestroy() override {
 		Serial.println("ResultActivity is destroyed");
@@ -28,6 +30,7 @@ class ResultActivity: public Activity {
 
 class MainActivity: public Activity {
 	using Activity::Activity;
+
 
 	void onCreate() override {
 		Serial.println("MainActivity is created");
@@ -41,13 +44,16 @@ class MainActivity: public Activity {
 		Serial.println("Doing other things...");
 	}
 
+
 	void onResume() override {
 		Serial.println("MainActivity is resumed");
 	}
 
+
 	void onPause() override {
 		Serial.println("MainActivity is paused");
 	}
+
 
 	void onDestroy() override {
 		Serial.println("MainActivity is destroyed");
