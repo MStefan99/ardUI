@@ -12,7 +12,7 @@ TestSuite::TestSuite() {
 
 
 TestSuite::TestSuite(const std::string& name, const std::function<void(TestSuite&)>& cb):
-		_name {name}, _blockCallback {cb} {
+		_name {name}, _blockCb {cb} {
 	TestCounter::getInstance();
 	++TestCounter::_totalSuites;
 	#if !DEFERRED_RUN
@@ -34,12 +34,22 @@ TestSuite::~TestSuite() {
 
 
 void TestSuite::beforeAll(const std::function<void()>& cb) {
-	_beforeCallback = cb;
+	_beforeAllCb = cb;
 }
 
 
 void TestSuite::afterAll(const std::function<void()>& cb) {
-	_afterCallback = cb;
+	_afterAllCb = cb;
+}
+
+
+void TestSuite::beforeEach(const std::function<void()>& cb) {
+	_beforeEachCb = cb;
+}
+
+
+void TestSuite::afterEach(const std::function<void()>& cb) {
+	_afterEachCb = cb;
 }
 
 
@@ -58,9 +68,9 @@ void TestSuite::test(const std::string& testName,
 
 void TestSuite::runBefore() {
 	try {
-		_blockCallback(*this);
-		if (_beforeCallback) {
-			_beforeCallback();
+		_blockCb(*this);
+		if (_beforeAllCb) {
+			_beforeAllCb();
 		}
 	} catch (const AssertException& e) {
 		_errors.emplace_back("Suite setup", e.what());
@@ -71,8 +81,8 @@ void TestSuite::runBefore() {
 
 void TestSuite::runAfter() {
 	try {
-		if (_afterCallback) {
-			_afterCallback();
+		if (_afterAllCb) {
+			_afterAllCb();
 		}
 	} catch (const AssertException& e) {
 		_errors.emplace_back("Suite teardown", e.what());
@@ -83,10 +93,25 @@ void TestSuite::runAfter() {
 
 void TestSuite::runTest(const Test& test) {
 	try {
+		if (_beforeEachCb) {
+			_beforeEachCb();
+		}
+	} catch (const AssertException& e) {
+		_errors.emplace_back("Test setup", e.what());
+		_passed = false;
+	}
+	try {
 		test.run();
 	} catch (const AssertException& e) {
 		_errors.emplace_back(test.getName(), e.what());
 		_passed = false;
+	}
+	try {
+		if (_afterEachCb) {
+			_afterEachCb();
+		}
+	} catch (const AssertException& e) {
+		_errors.emplace_back("Test teardown", e.what());
 	}
 }
 

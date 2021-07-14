@@ -46,14 +46,15 @@ class TestActivity: public Activity {
 
 
 void setup() {
-	ardUI::startActivity<TestActivity>();
-
-	test("Test Activity Pointer", []() -> void {
-		EventManager::update(false, true);
-		expect(&ardUI::getCurrentActivity()).Not().toBeNull();
-		ardUI::getCurrentActivity().finish();
-		EventManager::update(false, true);
-		expect(&ardUI::getCurrentActivity()).toBeNull();
+	describe("Activity tests", [](TestSuite& suite) -> void {
+		test("Starting/stopping Activity", []() -> void {
+			ardUI::startActivity<TestActivity>();
+			EventManager::update(false, true);
+			expect(&ardUI::getCurrentActivity()).Not().toBeNull();
+			ardUI::getCurrentActivity().finish();
+			EventManager::update(false, true);
+			expect(&ardUI::getCurrentActivity()).toBeNull();
+		});
 	});
 }
 

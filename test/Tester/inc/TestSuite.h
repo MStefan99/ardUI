@@ -26,8 +26,10 @@ public:
 
 	#if DEFERRED_RUN
 	void beforeAll(const std::function<void()>& callback);
-
 	void afterAll(const std::function<void()>& callback);
+
+	void beforeEach(const std::function<void()>& callback);
+	void afterEach(const std::function<void()>& callback);
 	#endif
 
 	void test(const std::string& testName,
@@ -41,9 +43,11 @@ protected:
 	void run();
 
 	std::string _name {};
-	std::function<void()> _beforeCallback {};
-	std::function<void(TestSuite&)> _blockCallback {};
-	std::function<void()> _afterCallback {};
+	std::function<void()> _beforeAllCb {};
+	std::function<void()> _beforeEachCb {};
+	std::function<void(TestSuite&)> _blockCb {};
+	std::function<void()> _afterAllCb {};
+	std::function<void()> _afterEachCb {};
 	std::list<std::pair<std::string, std::string>> _errors {};
 	bool _passed = true;
 	#if DEFERRED_RUN
