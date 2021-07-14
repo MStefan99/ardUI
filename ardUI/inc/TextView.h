@@ -29,7 +29,9 @@ public:
 	// TODO: add alignment options
 	// TODO: add background toggle
 
-	friend class EmscriptenBindingInitializer_BuilderInterface;
+	#ifdef __EMSCRIPTEN__
+		friend class EmscriptenBindingInitializer_BuilderInterface;
+	#endif
 
 protected:
 	void onMeasure(MeasureSpec widthMeasureSpec, MeasureSpec heightMeasureSpec) override;

@@ -24,6 +24,7 @@ jobs:
           --target Test_Rect
           --target Test_Bundle
           --target Test_Activity
+          --target Test_Activity_result
 
       - name: Test template library
         run: ${{github.workspace}}/build/test/Test_template_library
@@ -36,3 +37,6 @@ jobs:
 
       - name: Test Activity
         run: ${{github.workspace}}/build/test/Test_Activity
+
+      - name: Test Activity result
+        run: ${{github.workspace}}/build/test/Test_Activity_result

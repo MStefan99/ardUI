@@ -4,27 +4,9 @@
 
 
 #include "Tester.h"
+
 #include "ardUI.h"
-
-
-class ResultActivity: public Activity {
-	using Activity::Activity;
-
-
-	void onCreate() override {
-		auto data = getExtras();
-
-		test("Sending data", [&]() -> void {
-			expect(data.getString("request")).toEqual("hello");
-		});
-
-		Bundle result {};
-		result.putString("result", "success");
-
-		setResult(1, result);
-		finish();
-	}
-};
+#include "TextView.h"
 
 
 class TestActivity: public Activity {
@@ -32,30 +14,65 @@ class TestActivity: public Activity {
 
 
 	void onCreate() override {
-		Bundle data {};
-		data.putString("request", "hello");
+	}
+};
 
-		startActivityForResult<ResultActivity>([](int code, Bundle results) -> void {
-			test("Returning data", [&]() -> void {
-				expect(code).toEqual(1);
-				expect(results.getString("result")).toEqual("success");
+
+struct TestWrapper {
+	static void run() {
+		auto view = new TextView {};
+
+		describe("Activity tests", [&](TestSuite& suite) -> void {
+
+			suite.beforeEach([]() -> void {
+				ardUI::startActivity<TestActivity>();
+				EventManager::update(false, true);
 			});
-		}, data);
+
+			suite.afterEach([]() -> void {
+				if (ardUI::getCurrentActivity()) {
+					ardUI::getCurrentActivity()->finish();
+					EventManager::update(false, true);
+				}
+			});
+
+			suite.test("Activity lifecycle", []() -> void {
+				auto firstActivity {ActivityManager::_currentActivity};
+				auto& currentActivity {ActivityManager::_currentActivity};
+
+				expect(firstActivity).Not().toBeNull();
+				expect(firstActivity->_currentState).toEqual(Activity::RESUMED);
+
+				ardUI::startActivity<TestActivity>();
+				EventManager::update(false, true);
+				expect(firstActivity->_currentState).toEqual(Activity::STOPPED);
+				expect(currentActivity->_currentState).toEqual(Activity::RESUMED);
+
+				ardUI::getCurrentActivity()->finish();
+				EventManager::update(false, true);
+				expect(firstActivity->_currentState).toEqual(Activity::RESUMED);
+
+				ardUI::getCurrentActivity()->finish();
+				EventManager::update(false, true);
+				expect(currentActivity).toBeNull();
+			});
+
+			suite.test("Background color", []() -> void {
+				ardUI::getCurrentActivity()->setBackgroundColor({0xfffffful});
+				expect(ardUI::getCurrentActivity()->getBackgroundColor().to888()).toEqual(0xfffffful);
+			});
+
+			suite.test("Root view", [&]() -> void {
+				ardUI::getCurrentActivity()->setRootView(view);
+				expect(ardUI::getCurrentActivity()->getRootView()).toEqual(view);
+			});
+		});
 	}
 };
 
 
 void setup() {
-	describe("Activity tests", [](TestSuite& suite) -> void {
-		test("Starting/stopping Activity", []() -> void {
-			ardUI::startActivity<TestActivity>();
-			EventManager::update(false, true);
-			expect(&ardUI::getCurrentActivity()).Not().toBeNull();
-			ardUI::getCurrentActivity().finish();
-			EventManager::update(false, true);
-			expect(&ardUI::getCurrentActivity()).toBeNull();
-		});
-	});
+	TestWrapper::run();
 }
 
 

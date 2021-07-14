@@ -7,6 +7,8 @@ target_sources(ardUI PRIVATE ${SOURCE_DIRECTORY}/display.cpp)
 add_subdirectory(${TEST_DIRECTORY}/Tester)
 link_libraries(Tester)
 
+set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-DTEST")
+
 
 # Individual test targets
 add_executable(
@@ -27,4 +29,9 @@ add_executable(
 add_executable(
 		Test_Activity
 		${TEST_DIRECTORY}/tests/activity.test.cpp
+)
+
+add_executable(
+		Test_Activity_result
+		${TEST_DIRECTORY}/tests/activity_result.test.cpp
 )

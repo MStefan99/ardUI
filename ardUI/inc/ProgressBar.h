@@ -31,7 +31,9 @@ public:
 	Color getBackgroundColor() const;
 	void setBackgroundColor(Color backgroundColor);
 
-	friend class EmscriptenBindingInitializer_BuilderInterface;
+	#ifdef __EMSCRIPTEN__
+		friend class EmscriptenBindingInitializer_BuilderInterface;
+	#endif
 
 protected:
 	void onDraw() override;

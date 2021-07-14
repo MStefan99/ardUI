@@ -41,7 +41,9 @@ public:
 
 	bool isValid() const;
 
-	friend class EmscriptenBindingInitializer_BuilderInterface;
+	#ifdef __EMSCRIPTEN__
+		friend class EmscriptenBindingInitializer_BuilderInterface;
+	#endif
 
 protected:
 	bool _valid {false};

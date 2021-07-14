@@ -30,7 +30,9 @@ public:
 	void draw() override;
 	void invalidate() override;
 
-	friend class EmscriptenBindingInitializer_BuilderInterface;
+	#ifdef __EMSCRIPTEN__
+		friend class EmscriptenBindingInitializer_BuilderInterface;
+	#endif
 
 protected:
 	void onMeasure(MeasureSpec widthMeasureSpec, MeasureSpec heightMeasureSpec) override = 0;

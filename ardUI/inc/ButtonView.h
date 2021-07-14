@@ -16,7 +16,9 @@ public:
 	explicit ButtonView(const String& text);
 	~ButtonView() override = default;
 
-	friend class EmscriptenBindingInitializer_BuilderInterface;
+	#ifdef __EMSCRIPTEN__
+		friend class EmscriptenBindingInitializer_BuilderInterface;
+	#endif
 
 protected:
 	void onDraw() override;

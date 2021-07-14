@@ -50,7 +50,13 @@ public:
 
 	friend class ActivityManager;
 
-	friend class EmscriptenBindingInitializer_BuilderInterface;
+	#ifdef __EMSCRIPTEN__
+		friend class EmscriptenBindingInitializer_BuilderInterface;
+	#endif
+
+	#ifdef TEST
+		friend class TestWrapper;
+	#endif
 
 protected:
 	const Bundle& getExtras();

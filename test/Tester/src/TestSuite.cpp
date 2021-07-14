@@ -112,6 +112,7 @@ void TestSuite::runTest(const Test& test) {
 		}
 	} catch (const AssertException& e) {
 		_errors.emplace_back("Test teardown", e.what());
+		_passed = false;
 	}
 }
 

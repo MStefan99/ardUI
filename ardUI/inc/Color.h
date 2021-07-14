@@ -26,7 +26,9 @@ public:
 
 	Color& operator=(const Color& c) = default;
 
-	friend class EmscriptenBindingInitializer_BuilderInterface;
+	#ifdef __EMSCRIPTEN__
+		friend class EmscriptenBindingInitializer_BuilderInterface;
+	#endif
 
 protected:
 	#if COLOR_MODE == COLOR_888
@@ -46,7 +48,9 @@ protected:
 		explicit operator uint16_t() const;
 		explicit operator uint32_t() const;
 
-		friend class EmscriptenBindingInitializer_BuilderInterface;
+		#ifdef __EMSCRIPTEN__
+				friend class EmscriptenBindingInitializer_BuilderInterface;
+		#endif
 
 	protected:
 		uint8_t _r {};

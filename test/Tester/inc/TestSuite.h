@@ -49,7 +49,7 @@ protected:
 	std::function<void()> _afterAllCb {};
 	std::function<void()> _afterEachCb {};
 	std::list<std::pair<std::string, std::string>> _errors {};
-	bool _passed = true;
+	bool _passed {true};
 	#if DEFERRED_RUN
 	std::list<Test> _tests {};
 	#endif

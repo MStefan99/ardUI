@@ -29,6 +29,6 @@ View* ardUI::getViewByName(const String& name) {
 }
 
 
-Activity& ardUI::getCurrentActivity() {
-	return *ActivityManager::_currentActivity;
+Activity* ardUI::getCurrentActivity() {
+	return ActivityManager::_currentActivity;
 }

@@ -43,7 +43,13 @@ private:
 
 	friend class ardUI;
 
-	friend class BuilderInterface;
+	#ifdef __EMSCRIPTEN__
+		friend class BuilderInterface;
+	#endif
+
+	#ifdef TEST
+		friend class TestWrapper;
+	#endif
 };
 
 #endif //ARDUI_ACTIVITYMANAGER_H

@@ -15,7 +15,7 @@ class Matcher {
 public:
 	explicit Matcher(T expected);
 
-	Matcher Not();
+	Matcher& Not();
 
 	void toEqual(T expected) const;
 	void toBeTruthy() const;
@@ -41,7 +41,7 @@ Matcher<T>::Matcher(T expected):
 
 
 template <class T>
-Matcher<T> Matcher<T>::Not() {
+Matcher<T>& Matcher<T>::Not() {
 	_negated = !_negated;
 	return *this;
 }
@@ -52,7 +52,9 @@ void Matcher<T>::toEqual(T expected) const {
 	if ((_actual == expected) ^ _negated) {
 		return;
 	} else {
-		throw AssertException("Actual value doesn't match the expected value");
+		throw AssertException(!_negated?
+		                      "Actual value doesn't match the expected value" :
+		                      "Actual value shouldn't match the expected value");
 	}
 }
 
@@ -62,7 +64,9 @@ void Matcher<T>::toBeNull() const {
 	if ((_actual == nullptr) ^ _negated) {
 		return;
 	} else {
-		throw AssertException("Value was expected to be null");
+		throw AssertException(!_negated?
+		                      "Value was expected to be null" :
+		                      "Value was not expected to be null");
 	}
 }
 
@@ -72,7 +76,9 @@ void Matcher<T>::toBeTruthy() const {
 	if (_actual ^ _negated) {
 		return;
 	} else {
-		throw AssertException("Value was expected to be truthy");
+		throw AssertException(!_negated?
+		                      "Value was expected to be truthy" :
+		                      "Value was not expected to be truthy");
 	}
 }
 
@@ -82,7 +88,9 @@ void Matcher<T>::toBeFalsy() const {
 	if (!_actual ^ _negated) {
 		return;
 	} else {
-		throw AssertException("Value was expected to be falsy");
+		throw AssertException(!_negated?
+		                      "Value was expected to be falsy" :
+		                      "Value was not expected to be falsy");
 	}
 }
 

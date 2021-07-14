@@ -61,7 +61,9 @@ public:
 
 	friend class Activity;
 
-	friend class EmscriptenBindingInitializer_BuilderInterface;
+	#ifdef __EMSCRIPTEN__
+		friend class EmscriptenBindingInitializer_BuilderInterface;
+	#endif
 
 protected:
 	// Measure contents of the current view

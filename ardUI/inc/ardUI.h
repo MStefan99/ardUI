@@ -27,7 +27,7 @@ public:
 
 	static void setViewName(View* view, const String& name);
 	static View* getViewByName(const String& name);
-	static Activity& getCurrentActivity();
+	static Activity* getCurrentActivity();
 
 private:
 	static MAP<String, View*> _viewMap;
