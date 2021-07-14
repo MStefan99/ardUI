@@ -4,13 +4,13 @@
 
 #include "Tester.h"
 
-void describe(const std::string& desc, const std::function<void(TestBlock&)>& cb) {
-	TestBlock block {desc, cb};
+void describe(const std::string& desc, const std::function<void(TestSuite&)>& cb) {
+	TestSuite block {desc, cb};
 }
 
 
 void test(const std::string& desc, const std::function<void()>& cb) {
-	describe(desc, [&](TestBlock& block) -> void {
+	describe(desc, [&](TestSuite& block) -> void {
 		block.test(desc, [&]() -> void {
 			cb();
 		});

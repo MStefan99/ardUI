@@ -2,8 +2,8 @@
 // Created by MStefan99 on 16.11.20.
 //
 
-#ifndef ARDUI_TESTBLOCK_H
-#define ARDUI_TESTBLOCK_H
+#ifndef ARDUI_TESTSUITE_H
+#define ARDUI_TESTSUITE_H
 
 #include <functional>
 #include <list>
@@ -16,13 +16,13 @@
 #include "Terminal.h"
 
 
-class TestBlock {
+class TestSuite {
 public:
-	TestBlock();
-	TestBlock(const std::string& name,
-			const std::function<void(TestBlock&)>& callback);
+	TestSuite();
+	TestSuite(const std::string& name,
+			const std::function<void(TestSuite&)>& callback);
 
-	~TestBlock();
+	~TestSuite();
 
 	#if DEFERRED_RUN
 	void beforeAll(const std::function<void()>& callback);
@@ -42,13 +42,13 @@ protected:
 
 	std::string _name {};
 	std::function<void()> _beforeCallback {};
-	std::function<void(TestBlock&)> _blockCallback {};
+	std::function<void(TestSuite&)> _blockCallback {};
 	std::function<void()> _afterCallback {};
-	std::list<std::pair<const Test, std::string>> _errors {};
+	std::list<std::pair<std::string, std::string>> _errors {};
 	bool _passed = true;
 	#if DEFERRED_RUN
 	std::list<Test> _tests {};
 	#endif
 };
 
-#endif //ARDUI_TESTBLOCK_H
+#endif //ARDUI_TESTSUITE_H

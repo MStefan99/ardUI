@@ -9,12 +9,12 @@
 #include <string>
 #include <functional>
 
-#include "TestBlock.h"
+#include "TestSuite.h"
 #include "Tester_options.h"
 
 
 void describe(const std::string& desc,
-		const std::function<void(TestBlock&)>& callback);
+		const std::function<void(TestSuite&)>& callback);
 
 
 void test(const std::string& desc,

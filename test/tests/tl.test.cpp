@@ -21,7 +21,7 @@ void arduiUserLoop() {}
 
 void vectorAssert() {
 	ardui::vector<int> v {};
-	describe("Vector check", [&](TestBlock& block) -> void {
+	describe("Vector check", [&](TestSuite& block) -> void {
 
 		block.test("push and subscribe", [&]() -> void {
 			expect(v.empty()).toEqual(true);
@@ -90,7 +90,7 @@ void vectorAssert() {
 
 void listAssert() {
 	ardui::list<int> l {};
-	describe("List check", [&](TestBlock& block) -> void {
+	describe("List check", [&](TestSuite& block) -> void {
 
 		expect(l.empty()).toEqual(true);
 		block.test("push and subscript assert", [&]() -> void {
@@ -166,7 +166,7 @@ void listAssert() {
 
 void mapAssert() {
 	ardui::map<int, double> m {};
-	describe("Map check", [&](TestBlock& block) -> void {
+	describe("Map check", [&](TestSuite& block) -> void {
 
 		block.test("insert assert", [&]() -> void {
 			expect(m.empty()).toEqual(true);
@@ -222,11 +222,13 @@ void mapAssert() {
 
 void stackAssert() {
 	ardui::stack<int> s;
-	describe("Stack check", [&](TestBlock& block) -> void {
+	describe("Stack check", [&](TestSuite& block) -> void {
 
-		s.push(1);
-		s.push(2);
-		s.push(3);
+		block.beforeAll([&]() -> void {
+			s.push(1);
+			s.push(2);
+			s.push(3);
+		});
 
 		block.test("Size assert", [&]() -> void {
 			expect(s.size()).toEqual(3);
@@ -244,11 +246,13 @@ void stackAssert() {
 
 void queueAssert() {
 	ardui::queue<int> q;
-	describe("Queue check", [&](TestBlock& block) -> void {
+	describe("Queue check", [&](TestSuite& block) -> void {
 
-		q.push(1);
-		q.push(2);
-		q.push(3);
+		block.beforeAll([&]() -> void {
+			q.push(1);
+			q.push(2);
+			q.push(3);
+		});
 
 		block.test("Size assert", [&]() -> void {
 			expect(q.size()).toEqual(3);

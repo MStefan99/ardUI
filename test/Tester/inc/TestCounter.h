@@ -15,7 +15,7 @@ class TestCounter: public Singleton<TestCounter> {
 public:
 	~TestCounter();
 
-	friend class TestBlock;
+	friend class TestSuite;
 
 	friend class Test;
 

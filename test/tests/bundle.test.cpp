@@ -25,7 +25,7 @@ struct A {
 
 int main() {
 	Bundle b {};
-	describe("Bundle Test", [&](TestBlock& block) -> void {
+	describe("Bundle Test", [&](TestSuite& block) -> void {
 
 		block.test("Testing int", [&]() -> void {
 			b.putInt("int", 1);
