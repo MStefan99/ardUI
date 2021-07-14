@@ -22,7 +22,7 @@ struct TestWrapper {
 		describe("ardUI and EventManager", [&](TestSuite& suite) -> void {
 			suite.test("Switching Activities", []() -> void {
 				ardUI::startActivity<TestActivity>();
-				EventManager::update(false, true);
+				EventManager::update(true);
 
 				auto firstActivity {ActivityManager::_currentActivity};
 				auto& currentActivity {ActivityManager::_currentActivity};
@@ -31,16 +31,16 @@ struct TestWrapper {
 				expect(firstActivity->_currentState).toEqual(Activity::RESUMED);
 
 				ardUI::startActivity<TestActivity>();
-				EventManager::update(false, true);
+				EventManager::update(true);
 				expect(firstActivity->_currentState).toEqual(Activity::STOPPED);
 				expect(currentActivity->_currentState).toEqual(Activity::RESUMED);
 
 				ardUI::getCurrentActivity()->finish();
-				EventManager::update(false, true);
+				EventManager::update(true);
 				expect(firstActivity->_currentState).toEqual(Activity::RESUMED);
 
 				ardUI::getCurrentActivity()->finish();
-				EventManager::update(false, true);
+				EventManager::update(true);
 				expect(currentActivity).toBeNull();
 			});
 		});

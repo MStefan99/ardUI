@@ -29,7 +29,7 @@ class EventManager final {
 public:
 	EventManager() = delete;
 
-	static void update(bool callUserLoop = true, bool draw = false);
+	static void update(bool forceDraw = false, bool callUserLoop = false);
 
 private:
 	static void checkForActions(uint32_t deltaTime);
