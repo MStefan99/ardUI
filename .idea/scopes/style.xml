@@ -1,3 +1,3 @@
 <component name="DependencyValidationManager">
-  <scope name="style" pattern="file[ardUI]:Builder/style//*.styl" />
+  <scope name="style" pattern="file[ardUI]:Builder/style//*.styl||file[ardUI]:docs/style//*.styl" />
 </component>

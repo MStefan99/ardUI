@@ -1,0 +1,67 @@
+extends ../../templates/tabbed
+include ../../templates/mixins/code
+include ../../templates/mixins/toc
+
+
+block nav
+	include ../../templates/nav-tutorials
+
+
+block tab-content
+	+toc('View tree')
+		h1 Introduction to View tree
+	p
+		|  View tree in ardUI is a collection of objects that describes all Views added to a particular Activity.
+		|  Consider this simple Activity with a title text and three buttons:
+	img.img-20(src='/img/basic_activity.png' alt='An example of simple Activity')
+	p
+		|  An Activity in ardUI can only contain a single View. But this is by design since we actually do not need
+		|  more to display even the complicated user interfaces. This is achieved with the help of Layouts.
+		|  Layouts are a kind of Views that can contain other views inside them. Let's now take a look at the view tree
+		|  of our example:
+	img.img-40(src='/img/basic_view_tree.png' alt='A view tree for the example above')
+	p
+		|  Here you can see that our Activity indeed only contains a single View but since it's a type of Layout
+		|  (to be specific, it is a LinearLayout, which we'll cover later) and it can contain other widgets,
+		|  we are able to place four of them (one text and three buttons) in our Activity.
+	p
+		|  The code for this example would look something like this (with no styling applied):
+	+code(`
+		#include <Arduino.h>
+		#include "ardUI.h"
+		#include "TextView.h"
+		#include "ButtonView.h"
+		#include "LinearLayout.h"
+
+		class MainActivity: public Activity {
+			using Activity::Activity;
+
+			void onCreate() override {
+				auto ll = new LinearLayout();
+				ll->setOrientation(LinearLayout::Orientation::VERTICAL);
+				auto t = new TextView("Activity title");
+				auto b1 = new ButtonView("First Button");
+				auto b2 = new ButtonView("Second Button");
+				auto b3 = new ButtonView("Third Button");
+
+				setRootView(ll);
+				ll->addView(t);
+				ll->addView(b1);
+				ll->addView(b2);
+				ll->addView(b3);
+			}
+		};
+
+		void setup() {
+			ardUI::startActivity<MainActivity>();
+		}
+
+		void loop() {
+		}
+	`)
+	p
+		|  Notice the call to #[code setRootView()] at line 17. It is absolutely vital for ardUI to draw your Activity.
+		|  During a draw pass, ardUI will start from the root view of the currently open Activity and recursively draw
+		|  all the views it finds in the tree. If you don't set the root view or don't add your views to a Layout
+		|  (lines 18-22), ardUI will not know that those widgets exist, and thus not draw them at all.
+	script(async src='/js/referencer.js')

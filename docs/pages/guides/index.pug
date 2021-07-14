@@ -1,0 +1,16 @@
+extends ../../templates/tabbed
+include ../../templates/mixins/toc
+
+
+block nav
+	include ../../templates/nav-guides
+
+
+block tab-content
+	+toc('Welcome')
+		h1 Welcome to ardUI guides!
+	p
+		|  While tutorials are made to cover the very basics to get you started as quickly and effortlessly as possible,
+		|  guides offer a more involved description of the framework itself, its inner workings and best practices
+		|  to not only give you a rough idea on creating with ardUI but help you better understand how to make
+		|  your apps better and faster. To start, choose a guide on the left.

@@ -1,0 +1,15 @@
+extends layout
+
+
+block main
+	div#tab-layout
+		div#nav-tab.tab
+			h3.tab-title Navigation
+			div#nav-container
+				block nav
+		article#content-tab
+			block tab-content
+		div#toc-tab.tab
+			h3.tab-title On this page
+			div#toc-container
+			script(async src='/js/toc.js')

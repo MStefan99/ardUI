@@ -1,0 +1,47 @@
+extends ../../templates/tabbed
+include ../../templates/mixins/code
+include ../../templates/mixins/toc
+
+
+block nav
+	include ../../templates/nav-guides
+
+
+block tab-content
+	+toc('Porting')
+		h1 Porting guide
+	p
+		|  Everything in ardUI is designed to be platform-independent and even though ardUI is designed for Arduino,
+		|  you can easily compile the code for Linux, Windows and even WebAssembly to run in your browser with
+		|  no changes to the code.
+	p
+		|  However, you will need to introduce some changes to ardUI code if you want to run it on a microcontroller
+		|  not running Arduino framework. The first thing you'll need to change is the structure of your program.
+		|  ardUI relies on the #[code setup()] and #[code loop()] functions used in Arduino to run transparently to the
+		|  user. What happens in the background is that ardUI renames those two functions using macros
+		|  and uses the original ones internally for its event loop, calling renamed functions from inside.
+	p
+		|  This makes ardUI work with any existing Arduino program with no code changes whatsoever and also
+		|  completely transparent to the user since the framework gets called directly on every loop iteration
+		|  instead of the user having to call it. To summarize, a simple workaround to run ardUI on other platforms
+		|  may look something like this:
+	+code(`
+		// Renamed to user setup
+		void setup() {
+		}
+
+		// Renamed to user loop
+		void loop() {
+		}
+
+		// Disable renaming functions
+		#undef setup
+		#undef loop
+
+		int main() {
+			// Calling ardUI
+			setup();  // Will call user setup
+			while(true) loop();  // Will call user loop
+		}
+		`)
+	script(async src='/js/referencer.js')

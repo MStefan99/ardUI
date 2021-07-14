@@ -1,0 +1,14 @@
+extends ../../templates/tabbed
+include ../../templates/mixins/toc
+
+
+block nav
+	include ../../templates/nav-reference
+
+
+block tab-content
+	+toc('Welcome')
+		h1 Welcome to ardUI reference!
+	p
+		|  ardUI reference covers every function and variable used in ardUI to help you get the most of the framework.
+		|  To learn more about some specific ardUI concepts, use a menu on the left.

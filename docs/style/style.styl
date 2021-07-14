@@ -1,0 +1,177 @@
+--accent-color = #9AC1FF
+--text-color = #020202
+--background-color = #f0f0f0
+--header-height = 4rem
+
+--types = 'typename' 'classname' 'function' 'string' 'macro' 'template'\
+'keyword' 'scope' 'modifier' 'number' 'comment'
+--color-typename = #7c550b
+--color-classname = #0b7c4f
+--color-function = #448329
+--color-macro = #500b94
+--color-string = #7e1e0e
+--color-template = #8c8500
+--color-keyword = #16886e
+--color-scope = #47566b
+--color-modifier = #758155
+--color-number = #81556c
+--color-comment = #858585
+
+
+glass(color = #fffb)
+	background-color transparentify(color, #fff, .8)
+	backdrop-filter blur(12px)
+	border-bottom darken(color, 5%) 1px solid
+
+
+html
+	font-family sans-serif
+	scroll-behavior smooth
+	color --text-color
+
+	body
+		margin 0
+		display flex
+		flex-flow column
+		justify-content space-between
+		line-height 1.7
+		min-height 100vh
+
+		for size in (1..10)
+			.img-{size * 10}
+				max-height size * 10 vh
+
+		.hidden
+			visibility hidden
+
+		header
+			glass(--accent-color)
+			display flex
+			flex-flow row nowrap
+			justify-content flex-start
+			align-content center
+			padding 1em
+			padding-bottom .5em
+			position sticky
+			z-index 1
+			top 0
+			height --header-height
+
+			#logo
+				height 3em
+				filter invert(1)
+
+		main
+			flex-grow 1
+
+			#content
+				max-width 768px
+				padding 0 2em
+				margin 1em auto
+
+			#tab-layout
+				display flex
+				flex-flow row nowrap
+				justify-content space-between
+
+				@media screen and (max-width 768px)
+					min-height 100vh
+					flex-wrap wrap
+
+				.tab
+					background-color lighten(--accent-color, 90%)
+					width 100vw
+					padding 1em 3ch
+
+					@media screen and (min-width 768px)
+						height 100vh - --header-height
+
+					&#nav-tab
+						border-right 1px solid lighten(--accent-color, 50%)
+
+					&#toc-tab
+						border-left 1px solid lighten(--accent-color, 50%)
+
+					@media screen and (min-width 768px)
+						flex 0 0 15%
+						position sticky
+						top --header-height
+
+					.tab-title
+						width 100%
+						text-align center
+
+					a
+						display block
+						color #000
+
+				img
+					display block
+					margin 1em auto
+					max-width 100%
+					border-radius 10px
+					padding 5px
+					box-shadow 0 5px 10px lighten(gray, 90%)
+
+				#content-tab
+					flex-grow 1
+					max-width 768px
+					padding 0 2em
+					margin 1em auto
+
+			.tip-title
+				font-size 1.2em
+				margin-bottom .8em
+
+			code, pre
+				background-color lighten(--accent-color, 90%)
+				color darken(--accent-color, 70%)
+				white-space pre-line
+				word-break break-word
+				line-height 1.4
+				border-radius 5px
+				padding 1em
+				counter-reset code-line
+
+				@media screen and (min-width 768px)
+					white-space pre-wrap
+
+				:not(.comment) > .highlight  // TODO: fix nested
+					for type in --types
+						&.{type}
+							color --color- + type
+
+				div
+					counter-increment code-line
+
+					&:before
+						content counter(code-line)
+						display inline-block
+						color darken(--accent-color, 50%)
+						width 3.2ch
+						margin-right 1ch
+						border-right 1px solid --accent-color
+
+			code
+				font-family monospace
+				display inline
+				padding 0
+
+			.auto-reference
+				color darken(--accent-color, 80%)
+				padding 1px
+				border-radius 1px
+
+				&:hover
+					color darken(--accent-color, 50%)
+
+			.anchor
+				transform translateY(-10vh)
+
+		footer
+			display flex
+			flex-flow row wrap
+			justify-content space-between
+			padding 1em 2em
+			border-top 1px solid lighten(--accent-color, 50%)
+			background-color lighten(--accent-color, 90%)

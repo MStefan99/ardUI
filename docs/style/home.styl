@@ -1,0 +1,106 @@
+--background-color = #E2F1F9
+--accent-color = #9AC1FF
+--accent-color-dark = #8AB1FF
+
+
+button()
+	-.5rem -.5rem 1rem lighten(--background-color, 4) \,
+	.5rem .5rem 1rem darken(--background-color, 8)
+
+
+html
+	scroll-behavior smooth
+	font-family sans-serif
+
+	body
+		margin 0
+		min-height 100vh
+		background-color --background-color
+
+		#logo
+			filter invert(1)
+			margin 1rem 0 0 1rem
+			height 3em
+
+		#splash
+			overflow visible
+			background-image linear-gradient(to bottom right, --accent-color 0% 46%,
+			--accent-color-dark 46% 47%, lighten(--accent-color-dark, 50%) 47%, transparent 50% 100%)
+
+			@media screen and (min-width 1440px)
+				padding 0 10vw
+
+			@media screen and (min-width 2560px)
+				padding 0 20vw
+
+			span
+				display block
+
+			#left
+				color #fff
+				font-size 10em
+				margin 1rem 0 0 5rem
+				max-width 50vw
+				font-weight bold
+
+				@media screen and (max-width 1440px)
+					font-size 7em
+
+				@media screen and (max-width 768px)
+					margin-left 1rem
+					font-size 5em
+
+			#right
+				margin 25vh 2rem 0 0
+				text-align right
+				font-size 8em
+				position relative
+				color --accent-color
+
+				@media screen and (max-width 1440px)
+					font-size 5em
+
+				@media screen and (max-width 768px)
+					font-size 3em
+
+				#line2
+					font-weight bold
+
+			#buttons
+				font-size 2em
+				padding 1rem
+				margin-left 30vw
+
+				@media screen and (min-width 768px)
+					margin-left 30vw
+					font-size 3em
+
+				@media screen and (min-width 1440px)
+					margin-left 15vw
+
+				.button
+					display inline-block
+					position relative
+					padding .75rem
+					border-radius 1em
+					background-color --background-color
+					color --accent-color
+					font-weight bold
+					font-variant small-caps
+					margin-bottom 2rem
+					text-decoration none
+					box-shadow button()
+					transition background-color .2s
+
+					&:hover, &#button-start:hover
+						background-color darken(--accent-color, 10)
+						color #fff
+
+					@media screen and (min-width 1440px)
+						top -5vh
+
+					&#button-start
+						background-color --accent-color
+						box-shadow button()\, 0 0 1rem --accent-color
+						color #fff
+

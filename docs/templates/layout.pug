@@ -1,0 +1,25 @@
+doctype html
+
+
+html(lang='en')
+	head
+		meta(charset='UTF-8')
+		meta(name='viewport' content='width=device-width, initial-scale=1.0')
+		block head
+			title ardUI Documentation
+		link(rel='icon' href='/img/ardUI_logo.svg')
+		link(rel='stylesheet' href='/style/stylify.css')
+		link(rel='stylesheet' href='/style/style.css')
+
+	body
+		header
+			include header
+			block header
+
+		main
+			block main
+			div#content
+				block main-content
+
+		footer
+			include footer

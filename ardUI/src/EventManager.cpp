@@ -100,6 +100,7 @@ void EventManager::checkForActions(uint32_t deltaTime) {
 		} else if (actionTime >= LONG_CLICK_TIME) {
 			event._currentAction = Event::Action::LONG_CLICK;  // Register long click
 		}
+		// TODO: add drift rejection
 		if (event._currentAction == Event::Action::CLICK && (
 				((uint32_t)ABS(event._deltaX) * 1000 / deltaTime > SCROLL_SENSITIVITY) ||
 				((uint32_t)ABS(event._deltaY) * 1000 / deltaTime > SCROLL_SENSITIVITY))) {

@@ -1,0 +1,101 @@
+extends ../../templates/tabbed
+include ../../templates/mixins/code
+include ../../templates/mixins/toc
+
+
+block nav
+	include ../../templates/nav-tutorials
+
+
+block tab-content
+	+toc('View basics')
+		h1 View basics
+	p
+		|  A View is a single widget you can place on your screen. As mentioned before in
+		|  #[a(href='/pages/tutorials/view_tree') view tree article], a single Activity can store an unlimited number
+		|  of Views by making use of different Layouts. Let's take a look at one of the most important ardUI concepts.
+	+toc('Pointers and memory')
+		h2 Pointers and memory management
+	p
+		|  From the previous examples you may have noticed that the Views in ardUI are usually handled by their pointers.
+		|  This is intentional and it is important to understand why it's done. Consider this example:
+	+code(`
+		// Warning, legacy code ahead!
+		// This code WILL NOT work in the latest version of ardUI.
+
+		class MyActivity: public Activity {
+			void onCreate() override {
+				auto ll = LinearLayout();
+				auto t = TextView("Activity title");
+
+				setRootView(ll);
+				ll.addView(t);
+			}
+		};
+	`)
+	p
+		|  On the first look, this might look better than the current solution but there is a major problem with it.
+		|  The issue is that C++ passes arguments by copy. This means that line 10 would have had no effect since
+		|  a copy of the Layout with no widgets was already added to an Activity on line 9. Because of this
+		|  some objects in ardUI are handled using their pointers for best flexibility so that you can do things
+		|  in any order you like. If you are not very familiar
+		|  with pointers, all you need to know is that you should use a #[code new] keyword when creating Views and
+		|  use an arrow (#[code ->]) operator instead of a dot (#[code .]) to access View's methods and fields.
+	p
+		|  This, however, raises an issue of memory management since all memory allocated should be freed at some point.
+		|  ardUI handles that automatically for you by explicitly deleting everything it's aware of once it is no
+		|  longer needed. In other words, it will delete all Views added to a view tree once their containing Activity
+		|  is closed. However, you are still responsible for deleting everything not added to the view tree or any other
+		|  objects ardUI cannot handle.
+	+toc('Event callbacks')
+		h2 Event functions and callbacks
+	p
+		|  If you have ever tried to make user interfaces yourself, you might agree that the one of the
+		|  most annoying things is constantly monitoring touchscreen input to make your buttons work as expected.
+		|  ardUI simplifies things here as well. It constantly checks your touchscreen and when an action (a click,
+		|  long click, scroll, etc.) has been detected it will call a function that you have specified (a callback).
+		|  Here is a simple example of setting a callback on a button:
+	+code(`
+		class MainActivity: public Activity {
+			using Activity::Activity;
+
+			void onCreate() override {
+				auto b = new ButtonView("Hello world!");
+				setRootView(b);
+
+				b->setOnClickListener([](View* b) -> void {
+					Serial.println("Your button was clicked!");
+				});
+			}
+		};
+	`)
+	p
+		|  When ardUI detects that your button has been clicked in this example, it will call your callback (lines 13-15)
+		|  for you. Please note that none of the callbacks in ardUI are closures, meaning they cannot use or modify
+		|  any variables outside them. You can think of these as normal functions receiving predefined arguments:
+	+code(`
+		int i = 0;
+		b->setOnClickListener([](View* b) -> void {
+			++i;  // This will not work
+		});
+	`)
+	p
+		|  To make working with Views somewhat easier, ardUI provides two functions: #[code ardUI::setViewName()] and
+		|  #[code ardUI::getViewByName()]. If you need to access another View in your callback, you can first save your
+		|  View and then get it by name like this:
+	+code(`
+		auto t = new TextView("Hello");
+		auto b = new ButtonView("Press me!");
+
+		ardUI::setViewName(t, "text");
+
+		b->setOnClickListener([](View* b) -> void {
+			auto t = (TextView*)ardUI::getViewByName("text");
+			t->setText("Pressed!");
+		});
+	`)
+	p
+		|  Notice the type casting on line 7. This function will return a pointer to a View object so you may need to
+		|  cast it down to the appropriate type to use fields and methods specific to that widget, like
+		|  #[code setText()] in this example.
+	script(async src='/js/referencer.js')

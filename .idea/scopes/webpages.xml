@@ -1,3 +1,3 @@
 <component name="DependencyValidationManager">
-  <scope name="webpages" pattern="file[ardUI]:Builder/*.pug" />
+  <scope name="webpages" pattern="file[ardUI]:Builder/*.pug||file[ardUI]:docs//*.pug" />
 </component>

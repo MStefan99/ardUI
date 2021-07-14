@@ -1,0 +1,23 @@
+doctype html
+
+html(lang='en')
+	head
+		meta(charset='UTF-8')
+		title ardUI
+		meta(name='viewport' content='width=device-width, initial-scale=1.0')
+		link(rel='icon' href='/img/ardUI_logo.svg')
+		link(rel='stylesheet' href='/style/stylify.css')
+		link(rel='stylesheet' href='/style/home.css')
+
+	body
+		div#splash
+			img#logo(src='./img/ardUI_text.svg')
+			div.d-flex.justify-content-between
+				span#left A C++ UI
+				div#right
+					span#line1 for the
+					span#line2 modern
+					span#line3 age
+			div#buttons.d-flex.flex-column.align-items-start
+				a(href='/pages/tutorials/installation')#button-start.button Get started
+				a(href='/pages')#button-docs.button Learn more
