@@ -11,7 +11,7 @@
 
 #include "AssertException.h"
 #include "Tester_options.h"
-#include "TestCounter.h"
+#include "StatRecorder.h"
 #include "Matcher.h"
 #include "Terminal.h"
 

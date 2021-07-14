@@ -6,15 +6,15 @@
 
 
 TestSuite::TestSuite() {
-	TestCounter::getInstance();
-	++TestCounter::_totalSuites;
+	StatRecorder::getInstance();
+	++StatRecorder::_totalSuites;
 }
 
 
 TestSuite::TestSuite(const std::string& name, const std::function<void(TestSuite&)>& cb):
 		_name {name}, _blockCb {cb} {
-	TestCounter::getInstance();
-	++TestCounter::_totalSuites;
+	StatRecorder::getInstance();
+	++StatRecorder::_totalSuites;
 	#if !DEFERRED_RUN
 	runBefore();
 	#endif
@@ -147,6 +147,6 @@ void TestSuite::run() {
 	printResults();
 	#endif
 	if (_passed) {
-		++TestCounter::_passedSuites;
+		++StatRecorder::_passedSuites;
 	}
 }

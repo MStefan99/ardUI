@@ -6,23 +6,23 @@
 
 
 Test::Test() {
-	++TestCounter::_totalTests;
+	++StatRecorder::_totalTests;
 }
 
 
 Test::Test(std::string name, std::function<void()> callback):
 		_name {std::move(name)},
 		_callback {std::move(callback)} {
-	++TestCounter::_totalTests;
+	++StatRecorder::_totalTests;
 }
 
 
 void Test::run() const {
-	++TestCounter::_ranTests;
+	++StatRecorder::_ranTests;
 	if (_callback) {
 		try {
 			_callback();
-			++TestCounter::_passedTests;
+			++StatRecorder::_passedTests;
 		} catch (const AssertException& e) {
 			throw e;
 		}

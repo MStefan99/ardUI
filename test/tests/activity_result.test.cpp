@@ -47,7 +47,6 @@ class TestActivity: public Activity {
 
 void setup() {
 	ardUI::startActivity<TestActivity>();
-	EventManager::update(false, true);
 }
 
 

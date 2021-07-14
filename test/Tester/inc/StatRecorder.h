@@ -2,18 +2,20 @@
 // Created by MStefan99 on 13.7.21.
 //
 
-#ifndef ARDUI_TESTCOUNTER_H
-#define ARDUI_TESTCOUNTER_H
+#ifndef ARDUI_STATRECORDER_H
+#define ARDUI_STATRECORDER_H
 
 #include <iostream>
+#include <chrono>
+#include <iomanip>
 
 #include "Terminal.h"
 #include "Singleton.h"
 
 
-class TestCounter: public Singleton<TestCounter> {
+class StatRecorder: public Singleton<StatRecorder> {
 public:
-	~TestCounter();
+	~StatRecorder();
 
 	friend class TestSuite;
 
@@ -25,6 +27,7 @@ protected:
 	static size_t _totalTests;
 	static size_t _ranTests;
 	static size_t _passedTests;
+	static std::chrono::time_point<std::chrono::system_clock> _startTime;
 };
 
-#endif //ARDUI_TESTCOUNTER_H
+#endif //ARDUI_STATRECORDER_H
