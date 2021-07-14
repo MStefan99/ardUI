@@ -17,15 +17,15 @@ struct A {
 	int val;
 
 
-	bool operator ==(const A& other) const {
+	bool operator==(const A& other) const {
 		return val == other.val;
 	}
 };
 
 
 int main() {
-	describe("Bundle Test", [](TestBlock& block) -> void {
-		Bundle b {};
+	Bundle b {};
+	describe("Bundle Test", [&](TestBlock& block) -> void {
 
 		block.test("Testing int", [&]() -> void {
 			b.putInt("int", 1);
@@ -55,7 +55,7 @@ int main() {
 			expect(b.getString("string")).toEqual("Test");
 			expect(b.get<A>("custom")).toEqual(A {1});
 		});
-		
+
 		block.test("Bundle copying", [&]() -> void {
 			Bundle b1 {b};
 			expect(b1.getInt("int")).toEqual(1);
