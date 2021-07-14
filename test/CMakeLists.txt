@@ -27,6 +27,11 @@ add_executable(
 )
 
 add_executable(
+		Test_View
+		${TEST_DIRECTORY}/tests/view.test.cpp
+)
+
+add_executable(
 		Test_Activity
 		${TEST_DIRECTORY}/tests/activity.test.cpp
 )

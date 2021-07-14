@@ -17,9 +17,9 @@ public:
 	class MeasureSpec {
 	public:
 		enum Sizing {
+			UNSPECIFIED,
 			AT_MOST,
-			EXACTLY,
-			UNSPECIFIED
+			EXACTLY
 		};
 
 		explicit MeasureSpec(uint16_t size, Sizing mode = UNSPECIFIED);
@@ -63,6 +63,12 @@ public:
 
 	#ifdef __EMSCRIPTEN__
 	friend class EmscriptenBindingInitializer_BuilderInterface;
+	#endif
+
+	#ifdef TEST
+
+	friend class TestWrapper;
+
 	#endif
 
 protected:

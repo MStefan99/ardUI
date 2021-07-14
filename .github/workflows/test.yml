@@ -23,6 +23,7 @@ jobs:
           --target Test_template_library
           --target Test_Rect
           --target Test_Bundle
+          --target Test_View
           --target Test_Activity
           --target Test_Activity_result
           --target Test_ardUI
@@ -35,6 +36,9 @@ jobs:
 
       - name: Test Bundle
         run: ${{github.workspace}}/build/test/Test_Bundle
+
+      - name: Test View
+        run: ${{github.workspace}}/build/test/Test_View
 
       - name: Test Activity
         run: ${{github.workspace}}/build/test/Test_Activity
