@@ -25,7 +25,7 @@ TestCounter::~TestCounter() {
 	std::cout << FG_GREEN << _passedTests << " passed, " << RST;
 	std::cout << _totalTests << " total.";
 
-	std::cout << std::endl;
+	std::cout << std::endl << std::endl;
 
 	if (_passedTests != _totalTests || _totalSuites != _passedSuites) {
 		exit(1);

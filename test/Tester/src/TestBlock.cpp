@@ -16,7 +16,6 @@ TestBlock::TestBlock(const std::string& name, const std::function<void(TestBlock
 	TestCounter::getInstance();
 	++TestCounter::_totalSuites;
 	#if !DEFERRED_RUN
-	std::cout << BG_BLUE << " RUN " << RST << " " << name << '\r';
 	runBefore();
 	#endif
 }
@@ -111,8 +110,8 @@ void TestBlock::run() {
 	}
 	runAfter();
 	printResults();
+	#endif
 	if (_passed) {
 		++TestCounter::_passedSuites;
 	}
-	#endif
 }
