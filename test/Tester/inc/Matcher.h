@@ -53,8 +53,8 @@ void Matcher<T>::toEqual(T expected) const {
 		return;
 	} else {
 		throw AssertException(!_negated?
-		                      "Actual value doesn't match the expected value" :
-		                      "Actual value shouldn't match the expected value");
+		                      "Actual value does not match the expected value" :
+		                      "Actual value should not match the expected value");
 	}
 }
 

@@ -112,7 +112,11 @@ void Activity::onDestroy() {
 
 
 View* Activity::findViewById(int id) {
-	return _rootView->findViewById(id);
+	if (_rootView) {
+		return _rootView->findViewById(id);
+	} else {
+		return nullptr;
+	}
 }
 
 

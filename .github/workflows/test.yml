@@ -25,6 +25,7 @@ jobs:
           --target Test_Bundle
           --target Test_Activity
           --target Test_Activity_result
+          --target Test_ardUI
 
       - name: Test template library
         run: ${{github.workspace}}/build/test/Test_template_library
@@ -40,3 +41,6 @@ jobs:
 
       - name: Test Activity result
         run: ${{github.workspace}}/build/test/Test_Activity_result
+
+      - name: Test ardUI
+        run: ${{github.workspace}}/build/test/Test_ardUI

@@ -35,3 +35,8 @@ add_executable(
 		Test_Activity_result
 		${TEST_DIRECTORY}/tests/activity_result.test.cpp
 )
+
+add_executable(
+		Test_ardUI
+		${TEST_DIRECTORY}/tests/ardUI.test.cpp
+)

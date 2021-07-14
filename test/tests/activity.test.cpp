@@ -20,51 +20,68 @@ class TestActivity: public Activity {
 
 struct TestWrapper {
 	static void run() {
-		auto view = new TextView {};
-
+		Activity* activity {nullptr};
+		TextView* view {nullptr};
+				
 		describe("Activity tests", [&](TestSuite& suite) -> void {
+			
+			suite.beforeEach([&]() -> void {
+				activity = new TestActivity;
+				view = new TextView;
 
-			suite.beforeEach([]() -> void {
-				ardUI::startActivity<TestActivity>();
-				EventManager::update(false, true);
+				activity->setRootView(view);
+			});
+			
+			suite.afterEach([&]() -> void {
+				delete activity;
 			});
 
-			suite.afterEach([]() -> void {
-				if (ardUI::getCurrentActivity()) {
-					ardUI::getCurrentActivity()->finish();
-					EventManager::update(false, true);
-				}
-			});
-
-			suite.test("Activity lifecycle", []() -> void {
-				auto firstActivity {ActivityManager::_currentActivity};
-				auto& currentActivity {ActivityManager::_currentActivity};
-
-				expect(firstActivity).Not().toBeNull();
-				expect(firstActivity->_currentState).toEqual(Activity::RESUMED);
-
-				ardUI::startActivity<TestActivity>();
-				EventManager::update(false, true);
-				expect(firstActivity->_currentState).toEqual(Activity::STOPPED);
-				expect(currentActivity->_currentState).toEqual(Activity::RESUMED);
-
-				ardUI::getCurrentActivity()->finish();
-				EventManager::update(false, true);
-				expect(firstActivity->_currentState).toEqual(Activity::RESUMED);
-
-				ardUI::getCurrentActivity()->finish();
-				EventManager::update(false, true);
-				expect(currentActivity).toBeNull();
-			});
-
-			suite.test("Background color", []() -> void {
-				ardUI::getCurrentActivity()->setBackgroundColor({0xfffffful});
-				expect(ardUI::getCurrentActivity()->getBackgroundColor().to888()).toEqual(0xfffffful);
+			suite.test("Background color", [&]() -> void {
+				activity->setBackgroundColor({0xfffffful});
+				expect(activity->getBackgroundColor().to888()).toEqual(0xfffffful);
 			});
 
 			suite.test("Root view", [&]() -> void {
-				ardUI::getCurrentActivity()->setRootView(view);
-				expect(ardUI::getCurrentActivity()->getRootView()).toEqual(view);
+				expect(activity->getRootView()).toEqual(view);
+				activity->setRootView(nullptr);
+				expect(activity->getRootView()).toBeNull();
+				delete view;
+			});
+
+			suite.test("Find View by ID", [&]() -> void {
+				expect(activity->findViewById(view->getId())).toEqual(view);
+				activity->setRootView(nullptr);
+				expect(activity->findViewById(view->getId())).toBeNull();
+				delete view;
+			});
+			
+			suite.test("Activity lifecycle", [&]() -> void {
+				activity->rewindState(Activity::CREATED);
+				expect(activity->_currentState).toEqual(Activity::CREATED);
+
+				activity->rewindState(Activity::STARTED);
+				expect(activity->_currentState).toEqual(Activity::STARTED);
+
+				activity->rewindState(Activity::RESUMED);
+				expect(activity->_currentState).toEqual(Activity::RESUMED);
+
+				activity->rewindState(Activity::PAUSED);
+				expect(activity->_currentState).toEqual(Activity::PAUSED);
+
+				activity->rewindState(Activity::RESTARTED);
+				expect(activity->_currentState).toEqual(Activity::RESTARTED);
+
+				activity->rewindState(Activity::STOPPED);
+				expect(activity->_currentState).toEqual(Activity::STOPPED);
+
+				activity->rewindState(Activity::DESTROYED);
+				expect(activity->_currentState).toEqual(Activity::DESTROYED);
+
+				activity->rewindState(Activity::CREATED);
+				expect(activity->_currentState).toEqual(Activity::DESTROYED);
+
+				activity->rewindState(Activity::RESUMED);
+				expect(activity->_currentState).toEqual(Activity::DESTROYED);
 			});
 		});
 	}
