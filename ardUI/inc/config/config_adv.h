@@ -36,7 +36,7 @@
  * Can reduce the CPU load by only running the loop once per update.
  * Does not affect UI performance but leaves less time for other operations.
  */
-#define SLOW_MODE ( true )
+#define SLOW_MODE ( false )
 
 /*
  * Enable Display fallback.

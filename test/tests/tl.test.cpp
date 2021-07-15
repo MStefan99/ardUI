@@ -2,8 +2,6 @@
 // Created by MStefan99 on 3.2.20.
 //
 
-#include <iostream>
-
 #include "Tester.h"
 #include "vector.h"
 #include "list.h"
@@ -12,23 +10,16 @@
 #include "queue.h"
 
 
-// Needed to avoid undefined reference error, usually defined with setup() and loop()
-void arduiUserSetup() {}
-
-
-void arduiUserLoop() {}
-
-
 void vectorAssert() {
 	ardui::vector<int> v {};
 	describe("Vector check", [&](TestSuite& block) -> void {
 
 		block.test("push and subscribe", [&]() -> void {
-			expect(v.empty()).toEqual(true);
+			expect(v.empty()).toBeTruthy();
 			for (int i = 0; i < 10; ++i) {
 				v.push_back(i);
 			}
-			expect(v.empty()).toEqual(false);
+			expect(v.empty()).toBeFalsy();
 			expect(v.size()).toEqual(10);
 
 			for (int j = 0; j < 10; ++j) {
@@ -92,12 +83,12 @@ void listAssert() {
 	ardui::list<int> l {};
 	describe("List check", [&](TestSuite& block) -> void {
 
-		expect(l.empty()).toEqual(true);
+		expect(l.empty()).toBeTruthy();
 		block.test("push and subscript assert", [&]() -> void {
 			for (int i = 0; i < 10; ++i) {
 				l.push_back(i);
 			}
-			expect(l.empty()).toEqual(false);
+			expect(l.empty()).toBeFalsy();
 
 			for (int j = 0; j < 10; ++j) {
 				expect(l[j]).toEqual(j);
@@ -169,7 +160,7 @@ void mapAssert() {
 	describe("Map check", [&](TestSuite& block) -> void {
 
 		block.test("insert assert", [&]() -> void {
-			expect(m.empty()).toEqual(true);
+			expect(m.empty()).toBeTruthy();
 			m.insert({2, 2.2});
 			expect(m[2]).toEqual(2.2);
 			m.insert({-1, -1.1});
@@ -184,7 +175,7 @@ void mapAssert() {
 
 		block.test("size assert", [&]() -> void {
 			expect(m.size()).toEqual(8);
-			expect(m.empty()).toEqual(false);
+			expect(m.empty()).toBeFalsy();
 		});
 
 		block.test("copy assert", [&]() -> void {
@@ -232,7 +223,7 @@ void stackAssert() {
 
 		block.test("Size assert", [&]() -> void {
 			expect(s.size()).toEqual(3);
-			expect(s.empty()).toEqual(false);
+			expect(s.empty()).toBeFalsy();
 		});
 
 		block.test("Pop assert", [&]() -> void {
@@ -256,7 +247,7 @@ void queueAssert() {
 
 		block.test("Size assert", [&]() -> void {
 			expect(q.size()).toEqual(3);
-			expect(q.empty()).toEqual(false);
+			expect(q.empty()).toBeFalsy();
 		});
 
 		block.test("Front and back assert", [&]() -> void {

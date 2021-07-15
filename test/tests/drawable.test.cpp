@@ -62,9 +62,9 @@ int main() {
 		suite.test("Visibility", [&]() -> void {
 			expect(v->isVisible()).toBeTruthy();
 
-			expect(v->setVisible(true)).toEqual(false);
+			expect(v->setVisible(true)).toBeFalsy();
 			expect(v->isVisible()).toBeTruthy();
-			expect(v->setVisible(false)).toEqual(true);
+			expect(v->setVisible(false)).toBeTruthy();
 			expect(v->isVisible()).toBeFalsy();
 		});
 	});
