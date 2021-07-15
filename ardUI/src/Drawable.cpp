@@ -35,20 +35,18 @@ bool Drawable::setLevel(int16_t l) {
 }
 
 
-bool Drawable::getPadding(Rect& p) const {
-	// TODO: replace with a normal getter
-	bool paddingExists {p};
-	if (paddingExists) {
-		p = _padding;
-	} else {
-		p.setEmpty();
-	}
-	return paddingExists;
+Rect Drawable::getPadding() const {
+	return _padding;
 }
 
 
 void Drawable::setPadding(int16_t left, int16_t top, int16_t right, int16_t bottom) {
-	_padding = Rect(left, top, right, bottom);
+	_padding.set(left, top, right, bottom);
+}
+
+
+void Drawable::setPadding(const Rect& padding) {
+	_padding = padding;
 }
 
 

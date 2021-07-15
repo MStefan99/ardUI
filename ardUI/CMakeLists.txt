@@ -1,6 +1,6 @@
 # Setting compiler flags
 SET(COMPILER_FLAGS " -Weverything -Werror \
--Wno-padded -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-unknown-argument \
+-Wno-padded -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-unknown-argument -Wno-unused-function \
 -Wno-unused-parameter -Wno-global-constructors -Wno-exit-time-destructors -Wno-unknown-pragmas")
 SET(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} ${COMPILER_FLAGS})
 

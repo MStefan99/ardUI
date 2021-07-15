@@ -24,11 +24,12 @@ public:
 	void setBounds(int16_t left, int16_t top, int16_t right, int16_t bottom);
 	void setBounds(const Rect& bounds);
 
+	Rect getPadding() const;
+	void setPadding(int16_t left, int16_t top, int16_t right, int16_t bottom);
+	void setPadding(const Rect& padding);
+
 	int getLevel() const;
 	bool setLevel(int16_t level);
-
-	void setPadding(int16_t left, int16_t top, int16_t right, int16_t bottom);
-	bool getPadding(Rect& padding) const;
 
 	uint16_t getMinimumHeight() const;
 	void setMinimumHeight(uint16_t minimumHeight);

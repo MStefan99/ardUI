@@ -27,6 +27,16 @@ add_executable(
 )
 
 add_executable(
+		Test_Color
+		${TEST_DIRECTORY}/tests/color.test.cpp
+)
+
+add_executable(
+		Test_Drawable
+		${TEST_DIRECTORY}/tests/drawable.test.cpp
+)
+
+add_executable(
 		Test_View
 		${TEST_DIRECTORY}/tests/view.test.cpp
 )

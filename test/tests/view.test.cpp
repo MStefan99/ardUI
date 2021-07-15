@@ -45,7 +45,7 @@ int main() {
 			expect(v->findViewById(v->getId())).toEqual(v);
 		});
 
-		suite.test("Draw pass", [&]() -> void {
+		suite.test("Measure", [&]() -> void {
 			v->measure(MeasureSpec {100, MeasureSpec::EXACTLY},
 					MeasureSpec {100, MeasureSpec::EXACTLY});
 
@@ -58,7 +58,9 @@ int main() {
 			expect(v->getBounds().top).toEqual(0);
 			expect(v->getBounds().right).toEqual(0);
 			expect(v->getBounds().bottom).toEqual(0);
+		});
 
+		suite.test("Layout", [&]() -> void {
 			v->layout(100, 100, 200, 200);
 
 			expect(v->getBounds().left).toEqual(100);
@@ -75,7 +77,9 @@ int main() {
 			expect(v->getBounds().top).toEqual(200);
 			expect(v->getBounds().right).toEqual(300);
 			expect(v->getBounds().bottom).toEqual(300);
+		});
 
+		suite.test("Draw", [&]() -> void {
 			expect(v->isValid()).toBeFalsy();
 			v->draw();
 			expect(v->isValid()).toBeTruthy();

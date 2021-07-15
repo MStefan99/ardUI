@@ -17,17 +17,17 @@ Color::ColorData::ColorData(uint32_t color):
 
 
 Color::ColorData& Color::ColorData::operator=(uint32_t color) {
-	_r = static_cast<uint8_t>(color & 0xFF0000ul) >> 16u;
-	_g = static_cast<uint8_t>(color & 0xFF00u) >> 8u;
+	_r = static_cast<uint8_t>((color & 0xFF0000ul) >> 16u);
+	_g = static_cast<uint8_t>((color & 0xFF00u) >> 8u);
 	_b = static_cast<uint8_t>(color & 0xFFu);
 	return *this;
 }
 
 
 Color::ColorData& Color::ColorData::operator=(uint16_t color) {
-	_r = static_cast<uint8_t>(color & 0xF80000ul) >> 8u;
-	_g = static_cast<uint8_t>(color & 0xFC00u) >> 5u;
-	_b = static_cast<uint8_t>(color & 0xF8u) >> 3u;
+	_r = static_cast<uint8_t>((color & 0xF80000ul) >> 8u);
+	_g = static_cast<uint8_t>((color & 0xFC00u) >> 3u);
+	_b = static_cast<uint8_t>((color & 0xF8u) << 3u);
 	return *this;
 }
 
@@ -40,9 +40,9 @@ Color::ColorData::operator uint32_t() const {
 
 
 Color::ColorData::operator uint16_t() const {
-	return static_cast<uint16_t>(_r << 8u)
-			| static_cast<uint16_t>(_g << 5u)
-			| static_cast<uint16_t>(_b);  // NOLINT(hicpp-signed-bitwise)
+	return static_cast<uint16_t>((_r & 0xF8u) << 8u)
+			| static_cast<uint16_t>((_g & 0xFCu) << 3u)
+			| static_cast<uint16_t>((_b & 0xF8u) >> 3u);
 }
 
 
@@ -75,33 +75,46 @@ uint32_t Color::to888() const {
 #else
 
 
-static uint32_t Expand(uint32_t number, uint8_t amount, uint8_t lsb) {
-	if (number >> lsb & 1u) {
-		for (uint8_t i {0}; i < amount; ++i) {
-			number = number << 1u | 0x1u << lsb;
-		}
-		return number;
-	} else {
-		return number << amount;
+static uint32_t ShiftColor(uint32_t number, uint8_t shift, uint8_t lsb = 0, uint8_t fillBits = 3) {
+	number <<= shift;
+
+	if (number >> (lsb + fillBits) & 1u) {
+		number |= ((1u << fillBits) - 1u) << lsb;
 	}
+	return number;
 }
 
 
-Color::Color(uint32_t color): _color {(uint16_t)color} {
+static uint16_t To565(uint32_t color) {
+	return static_cast<uint16_t>(
+			((color & 0xF80000ul) >> 8u) |
+					((color & 0xFC00u) >> 5u) |
+					((color & 0xF8u) >> 3u));
+}
+
+
+static uint32_t To888(uint16_t color) {
+	return static_cast<uint32_t>(
+			ShiftColor((color & 0xF800ul), 8, 16) |
+					ShiftColor((color & 0x7E0u), 5, 8, 2) |
+					ShiftColor((color & 0x1Fu), 3));
+}
+
+
+Color::Color(uint32_t color):
+		_color {To565(color)} {
 	// Nothing to do
 }
 
 
 Color& Color::operator=(uint32_t color) {
-	_color = (uint16_t)color;
+	_color = To565(color);
 	return *this;
 }
 
 
 uint32_t Color::to888() const {
-	return Expand((_color & 0xF800ul), 8, 11) |
-			Expand((_color & 0x7E0u), 5, 5) |
-			Expand((_color & 0x1Fu), 3, 0);
+	return To888(_color);
 }
 
 
