@@ -97,25 +97,24 @@ void TestSuite::runTest(const Test& test) {
 			_beforeEachCb();
 		}
 	} catch (const AssertException& e) {
-		_errors.emplace_back("Test setup", e.what());
+		_errors.emplace_back(test.getName() + " > Test setup", e.what());
 		_passed = false;
-		return;
 	}
-	try {
-		test.run();
-	} catch (const AssertException& e) {
-		_errors.emplace_back(test.getName(), e.what());
-		_passed = false;
-		return;
+	if (_passed) {
+		try {
+			test.run();
+		} catch (const AssertException& e) {
+			_errors.emplace_back(test.getName(), e.what());
+			_passed = false;
+		}
 	}
 	try {
 		if (_afterEachCb) {
 			_afterEachCb();
 		}
 	} catch (const AssertException& e) {
-		_errors.emplace_back("Test teardown", e.what());
+		_errors.emplace_back(test.getName() + " > Test teardown", e.what());
 		_passed = false;
-		return;
 	}
 }
 
@@ -141,9 +140,7 @@ void TestSuite::run() {
 			runTest(test);
 		}
 	}
-	if (_passed) {
-		runAfter();
-	}
+	runAfter();
 	printResults();
 	#endif
 	if (_passed) {
