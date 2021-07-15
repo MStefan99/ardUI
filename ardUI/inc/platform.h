@@ -10,6 +10,18 @@
 #include "config/config_adv.h"
 
 
+#if LOG_LEVEL < LOG_NONE || LOG_LEVEL > LOG_VERBOSE
+#error ERROR: Invalid log level
+#endif
+
+#if COLOR_MODE != COLOR_888 && COLOR_MODE != COLOR_565
+#error ERROR: Invalid color mode
+#endif
+
+#if REFRESH_RATE <= 0 || TOUCH_RATE <= 0
+#error ERROR: Refresh rate should be greater than zero
+#endif
+
 #if DISPLAY_FALLBACK
 	#define DISPLAY_H "DisplayController.h"
 	#define DISPLAY DisplayController
@@ -61,7 +73,7 @@
   b = t;\
 }
 
-#if (!defined(Arduino_h) && DEBUGGING)
+#if !defined(Arduino_h) && DEBUGGING
 	#define DEBUG_MODE ( true )
 #else
 	#define DEBUG_MODE ( false )

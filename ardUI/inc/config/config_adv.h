@@ -14,7 +14,7 @@
 
 
 /*
- * Hybrid sleep prevents ardUI from pausing whenever you call the
+ * Smart delay prevents ardUI from pausing whenever you call the
  * delay() function, so that the UI always remains dynamic and responsive.
  * If this feature is disabled, no UI updates will happen during sleep(),
  * which means all UI interactions will be paused as well.
