@@ -192,10 +192,11 @@ namespace ardui {
 	vector<T>& vector<T>::operator=(const vector <T>& vector) {
 		if (this != &vector) {
 			resize(vector._vectorSize);
-			for (int i {0}; i < _vectorSize; ++i) {
+			for (int i {0}; i < vector.size(); ++i) {
 				_vectorArray[i] = vector._vectorArray[i];
 			}
 		}
+		_vectorSize = vector.size();
 		return *this;
 	}
 

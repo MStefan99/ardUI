@@ -7,12 +7,6 @@
 #include "Bundle.h"
 
 
-void arduiUserSetup() {}
-
-
-void arduiUserLoop() {}
-
-
 struct A {
 	int val;
 
@@ -58,10 +52,16 @@ int main() {
 
 		block.test("Bundle copying", [&]() -> void {
 			Bundle b1 {b};
+
 			expect(b1.getInt("int")).toEqual(1);
 			expect(b1.getFloat("float")).toEqual(1.1);
 			expect(b1.getString("string")).toEqual("Test");
 			expect(b1.get<A>("custom")).toEqual(A {1});
+
+			b1.putInt("newInt", 2);
+			b1 = b;
+
+			expect(b1.getInt("newInt")).toEqual(2);
 		});
 	});
 }

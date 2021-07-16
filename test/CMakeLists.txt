@@ -7,7 +7,7 @@ target_sources(ardUI PRIVATE ${SOURCE_DIRECTORY}/display.cpp)
 add_subdirectory(${TEST_DIRECTORY}/Tester)
 link_libraries(Tester)
 
-set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-DTEST")
+add_compile_options(-DTEST)
 
 
 # Individual test targets

@@ -24,14 +24,6 @@ Color::ColorData& Color::ColorData::operator=(uint32_t color) {
 }
 
 
-Color::ColorData& Color::ColorData::operator=(uint16_t color) {
-	_r = static_cast<uint8_t>((color & 0xF80000ul) >> 8u);
-	_g = static_cast<uint8_t>((color & 0xFC00u) >> 3u);
-	_b = static_cast<uint8_t>((color & 0xF8u) << 3u);
-	return *this;
-}
-
-
 Color::ColorData::operator uint32_t() const {
 	return (static_cast<uint32_t>(_r) << 16u)
 			| (static_cast<uint32_t>(_g) << 8u)

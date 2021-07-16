@@ -40,7 +40,6 @@ protected:
 		explicit ColorData(uint32_t color);
 
 		ColorData& operator=(uint32_t color);
-		ColorData& operator=(uint16_t color);
 
 		bool operator==(const ColorData& c) const;
 		bool operator!=(const ColorData& c) const;

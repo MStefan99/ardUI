@@ -18,6 +18,11 @@ public:
 	Matcher& Not();
 
 	void toEqual(T expected) const;
+	void toDiffer(T expected) const;
+	void toBeGreaterThan(T expected) const;
+	void toBeGreaterThanOrEqual(T expected) const;
+	void toBeLessThan(T expected) const;
+	void toBeLessThanOrEqual(T expected) const;
 	void toBeTruthy() const;
 	void toBeFalsy() const;
 	void toBeNull() const;
@@ -53,8 +58,68 @@ void Matcher<T>::toEqual(T expected) const {
 		return;
 	} else {
 		throw AssertException(!_negated?
-		                      "Actual value does not match the expected value" :
-		                      "Actual value should not match the expected value");
+				"Actual value does not match the expected value" :
+				"Actual value should not match the expected value");
+	}
+}
+
+
+template <class T>
+void Matcher<T>::toDiffer(T expected) const {
+	if ((_actual != expected) ^ _negated) {
+		return;
+	} else {
+		throw AssertException(!_negated?
+				"Actual value does not differ from the expected value" :
+				"Actual value should not differ from the expected value");
+	}
+}
+
+
+template <class T>
+void Matcher<T>::toBeGreaterThan(T expected) const {
+	if ((_actual > expected) ^ _negated) {
+		return;
+	} else {
+		throw AssertException(!_negated?
+				"Actual value is not greater than the expected value" :
+				"Actual value should not be greater than the expected value");
+	}
+}
+
+
+template <class T>
+void Matcher<T>::toBeGreaterThanOrEqual(T expected) const {
+	if ((_actual >= expected) ^ _negated) {
+		return;
+	} else {
+		throw AssertException(!_negated?
+				"Actual value is not greater than or equal to the expected value" :
+				"Actual value should not be greater than or equal to the expected value");
+	}
+}
+
+
+template <class T>
+void Matcher<T>::toBeLessThan(T expected) const {
+	if ((_actual < expected) ^ _negated) {
+		return;
+	} else {
+		throw AssertException(!_negated?
+				"Actual value is not less than the expected value" :
+				"Actual value should not be less than the expected value");
+	}
+}
+
+
+template <class T>
+void Matcher<T>::toBeLessThanOrEqual(T expected) const {
+	if ((_actual <= expected) ^ _negated) {
+		return;
+	} else {
+		throw AssertException(!_negated?
+				"Actual value is not less than or equal to the expected value" :
+				"Actual value should not be less than or equal to the expected value");
 	}
 }
 
@@ -65,8 +130,8 @@ void Matcher<T>::toBeNull() const {
 		return;
 	} else {
 		throw AssertException(!_negated?
-		                      "Value was expected to be null" :
-		                      "Value was not expected to be null");
+				"Value was expected to be null" :
+				"Value was not expected to be null");
 	}
 }
 
@@ -77,8 +142,8 @@ void Matcher<T>::toBeTruthy() const {
 		return;
 	} else {
 		throw AssertException(!_negated?
-		                      "Value was expected to be truthy" :
-		                      "Value was not expected to be truthy");
+				"Value was expected to be truthy" :
+				"Value was not expected to be truthy");
 	}
 }
 
@@ -89,8 +154,8 @@ void Matcher<T>::toBeFalsy() const {
 		return;
 	} else {
 		throw AssertException(!_negated?
-		                      "Value was expected to be falsy" :
-		                      "Value was not expected to be falsy");
+				"Value was expected to be falsy" :
+				"Value was not expected to be falsy");
 	}
 }
 

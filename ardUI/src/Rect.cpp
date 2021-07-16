@@ -9,7 +9,9 @@ Rect::Rect(int16_t l, int16_t t, int16_t r, int16_t b):
 		left {l},
 		top {t},
 		right {r},
-		bottom {b} {}
+		bottom {b} {
+	// Nothing to do
+}
 
 
 bool Rect::contains(const Rect& r) const {

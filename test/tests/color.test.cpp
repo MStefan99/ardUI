@@ -34,26 +34,30 @@ int main() {
 		});
 
 		suite.test("Color copy", [&]() -> void {
+			Color c0 {0xfu};
+
 			for (auto c: testColors) {
 				Color c1 {c.first};
 				Color c2 {c1};
-				Color c3 {0x1u};
 
+				expect(c0.to888()).Not().toEqual(c.first);
 				expect(c1.to888()).toEqual(c.first);
 				expect(c2.to888()).toEqual(c.first);
-				expect(c3.to888()).Not().toEqual(c.first);
 			}
 		});
 
 		suite.test("Color comparison", [&]() -> void {
-			for (auto c: testColors) {
-				Color c1 {c.first};
-				Color c2 {c.first};
-				Color c3 {0x1u};
+			Color c0 {0xfu};
+			Color c1;
 
+			for (auto c: testColors) {
+				Color c2 {c.first};
+				Color c3 {c.first};
+				c1 = c2;
+
+				expect(c0).toDiffer(c1);
 				expect(c1).toEqual(c2);
-				expect(c3).Not().toEqual(c1);
-				expect(c3).Not().toEqual(c2);
+				expect(c2).toEqual(c3);
 			}
 		});
 	});
