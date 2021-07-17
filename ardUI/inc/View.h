@@ -25,7 +25,7 @@ public:
 		explicit MeasureSpec(uint16_t size, Sizing mode = UNSPECIFIED);
 
 		uint16_t getSize() const;
-		uint16_t getMode() const;
+		Sizing getMode() const;
 
 	protected:
 		uint16_t _size {};
@@ -58,6 +58,7 @@ public:
 
 	void setOnClickListener(void (* onClickListener)(View*));
 	void setOnLongClickListener(void (* onLongClickListener)(View*));
+	void setOnScrollListener(void (* onScrollListener)(View*));
 
 	friend class Activity;
 

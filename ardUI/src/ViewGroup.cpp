@@ -89,6 +89,7 @@ void ViewGroup::draw() {
 
 
 View* ViewGroup::handleEvent(const Event& event) {
+	// TODO: fix event handling (listeners not called)
 	for (auto view: _viewList) {
 		if (view->getBounds().contains(event._targetX, event._targetY)) {
 			return view->handleEvent(event);

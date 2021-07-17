@@ -15,7 +15,7 @@ uint16_t View::MeasureSpec::getSize() const {
 }
 
 
-uint16_t View::MeasureSpec::getMode() const {
+View::MeasureSpec::Sizing View::MeasureSpec::getMode() const {
 	return _mode;
 }
 
@@ -161,6 +161,11 @@ void View::setOnLongClickListener(void (* l)(View*)) {
 }
 
 
+void View::setOnScrollListener(void (* l)(View*)) {
+	_onScroll = l;
+}
+
+
 void View::onMeasure(MeasureSpec widthMeasureSpec, MeasureSpec heightMeasureSpec) {
 	setMeasuredDimensions(getDefaultSize(getMinimumWidth() + _padding.width(), widthMeasureSpec),
 			getDefaultSize(getMinimumHeight() + _padding.height(), heightMeasureSpec));
@@ -180,7 +185,6 @@ void View::onDraw() {
 uint16_t View::getDefaultSize(uint16_t size, MeasureSpec measureSpec) {
 	switch (measureSpec.getMode()) {
 		case View::MeasureSpec::Sizing::UNSPECIFIED:
-		default:
 			return size;
 		case View::MeasureSpec::Sizing::AT_MOST:
 			return MIN(size, measureSpec.getSize());
