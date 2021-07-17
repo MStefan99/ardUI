@@ -134,7 +134,7 @@ Rect& Rect::operator=(const Rect& r) {
 
 
 Rect::operator bool() const {
-	return isEmpty();
+	return !isEmpty();
 }
 
 

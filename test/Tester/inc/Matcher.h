@@ -138,7 +138,7 @@ void Matcher<T>::toBeNull() const {
 
 template <class T>
 void Matcher<T>::toBeTruthy() const {
-	if (_actual ^ _negated) {
+	if (!!_actual ^ _negated) {
 		return;
 	} else {
 		throw AssertException(!_negated?
