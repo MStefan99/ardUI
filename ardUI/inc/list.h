@@ -75,9 +75,6 @@ namespace ardui {
 			element(const element& listElement) = default;
 			~element() = default;
 
-			element& operator=(const element& listElement) = default;
-			element& operator=(const T& value);
-
 			T elementValue;
 			element* prevElement {nullptr};
 			element* nextElement {nullptr};
@@ -93,7 +90,9 @@ namespace ardui {
 
 	template <class T>
 	list<T>::element::element(const T& value, element* prev, element* next):
-			elementValue(value), prevElement(prev), nextElement(next) {}
+			elementValue(value), prevElement(prev), nextElement(next) {
+		// Nothing to do
+	}
 
 
 	template <class T>
@@ -352,13 +351,6 @@ namespace ardui {
 
 
 	template <class T>
-	typename list<T>::element& list<T>::element::operator=(const T& value) {
-		elementValue = value;
-		return *this;
-	}
-
-
-	template <class T>
 	list<T>::iterator::iterator(element* elementPointer): _elementPointer(elementPointer) {}
 
 
@@ -374,7 +366,7 @@ namespace ardui {
 
 	template <class T>
 	const typename list<T>::iterator list<T>::iterator::operator++(int) { // NOLINT(readability-const-return-type)
-		iterator temp {this};
+		iterator temp {*this};
 		if (!_elementPointer->nextElement) {
 			_lastPointer = _elementPointer;
 		}
@@ -396,7 +388,7 @@ namespace ardui {
 
 	template <class T>
 	const typename list<T>::iterator list<T>::iterator::operator--(int) { // NOLINT(readability-const-return-type)
-		iterator temp {this};
+		iterator temp {*this};
 		if (!_elementPointer) {
 			_elementPointer = _lastPointer;
 		} else {

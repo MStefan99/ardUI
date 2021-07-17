@@ -10,7 +10,7 @@
 #include "queue.h"
 
 
-void vectorAssert() {
+static void VectorAssert() {
 	ardui::vector<int> v {};
 	describe("Vector check", [&](TestSuite& suite) -> void {
 
@@ -134,12 +134,23 @@ void vectorAssert() {
 }
 
 
-void listAssert() {
+static void ListAssert() {
 	ardui::list<int> l {};
 	describe("List check", [&](TestSuite& suite) -> void {
 
-		expect(l.empty()).toBeTruthy();
 		suite.test("push and subscript assert", [&]() -> void {
+			expect(l.empty()).toBeTruthy();
+			l.push_back(1);
+			expect(l.front()).toEqual(1);
+			expect(l.back()).toEqual(1);
+			l.pop_back();
+
+			l.push_front(2);
+			expect(l.front()).toEqual(2);
+			expect(l.back()).toEqual(2);
+			l.pop_front();
+
+			expect(l.empty()).toBeTruthy();
 			for (int i = 0; i < 10; ++i) {
 				l.push_back(i);
 			}
@@ -153,6 +164,54 @@ void listAssert() {
 			expect(*l.begin()).toEqual(0);
 			expect(l[5]).toEqual(5);
 			expect(l[8]).toEqual(8);
+
+			l.clear();
+			expect(l.empty()).toBeTruthy();
+
+			for (int i = 9; i >= 0; --i) {
+				l.push_front(i);
+			}
+			expect(l.empty()).toBeFalsy();
+
+			for (int j = 0; j < 10; ++j) {
+				expect(l[j]).toEqual(j);
+			}
+
+			expect(l.size()).toEqual(10);
+			expect(*l.begin()).toEqual(0);
+			expect(l[5]).toEqual(5);
+			expect(l[8]).toEqual(8);
+
+
+			ardui::list<ardui::list<int>> l1 {};
+			l1.push_back({});
+			expect(l1.begin()->empty()).toBeTruthy();
+		});
+
+		suite.test("Iterator arithmetics", [&]() -> void {
+			auto it {l.begin()};
+			expect(*it++).toEqual(0);
+			expect(*++it).toEqual(2);
+
+			it = --l.end();
+			expect(*it--).toEqual(9);
+			expect(*--it).toEqual(7);
+
+			it = l.end();
+			it--;
+			expect(*it).toEqual(9);
+			++it;
+			expect(*--it).toEqual(9);
+			it++;
+			expect(*--it).toEqual(9);
+		});
+		
+		suite.test("Iterator comparison", [&]() -> void {
+			expect(l.begin()).toEqual(l.begin());
+			expect(l.end()).toEqual(l.end());
+
+			expect(l.begin()).toDiffer(l.end());
+
 		});
 
 		suite.test("insert assert", [&]() -> void {
@@ -163,6 +222,12 @@ void listAssert() {
 			expect(l[2]).toEqual(0);
 			expect(l[3]).toEqual(1);
 			expect(l.size()).toEqual(12);
+
+			ardui::list<int> l1;
+			l1.insert(l1.begin(), 1);
+			l1.insert(l1.end(), 2);
+			expect(l1.front()).toEqual(1);
+			expect(l1.back()).toEqual(2);
 		});
 
 		suite.test("erase assert", [&]() -> void {
@@ -195,22 +260,40 @@ void listAssert() {
 			expect(*--l.end()).toEqual(9);
 		});
 
+
+		suite.test("Iterator edit", [&]() -> void {
+			expect(l.front()).toEqual(-1);
+
+			l.begin() = -2;
+			expect(l.front()).toEqual(-2);
+		});
+
 		suite.test("copy assert", [&]() -> void {
-			ardui::list<int> l1 {l};
+			ardui::list<int> l1 {l};  // NOLINT(performance-unnecessary-copy-initialization)
+			ardui::list<int> l2;
+			l2 = l;
+			
 			expect(l1.size()).toEqual(6);
-			expect(l1.front()).toEqual(-1);
+			expect(l1.front()).toEqual(-2);
 			expect(l1.back()).toEqual(9);
 			expect(*--l1.end()).toEqual(9);
+
+			expect(l2.size()).toEqual(6);
+			expect(l2.front()).toEqual(-2);
+			expect(l2.back()).toEqual(9);
+			expect(*--l2.end()).toEqual(9);
 		});
 
 		suite.test("empty copy assert", [&]() -> void {
-			ardui::list<int> {ardui::list<int> {}};
+			ardui::list<int> l1 {ardui::list<int> {}};
+
+			expect(l1.empty()).toBeTruthy();
 		});
 	});
 }
 
 
-void mapAssert() {
+static void MapAssert() {
 	ardui::map<int, double> m {};
 	describe("Map check", [&](TestSuite& suite) -> void {
 
@@ -254,19 +337,19 @@ void mapAssert() {
 			m2[2] = 2;
 			m2[1] = 1;
 
-			for (const auto& i : m2) {}
+			for (const auto& e : m2) {
+				expect(e.first).toEqual(e.second);
+			}
 		});
 
 		suite.test("empty copy assert", [&]() -> void {
 			ardui::map<int, double> {ardui::map<int, double> {}};
 		});
-
-		//
 	});
 }
 
 
-void stackAssert() {
+static void StackAssert() {
 	ardui::stack<int> s;
 	describe("Stack check", [&](TestSuite& suite) -> void {
 
@@ -290,7 +373,7 @@ void stackAssert() {
 }
 
 
-void queueAssert() {
+static void QueueAssert() {
 	ardui::queue<int> q;
 	describe("Queue check", [&](TestSuite& suite) -> void {
 
@@ -319,9 +402,9 @@ void queueAssert() {
 
 
 int main() {
-	vectorAssert();
-	listAssert();
-	mapAssert();
-	stackAssert();
-	queueAssert();
+	VectorAssert();
+	ListAssert();
+	MapAssert();
+	StackAssert();
+	QueueAssert();
 }

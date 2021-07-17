@@ -10,7 +10,7 @@
 
 
 template <class pNode>
-pNode leftmost(pNode pointer) {
+static pNode Leftmost(pNode pointer) {
 	if (pointer) {
 		while (pointer->left) {
 			pointer = pointer->left;
@@ -21,7 +21,7 @@ pNode leftmost(pNode pointer) {
 
 
 template <class pNode>
-pNode rightmost(pNode pointer) {
+static pNode Rightmost(pNode pointer) {
 	if (pointer) {
 		while (pointer->right) {
 			pointer = pointer->right;
@@ -117,7 +117,7 @@ namespace ardui {
 	template <class Key, class T, class Comp>
 	typename map<Key, T, Comp>::iterator& map<Key, T, Comp>::iterator::operator++() {
 		if (_currentElement->right) {
-			_currentElement = leftmost(_currentElement->right);
+			_currentElement = Leftmost(_currentElement->right);
 			_lastElement = _currentElement;
 		} else if (_currentElement->parent) {
 			while (_currentElement->parent && _currentElement->parent->right == _currentElement) {
@@ -141,7 +141,7 @@ namespace ardui {
 	map<Key, T, Comp>::iterator::operator++(int) {
 		auto temp {*this};
 		if (_currentElement->right) {
-			_currentElement = leftmost(_currentElement->right);
+			_currentElement = Leftmost(_currentElement->right);
 			_lastElement = _currentElement;
 		} else if (_currentElement->parent) {
 			while (_currentElement->parent && _currentElement->parent->right == _currentElement) {
@@ -164,7 +164,7 @@ namespace ardui {
 		if (!_currentElement) {
 			_currentElement = _lastElement;
 		} else if (_currentElement->left) {
-			_currentElement = rightmost(_currentElement->left);
+			_currentElement = Rightmost(_currentElement->left);
 		} else if (_currentElement->parent) {
 			while (_currentElement->parent && _currentElement->parent->left == _currentElement) {
 				_currentElement = _currentElement->parent;
@@ -187,7 +187,7 @@ namespace ardui {
 		if (!_currentElement) {
 			_currentElement = _lastElement;
 		} else if (_currentElement->left) {
-			_currentElement = rightmost(_currentElement->left);
+			_currentElement = Rightmost(_currentElement->left);
 		} else if (_currentElement->parent) {
 			while (_currentElement->parent && _currentElement->parent->left == _currentElement) {
 				_currentElement = _currentElement->parent;
@@ -325,7 +325,7 @@ namespace ardui {
 				deleteRoot = true;
 			}
 			if (node->right) {
-				node = leftmost(node->right);
+				node = Leftmost(node->right);
 			} else if (node->parent) {
 				while (node->parent && node->parent->right == node) {
 					temp = node;
@@ -350,12 +350,12 @@ namespace ardui {
 
 	template <class Key, class T, class Comp>
 	void map<Key, T, Comp>::clear() {
-		element* node {leftmost(_mapRoot)};
+		element* node {Leftmost(_mapRoot)};
 		element* temp {node};
 
 		while (node) {
 			if (node->right) {
-				node = leftmost(node->right);
+				node = Leftmost(node->right);
 			} else if (node->parent) {
 				while (node->parent && node->parent->right == node) {
 					temp = node;
@@ -441,13 +441,13 @@ namespace ardui {
 
 	template <class Key, class T, class Comp>
 	typename map<Key, T, Comp>::iterator map<Key, T, Comp>::begin() const {
-		return map::iterator(leftmost(_mapRoot));
+		return map::iterator(Leftmost(_mapRoot));
 	}
 
 
 	template <class Key, class T, class Comp>
 	typename map<Key, T, Comp>::iterator map<Key, T, Comp>::end() const {
-		return map::iterator(nullptr, rightmost(_mapRoot));
+		return map::iterator(nullptr, Rightmost(_mapRoot));
 	}
 
 
@@ -476,10 +476,10 @@ namespace ardui {
 
 		if (e->left && e->right) {
 			if (_balancingLeft) {
-				replacement = rightmost(e->left);
+				replacement = Rightmost(e->left);
 				replacement->right = e->right;
 			} else {
-				replacement = leftmost(e->right);
+				replacement = Leftmost(e->right);
 				replacement->left = e->left;
 			}
 			_balancingLeft = !_balancingLeft;
