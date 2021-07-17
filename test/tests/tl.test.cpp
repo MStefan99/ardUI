@@ -12,9 +12,9 @@
 
 static void VectorAssert() {
 	ardui::vector<int> v {};
-	describe("Vector check", [&](TestSuite& suite) -> void {
+	describe("Vector check", [&](TestSuite& suite) {
 
-		suite.test("push and subscribe", [&]() -> void {
+		suite.test("push and subscribe", [&] {
 			expect(v.empty()).toBeTruthy();
 			expect(v.capacity()).toBeFalsy();
 			for (int i = 0; i < 10; ++i) {
@@ -31,7 +31,7 @@ static void VectorAssert() {
 			expect(*--v.end()).toEqual(9);
 		});
 
-		suite.test("Iterator arithmetics", [&]() -> void {
+		suite.test("Iterator arithmetics", [&] {
 			auto it = v.begin();
 			expect(*++it).toEqual(1);
 			expect(*--it).toEqual(0);
@@ -47,7 +47,7 @@ static void VectorAssert() {
 			expect(v1.begin()->size()).toBeFalsy();
 		});
 
-		suite.test("Iterator comparison", [&]() -> void {
+		suite.test("Iterator comparison", [&] {
 			expect(v.begin()).toEqual(v.begin());
 			expect(v.begin()).toDiffer(++v.begin());
 			expect(v.begin()).toBeLessThan(++v.begin());
@@ -56,7 +56,7 @@ static void VectorAssert() {
 			expect(++v.begin()).toBeGreaterThanOrEqual(v.begin());
 		});
 
-		suite.test("erase", [&]() -> void {
+		suite.test("erase", [&] {
 			auto it = v.erase(++v.begin());
 			expect(*it).toEqual(2);
 			v.erase(v.begin() + 5);
@@ -71,7 +71,7 @@ static void VectorAssert() {
 			expect(v.size()).toEqual(7);
 		});
 
-		suite.test("insert", [&]() -> void {
+		suite.test("insert", [&] {
 			v.insert(v.begin() + 2, -2);
 			auto it = v.insert(v.begin() + 6, -1);
 			expect(*it).toEqual(-1);
@@ -83,7 +83,7 @@ static void VectorAssert() {
 			expect(v.size()).toEqual(9);
 		});
 
-		suite.test("Edit elements", [&]() -> void {
+		suite.test("Edit elements", [&] {
 			v[2] = 20;
 			expect(v[2]).toEqual(20);
 			auto it = v.begin() += 3;
@@ -93,7 +93,7 @@ static void VectorAssert() {
 			expect(*++it).toEqual(40);
 		});
 
-		suite.test("copy", [&]() -> void {
+		suite.test("copy", [&] {
 			ardui::vector<int> v1 {v};  // NOLINT(performance-unnecessary-copy-initialization)
 			ardui::vector<int> v2;
 
@@ -107,21 +107,21 @@ static void VectorAssert() {
 			}
 		});
 
-		suite.test("pop", [&]() -> void {
+		suite.test("pop", [&] {
 			v.pop_back();
 			expect(*--v.end()).toEqual(8);
 		});
 
-		suite.test("clear", [&]() -> void {
+		suite.test("clear", [&] {
 			v.clear();
 			expect(v.size()).toEqual(0);
 		});
 
-		suite.test("empty copy", [&]() -> void {
+		suite.test("empty copy", [&] {
 			ardui::vector<int> {ardui::vector<int> {}};
 		});
 
-		suite.test("Insert resize", [&]() -> void {
+		suite.test("Insert resize", [&] {
 			for (int i = 0; i < 20; ++i) {
 				v.insert(v.begin(), i);
 			}
@@ -136,9 +136,9 @@ static void VectorAssert() {
 
 static void ListAssert() {
 	ardui::list<int> l {};
-	describe("List check", [&](TestSuite& suite) -> void {
+	describe("List check", [&](TestSuite& suite) {
 
-		suite.test("push and subscript assert", [&]() -> void {
+		suite.test("push and subscript assert", [&] {
 			expect(l.empty()).toBeTruthy();
 			l.push_back(1);
 			expect(l.front()).toEqual(1);
@@ -182,13 +182,12 @@ static void ListAssert() {
 			expect(l[5]).toEqual(5);
 			expect(l[8]).toEqual(8);
 
-
 			ardui::list<ardui::list<int>> l1 {};
 			l1.push_back({});
 			expect(l1.begin()->empty()).toBeTruthy();
 		});
 
-		suite.test("Iterator arithmetics", [&]() -> void {
+		suite.test("Iterator arithmetics", [&] {
 			auto it {l.begin()};
 			expect(*it++).toEqual(0);
 			expect(*++it).toEqual(2);
@@ -205,16 +204,15 @@ static void ListAssert() {
 			it++;
 			expect(*--it).toEqual(9);
 		});
-		
-		suite.test("Iterator comparison", [&]() -> void {
+
+		suite.test("Iterator comparison", [&] {
 			expect(l.begin()).toEqual(l.begin());
 			expect(l.end()).toEqual(l.end());
 
 			expect(l.begin()).toDiffer(l.end());
-
 		});
 
-		suite.test("insert assert", [&]() -> void {
+		suite.test("insert assert", [&] {
 			l.insert(l.begin(), -1);
 			l.insert(++l.begin(), -2);
 			expect(l[0]).toEqual(-1);
@@ -230,7 +228,7 @@ static void ListAssert() {
 			expect(l1.back()).toEqual(2);
 		});
 
-		suite.test("erase assert", [&]() -> void {
+		suite.test("erase assert", [&] {
 			auto it {l.begin()};
 			it = l.erase(++it);
 			++it;
@@ -244,7 +242,7 @@ static void ListAssert() {
 			expect(l[3]).toEqual(5);
 		});
 
-		suite.test("remove assert", [&]() -> void {
+		suite.test("remove assert", [&] {
 			int i = l.remove(6);
 			expect(l[4]).toEqual(7);
 			expect(i).toEqual(1);
@@ -260,19 +258,18 @@ static void ListAssert() {
 			expect(*--l.end()).toEqual(9);
 		});
 
-
-		suite.test("Iterator edit", [&]() -> void {
+		suite.test("Iterator edit", [&] {
 			expect(l.front()).toEqual(-1);
 
 			l.begin() = -2;
 			expect(l.front()).toEqual(-2);
 		});
 
-		suite.test("copy assert", [&]() -> void {
+		suite.test("copy assert", [&] {
 			ardui::list<int> l1 {l};  // NOLINT(performance-unnecessary-copy-initialization)
 			ardui::list<int> l2;
 			l2 = l;
-			
+
 			expect(l1.size()).toEqual(6);
 			expect(l1.front()).toEqual(-2);
 			expect(l1.back()).toEqual(9);
@@ -284,7 +281,7 @@ static void ListAssert() {
 			expect(*--l2.end()).toEqual(9);
 		});
 
-		suite.test("empty copy assert", [&]() -> void {
+		suite.test("empty copy assert", [&] {
 			ardui::list<int> l1 {ardui::list<int> {}};
 
 			expect(l1.empty()).toBeTruthy();
@@ -295,9 +292,9 @@ static void ListAssert() {
 
 static void MapAssert() {
 	ardui::map<int, double> m {};
-	describe("Map check", [&](TestSuite& suite) -> void {
+	describe("Map check", [&](TestSuite& suite) {
 
-		suite.test("insert assert", [&]() -> void {
+		suite.test("insert assert", [&] {
 			expect(m.empty()).toBeTruthy();
 			m.insert({2, 2.2});
 			expect(m[2]).toEqual(2.2);
@@ -309,41 +306,88 @@ static void MapAssert() {
 			m[3] = 3.3;
 			m[5] = 5.5;
 			m[1] = 1.1;
+
+			auto it = m.find(2);
+			expect(m.insert({2, 2.2}).first).toEqual(it);
+			expect(m[2]).toEqual(2.2);
 		});
 
-		suite.test("size assert", [&]() -> void {
+		suite.test("size assert", [&] {
 			expect(m.size()).toEqual(8);
 			expect(m.empty()).toBeFalsy();
 		});
 
-		suite.test("copy assert", [&]() -> void {
+		suite.test("copy assert", [&] {
 			ardui::map<int, double> m1 {m};
 			expect(m1.size()).toEqual(8);
 			expect(m1[0]).toEqual(0.0);
 		});
 
-		suite.test("erase assert", [&]() -> void {
+		suite.test("erase assert", [&] {
 			auto it {--m.end()};
 			it = m.erase(--it);
 			m.erase(3);
+			expect(m.size()).toEqual(6);
+			expect(m.erase(20)).toBeFalsy();
 			expect(m.size()).toEqual(6);
 			it = m.erase(m.find(-1), m.find(5));
 			expect(m.size()).toEqual(2);
 			expect(it).toEqual(m.find(5));
 		});
 
-		suite.test("Unbalanced iteration assert", [&]() -> void {
-			ardui::map<int, int> m2 {};
-			m2[2] = 2;
-			m2[1] = 1;
+		suite.test("Iterator arithmetics", [&] {
+			expect(m.begin()->first).toEqual(-2);
+			expect((++m.begin())->first).toEqual(5);
 
-			for (const auto& e : m2) {
-				expect(e.first).toEqual(e.second);
-			}
+			auto it {m.begin()};
+			expect(it->first).toEqual(-2);
+			it++;
+			expect(it->first).toEqual(5);
+			it++;
+			expect((--it)->first).toEqual(5);
+
+			it = --m.end();
+			expect(it->first).toEqual(5);
+			it--;
+			expect(it->first).toEqual(-2);
 		});
 
-		suite.test("empty copy assert", [&]() -> void {
-			ardui::map<int, double> {ardui::map<int, double> {}};
+		suite.test("Unbalanced traversal", [&] {
+			ardui::map<int, int> mLeft {};
+			mLeft[3] = 3;
+			mLeft[2] = 2;
+			mLeft[1] = 1;
+
+			ardui::map<int, int> mRight {};
+			mRight[1] = 1;
+			mRight[2] = 2;
+			mRight[3] = 3;
+
+			for (const auto& e : mLeft) {
+				expect(e.first).toEqual(e.second);
+			}
+			for (const auto& e : mRight) {
+				expect(e.first).toEqual(e.second);
+			}
+			auto it {mLeft.end()};
+			for (it = --mLeft.end(); it != mLeft.begin(); --it) {
+				expect(it->first).toEqual(it->second);
+			}
+			--it;
+			for (it = --mRight.end(); it != mRight.begin(); --it) {
+				expect(it->first).toEqual(it->second);
+			}
+			--it;  // Covers lines needed for reverse iterator
+			// TODO: add reverse iterators
+		});
+
+		suite.test("Iterator assignment", [&] {
+
+		});
+
+		suite.test("empty copy assert", [&] {
+			ardui::map<int, double> m1 {ardui::map<int, double> {}};
+			expect(m1.empty()).toBeTruthy();
 		});
 	});
 }
@@ -351,20 +395,20 @@ static void MapAssert() {
 
 static void StackAssert() {
 	ardui::stack<int> s;
-	describe("Stack check", [&](TestSuite& suite) -> void {
+	describe("Stack check", [&](TestSuite& suite) {
 
-		suite.beforeAll([&]() -> void {
+		suite.beforeAll([&] {
 			s.push(1);
 			s.push(2);
 			s.push(3);
 		});
 
-		suite.test("Size assert", [&]() -> void {
+		suite.test("Size assert", [&] {
 			expect(s.size()).toEqual(3);
 			expect(s.empty()).toBeFalsy();
 		});
 
-		suite.test("Pop assert", [&]() -> void {
+		suite.test("Pop assert", [&] {
 			expect(s.top()).toEqual(3);
 			s.pop();
 			expect(s.top()).toEqual(2);
@@ -375,25 +419,25 @@ static void StackAssert() {
 
 static void QueueAssert() {
 	ardui::queue<int> q;
-	describe("Queue check", [&](TestSuite& suite) -> void {
+	describe("Queue check", [&](TestSuite& suite) {
 
-		suite.beforeAll([&]() -> void {
+		suite.beforeAll([&] {
 			q.push(1);
 			q.push(2);
 			q.push(3);
 		});
 
-		suite.test("Size assert", [&]() -> void {
+		suite.test("Size assert", [&] {
 			expect(q.size()).toEqual(3);
 			expect(q.empty()).toBeFalsy();
 		});
 
-		suite.test("Front and back assert", [&]() -> void {
+		suite.test("Front and back assert", [&] {
 			expect(q.back()).toEqual(3);
 			expect(q.front()).toEqual(1);
 		});
 
-		suite.test("Pop assert", [&]() -> void {
+		suite.test("Pop assert", [&] {
 			q.pop();
 			expect(q.front()).toEqual(2);
 		});

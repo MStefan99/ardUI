@@ -140,21 +140,7 @@ namespace ardui {
 	const typename map<Key, T, Comp>::iterator  // NOLINT(readability-const-return-type)
 	map<Key, T, Comp>::iterator::operator++(int) {
 		auto temp {*this};
-		if (_currentElement->right) {
-			_currentElement = Leftmost(_currentElement->right);
-			_lastElement = _currentElement;
-		} else if (_currentElement->parent) {
-			while (_currentElement->parent && _currentElement->parent->right == _currentElement) {
-				_currentElement = _currentElement->parent;
-			}
-			if (_currentElement->parent) {
-				_currentElement = _currentElement->parent;
-			} else {
-				_currentElement = nullptr;
-			}
-		} else {
-			_currentElement = nullptr;
-		}
+		operator++();
 		return temp;
 	}
 
@@ -171,6 +157,8 @@ namespace ardui {
 			}
 			if (_currentElement->parent) {
 				_currentElement = _currentElement->parent;
+			} else {
+				_currentElement = nullptr;
 			}
 		} else {
 			_lastElement = _currentElement;
@@ -184,21 +172,7 @@ namespace ardui {
 	const typename map<Key, T, Comp>::iterator  // NOLINT(readability-const-return-type)
 	map<Key, T, Comp>::iterator::operator--(int) {
 		auto temp {*this};
-		if (!_currentElement) {
-			_currentElement = _lastElement;
-		} else if (_currentElement->left) {
-			_currentElement = Rightmost(_currentElement->left);
-		} else if (_currentElement->parent) {
-			while (_currentElement->parent && _currentElement->parent->left == _currentElement) {
-				_currentElement = _currentElement->parent;
-			}
-			if (_currentElement->parent) {
-				_currentElement = _currentElement->parent;
-			}
-		} else {
-			_lastElement = _currentElement;
-			_currentElement = nullptr;
-		}
+		operator--();
 		return temp;
 	}
 
@@ -238,6 +212,7 @@ namespace ardui {
 	map<Key, T, Comp>::element::element(const pair<const Key, T>& value, element* parent):
 			value(value),
 			parent(parent) {
+		// Nothing to do
 	}
 
 

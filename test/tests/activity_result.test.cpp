@@ -14,7 +14,7 @@ class ResultActivity: public Activity {
 	void onCreate() override {
 		auto data = getExtras();
 
-		test("Sending data", [&]() -> void {
+		test("Sending data", [&] {
 			expect(data.getString("request")).toEqual("hello");
 		});
 
@@ -35,8 +35,8 @@ class TestActivity: public Activity {
 		Bundle data {};
 		data.putString("request", "hello");
 
-		startActivityForResult<ResultActivity>([](int code, Bundle results) -> void {
-			test("Returning data", [&]() -> void {
+		startActivityForResult<ResultActivity>([](int code, Bundle results) {
+			test("Returning data", [&] {
 				expect(code).toEqual(1);
 				expect(results.getString("result")).toEqual("success");
 			});

@@ -11,16 +11,16 @@
 int main() {
 	View* v {nullptr};  // Drawable is an abstract class, using child View class
 
-	describe("Drawable test", [&](TestSuite& suite) -> void {
-		suite.beforeEach([&]() -> void {
+	describe("Drawable test", [&](TestSuite& suite) {
+		suite.beforeEach([&] {
 			v = new View;
 		});
 
-		suite.afterEach([&]() -> void {
+		suite.afterEach([&] {
 			delete v;
 		});
 
-		suite.test("Bounds", [&]() -> void {
+		suite.test("Bounds", [&] {
 			Rect r {10, 20, 30, 40};
 
 			expect(v->getBounds()).toEqual({});
@@ -30,7 +30,7 @@ int main() {
 			expect(v->getBounds()).toEqual(r);
 		});
 
-		suite.test("Level", [&]() -> void {
+		suite.test("Level", [&] {
 			expect(v->getLevel()).toEqual(0);
 
 			expect(v->setLevel(10)).toBeTruthy();
@@ -38,7 +38,7 @@ int main() {
 			expect(v->setLevel(10)).toBeFalsy();
 		});
 
-		suite.test("Padding", [&]() -> void {
+		suite.test("Padding", [&] {
 			Rect r {10, 20, 30, 40};
 
 			expect(v->getPadding()).toEqual({});
@@ -48,7 +48,7 @@ int main() {
 			expect(v->getPadding()).toEqual(r);
 		});
 		
-		suite.test("Dimensions", [&]() -> void {
+		suite.test("Dimensions", [&] {
 			expect(v->getMinimumWidth()).toEqual(20);
 			expect(v->getMinimumHeight()).toEqual(20);
 			
@@ -59,7 +59,7 @@ int main() {
 			expect(v->getMinimumHeight()).toEqual(40);
 		});
 
-		suite.test("Visibility", [&]() -> void {
+		suite.test("Visibility", [&] {
 			expect(v->isVisible()).toBeTruthy();
 
 			expect(v->setVisible(true)).toBeFalsy();

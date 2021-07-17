@@ -18,8 +18,8 @@ int main() {
 			{0xfful, 0x1fu}
 	};
 
-	describe("Color test", [&](TestSuite& suite) -> void {
-		suite.test("Color conversions", [&]() -> void {
+	describe("Color test", [&](TestSuite& suite) {
+		suite.test("Color conversions", [&] {
 			Color color;
 
 			for (auto c: testColors) {
@@ -33,7 +33,7 @@ int main() {
 			}
 		});
 
-		suite.test("Color copy", [&]() -> void {
+		suite.test("Color copy", [&] {
 			Color c0 {0xfu};
 
 			for (auto c: testColors) {
@@ -46,7 +46,7 @@ int main() {
 			}
 		});
 
-		suite.test("Color comparison", [&]() -> void {
+		suite.test("Color comparison", [&] {
 			Color c0 {0xfu};
 			Color c1;
 

@@ -17,7 +17,7 @@ int main() {
 
 	View* v {nullptr};
 
-	test("MeasureSpec test", []() -> void {
+	test("MeasureSpec test", [] {
 
 		MeasureSpec measureSpec1 {0};
 		MeasureSpec measureSpec2 {50, MeasureSpec::AT_MOST};
@@ -32,20 +32,20 @@ int main() {
 		expect(measureSpec3.getMode()).toEqual(MeasureSpec::EXACTLY);
 	});
 
-	describe("View test", [&](TestSuite& suite) -> void {
-		suite.beforeEach([&]() -> void {
+	describe("View test", [&](TestSuite& suite) {
+		suite.beforeEach([&] {
 			v = new View;
 		});
 
-		suite.afterEach([&]() -> void {
+		suite.afterEach([&] {
 			delete v;
 		});
 
-		suite.test("Find By ID", [&]() -> void {
+		suite.test("Find By ID", [&] {
 			expect(v->findViewById(v->getId())).toEqual(v);
 		});
 
-		suite.test("Measure", [&]() -> void {
+		suite.test("Measure", [&] {
 			v->measure(MeasureSpec {100, MeasureSpec::EXACTLY},
 					MeasureSpec {100, MeasureSpec::EXACTLY});
 
@@ -60,7 +60,7 @@ int main() {
 			expect(v->getBounds().bottom).toEqual(0);
 		});
 
-		suite.test("Layout", [&]() -> void {
+		suite.test("Layout", [&] {
 			v->layout(100, 100, 200, 200);
 
 			expect(v->getBounds().left).toEqual(100);
@@ -79,7 +79,7 @@ int main() {
 			expect(v->getBounds().bottom).toEqual(300);
 		});
 
-		suite.test("Draw", [&]() -> void {
+		suite.test("Draw", [&] {
 			expect(v->isValid()).toBeFalsy();
 			v->draw();
 			expect(v->isValid()).toBeTruthy();
@@ -87,14 +87,14 @@ int main() {
 			expect(v->isValid()).toBeFalsy();
 		});
 
-		suite.test("Event handling", [&]() -> void {
+		suite.test("Event handling", [&] {
 			Event e;
 
-			v->setOnClickListener([](View* v) -> void {
+			v->setOnClickListener([](View* v) {
 				++CLICK_COUNT;
 			});
 
-			v->setOnLongClickListener([](View* v) -> void {
+			v->setOnLongClickListener([](View* v) {
 				++LONG_CLICK_COUNT;
 			});
 

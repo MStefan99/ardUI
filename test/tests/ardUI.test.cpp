@@ -18,8 +18,8 @@ class TestActivity: public Activity {
 
 struct TestWrapper {
 	static void run() {
-		describe("ardUI and EventManager", [&](TestSuite& suite) -> void {
-			suite.test("Switching Activities", []() -> void {
+		describe("ardUI and EventManager", [&](TestSuite& suite) {
+			suite.test("Switching Activities", [] {
 				ardUI::startActivity<TestActivity>();
 				EventManager::update(true);
 

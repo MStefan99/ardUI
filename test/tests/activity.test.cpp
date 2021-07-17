@@ -57,39 +57,39 @@ struct TestWrapper {
 		TestActivity* activity {nullptr};
 		TextView* view {nullptr};
 
-		describe("Activity tests", [&](TestSuite& suite) -> void {
+		describe("Activity tests", [&](TestSuite& suite) {
 
-			suite.beforeEach([&]() -> void {
+			suite.beforeEach([&] {
 				activity = new TestActivity;
 				view = new TextView;
 
 				activity->setRootView(view);
 			});
 
-			suite.afterEach([&]() -> void {
+			suite.afterEach([&] {
 				delete activity;
 			});
 
-			suite.test("Background color", [&]() -> void {
+			suite.test("Background color", [&] {
 				activity->setBackgroundColor({0xfffffful});
 				expect(activity->getBackgroundColor().to888()).toEqual(0xfffffful);
 			});
 
-			suite.test("Root view", [&]() -> void {
+			suite.test("Root view", [&] {
 				expect(activity->getRootView()).toEqual(view);
 				activity->setRootView(nullptr);
 				expect(activity->getRootView()).toBeNull();
 				delete view;
 			});
 
-			suite.test("Find View by ID", [&]() -> void {
+			suite.test("Find View by ID", [&] {
 				expect(activity->findViewById(view->getId())).toEqual(view);
 				activity->setRootView(nullptr);
 				expect(activity->findViewById(view->getId())).toBeNull();
 				delete view;
 			});
 
-			suite.test("Activity lifecycle", [&]() -> void {
+			suite.test("Activity lifecycle", [&] {
 				activity->rewindState(Activity::CREATED);
 				expect(activity->_currentState).toEqual(Activity::CREATED);
 				expect(activity->created).toEqual(1);

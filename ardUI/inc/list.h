@@ -367,10 +367,7 @@ namespace ardui {
 	template <class T>
 	const typename list<T>::iterator list<T>::iterator::operator++(int) { // NOLINT(readability-const-return-type)
 		iterator temp {*this};
-		if (!_elementPointer->nextElement) {
-			_lastPointer = _elementPointer;
-		}
-		_elementPointer = _elementPointer->nextElement;
+		operator++();
 		return temp;
 	}
 
@@ -389,11 +386,7 @@ namespace ardui {
 	template <class T>
 	const typename list<T>::iterator list<T>::iterator::operator--(int) { // NOLINT(readability-const-return-type)
 		iterator temp {*this};
-		if (!_elementPointer) {
-			_elementPointer = _lastPointer;
-		} else {
-			_elementPointer = _elementPointer->prevElement;
-		}
+		operator--();
 		return temp;
 	}
 

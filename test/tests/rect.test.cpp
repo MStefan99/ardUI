@@ -10,7 +10,7 @@
 int main() {
 	Rect r {10, 20, 80, 100};
 
-	test("Basic Rect functions", [&]() -> void {
+	test("Basic Rect functions", [&] {
 		expect(r.width()).toEqual(70);
 		expect(r.height()).toEqual(80);
 
