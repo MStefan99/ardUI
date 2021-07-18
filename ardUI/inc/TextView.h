@@ -33,6 +33,12 @@ public:
 	friend class EmscriptenBindingInitializer_BuilderInterface;
 	#endif
 
+	#ifdef TEST
+
+	friend class TestWrapper;
+
+	#endif
+
 protected:
 	void onMeasure(MeasureSpec widthMeasureSpec, MeasureSpec heightMeasureSpec) override;
 	void onDraw() override;

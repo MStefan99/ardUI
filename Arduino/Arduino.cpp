@@ -19,6 +19,8 @@ int main() {
 	for (int i = 0; i < LOOP_ITERATIONS || LOOP_ITERATIONS < 0; ++i) {
 		loop();
 	}
+
+	return 0;
 }
 
 

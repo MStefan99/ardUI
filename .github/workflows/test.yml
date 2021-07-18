@@ -26,6 +26,8 @@ jobs:
           --target Test_Color
           --target Test_Drawable
           --target Test_View
+          --target Test_ProgressBar
+          --target Test_TextView
           --target Test_Activity
           --target Test_Activity_result
           --target Test_ardUI
@@ -47,6 +49,12 @@ jobs:
 
       - name: Test View
         run: ${{github.workspace}}/build/test/Test_View
+
+      - name: Test ProgressBar
+        run: ${{github.workspace}}/build/test/Test_ProgressBar
+
+      - name: Test TextView
+        run: ${{github.workspace}}/build/test/Test_TextView
 
       - name: Test Activity
         run: ${{github.workspace}}/build/test/Test_Activity

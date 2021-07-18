@@ -2,12 +2,16 @@
 link_libraries(ardUI)
 target_sources(ardUI PRIVATE ${SOURCE_DIRECTORY}/display.cpp)
 
+add_compile_options(-DTEST)
+
+if (${CMAKE_CXX_COMPILER} MATCHES "clang-cl")
+	add_compile_options(/EHs)
+endif ()
+
 
 # Including Tester library
 add_subdirectory(${TEST_DIRECTORY}/Tester)
 link_libraries(Tester)
-
-add_compile_options(-DTEST)
 
 
 # Individual test targets
@@ -39,6 +43,16 @@ add_executable(
 add_executable(
 		Test_View
 		${TEST_DIRECTORY}/tests/view.test.cpp
+)
+
+add_executable(
+		Test_ProgressBar
+		${TEST_DIRECTORY}/tests/progressbar.test.cpp
+)
+
+add_executable(
+		Test_TextView
+		${TEST_DIRECTORY}/tests/textview.test.cpp
 )
 
 add_executable(

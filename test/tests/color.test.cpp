@@ -15,7 +15,10 @@ int main() {
 			{0xfffffful, 0xffffu},
 			{0xff0000ul, 0xf800u},
 			{0xff00ul, 0x7e0u},
-			{0xfful, 0x1fu}
+			{0xfful, 0x1fu},
+			{0xffff00ul, 0xffe0u},
+			{0xffffu, 0x7ffu},
+			{0xff00fful, 0xf81fu}
 	};
 
 	describe("Color test", [&](TestSuite& suite) {
@@ -61,4 +64,6 @@ int main() {
 			}
 		});
 	});
+
+	return 0;
 }

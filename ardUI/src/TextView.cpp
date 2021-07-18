@@ -81,7 +81,7 @@ LIST<String> TextView::getLines(uint16_t maxWidth) const {
 		if (s[i] == ' ') {
 			lastSpace = i + 1;
 		}
-		if (currentWidth > maxWidth) {
+		if (currentWidth > maxWidth && i) {
 			if (lineStart == lastSpace) {
 				lastSpace = i;
 			}

@@ -146,4 +146,6 @@ struct TestWrapper {
 
 int main() {
 	TestWrapper::run();
+
+	return 0;
 }

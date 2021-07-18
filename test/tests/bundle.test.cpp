@@ -64,5 +64,7 @@ int main() {
 			expect(b1.getInt("newInt")).toEqual(2);
 		});
 	});
+
+	return 0;
 }
 

@@ -68,4 +68,6 @@ int main() {
 			expect(v->isVisible()).toBeFalsy();
 		});
 	});
+
+	return 0;
 }

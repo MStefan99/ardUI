@@ -451,4 +451,6 @@ int main() {
 	MapAssert();
 	StackAssert();
 	QueueAssert();
+
+	return 0;
 }

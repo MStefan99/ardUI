@@ -102,4 +102,6 @@ int main() {
 			expect(r.bottom).toEqual(30);
 		});
 	});
+
+	return 0;
 }
