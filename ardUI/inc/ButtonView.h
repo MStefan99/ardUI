@@ -16,6 +16,9 @@ public:
 	explicit ButtonView(const String& text);
 	~ButtonView() override = default;
 
+	Color getBorderColor() const;
+	void setBorderColor(Color borderColor);
+
 	#ifdef __EMSCRIPTEN__
 	friend class EmscriptenBindingInitializer_BuilderInterface;
 	#endif

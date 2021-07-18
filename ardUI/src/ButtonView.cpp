@@ -11,6 +11,16 @@ ButtonView::ButtonView(const String& text):
 }
 
 
+Color ButtonView::getBorderColor() const {
+	return _borderColor;
+}
+
+
+void ButtonView::setBorderColor(Color borderColor) {
+	_borderColor = borderColor;
+}
+
+
 void ButtonView::onDraw() {
 	DISPLAY::fillRect(_viewBox.left, _viewBox.top, _viewBox.right - 1, _viewBox.bottom - 1, _backgroundColor);
 	DISPLAY::drawRect(_viewBox.left, _viewBox.top, _viewBox.right - 1, _viewBox.bottom - 1, _borderColor);

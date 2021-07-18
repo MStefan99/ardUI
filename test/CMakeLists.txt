@@ -22,47 +22,52 @@ add_executable(
 
 add_executable(
 		Test_Rect
-		${TEST_DIRECTORY}/tests/rect.test.cpp
+		${TEST_DIRECTORY}/tests/Rect.test.cpp
 )
 
 add_executable(
 		Test_Bundle
-		${TEST_DIRECTORY}/tests/bundle.test.cpp
+		${TEST_DIRECTORY}/tests/Bundle.test.cpp
 )
 
 add_executable(
 		Test_Color
-		${TEST_DIRECTORY}/tests/color.test.cpp
+		${TEST_DIRECTORY}/tests/Color.test.cpp
 )
 
 add_executable(
 		Test_Drawable
-		${TEST_DIRECTORY}/tests/drawable.test.cpp
+		${TEST_DIRECTORY}/tests/Drawable.test.cpp
 )
 
 add_executable(
 		Test_View
-		${TEST_DIRECTORY}/tests/view.test.cpp
+		${TEST_DIRECTORY}/tests/View.test.cpp
 )
 
 add_executable(
 		Test_ProgressBar
-		${TEST_DIRECTORY}/tests/progressbar.test.cpp
+		${TEST_DIRECTORY}/tests/ProgressBar.test.cpp
 )
 
 add_executable(
 		Test_TextView
-		${TEST_DIRECTORY}/tests/textview.test.cpp
+		${TEST_DIRECTORY}/tests/TextView.test.cpp
+)
+
+add_executable(
+		Test_ButtonView
+		${TEST_DIRECTORY}/tests/ButtonView.test.cpp
 )
 
 add_executable(
 		Test_Activity
-		${TEST_DIRECTORY}/tests/activity.test.cpp
+		${TEST_DIRECTORY}/tests/Activity.test.cpp
 )
 
 add_executable(
 		Test_Activity_result
-		${TEST_DIRECTORY}/tests/activity_result.test.cpp
+		${TEST_DIRECTORY}/tests/Activity_result.test.cpp
 )
 
 add_executable(
