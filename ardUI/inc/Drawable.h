@@ -5,6 +5,7 @@
 #ifndef ARDUI_DRAWABLE_H
 #define ARDUI_DRAWABLE_H
 
+#include "config/defaults.h"
 #include "platform.h"
 #include DISPLAY_H
 
@@ -54,9 +55,9 @@ protected:
 
 	Rect _viewBox {};
 	Rect _padding {};
-	uint16_t _minHeight {20};
-	uint16_t _minWidth {20};
-	int16_t _level {0};
+	uint16_t _minWidth {DEFAULT_MIN_WIDTH};
+	uint16_t _minHeight {DEFAULT_MIN_HEIGHT};
+	int16_t _level {DEFAULT_LEVEL};
 };
 
 #endif //ARDUI_DRAWABLE_H

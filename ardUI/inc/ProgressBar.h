@@ -5,6 +5,7 @@
 #ifndef ARDUI_PROGRESSBAR_H
 #define ARDUI_PROGRESSBAR_H
 
+#include "config/defaults.h"
 #include "platform.h"
 #include DISPLAY_H
 
@@ -40,8 +41,8 @@ protected:
 
 	static int16_t mapScale(int16_t value, int16_t oldMin, int16_t oldMax, int16_t newMin, int16_t newMax);
 
-	Color _barColor {0x0};
-	Color _backgroundColor {0xffffff};
+	Color _barColor {DEFAULT_COLOR};
+	Color _backgroundColor {DEFAULT_BACKGROUND_COLOR};
 
 	int16_t _min {};
 	int16_t _max {100};

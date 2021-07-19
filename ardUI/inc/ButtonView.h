@@ -5,6 +5,7 @@
 #ifndef ARDUI_BUTTONVIEW_H
 #define ARDUI_BUTTONVIEW_H
 
+#include "config/defaults.h"
 #include "platform.h"
 
 #include "TextView.h"
@@ -26,7 +27,7 @@ public:
 protected:
 	void onDraw() override;
 
-	Color _borderColor {0x0};
+	Color _borderColor {DEFAULT_BORDER_COLOR};
 };
 
 #endif //ARDUI_BUTTONVIEW_H

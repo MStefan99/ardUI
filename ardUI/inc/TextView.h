@@ -5,6 +5,7 @@
 #ifndef ARDUI_TEXTVIEW_H
 #define ARDUI_TEXTVIEW_H
 
+#include "config/defaults.h"
 #include "platform.h"
 #include LIST_H
 
@@ -47,9 +48,9 @@ protected:
 	uint16_t getMaxWidth();
 
 	String _text;
-	uint16_t _textSize {20};
-	Color _textColor {0x0};
-	Color _backgroundColor {0xffffff};
+	uint16_t _textSize {DEFAULT_TEXT_SIZE};
+	Color _textColor {DEFAULT_COLOR};
+	Color _backgroundColor {DEFAULT_BACKGROUND_COLOR};
 };
 
 #endif //ARDUI_TEXTVIEW_H

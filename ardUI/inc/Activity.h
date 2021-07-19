@@ -5,6 +5,7 @@
 #ifndef ARDUI_ACTIVITY_H
 #define ARDUI_ACTIVITY_H
 
+#include "config/defaults.h"
 #include "platform.h"
 #include DISPLAY_H
 #include "Color.h"
@@ -97,7 +98,7 @@ private:
 	Bundle _resultData {};
 	int _status {};
 	void (* _resultCallback)(int statusCode, Bundle resultData) {nullptr};
-	Color _backgroundColor {0xffffff};
+	Color _backgroundColor {DEFAULT_BACKGROUND_COLOR};
 };
 
 
