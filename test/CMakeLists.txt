@@ -61,6 +61,16 @@ add_executable(
 )
 
 add_executable(
+		Test_ListView
+		${TEST_DIRECTORY}/tests/ListView.test.cpp
+)
+
+add_executable(
+		Test_LinearLayout
+		${TEST_DIRECTORY}/tests/LinearLayout.test.cpp
+)
+
+add_executable(
 		Test_Activity
 		${TEST_DIRECTORY}/tests/Activity.test.cpp
 )

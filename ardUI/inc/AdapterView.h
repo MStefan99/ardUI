@@ -25,6 +25,7 @@ protected:
 
 template <class T>
 AdapterView<T>::AdapterView(const Adapter<T>& adapter): _adapter {&adapter} {
+	// Nothing to do
 }
 
 
