@@ -21,14 +21,9 @@ ardUIInstance.then(ardUI => {
 	ardUI._setup();
 	ardUI._loop();
 
-	setTimeout(() => {
-		const splash = document.getElementById('splash');
-		splash.classList.add('invisible');
-
-		setInterval(() => {
-			ardUI._loop();
-		}, 1000 / 10);
-	}, 750);
+	setInterval(() => {
+		ardUI._loop();
+	}, 1000 / 10);
 
 	canvas.addEventListener('mousedown', e => {
 		click.down = true;

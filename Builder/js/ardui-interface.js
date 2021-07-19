@@ -3,7 +3,17 @@
 export const ardUIInstance = new Promise(resolve => {
 	addEventListener('load', async () => {
 		if (typeof ardUI !== 'undefined') {
-			resolve(await ardUI());
+			await ardUI().then(ardUI => {
+				setTimeout(() => {
+					document.getElementById('splash').classList.add('invisible');
+					resolve(ardUI);
+				}, 1000);
+			});
+		} else {
+			setTimeout(() => {
+				document.getElementById('splash-load-error').classList.remove('d-none');
+				document.getElementById('splash-animation').classList.add('invisible');
+			}, 1000);
 		}
 	});
 });

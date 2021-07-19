@@ -16,14 +16,14 @@
 #define DEFAULT_COLOR ( 0x0u )
 
 /*
+ * Default border color for Views
+ */
+#define DEFAULT_BORDER_COLOR ( 0x0u )
+
+/*
  * Default background color for Views
  */
 #define DEFAULT_BACKGROUND_COLOR ( 0xfffffful )
-
-/*
- * Default border color for Views
- */
-#define DEFAULT_BORDER_COLOR ( 0xfffffful )
 
 /*
  * Default minimum View width

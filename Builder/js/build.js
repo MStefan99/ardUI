@@ -165,11 +165,6 @@ ardUIInstance.then(ardUI => {
 	{ //  Will be run after page load
 		addViews(currentActivity.getRootView());
 
-		setTimeout(() => {
-			const splash = document.getElementById('splash');
-			splash.classList.add('invisible');
-		}, 750);
-
 		setInterval(() => {
 			if (!currentActivity.getRootView()._valid) {
 				ardUI._loop();

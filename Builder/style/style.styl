@@ -136,6 +136,14 @@ html
 				max-height 80vh
 
 			div#splash-animation
+				transition transform .2s cubic-bezier(0, .3, .7, 1),
+					opacity .2s cubic-bezier(0, .3, .7, 1) .25s
+
+				&.invisible
+					transform scale(.2)
+					opacity 0
+					pointer-events none
+
 				span.animation-dot
 					display inline-block
 					height 2.5em
