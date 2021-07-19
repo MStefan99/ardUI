@@ -18,7 +18,7 @@ class TestActivity: public Activity {
 
 struct TestWrapper {
 	static void run() {
-		describe("ardUI and EventManager", [&](TestSuite& suite) {
+		describe("ardUI test", [&](TestSuite& suite) {
 			suite.test("Switching Activities", [] {
 				ardUI::startActivity<TestActivity>();
 				EventManager::update(true);
@@ -41,6 +41,22 @@ struct TestWrapper {
 				ardUI::getCurrentActivity()->finish();
 				EventManager::update(true);
 				expect(currentActivity).toBeNull();
+			});
+
+			suite.test("Activity stack", [] {
+				for (unsigned int i {0}; i < BACK_STACK_DEPTH + 10; ++i) {
+					ardUI::startActivity<TestActivity>();
+					EventManager::update(true);
+					expect(ActivityManager::_backList.size()).toBeLessThanOrEqual(BACK_STACK_DEPTH);
+				}
+
+				ardUI::back();
+				EventManager::update(true);
+				expect(ActivityManager::_backList.size()).toEqual(BACK_STACK_DEPTH - 1);
+
+				ardUI::reset();
+				EventManager::update(true);
+				expect(ActivityManager::_backList.empty()).toBeTruthy();
 			});
 		});
 	}

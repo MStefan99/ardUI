@@ -25,7 +25,7 @@ void ActivityManager::back() {
 void ActivityManager::reset() {
 	stopActivity(_currentActivity);
 	for (auto a : _backList) {
-		finishActivity(a);
+		stopActivity(a);
 	}
 }
 
