@@ -71,6 +71,11 @@ add_executable(
 )
 
 add_executable(
+		Test_ConstraintLayout
+		${TEST_DIRECTORY}/tests/ConstraintLayout.test.cpp
+)
+
+add_executable(
 		Test_Activity
 		${TEST_DIRECTORY}/tests/Activity.test.cpp
 )

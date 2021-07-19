@@ -31,6 +31,7 @@ jobs:
           --target Test_ButtonView
           --target Test_ListView
           --target Test_LinearLayout
+          --target Test_ConstraintLayout
           --target Test_Activity
           --target Test_Activity_result
           --target Test_ardUI
@@ -67,6 +68,9 @@ jobs:
 
       - name: Test LinearLayout
         run: ${{github.workspace}}/build/test/Test_LinearLayout
+
+      - name: Test ConstraintLayout
+        run: ${{github.workspace}}/build/test/Test_ConstraintLayout
 
       - name: Test Activity
         run: ${{github.workspace}}/build/test/Test_Activity

@@ -67,7 +67,7 @@ void ConstraintLayout::applyConstraints(
 				break;
 			case TOP:
 				if (layoutInfo.bottomConstrained) {
-					layoutInfo.viewBox.bottom = getPos(constraint.endView, constraint.endSide) + constraint.margin;
+					layoutInfo.viewBox.top = getPos(constraint.endView, constraint.endSide) + constraint.margin;
 				} else {
 					layoutInfo.viewBox.offsetTo(layoutInfo.viewBox.left, getPos(constraint.endView, constraint.endSide)
 							+ constraint.margin);
