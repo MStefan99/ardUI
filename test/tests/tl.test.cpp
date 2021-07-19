@@ -371,9 +371,14 @@ static void MapAssert() {
 			// TODO: add reverse iterators
 		});
 
-		suite.test("empty copy assert", [&] {
+		suite.test("Special copy cases", [&] {
 			ardui::map<int, double> m1 {ardui::map<int, double> {}};
 			expect(m1.empty()).toBeTruthy();
+
+			ardui::map<int, double> m2 {};
+			m2[0] = 0;
+			auto m3 {m2};
+			expect(m3.size()).toEqual(1);
 		});
 	});
 }

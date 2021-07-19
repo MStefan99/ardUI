@@ -380,8 +380,10 @@ namespace ardui {
 					if (e->parent) {
 						e = e->parent;
 					} else {
-						e = nullptr;
+						break;
 					}
+				} else {
+					break;
 				}
 			}
 		}
