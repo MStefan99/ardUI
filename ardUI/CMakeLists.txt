@@ -28,4 +28,6 @@ target_sources(ardUI PRIVATE
 
 
 target_include_directories(ardUI PUBLIC ${INCLUDE_DIRECTORY})
+target_include_directories(ardUI PUBLIC ${INCLUDE_DIRECTORY}/config)
+target_include_directories(ardUI PUBLIC ${INCLUDE_DIRECTORY}/tl)
 target_link_libraries(ardUI arduinoEmulator)

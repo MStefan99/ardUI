@@ -13,7 +13,7 @@ namespace ardui {
 		~stack() = default;
 
 		bool empty() const;
-		int size() const;
+		unsigned int size() const;
 
 		T& top() const;
 
@@ -32,7 +32,7 @@ namespace ardui {
 
 
 	template <class T, class Container>
-	int stack<T, Container>::size() const {
+	unsigned int stack<T, Container>::size() const {
 		return _c.size();
 	}
 

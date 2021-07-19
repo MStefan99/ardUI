@@ -5,6 +5,8 @@
 #include <string>
 
 #include "Tester.h"
+
+#include "platform.h"
 #include "TextView.h"
 #include "ArrayAdapter.h"
 #include "ListView.h"
@@ -23,7 +25,11 @@ public:
 int main() {
 	ListView<std::string> l;
 	std::string stringArray[] {"1", "2", "3"};
-	std::list<std::string> stringList {"1", "2", "3"};
+	LIST<std::string> stringList;
+	stringList.push_back("1");
+	stringList.push_back("2");
+	stringList.push_back("3");
+
 	StringAdapter arrayAdapter {stringArray, 3};
 	StringAdapter listAdapter {stringList};
 

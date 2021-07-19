@@ -5,6 +5,9 @@
 #ifndef ARDUI_LIST_H
 #define ARDUI_LIST_H
 
+#include "iterator.h"
+
+
 namespace ardui {
 	template <class T>
 	class list {
@@ -14,6 +17,8 @@ namespace ardui {
 	public:
 		class iterator final {  // bidirectional iterator
 		public:
+			typedef _internal::bidirectional_iterator_tag iterator_category;
+
 			iterator() = default;
 
 			iterator& operator++();
@@ -51,8 +56,8 @@ namespace ardui {
 		void pop_back();
 		void pop_front();
 
-		int remove(const T& value);
-		int remove_if(bool (* predicate)(const T&));
+		unsigned int remove(const T& value);
+		unsigned int remove_if(bool (* predicate)(const T&));
 
 		iterator insert(iterator position, const T& value);
 
@@ -60,10 +65,9 @@ namespace ardui {
 		iterator erase(iterator first, iterator last);
 		void clear();
 
-		int size() const;
+		unsigned int size() const;
 		bool empty() const;
 
-		T& operator[](int n) const;  // TODO: remove
 		list& operator=(const list& list);
 
 		iterator begin() const;
@@ -84,7 +88,7 @@ namespace ardui {
 		element* _last {nullptr};
 
 		void destroyElement(element* e);
-		int _listSize {0};
+		unsigned int _listSize {0};
 	};
 
 
@@ -254,8 +258,8 @@ namespace ardui {
 
 
 	template <class T>
-	int list<T>::remove(const T& value) {
-		int i {0};
+	unsigned int list<T>::remove(const T& value) {
+		unsigned int i {0};
 		element* e {_first};
 
 		while (e) {
@@ -272,8 +276,8 @@ namespace ardui {
 
 
 	template <class T>
-	int list<T>::remove_if(bool (* p)(const T&)) {
-		int i {0};
+	unsigned int list<T>::remove_if(bool (* p)(const T&)) {
+		unsigned int i {0};
 		element* e {_first};
 
 		while (e) {
@@ -303,7 +307,7 @@ namespace ardui {
 
 
 	template <class T>
-	int list<T>::size() const {
+	unsigned int list<T>::size() const {
 		return _listSize;
 	}
 
@@ -325,16 +329,6 @@ namespace ardui {
 		iterator it {};
 		it._lastPointer = _last;
 		return it;
-	}
-
-
-	template <class T>
-	T& list<T>::operator[](int n) const {
-		auto p {_first};
-		for (int i {0}; i < n; ++i) {
-			p = p->nextElement;
-		}
-		return p->elementValue;
 	}
 
 

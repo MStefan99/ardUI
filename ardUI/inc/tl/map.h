@@ -7,6 +7,7 @@
 
 #include "pair.h"
 #include "less.h"
+#include "iterator.h"
 
 
 template <class pNode>
@@ -40,6 +41,8 @@ namespace ardui {
 	public:
 		class iterator final {  // bidirectional iterator
 		public:
+			typedef _internal::bidirectional_iterator_tag iterator_category;
+
 			iterator() = default;
 
 			iterator& operator++();
@@ -71,14 +74,14 @@ namespace ardui {
 		T& operator[](const Key& k);
 
 		bool empty() const;
-		int size() const;
+		unsigned int size() const;
 
 		iterator find(const Key& k) const;
 
 		pair<iterator, bool> insert(const pair<const Key, T>& value);
 
 		iterator erase(iterator position);
-		int erase(const Key& k);
+		unsigned int erase(const Key& k);
 		iterator erase(iterator first, iterator last);
 		void clear();
 
@@ -102,7 +105,7 @@ namespace ardui {
 
 		element* _mapRoot {nullptr};
 		Comp _less {};
-		int _mapSize {0};
+		unsigned int _mapSize {0};
 		bool _balancingLeft {true};
 	};
 
@@ -209,17 +212,17 @@ namespace ardui {
 
 
 	template <class Key, class T, class Comp>
-	map<Key, T, Comp>::element::element(const pair<const Key, T>& value, element* parent):
-			value(value),
-			parent(parent) {
+	map<Key, T, Comp>::element::element(const pair<const Key, T>& v, element* p):
+			value(v),
+			parent(p) {
 		// Nothing to do
 	}
 
 
 	template <class Key, class T, class Comp>
-	map<Key, T, Comp>::element::element(const Key& k, element* parent):
+	map<Key, T, Comp>::element::element(const Key& k, element* p):
 			value(k, T {}),
-			parent(parent) {
+			parent(p) {
 	}
 
 
@@ -230,7 +233,7 @@ namespace ardui {
 
 
 	template <class Key, class T, class Comp>
-	int map<Key, T, Comp>::size() const {
+	unsigned int map<Key, T, Comp>::size() const {
 		return _mapSize;
 	}
 
@@ -276,7 +279,7 @@ namespace ardui {
 
 
 	template <class Key, class T, class Comp>
-	int map<Key, T, Comp>::erase(const Key& k) {
+	unsigned int map<Key, T, Comp>::erase(const Key& k) {
 		element* e {findElement(k)};
 
 		if (e) {
@@ -377,8 +380,10 @@ namespace ardui {
 					if (e->parent) {
 						e = e->parent;
 					} else {
-						e = nullptr;
+						break;
 					}
+				} else {
+					break;
 				}
 			}
 		}
