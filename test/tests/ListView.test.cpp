@@ -20,47 +20,40 @@ public:
 };
 
 
-struct TestWrapper {
-	static void run() {
-		ListView<std::string> l;
-		std::string stringArray[] {"1", "2", "3"};
-		std::list<std::string> stringList {"1", "2", "3"};
-		StringAdapter arrayAdapter {stringArray, 3};
-		StringAdapter listAdapter {stringList};
-
-		describe("ListView test", [&](TestSuite& suite) {
-			suite.test("Array adapter", [&]() {
-				expect(arrayAdapter.isEmpty()).toBeFalsy();
-
-				l.setAdapter(&arrayAdapter);
-
-				l.measure(View::MeasureSpec {100},
-						View::MeasureSpec {400});
-
-				expect(l.getAdapter()).toEqual(&arrayAdapter);
-				expect(l.getChildCount()).toEqual(3);
-				expect(((TextView*)l.getChildAt(0))->getText()).toEqual("1");
-			});
-
-			suite.test("List adapter", [&]() {
-				expect(arrayAdapter.isEmpty()).toBeFalsy();
-
-				l.setAdapter(&listAdapter);
-
-				l.measure(View::MeasureSpec {100},
-						View::MeasureSpec {400});
-
-				expect(l.getAdapter()).toEqual(&listAdapter);
-				expect(l.getChildCount()).toEqual(3);
-				expect(((TextView*)l.getChildAt(0))->getText()).toEqual("1");
-			});
-		});
-	}
-};
-
-
 int main() {
-	TestWrapper::run();
+	ListView<std::string> l;
+	std::string stringArray[] {"1", "2", "3"};
+	std::list<std::string> stringList {"1", "2", "3"};
+	StringAdapter arrayAdapter {stringArray, 3};
+	StringAdapter listAdapter {stringList};
+
+	describe("ListView test", [&](TestSuite& suite) {
+		suite.test("Array adapter", [&]() {
+			expect(arrayAdapter.isEmpty()).toBeFalsy();
+
+			l.setAdapter(&arrayAdapter);
+
+			l.measure(View::MeasureSpec {100},
+					View::MeasureSpec {400});
+
+			expect(l.getAdapter()).toEqual(&arrayAdapter);
+			expect(l.getChildCount()).toEqual(3);
+			expect(((TextView*)l.getChildAt(0))->getText()).toEqual("1");
+		});
+
+		suite.test("List adapter", [&]() {
+			expect(arrayAdapter.isEmpty()).toBeFalsy();
+
+			l.setAdapter(&listAdapter);
+
+			l.measure(View::MeasureSpec {100},
+					View::MeasureSpec {400});
+
+			expect(l.getAdapter()).toEqual(&listAdapter);
+			expect(l.getChildCount()).toEqual(3);
+			expect(((TextView*)l.getChildAt(0))->getText()).toEqual("1");
+		});
+	});
 
 	return 0;
 }

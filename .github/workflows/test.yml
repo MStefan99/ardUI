@@ -29,6 +29,8 @@ jobs:
           --target Test_ProgressBar
           --target Test_TextView
           --target Test_ButtonView
+          --target Test_ListView
+          --target Test_LinearLayout
           --target Test_Activity
           --target Test_Activity_result
           --target Test_ardUI
@@ -59,6 +61,12 @@ jobs:
 
       - name: Test ButtonView
         run: ${{github.workspace}}/build/test/Test_ButtonView
+
+      - name: Test ListView
+        run: ${{github.workspace}}/build/test/Test_ListView
+
+      - name: Test LinearLayout
+        run: ${{github.workspace}}/build/test/Test_LinearLayout
 
       - name: Test Activity
         run: ${{github.workspace}}/build/test/Test_Activity
