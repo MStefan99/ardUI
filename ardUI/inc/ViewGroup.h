@@ -7,6 +7,7 @@
 
 #include "platform.h"
 #include LIST_H
+
 #include "View.h"
 
 
@@ -29,12 +30,16 @@ public:
 	void draw() override;
 	void invalidate() override;
 
+	#ifdef __EMSCRIPTEN__
 	friend class EmscriptenBindingInitializer_BuilderInterface;
+	#endif
 
 protected:
-	void onMeasure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec) override = 0;
-	void onLayout(bool changed, uint16_t left, uint16_t top, uint16_t right, uint16_t bottom) override = 0;
+	void onMeasure(MeasureSpec widthMeasureSpec, MeasureSpec heightMeasureSpec) override = 0;
+	void onLayout(bool changed, int16_t left, int16_t top, int16_t right, int16_t bottom) override = 0;
 	void onDraw() override = 0;
+
+	View* handleEvent(const Event& event) override;
 
 	LIST<View*> _viewList {};
 };

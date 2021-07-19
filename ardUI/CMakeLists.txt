@@ -1,13 +1,14 @@
 # Setting compiler flags
-SET(COMPILER_FLAGS " -Weverything -Wextra -pedantic -Wno-padded -Wno-c++98-compat -Wno-c++98-compat-pedantic \
--Wno-unused-parameter -Wno-shadow-field -Wno-shadow-field-in-constructor -Wno-old-style-cast \
--Wno-global-constructors -Wno-exit-time-destructors -Wno-unknown-pragmas")
-SET(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} ${COMPILER_FLAGS})
+add_compile_options(-Weverything -Werror
+-Wno-padded -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-unknown-argument -Wno-unused-function
+-Wno-unused-parameter -Wno-global-constructors -Wno-exit-time-destructors -Wno-unknown-pragmas)
 
 
 # Adding ardUI framework
 add_library(ardUI STATIC)
 target_sources(ardUI PRIVATE
+		${SOURCE_DIRECTORY}/Color.cpp
+		${SOURCE_DIRECTORY}/DisplayController.cpp
 		${SOURCE_DIRECTORY}/Bundle.cpp
 		${SOURCE_DIRECTORY}/Rect.cpp
 		${SOURCE_DIRECTORY}/Drawable.cpp
@@ -18,6 +19,7 @@ target_sources(ardUI PRIVATE
 		${SOURCE_DIRECTORY}/ViewGroup.cpp
 		${SOURCE_DIRECTORY}/LinearLayout.cpp
 		${SOURCE_DIRECTORY}/ConstraintLayout.cpp
+		${SOURCE_DIRECTORY}/ScrollLayout.cpp
 		${SOURCE_DIRECTORY}/EventManager.cpp
 		${SOURCE_DIRECTORY}/Activity.cpp
 		${SOURCE_DIRECTORY}/ActivityManager.cpp

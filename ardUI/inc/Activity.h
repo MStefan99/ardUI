@@ -6,7 +6,8 @@
 #define ARDUI_ACTIVITY_H
 
 #include "platform.h"
-#include LIST_H
+#include DISPLAY_H
+#include "Color.h"
 
 #include "Event.h"
 #include "Bundle.h"
@@ -23,8 +24,8 @@ public:
 
 	template <class compiledLayout>
 	void setContentView();
-	uint32_t getBackgroundColor() const;
-	void setBackgroundColor(uint32_t backgroundColor);
+	Color getBackgroundColor() const;
+	void setBackgroundColor(Color backgroundColor);
 	void setRootView(View* view);
 
 	template <class ActivityClass>
@@ -49,7 +50,15 @@ public:
 
 	friend class ActivityManager;
 
+	#ifdef __EMSCRIPTEN__
 	friend class EmscriptenBindingInitializer_BuilderInterface;
+	#endif
+
+	#ifdef TEST
+
+	friend class TestWrapper;
+
+	#endif
 
 protected:
 	const Bundle& getExtras();
@@ -74,10 +83,10 @@ private:
 	void stop();
 	void destroy();
 
+	void measure(View::MeasureSpec widthMeasureSpec, View::MeasureSpec heightMeasureSpec);
+	void layout(int16_t left, int16_t top, int16_t right, int16_t bottom);
 	void draw() const;
-	void measure();
-	void layout();
-	void handleEvent(const Event& event);
+	View* handleEvent(const Event& event);
 	View* getRootView();
 
 	void rewindState(Activity::State targetState);
@@ -88,7 +97,7 @@ private:
 	Bundle _resultData {};
 	int _status {};
 	void (* _resultCallback)(int statusCode, Bundle resultData) {nullptr};
-	uint32_t _backgroundColor {0xffffff};
+	Color _backgroundColor {0xffffff};
 };
 
 

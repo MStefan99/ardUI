@@ -2,8 +2,6 @@
 // Created by MStefan99 on 29.1.20.
 //
 
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "OCInconsistentNamingInspection"
 #ifndef ARDUI_PAIR_H
 #define ARDUI_PAIR_H
 
@@ -13,7 +11,7 @@ namespace ardui {
 		pair() = default;
 		pair(const T1& x, const T2& y);
 		pair(const pair& p) = default;
-		pair& operator =(const pair& p);
+		pair& operator=(const pair& p);
 
 		T1 first;
 		T2 second;
@@ -30,7 +28,7 @@ namespace ardui {
 
 
 	template <class T1, class T2>
-	pair<T1, T2>& pair<T1, T2>::operator =(const pair& p) {
+	pair<T1, T2>& pair<T1, T2>::operator=(const pair& p) {
 		if (this == &p) {
 			return *this;
 		} else {
@@ -42,5 +40,3 @@ namespace ardui {
 }
 
 #endif //ARDUI_PAIR_H
-
-#pragma clang diagnostic pop

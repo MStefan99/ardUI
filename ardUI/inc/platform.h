@@ -6,8 +6,29 @@
 #define ARDUI_PLATFORM_H
 
 #include <Arduino.h>
-#include "ardUI_config.h"
+#include "config/config.h"
+#include "config/config_adv.h"
 
+
+#if LOG_LEVEL < LOG_NONE || LOG_LEVEL > LOG_VERBOSE
+#error ERROR: Invalid log level
+#endif
+
+#if COLOR_MODE != COLOR_888 && COLOR_MODE != COLOR_565
+#error ERROR: Invalid color mode
+#endif
+
+#if REFRESH_RATE <= 0 || TOUCH_RATE <= 0
+#error ERROR: Refresh rate should be greater than zero
+#endif
+
+#if DISPLAY_FALLBACK
+	#define DISPLAY_H "DisplayController.h"
+	#define DISPLAY DisplayController
+#else
+	#define DISPLAY_H "display.h"
+	#define DISPLAY ardui::display
+#endif
 
 #if USE_STL
 
@@ -43,19 +64,19 @@
 #define STACK NAMESPACE::stack
 #define QUEUE NAMESPACE::queue
 
-
 #define ABS(a) ((a > 0)? (a) : -(a))
 #define MIN(a, b) ((a < b)? (a) : (b))
 #define MAX(a, b) ((a > b)? (a) : (b))
+#define SWAP(a, b) {\
+  auto t {a};  \
+  a = b;  \
+  b = t;\
+}
 
-#if (!defined(Arduino_h) && DEBUGGING)
+#if !defined(Arduino_h) && DEBUGGING
 	#define DEBUG_MODE ( true )
 #else
 	#define DEBUG_MODE ( false )
 #endif
-
-#define VERBOSE_MODE VERBOSE
-
-// TODO: disable slow mode on emscripten, figure out what to do with logging
 
 #endif //ARDUI_PLATFORM_H

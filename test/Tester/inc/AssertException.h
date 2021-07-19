@@ -5,30 +5,21 @@
 #ifndef ARDUI_ASSERTEXCEPTION_H
 #define ARDUI_ASSERTEXCEPTION_H
 
-
 #include <string>
+#include <utility>
 
 
 class AssertException: public std::exception {
 public:
-	AssertException(const std::string& description) noexcept:
-		desc {description} {}
-
-
-	AssertException(const AssertException& e) noexcept:
-		desc {e.desc} {}
-
-
+	explicit AssertException(std::string description) noexcept;
 	~AssertException() override = default;
 
+	AssertException(const AssertException& e) noexcept;
 
-	const char* what() const noexcept override {
-		return desc.c_str();
-	}
-
+	const char* what() const noexcept override;
 
 private:
-	std::string desc {};
+	std::string _desc {};
 };
 
 #endif //ARDUI_ASSERTEXCEPTION_H

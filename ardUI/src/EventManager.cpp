@@ -11,22 +11,22 @@
 
 
 void setup() {  // Default setup function will be used to initiate ardUI
-	arduiDisplayInit();
 	arduiUserSetup();  // Calling user setup function
-	EventManager::draw();
+	ardui::display::init();
+	EventManager::update(true, false);  // Forcing update before loop
 }
 
 
 void loop() {  // ardUI core functions will be added to the loop function
-	update();
+	EventManager::update(false, true);  // Updating and calling user loop
 }
 
 
-void update(bool callUserLoop) {
+void EventManager::update(bool forceDraw, bool callUserLoop) {
 	static uint32_t lastTouchRefresh, lastDisplayRefresh;
 	uint32_t currentTime = millis();
 
-	if (ABS(currentTime - lastDisplayRefresh) > 1000 / REFRESH_RATE) {
+	if (ABS(currentTime - lastDisplayRefresh) > 1000 / REFRESH_RATE || forceDraw) {
 		EventManager::draw();  // Drawing UI elements
 		lastDisplayRefresh = currentTime;
 	}
@@ -41,25 +41,31 @@ void update(bool callUserLoop) {
 		arduiUserLoop();  // Calling user loop function
 	}
 
+#if LOG_LEVEL >= LOG_INFO
 	if (millis() - currentTime > 1000 / REFRESH_RATE) {
 		Serial.println("Skipping frames, please ensure your loop doesn't perform any long operations");
 	}
+#endif
 
-#if VERBOSE_MODE
+#if LOG_LEVEL >= LOG_VERBOSE
 	Serial.println("Loop iteration");
 #endif
-#if SLOW_MODE
-	delay(MIN(1000 / TOUCH_RATE, 1000 / REFRESH_RATE));
+
+#if SLOW_MODE && !defined(__EMSCRIPTEN__)
+	delay(MIN(1000 / TOUCH_RATE, 1000 / REFRESH_RATE) + 50);
 #endif
 }
 
 
 void arduiSmartDelay(uint32_t ms) {
+	#if LOG_LEVEL >= LOG_INFO
 	Serial.println("Please be careful when using sleep!");
+	#endif
+
 	auto startTime = millis();
 
 	while (ABS(millis() - startTime) < ms) {
-		update(false);
+		EventManager::update(false);
 		delay(MIN(1000 / TOUCH_RATE, 1000 / REFRESH_RATE));
 	}
 }
@@ -69,28 +75,28 @@ void EventManager::checkForActions(uint32_t deltaTime) {
 	static Event event {};
 	static uint32_t actionTime {0};
 
-	if (arduiDisplayIsClicked()) {  // Detecting actions
-		static uint16_t lastX {event._targetX}, lastY {event._targetY};
-		event._targetX = arduiDisplayGetClickX();
-		event._targetY = arduiDisplayGetClickY();
+	if (ardui::display::isClicked()) {  // Detecting actions
+		int16_t lastX {event._targetX}, lastY {event._targetY};
+		event._targetX = static_cast<int16_t>(ardui::display::getClickX());
+		event._targetY = static_cast<int16_t>(ardui::display::getClickY());
 
 		if (event._currentAction == Event::Action::NO_ACTION) {
 			event._currentAction = Event::Action::CLICK;  // Register click
 
 			lastX = event._targetX;  // Set last coords to current
 			lastY = event._targetY;
-#if VERBOSE_MODE
+#if LOG_LEVEL >= LOG_VERBOSE
 			Serial.println("Event registered");
 #endif
 		} else {
 			actionTime += deltaTime;
-			event._deltaX = (int16_t)(lastX - event._targetX);
-			event._deltaY = (int16_t)(lastY - event._targetY);
+			event._deltaX = static_cast<int16_t>(event._targetX - lastX);
+			event._deltaY = static_cast<int16_t>(event._targetY - lastY);
 		}
 		if (event._currentAction == Event::Action::SCROLL) {
 			// Handle scroll event every Update
 			if (ActivityManager::_currentActivity) {
-#if VERBOSE_MODE
+#if LOG_LEVEL >= LOG_VERBOSE
 				Serial.println("Scroll event dispatched");
 #endif
 				if (ActivityManager::_currentActivity) {
@@ -102,12 +108,12 @@ void EventManager::checkForActions(uint32_t deltaTime) {
 		}
 		// TODO: add drift rejection
 		if (event._currentAction == Event::Action::CLICK && (
-				((uint32_t)ABS(event._deltaX) * 1000 / deltaTime > SCROLL_SENSITIVITY) ||
-				((uint32_t)ABS(event._deltaY) * 1000 / deltaTime > SCROLL_SENSITIVITY))) {
+				(static_cast<uint32_t>(ABS(event._deltaX) * 1000) / deltaTime > SCROLL_SENSITIVITY) ||
+						(static_cast<uint32_t>(ABS(event._deltaY)) * 1000 / deltaTime > SCROLL_SENSITIVITY))) {
 			event._currentAction = Event::Action::SCROLL;  // Register scroll
 		}
 	} else if (event._currentAction != Event::Action::NO_ACTION) {
-#if VERBOSE_MODE
+#if LOG_LEVEL >= LOG_VERBOSE
 		Serial.println("Event dispatched");
 #endif
 		if (ActivityManager::_currentActivity) {  // Touch over, handle event
@@ -121,12 +127,18 @@ void EventManager::checkForActions(uint32_t deltaTime) {
 
 void EventManager::draw() {
 	ActivityManager::processWaitingActivities();
-#if VERBOSE_MODE
+#if LOG_LEVEL >= LOG_VERBOSE
 	Serial.println("Draw call");
 #endif
 	if (ActivityManager::_currentActivity) {
-		ActivityManager::_currentActivity->measure();
-		ActivityManager::_currentActivity->layout();
+		auto displayWidth {ardui::display::getWidth()};
+		auto displayHeight {ardui::display::getHeight()};
+
+		ActivityManager::_currentActivity->measure(
+				View::MeasureSpec {displayWidth, View::MeasureSpec::EXACTLY},
+				View::MeasureSpec {displayHeight, View::MeasureSpec::EXACTLY});
+		ActivityManager::_currentActivity->layout(0, 0,
+				static_cast<int16_t>(displayWidth), static_cast<int16_t>(displayHeight));
 		ActivityManager::_currentActivity->draw();
 	}
 }

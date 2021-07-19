@@ -5,12 +5,15 @@
 #include "Drawable.h"
 
 
+Drawable::~Drawable() = default;
+
+
 Rect Drawable::getBounds() const {
 	return _viewBox;
 }
 
 
-void Drawable::setBounds(uint16_t l, uint16_t t, uint16_t r, uint16_t b) {
+void Drawable::setBounds(int16_t l, int16_t t, int16_t r, int16_t b) {
 	_viewBox.set(l, t, r, b);
 }
 
@@ -25,26 +28,25 @@ int Drawable::getLevel() const {
 }
 
 
-bool Drawable::setLevel(uint16_t l) {
+bool Drawable::setLevel(int16_t l) {
 	bool changed {l != _level};
 	_level = l;
 	return changed;
 }
 
 
-bool Drawable::getPadding(Rect& p) const {
-	bool paddingExists {(bool)p};
-	if (paddingExists) {
-		p = _padding;
-	} else {
-		p.setEmpty();
-	}
-	return paddingExists;
+Rect Drawable::getPadding() const {
+	return _padding;
 }
 
 
-void Drawable::setPadding(uint16_t left, uint16_t top, uint16_t right, uint16_t bottom) {
-	_padding = Rect(left, top, right, bottom);
+void Drawable::setPadding(int16_t left, int16_t top, int16_t right, int16_t bottom) {
+	_padding.set(left, top, right, bottom);
+}
+
+
+void Drawable::setPadding(const Rect& padding) {
+	_padding = padding;
 }
 
 

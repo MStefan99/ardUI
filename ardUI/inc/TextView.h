@@ -6,8 +6,9 @@
 #define ARDUI_TEXTVIEW_H
 
 #include "platform.h"
-#include "View.h"
 #include LIST_H
+
+#include "View.h"
 
 
 class TextView: public View {
@@ -19,19 +20,27 @@ public:
 	void setText(const String& textToSet);
 	void append(const String& textToAppend);
 	void setTextSize(uint16_t textSize);
-	void setTextColor(uint32_t textColor);
+	void setTextColor(Color textColor);
 
 	String getText() const;
 	uint16_t getTextSize() const;
-	uint32_t getTextColor() const;
+	Color getTextColor() const;
 
 	// TODO: add alignment options
 	// TODO: add background toggle
 
+	#ifdef __EMSCRIPTEN__
 	friend class EmscriptenBindingInitializer_BuilderInterface;
+	#endif
+
+	#ifdef TEST
+
+	friend class TestWrapper;
+
+	#endif
 
 protected:
-	void onMeasure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec) override;
+	void onMeasure(MeasureSpec widthMeasureSpec, MeasureSpec heightMeasureSpec) override;
 	void onDraw() override;
 
 	LIST<String> getLines(uint16_t maxWidth) const;
@@ -39,8 +48,8 @@ protected:
 
 	String _text;
 	uint16_t _textSize {20};
-	uint32_t _textColor {0x0};
-	uint32_t _backgroundColor {0xffffff};
+	Color _textColor {0x0};
+	Color _backgroundColor {0xffffff};
 };
 
 #endif //ARDUI_TEXTVIEW_H

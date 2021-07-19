@@ -6,7 +6,7 @@
 #define ARDUI_BUTTONVIEW_H
 
 #include "platform.h"
-#include "llpi.h"
+
 #include "TextView.h"
 
 
@@ -16,12 +16,17 @@ public:
 	explicit ButtonView(const String& text);
 	~ButtonView() override = default;
 
+	Color getBorderColor() const;
+	void setBorderColor(Color borderColor);
+
+	#ifdef __EMSCRIPTEN__
 	friend class EmscriptenBindingInitializer_BuilderInterface;
+	#endif
 
 protected:
 	void onDraw() override;
 
-	uint32_t _borderColor {0x0};
+	Color _borderColor {0x0};
 };
 
 #endif //ARDUI_BUTTONVIEW_H

@@ -11,15 +11,18 @@
 class Rect {
 public:
 	Rect() = default;
-	Rect(uint16_t left, uint16_t top, uint16_t right, uint16_t bottom);
+	Rect(int16_t left, int16_t top, int16_t right, int16_t bottom);
 	Rect(const Rect& r) = default;
 
-	bool contains(uint16_t left, uint16_t top, uint16_t right, uint16_t bottom) const;
+	bool contains(int16_t left, int16_t top, int16_t right, int16_t bottom) const;
 	bool contains(const Rect& r) const;
-	bool contains(uint16_t x, uint16_t y) const;
+	bool contains(int16_t x, int16_t y) const;
 
-	uint16_t centerX() const;
-	uint16_t centerY() const;
+	bool intersects(int16_t left, int16_t top, int16_t right, int16_t bottom) const;
+	bool intersects(const Rect& r) const;
+
+	int16_t centerX() const;
+	int16_t centerY() const;
 
 	uint16_t height() const;
 	uint16_t width() const;
@@ -27,23 +30,24 @@ public:
 	bool isEmpty() const;
 	void setEmpty();
 
-	void offset(uint16_t dx, uint16_t dy);
-	void offsetTo(uint16_t newLeft, uint16_t newTop);
+	void offset(int16_t dx, int16_t dy);
+	void offsetTo(int16_t newLeft, int16_t newTop);
 
-	void inset(uint16_t dx, uint16_t dy);
-	void inset(uint16_t left, uint16_t top, uint16_t right, uint16_t bottom);
+	void inset(int16_t dx, int16_t dy);
+	void inset(int16_t left, int16_t top, int16_t right, int16_t bottom);
 	void inset(const Rect& r);
 
-	void set(uint16_t left, uint16_t top, uint16_t right, uint16_t bottom);
+	void set(int16_t left, int16_t top, int16_t right, int16_t bottom);
 	void set(const Rect& r);
 
-	Rect& operator =(const Rect& r);
+	Rect& operator=(const Rect& r);
 	explicit operator bool() const;
+	bool operator==(const Rect& r) const;
 
-	uint16_t left {0};
-	uint16_t top {0};
-	uint16_t right {0};
-	uint16_t bottom {0};
+	int16_t left {0};
+	int16_t top {0};
+	int16_t right {0};
+	int16_t bottom {0};
 };
 
 #endif //ARDUI_RECT_H

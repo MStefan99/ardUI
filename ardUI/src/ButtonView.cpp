@@ -11,13 +11,24 @@ ButtonView::ButtonView(const String& text):
 }
 
 
+Color ButtonView::getBorderColor() const {
+	return _borderColor;
+}
+
+
+void ButtonView::setBorderColor(Color borderColor) {
+	_borderColor = borderColor;
+}
+
+
 void ButtonView::onDraw() {
-	arduiDisplayFillRect(_viewBox.left, _viewBox.top, _viewBox.right - 1, _viewBox.bottom - 1, _backgroundColor);
-	arduiDisplayDrawRect(_viewBox.left, _viewBox.top, _viewBox.right - 1, _viewBox.bottom - 1, _borderColor);
+	DISPLAY::fillRect(_viewBox.left, _viewBox.top, _viewBox.right - 1, _viewBox.bottom - 1, _backgroundColor);
+	DISPLAY::drawRect(_viewBox.left, _viewBox.top, _viewBox.right - 1, _viewBox.bottom - 1, _borderColor);
 
 	uint16_t line {0};
 	for (const auto& l : getLines(_viewBox.width())) {
-		arduiDisplayDrawText(_viewBox.left + _padding.left, _viewBox.top + _padding.top + _textSize * line++,
+		DISPLAY::drawText(_viewBox.left + _padding.left,
+				static_cast<int16_t>(_viewBox.top + _padding.top + _textSize * line++),
 				l, _textSize, _textColor);
 	}
 }

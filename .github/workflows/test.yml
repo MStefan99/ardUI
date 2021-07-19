@@ -1,0 +1,82 @@
+name: Run tests
+
+on: [ push, pull_request ]
+
+env:
+  BUILD_TYPE: Release
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Configure CMake
+        run: >-
+          cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+          -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++
+
+      - name: Build project
+        run: >-
+          cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+          --target Test_template_library
+          --target Test_Rect
+          --target Test_Bundle
+          --target Test_Color
+          --target Test_Drawable
+          --target Test_View
+          --target Test_ProgressBar
+          --target Test_TextView
+          --target Test_ButtonView
+          --target Test_ListView
+          --target Test_LinearLayout
+          --target Test_ConstraintLayout
+          --target Test_Activity
+          --target Test_Activity_result
+          --target Test_ardUI
+
+      - name: Test template library
+        run: ${{github.workspace}}/build/test/Test_template_library
+
+      - name: Test Rect
+        run: ${{github.workspace}}/build/test/Test_Rect
+
+      - name: Test Bundle
+        run: ${{github.workspace}}/build/test/Test_Bundle
+
+      - name: Test Color
+        run: ${{github.workspace}}/build/test/Test_Color
+
+      - name: Test Drawable
+        run: ${{github.workspace}}/build/test/Test_Drawable
+
+      - name: Test View
+        run: ${{github.workspace}}/build/test/Test_View
+
+      - name: Test ProgressBar
+        run: ${{github.workspace}}/build/test/Test_ProgressBar
+
+      - name: Test TextView
+        run: ${{github.workspace}}/build/test/Test_TextView
+
+      - name: Test ButtonView
+        run: ${{github.workspace}}/build/test/Test_ButtonView
+
+      - name: Test ListView
+        run: ${{github.workspace}}/build/test/Test_ListView
+
+      - name: Test LinearLayout
+        run: ${{github.workspace}}/build/test/Test_LinearLayout
+
+      - name: Test ConstraintLayout
+        run: ${{github.workspace}}/build/test/Test_ConstraintLayout
+
+      - name: Test Activity
+        run: ${{github.workspace}}/build/test/Test_Activity
+
+      - name: Test Activity result
+        run: ${{github.workspace}}/build/test/Test_Activity_result
+
+      - name: Test ardUI
+        run: ${{github.workspace}}/build/test/Test_ardUI

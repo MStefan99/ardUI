@@ -22,43 +22,43 @@ namespace ardui {
 		void push(const T& value);
 
 	protected:
-		Container c {};
+		Container _c {};
 	};
 
 
 	template <class T, class Container>
 	bool queue<T, Container>::empty() const {
-		return c.empty();
+		return _c.empty();
 	}
 
 
 	template <class T, class Container>
 	int queue<T, Container>::size() const {
-		return c.size();
+		return _c.size();
 	}
 
 
 	template <class T, class Container>
 	T& queue<T, Container>::front() const {
-		return c.front();
+		return _c.front();
 	}
 
 
 	template <class T, class Container>
 	T& queue<T, Container>::back() const {
-		return c.back();
+		return _c.back();
 	}
 
 
 	template <class T, class Container>
 	void queue<T, Container>::pop() {
-		c.pop_front();
+		_c.pop_front();
 	}
 
 
 	template <class T, class Container>
 	void queue<T, Container>::push(const T& value) {
-		c.push_back(value);
+		_c.push_back(value);
 	}
 }
 

@@ -11,13 +11,19 @@ void ArduinoSerial::begin(long baud) {
 
 
 #ifndef __EMSCRIPTEN__
+
+
 int main() {
 	setup();
 
 	for (int i = 0; i < LOOP_ITERATIONS || LOOP_ITERATIONS < 0; ++i) {
 		loop();
 	}
+
+	return 0;
 }
+
+
 #endif
 
 #ifdef _WIN32
@@ -28,9 +34,11 @@ void delay(uint32_t ms) {
 
 #else
 
+
 void delay(uint32_t ms) {
 	usleep(ms * 1000);
 }
+
 
 #endif
 

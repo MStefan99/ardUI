@@ -27,7 +27,7 @@ View* ViewGroup::getChildAt(int index) const {
 
 
 int ViewGroup::getChildCount() const {
-	return (int)_viewList.size();
+	return static_cast<int>(_viewList.size());
 }
 
 
@@ -82,9 +82,18 @@ void ViewGroup::invalidate() {
 void ViewGroup::draw() {
 	onDraw();
 	for (auto view: _viewList) {
-		if (!view->isValid() && view->isVisible()) {
-			view->draw();
-		}
+		view->draw();
 	}
 	_valid = true;
+}
+
+
+View* ViewGroup::handleEvent(const Event& event) {
+	// TODO: fix event handling (listeners not called)
+	for (auto view: _viewList) {
+		if (view->getBounds().contains(event._targetX, event._targetY)) {
+			return view->handleEvent(event);
+		}
+	}
+	return nullptr;
 }

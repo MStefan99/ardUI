@@ -5,18 +5,18 @@
 #include "View.h"
 
 
-uint16_t View::MeasureSpec::makeMeasureSpec(uint16_t mode, uint16_t size) {
-	return mode | size;
+View::MeasureSpec::MeasureSpec(uint16_t size, Sizing mode): _size {size}, _mode {mode} {
+	// Nothing to do
 }
 
 
-uint16_t View::MeasureSpec::getMode(uint16_t measureSpec) {
-	return measureSpec & 0xC000u;
+uint16_t View::MeasureSpec::getSize() const {
+	return _size;
 }
 
 
-uint16_t View::MeasureSpec::getSize(uint16_t measureSpec) {
-	return measureSpec & 0x3FFFu;
+View::MeasureSpec::Sizing View::MeasureSpec::getMode() const {
+	return _mode;
 }
 
 
@@ -42,7 +42,7 @@ int View::getId() const {
 }
 
 
-void View::measure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec) {
+void View::measure(MeasureSpec widthMeasureSpec, MeasureSpec heightMeasureSpec) {
 	if (!_valid) {
 		onMeasure(widthMeasureSpec, heightMeasureSpec);
 	}
@@ -54,10 +54,10 @@ void View::layout(const Rect& r) {
 }
 
 
-void View::layout(uint16_t left, uint16_t top, uint16_t right, uint16_t bottom) {
+void View::layout(int16_t left, int16_t top, int16_t right, int16_t bottom) {
 	if (!_valid) {
 		auto b = getBounds();
-		bool changed = left == b.left && top == b.top && bottom == b.bottom && right == b.right;
+		bool changed = left != b.left || top != b.top || bottom != b.bottom || right != b.right;
 		if (changed) {
 			invalidate();
 		}
@@ -75,28 +75,28 @@ void View::draw() {
 }
 
 
-void View::handleEvent(const Event& event) {
+View* View::handleEvent(const Event& event) {
 	// TODO: check if visible
 	switch (event._currentAction) {
 		case Event::Action::NO_ACTION:
 		case Event::Action::TOUCH:
 			// Nothing to do
-			break;
+			return nullptr;
 		case Event::Action::CLICK:
 			if (_onClick) {
 				_onClick(this);
 			}
-			break;
+			return this;
 		case Event::Action::LONG_CLICK:
 			if (_onLongClick) {
 				_onLongClick(this);
 			}
-			break;
+			return this;
 		case Event::Action::SCROLL:
 			if (_onScroll) {
 				_onScroll(this);
 			}
-			break;
+			return this;
 	}
 }
 
@@ -106,22 +106,22 @@ void View::invalidate() {
 }
 
 
-void View::setLeft(uint16_t left) {
+void View::setLeft(int16_t left) {
 	_viewBox.left = left;
 }
 
 
-void View::setTop(uint16_t top) {
+void View::setTop(int16_t top) {
 	_viewBox.top = top;
 }
 
 
-void View::setRight(uint16_t right) {
+void View::setRight(int16_t right) {
 	_viewBox.right = right;
 }
 
 
-void View::setBottom(uint16_t bottom) {
+void View::setBottom(int16_t bottom) {
 	_viewBox.bottom = bottom;
 }
 
@@ -162,13 +162,18 @@ void View::setOnLongClickListener(void (* l)(View*)) {
 }
 
 
-void View::onMeasure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec) {
+void View::setOnScrollListener(void (* l)(View*)) {
+	_onScroll = l;
+}
+
+
+void View::onMeasure(MeasureSpec widthMeasureSpec, MeasureSpec heightMeasureSpec) {
 	setMeasuredDimensions(getDefaultSize(getMinimumWidth() + _padding.width(), widthMeasureSpec),
 			getDefaultSize(getMinimumHeight() + _padding.height(), heightMeasureSpec));
 }
 
 
-void View::onLayout(bool changed, uint16_t left, uint16_t top, uint16_t right, uint16_t bottom) {
+void View::onLayout(bool changed, int16_t left, int16_t top, int16_t right, int16_t bottom) {
 	// Nothing to do
 }
 
@@ -178,14 +183,13 @@ void View::onDraw() {
 }
 
 
-uint16_t View::getDefaultSize(uint16_t size, uint16_t measureSpec) {
-	switch (View::MeasureSpec::getMode(measureSpec)) {
+uint16_t View::getDefaultSize(uint16_t size, MeasureSpec measureSpec) {
+	switch (measureSpec.getMode()) {
 		case View::MeasureSpec::Sizing::UNSPECIFIED:
-		default:
 			return size;
 		case View::MeasureSpec::Sizing::AT_MOST:
-			return MIN(size, View::MeasureSpec::getSize(measureSpec));
+			return MIN(size, measureSpec.getSize());
 		case View::MeasureSpec::Sizing::EXACTLY:
-			return View::MeasureSpec::getSize(measureSpec);
+			return measureSpec.getSize();
 	}
 }

@@ -16,7 +16,7 @@ protected:
 public:
 	Bundle() = default;
 	Bundle(const Bundle& b);
-	Bundle& operator =(const Bundle& other);
+	Bundle& operator=(const Bundle& other);
 
 	void putInt(const String& key, int value);
 	void putFloat(const String& key, float value);
@@ -77,13 +77,13 @@ void Bundle::put(const String& key, const T& value) {
 
 template <class T>
 T& Bundle::get(const String& key) {
-	return ((Model<T>*)_bundleMap[key])->_object;
+	return (static_cast<Model<T>*>(_bundleMap[key]))->_object;
 }
 
 
 template <class T>
 void Bundle::remove(const String& key) {
-	delete (T*)_bundleMap[key];
+	delete static_cast<T*>(_bundleMap[key]);
 	_bundleMap.erase(key);
 }
 

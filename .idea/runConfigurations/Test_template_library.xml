@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Test template library" type="CMakeRunConfiguration" factoryName="Application" folderName="Tests" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="ardUI" TARGET_NAME="Test_template_library" CONFIG_NAME="Linux" RUN_TARGET_PROJECT_NAME="ardUI" RUN_TARGET_NAME="Test_template_library">
+    <method v="2">
+      <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+    </method>
+  </configuration>
+</component>

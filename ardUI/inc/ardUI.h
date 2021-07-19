@@ -6,13 +6,10 @@
 #define ARDUI_H
 
 #include "platform.h"
-#include "llpi.h"
-#include "ardUI_config.h"
-#include "Singleton.h"
-
-#include "Event.h"
 #include "EventManager.h"
+
 #include "View.h"
+#include "Bundle.h"
 #include "Activity.h"
 #include "ActivityManager.h"
 #include "ActivitySwitcher.h"
@@ -21,7 +18,7 @@
 #include MAP_H
 
 
-class ardUI final: public Singleton<ardUI> {
+class ardUI final {
 public:
 	template <class ActivityClass>
 	static void startActivity(const Bundle& extras = {});
@@ -30,14 +27,10 @@ public:
 
 	static void setViewName(View* view, const String& name);
 	static View* getViewByName(const String& name);
-	static Activity& getCurrentActivity();
-
-	friend class Singleton<ardUI>;
+	static Activity* getCurrentActivity();
 
 private:
-	ardUI() = default;
-	~ardUI();
-	MAP<String, View*> _viewMap;
+	static MAP<String, View*> _viewMap;
 };
 
 

@@ -29,7 +29,7 @@ void TextView::setTextSize(uint16_t size) {
 }
 
 
-void TextView::setTextColor(uint32_t color) {
+void TextView::setTextColor(Color color) {
 	_textColor = color;
 	invalidate();
 }
@@ -45,26 +45,26 @@ uint16_t TextView::getTextSize() const {
 }
 
 
-uint32_t TextView::getTextColor() const {
+Color TextView::getTextColor() const {
 	return _textColor;
 }
 
 
-void TextView::onMeasure(uint16_t widthMeasureSpec, uint16_t heightMeasureSpec) {
+void TextView::onMeasure(MeasureSpec widthMeasureSpec, MeasureSpec heightMeasureSpec) {
 	auto width = getDefaultSize(getMaxWidth(), widthMeasureSpec);
-	setMeasuredDimensions(width + _padding.left + _padding.right,
-			getDefaultSize(_textSize * (uint16_t)getLines(width).size() +
-			               _padding.top + _padding.bottom, heightMeasureSpec));
+	setMeasuredDimensions(static_cast<uint16_t>(width + _padding.left + _padding.right),
+			getDefaultSize(static_cast<uint16_t>(_textSize * getLines(width).size() +
+					static_cast<uint16_t>(_padding.top + _padding.bottom)), heightMeasureSpec));
 }
 
 
 void TextView::onDraw() {
-	arduiDisplayFillRect(_viewBox.left, _viewBox.top, _viewBox.right - 1, _viewBox.bottom - 1, _backgroundColor);
+	DISPLAY::fillRect(_viewBox.left, _viewBox.top, _viewBox.right - 1, _viewBox.bottom - 1, _backgroundColor);
 
 	uint16_t line {0};
 	for (const auto& l : getLines(_viewBox.width())) {
-		arduiDisplayDrawText(_viewBox.left + _padding.left, _viewBox.top + _padding.top + _textSize * line++,
-				l, _textSize, _textColor);
+		DISPLAY::drawText(_viewBox.left + _padding.left,
+				static_cast<int16_t>(_viewBox.top + _padding.top + _textSize * line++), l, _textSize, _textColor);
 	}
 }
 
@@ -77,11 +77,11 @@ LIST<String> TextView::getLines(uint16_t maxWidth) const {
 	uint16_t currentWidth {0};
 
 	for (uint16_t i {0}; s[i]; ++i) {
-		currentWidth += arduiDisplayGetCharWidth(s[i], _textSize);
+		currentWidth += DISPLAY::getCharWidth(s[i], _textSize);
 		if (s[i] == ' ') {
 			lastSpace = i + 1;
 		}
-		if (currentWidth > maxWidth) {
+		if (currentWidth > maxWidth && i) {
 			if (lineStart == lastSpace) {
 				lastSpace = i;
 			}
@@ -111,7 +111,7 @@ uint16_t TextView::getMaxWidth() {
 	auto s {_text.c_str()};
 
 	for (uint16_t i {0}; s[i]; ++i) {
-		width += arduiDisplayGetCharWidth(s[i], _textSize);
+		width += DISPLAY::getCharWidth(s[i], _textSize);
 	}
 
 	return width;

@@ -5,68 +5,68 @@
 #include "ProgressBar.h"
 
 
-uint16_t ProgressBar::getProgress() const {
+int16_t ProgressBar::getProgress() const {
 	return mapScale(_level, 0, 10000, _min, _max);
 }
 
 
-void ProgressBar::setProgress(uint16_t progress) {
+void ProgressBar::setProgress(int16_t progress) {
 	_level = mapScale(progress, _min, _max, 0, 10000);
 	invalidate();
 }
 
 
-uint16_t ProgressBar::getMin() const {
+int16_t ProgressBar::getMin() const {
 	return _min;
 }
 
 
-void ProgressBar::setMin(uint16_t min) {
+void ProgressBar::setMin(int16_t min) {
 	_min = min;
 }
 
 
-uint16_t ProgressBar::getMax() const {
+int16_t ProgressBar::getMax() const {
 	return _max;
 }
 
 
-void ProgressBar::setMax(uint16_t max) {
+void ProgressBar::setMax(int16_t max) {
 	_max = max;
 }
 
 
-uint32_t ProgressBar::getBarColor() const {
+Color ProgressBar::getBarColor() const {
 	return _barColor;
 }
 
 
-void ProgressBar::setBarColor(uint32_t barColor) {
+void ProgressBar::setBarColor(Color barColor) {
 	_barColor = barColor;
 }
 
 
-uint32_t ProgressBar::getBackgroundColor() const {
+Color ProgressBar::getBackgroundColor() const {
 	return _backgroundColor;
 }
 
 
-void ProgressBar::setBackgroundColor(uint32_t backgroundColor) {
+void ProgressBar::setBackgroundColor(Color backgroundColor) {
 	_backgroundColor = backgroundColor;
 }
 
 
-uint16_t ProgressBar::mapScale(uint16_t value, uint16_t oldMin, uint16_t oldMax,
-		uint16_t newMin, uint16_t newMax) {
+int16_t ProgressBar::mapScale(int16_t value, int16_t oldMin, int16_t oldMax,
+		int16_t newMin, int16_t newMax) {
 	// TODO: fix overflow
 	return (newMax - newMin) * (value - oldMin) / (oldMax - oldMin) + newMin;
 }
 
 
 void ProgressBar::onDraw() {
-	arduiDisplayFillRect(_viewBox.left, _viewBox.top, _viewBox.right - 1, _viewBox.bottom - 1, _backgroundColor);
-	arduiDisplayDrawRect(_viewBox.left, _viewBox.top, _viewBox.right - 1, _viewBox.bottom - 1, _barColor);
+	DISPLAY::fillRect(_viewBox.left, _viewBox.top, _viewBox.right - 1, _viewBox.bottom - 1, _backgroundColor);
+	DISPLAY::drawRect(_viewBox.left, _viewBox.top, _viewBox.right - 1, _viewBox.bottom - 1, _barColor);
 
-	arduiDisplayFillRect(_viewBox.left, _viewBox.top,
+	DISPLAY::fillRect(_viewBox.left, _viewBox.top,
 			_viewBox.left + mapScale(_level, 0, 10000, _viewBox.left, _viewBox.right), _viewBox.bottom, _barColor);
 }

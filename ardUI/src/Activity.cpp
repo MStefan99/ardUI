@@ -112,7 +112,11 @@ void Activity::onDestroy() {
 
 
 View* Activity::findViewById(int id) {
-	return _rootView->findViewById(id);
+	if (_rootView) {
+		return _rootView->findViewById(id);
+	} else {
+		return nullptr;
+	}
 }
 
 
@@ -126,19 +130,16 @@ View* Activity::getRootView() {
 }
 
 
-void Activity::measure() {
+void Activity::measure(View::MeasureSpec widthMeasureSpec, View::MeasureSpec heightMeasureSpec) {
 	if (_rootView) {
-		uint16_t widthSpec = View::MeasureSpec::makeMeasureSpec(View::MeasureSpec::EXACTLY, arduiDisplayGetWidth());
-		uint16_t heightSpec = View::MeasureSpec::makeMeasureSpec(View::MeasureSpec::EXACTLY, arduiDisplayGetHeight());
-		_rootView->measure(widthSpec, heightSpec);
+		_rootView->measure(widthMeasureSpec, heightMeasureSpec);
 	}
 }
 
 
-void Activity::layout() {
+void Activity::layout(int16_t left, int16_t top, int16_t right, int16_t bottom) {
 	if (_rootView) {
-		Rect display {0, 0, arduiDisplayGetWidth(), arduiDisplayGetHeight()};
-		_rootView->layout(display);
+		_rootView->layout(left, top, right, bottom);
 	}
 }
 
@@ -146,17 +147,18 @@ void Activity::layout() {
 void Activity::draw() const {
 	if (_rootView) {
 		if (!_rootView->_valid) {
-			arduiDisplayFill(_backgroundColor);
+			DISPLAY::fill(_backgroundColor);
 		}
 		_rootView->draw();
 	}
 }
 
 
-void Activity::handleEvent(const Event& event) {
+View* Activity::handleEvent(const Event& event) {
 	if (_rootView) {
-		_rootView->handleEvent(event);
+		return _rootView->handleEvent(event);
 	}
+	return nullptr;
 }
 
 
@@ -198,11 +200,11 @@ void Activity::rewindState(Activity::State targetState) {
 }
 
 
-uint32_t Activity::getBackgroundColor() const {
+Color Activity::getBackgroundColor() const {
 	return _backgroundColor;
 }
 
 
-void Activity::setBackgroundColor(uint32_t backgroundColor) {
+void Activity::setBackgroundColor(Color backgroundColor) {
 	_backgroundColor = backgroundColor;
 }

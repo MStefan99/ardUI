@@ -18,8 +18,8 @@ struct Event {
 	};
 
 	Action _currentAction {NO_ACTION};
-	uint16_t _targetX {0};
-	uint16_t _targetY {0};
+	int16_t _targetX {0};
+	int16_t _targetY {0};
 	int16_t _deltaX {0};
 	int16_t _deltaY {0};
 };

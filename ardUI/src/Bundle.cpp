@@ -15,7 +15,7 @@ Bundle::Bundle(const Bundle& b): _bundleMap(b._bundleMap) {
 }
 
 
-Bundle& Bundle::operator =(const Bundle& other) {
+Bundle& Bundle::operator=(const Bundle& other) {
 	for (const auto& e: other._bundleMap) {
 		_bundleMap[e.first] = e.second->copy();
 	}
@@ -39,17 +39,17 @@ void Bundle::putString(const String& key, const String& value) {
 
 
 int Bundle::getInt(const String& key) {
-	return ((Model<int>*)_bundleMap[key])->_object;
+	return (static_cast<Model<int>*>(_bundleMap[key]))->_object;
 }
 
 
 float Bundle::getFloat(const String& key) {
-	return ((Model<float>*)_bundleMap[key])->_object;
+	return (static_cast<Model<float>*>(_bundleMap[key]))->_object;
 }
 
 
 String& Bundle::getString(const String& key) {
-	return ((Model<String>*)_bundleMap[key])->_object;
+	return (static_cast<Model<String>*>(_bundleMap[key]))->_object;
 }
 
 
