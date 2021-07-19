@@ -32,7 +32,7 @@ static void VectorAssert() {
 		});
 
 		suite.test("Iterator arithmetics", [&] {
-			auto it = v.begin();
+			auto it {v.begin()};
 			expect(*++it).toEqual(1);
 			expect(*--it).toEqual(0);
 			expect(*(it += 3)).toEqual(3);
@@ -41,6 +41,10 @@ static void VectorAssert() {
 			expect(*it).toEqual(2);
 			it--;
 			expect(*it).toEqual(1);
+
+			it = v.begin();
+			ardui::advance(it, 3);
+			expect(*it).toEqual(3);
 
 			ardui::vector<ardui::vector<int>> v1;
 			v1.push_back(ardui::vector<int> {});
@@ -156,14 +160,8 @@ static void ListAssert() {
 			}
 			expect(l.empty()).toBeFalsy();
 
-			for (int j = 0; j < 10; ++j) {
-				expect(l[j]).toEqual(j);
-			}
-
 			expect(l.size()).toEqual(10);
 			expect(*l.begin()).toEqual(0);
-			expect(l[5]).toEqual(5);
-			expect(l[8]).toEqual(8);
 
 			l.clear();
 			expect(l.empty()).toBeTruthy();
@@ -173,14 +171,8 @@ static void ListAssert() {
 			}
 			expect(l.empty()).toBeFalsy();
 
-			for (int j = 0; j < 10; ++j) {
-				expect(l[j]).toEqual(j);
-			}
-
 			expect(l.size()).toEqual(10);
 			expect(*l.begin()).toEqual(0);
-			expect(l[5]).toEqual(5);
-			expect(l[8]).toEqual(8);
 
 			ardui::list<ardui::list<int>> l1 {};
 			l1.push_back({});
@@ -191,6 +183,10 @@ static void ListAssert() {
 			auto it {l.begin()};
 			expect(*it++).toEqual(0);
 			expect(*++it).toEqual(2);
+
+			it = l.begin();
+			ardui::advance(it, 3);
+			expect(*it).toEqual(3);
 
 			it = --l.end();
 			expect(*it--).toEqual(9);
@@ -215,10 +211,6 @@ static void ListAssert() {
 		suite.test("insert assert", [&] {
 			l.insert(l.begin(), -1);
 			l.insert(++l.begin(), -2);
-			expect(l[0]).toEqual(-1);
-			expect(l[1]).toEqual(-2);
-			expect(l[2]).toEqual(0);
-			expect(l[3]).toEqual(1);
 			expect(l.size()).toEqual(12);
 
 			ardui::list<int> l1;
@@ -236,21 +228,15 @@ static void ListAssert() {
 			it = l.erase(it, ++it);
 			it = l.erase(it);
 			expect(l.size()).toEqual(8);
-			expect(l[0]).toEqual(-1);
-			expect(l[1]).toEqual(0);
-			expect(l[2]).toEqual(1);
-			expect(l[3]).toEqual(5);
 		});
 
 		suite.test("remove assert", [&] {
 			int i = l.remove(6);
-			expect(l[4]).toEqual(7);
 			expect(i).toEqual(1);
 			i = l.remove_if([](const int& e) -> bool {
 				return !e;
 			});
 
-			expect(l[1]).toEqual(1);
 			expect(i).toEqual(1);
 			expect(l.size()).toEqual(6);
 			expect(l.front()).toEqual(-1);
@@ -310,6 +296,10 @@ static void MapAssert() {
 			auto it = m.find(2);
 			expect(m.insert({2, 2.2}).first).toEqual(it);
 			expect(m[2]).toEqual(2.2);
+
+			it = m.begin();
+			ardui::advance(it, 3);
+			expect(it->first).toEqual(1);
 		});
 
 		suite.test("size assert", [&] {

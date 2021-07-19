@@ -5,12 +5,17 @@
 #ifndef ARDUI_VECTOR_H
 #define ARDUI_VECTOR_H
 
+#include "iterator.h"
+
+
 namespace ardui {
 	template <class T>
 	class vector {
 	public:
 		class iterator final {  // random access iterator
 		public:
+			typedef _internal::random_access_iterator_tag iterator_category;
+
 			iterator() = default;
 
 			iterator& operator++();
@@ -38,7 +43,7 @@ namespace ardui {
 			bool operator>(const iterator& it) const;
 			bool operator>=(const iterator& it) const;
 
-			T& operator[](int n) const;
+			T& operator[](unsigned int n) const;
 
 			friend class vector;
 
@@ -59,29 +64,30 @@ namespace ardui {
 		iterator erase(iterator first, iterator last);
 		void clear();
 
-		T& operator[](int n) const;
+		T& operator[](unsigned int n) const;
 		vector& operator=(const vector& vector);
 
 		bool empty() const;
-		int size() const;
-		int capacity() const;
+		unsigned int size() const;
+		unsigned int capacity() const;
 
-		void resize(int n);
+		void resize(unsigned int n);
 
 		iterator begin() const;
 		iterator end() const;
 
 	protected:
 		T* _vectorArray {nullptr};
-		int _vectorSize {0};
-		int _vectorCapacity {0};
+		unsigned int _vectorSize {0};
+		unsigned int _vectorCapacity {0};
 	};
 
 
 	template <class T>
-	vector<T>::vector(const vector& v) : _vectorSize(v._vectorSize), _vectorCapacity(v._vectorCapacity) {
+	vector<T>::vector(const vector& v):
+			_vectorSize(v._vectorSize), _vectorCapacity(v._vectorCapacity) {
 		resize(_vectorCapacity);
-		for (int i {0}; i < v._vectorSize; ++i) {
+		for (unsigned int i {0}; i < v._vectorSize; ++i) {
 			_vectorArray[i] = v._vectorArray[i];
 		}
 	}
@@ -112,13 +118,13 @@ namespace ardui {
 
 	template <class T>
 	typename vector<T>::iterator vector<T>::insert(iterator position, const T& value) {
-		long i {position._elementPointer - _vectorArray};
+		auto i {position._elementPointer - _vectorArray};
 
 		if (_vectorSize == _vectorCapacity) {
 			resize(_vectorCapacity * 1.1 + 1);
 		}
-		for (long j {_vectorSize - 1}; j >= i; --j) {
-			_vectorArray[j + 1] = _vectorArray[j];
+		for (auto j {_vectorSize}; j > i; --j) {
+			_vectorArray[j] = _vectorArray[j - 1];
 		}
 		_vectorArray[i] = value;
 		++_vectorSize;
@@ -129,7 +135,7 @@ namespace ardui {
 
 	template <class T>
 	typename vector<T>::iterator vector<T>::erase(vector<T>::iterator position) {
-		long i {position._elementPointer - _vectorArray};
+		auto i {position._elementPointer - _vectorArray};
 
 		if (i > _vectorSize - 1) {
 			return position;
@@ -160,7 +166,7 @@ namespace ardui {
 
 	template <class T>
 	void vector<T>::clear() {
-		for (int i {0}; i < _vectorSize; ++i) {
+		for (unsigned int i {0}; i < _vectorSize; ++i) {
 			_vectorArray[i] = T {};
 		}
 		_vectorSize = 0;
@@ -168,12 +174,12 @@ namespace ardui {
 
 
 	template <class T>
-	void vector<T>::resize(int n) {
+	void vector<T>::resize(unsigned int n) {
 		T* temp = new T[n];
 		_vectorCapacity = n;
 
 		if (_vectorArray) {
-			for (int i {0}; i < _vectorSize && i < n; ++i) {
+			for (unsigned int i {0}; i < _vectorSize && i < n; ++i) {
 				temp[i] = _vectorArray[i];
 			}
 			delete[] _vectorArray;
@@ -183,7 +189,7 @@ namespace ardui {
 
 
 	template <class T>
-	T& vector<T>::operator[](int n) const {
+	T& vector<T>::operator[](unsigned int n) const {
 		return _vectorArray[n];
 	}
 
@@ -192,7 +198,7 @@ namespace ardui {
 	vector<T>& vector<T>::operator=(const vector <T>& vector) {
 		if (this != &vector) {
 			resize(vector._vectorSize);
-			for (int i {0}; i < vector.size(); ++i) {
+			for (unsigned int i {0}; i < vector.size(); ++i) {
 				_vectorArray[i] = vector._vectorArray[i];
 			}
 		}
@@ -208,13 +214,13 @@ namespace ardui {
 
 
 	template <class T>
-	int vector<T>::size() const {
+	unsigned int vector<T>::size() const {
 		return _vectorSize;
 	}
 
 
 	template <class T>
-	int vector<T>::capacity() const {
+	unsigned int vector<T>::capacity() const {
 		return _vectorCapacity;
 	}
 
@@ -316,7 +322,7 @@ namespace ardui {
 
 
 	template <class T>
-	T& vector<T>::iterator::operator[](int n) const {
+	T& vector<T>::iterator::operator[](unsigned int n) const {
 		return _elementPointer[n];
 	}
 
