@@ -14,7 +14,7 @@
  * it will be saved to memory so that the user can navigate back to it.
  * Higher values improve user experience but will use significantly more memory.
  */
-#define BACK_STACK_DEPTH ( 3 )
+#define BACK_STACK_DEPTH ( 1 )
 
 
 /*
@@ -70,6 +70,6 @@
  * You can choose whether to use 24 or 16-bit colors.
  * If your display doesn't support 24-bit colors, choose 16-bit mode to save memory.
  */
-#define COLOR_MODE ( COLOR_888 )
+#define COLOR_MODE ( COLOR_565 )
 
 #endif //ARDUI_CONFIG_H

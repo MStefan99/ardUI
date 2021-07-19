@@ -10,7 +10,7 @@
  * Use standard template library.
  * Disable if not supported on your platform.
  */
-#define USE_STL ( true )
+#define USE_STL ( false )
 
 
 /*
@@ -28,7 +28,7 @@
  * Debug mode is not guaranteed to run on Arduino
  * and will only turned on in a desktop environment.
  */
-#define DEBUGGING ( true )
+#define DEBUGGING ( false )
 
 
 /*
@@ -37,6 +37,7 @@
  * Does not affect UI performance but leaves less time for other operations.
  */
 #define SLOW_MODE ( false )
+
 
 /*
  * Enable Display fallback.
