@@ -27,8 +27,9 @@ StatRecorder::~StatRecorder() {
 	std::cout << BOLD << "Test cases:  " << RST;
 	if (_totalTests != _ranTests) {
 		std::cout << FG_RED << _ranTests << " ran, " << RST;
-	} else if (_totalTests != _passedTests) {
-		std::cout << FG_RED << _totalTests - _passedTests << " failed, " << RST;
+	}
+	if (_ranTests != _passedTests) {
+		std::cout << FG_RED << _ranTests - _passedTests << " failed, " << RST;
 	}
 	std::cout << FG_GREEN << _passedTests << " passed, " << RST;
 	std::cout << _totalTests << " total." << std::endl;
