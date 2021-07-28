@@ -64,9 +64,9 @@ int16_t ProgressBar::mapScale(int16_t value, int16_t oldMin, int16_t oldMax,
 
 
 void ProgressBar::onDraw() {
-	DISPLAY::fillRect(_viewBox.left, _viewBox.top, _viewBox.right - 1, _viewBox.bottom - 1, _backgroundColor);
-	DISPLAY::drawRect(_viewBox.left, _viewBox.top, _viewBox.right - 1, _viewBox.bottom - 1, _barColor);
+	DISPLAY_UTIL::fillRect(_viewBox.left, _viewBox.top, _viewBox.right - 1, _viewBox.bottom - 1, _backgroundColor);
+	DISPLAY_UTIL::drawRect(_viewBox.left, _viewBox.top, _viewBox.right - 1, _viewBox.bottom - 1, _barColor);
 
-	DISPLAY::fillRect(_viewBox.left, _viewBox.top,
+	DISPLAY_UTIL::fillRect(_viewBox.left, _viewBox.top,
 			_viewBox.left + mapScale(_level, 0, 10000, _viewBox.left, _viewBox.right), _viewBox.bottom, _barColor);
 }

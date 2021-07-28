@@ -59,11 +59,11 @@ void TextView::onMeasure(MeasureSpec widthMeasureSpec, MeasureSpec heightMeasure
 
 
 void TextView::onDraw() {
-	DISPLAY::fillRect(_viewBox.left, _viewBox.top, _viewBox.right - 1, _viewBox.bottom - 1, _backgroundColor);
+	DISPLAY_UTIL::fillRect(_viewBox.left, _viewBox.top, _viewBox.right - 1, _viewBox.bottom - 1, _backgroundColor);
 
 	uint16_t line {0};
 	for (const auto& l : getLines(_viewBox.width())) {
-		DISPLAY::drawText(_viewBox.left + _padding.left,
+		DISPLAY_UTIL::drawText(_viewBox.left + _padding.left,
 				static_cast<int16_t>(_viewBox.top + _padding.top + _textSize * line++), l, _textSize, _textColor);
 	}
 }
@@ -77,7 +77,7 @@ LIST<String> TextView::getLines(uint16_t maxWidth) const {
 	uint16_t currentWidth {0};
 
 	for (uint16_t i {0}; s[i]; ++i) {
-		currentWidth += DISPLAY::getCharWidth(s[i], _textSize);
+		currentWidth += DISPLAY_UTIL::getCharWidth(s[i], _textSize);
 		if (s[i] == ' ') {
 			lastSpace = i + 1;
 		}
@@ -111,7 +111,7 @@ uint16_t TextView::getMaxWidth() {
 	auto s {_text.c_str()};
 
 	for (uint16_t i {0}; s[i]; ++i) {
-		width += DISPLAY::getCharWidth(s[i], _textSize);
+		width += DISPLAY_UTIL::getCharWidth(s[i], _textSize);
 	}
 
 	return width;

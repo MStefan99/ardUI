@@ -60,7 +60,7 @@ void Dialog::layout(int16_t left, int16_t top, int16_t right, int16_t bottom) {
 void Dialog::draw() const {
 	if (_rootView) {
 		if (!_rootView->isValid()) {
-			DISPLAY::fill({DEFAULT_DIALOG_BACKGROUND_COLOR});
+			DISPLAY_UTIL::fill({DEFAULT_DIALOG_BACKGROUND_COLOR});
 		}
 		_rootView->draw();
 	}

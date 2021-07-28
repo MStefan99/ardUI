@@ -24,10 +24,10 @@
 
 #if DISPLAY_FALLBACK
 	#define DISPLAY_H "DisplayController.h"
-	#define DISPLAY DisplayController
+	#define DISPLAY_UTIL DisplayController
 #else
 	#define DISPLAY_H "display.h"
-	#define DISPLAY ardui::display
+	#define DISPLAY_UTIL ardui::display
 #endif
 
 #if USE_STL

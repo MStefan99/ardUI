@@ -171,7 +171,7 @@ void Activity::draw() const {
 		_dialog->draw();
 	} else if (_rootView) {
 		if (!_rootView->_valid) {
-			DISPLAY::fill(_backgroundColor);
+			DISPLAY_UTIL::fill(_backgroundColor);
 		}
 		_rootView->draw();
 	}
