@@ -6,8 +6,8 @@
 #define ARDUI_PLATFORM_H
 
 #include <Arduino.h>
-#include "config/config.h"
-#include "config/config_adv.h"
+#include "config.h"
+#include "config_adv.h"
 
 
 #if LOG_LEVEL < LOG_NONE || LOG_LEVEL > LOG_VERBOSE

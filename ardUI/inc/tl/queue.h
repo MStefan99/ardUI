@@ -13,7 +13,7 @@ namespace ardui {
 		~queue() = default;
 
 		bool empty() const;
-		int size() const;
+		unsigned int size() const;
 
 		T& front() const;
 		T& back() const;
@@ -33,7 +33,7 @@ namespace ardui {
 
 
 	template <class T, class Container>
-	int queue<T, Container>::size() const {
+	unsigned int queue<T, Container>::size() const {
 		return _c.size();
 	}
 
