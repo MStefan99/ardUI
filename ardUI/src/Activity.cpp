@@ -147,7 +147,7 @@ void Activity::layout(int16_t left, int16_t top, int16_t right, int16_t bottom) 
 void Activity::draw() const {
 	if (_rootView) {
 		if (!_rootView->_valid) {
-			DISPLAY::fill(_backgroundColor);
+			DISPLAY_UTIL::fill(_backgroundColor);
 		}
 		_rootView->draw();
 	}
