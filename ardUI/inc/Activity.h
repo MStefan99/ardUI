@@ -13,6 +13,7 @@
 #include "Event.h"
 #include "Bundle.h"
 #include "View.h"
+#include "Dialog.h"
 #include "ActivityManager.h"
 
 
@@ -37,13 +38,8 @@ public:
 	void setResult(int statusCode = 0, const Bundle& data = {});
 	void finish();
 
-	virtual void onCreate() = 0;
-	virtual void onStart();
-	virtual void onRestart();
-	virtual void onResume();
-	virtual void onPause();
-	virtual void onStop();
-	virtual void onDestroy();
+	void showDialog(Dialog* dialog);
+	void dismissDialog();
 
 	View* findViewById(int id);
 
@@ -62,6 +58,14 @@ public:
 	#endif
 
 protected:
+	virtual void onCreate() = 0;
+	virtual void onStart();
+	virtual void onRestart();
+	virtual void onResume();
+	virtual void onPause();
+	virtual void onStop();
+	virtual void onDestroy();
+
 	const Bundle& getExtras();
 
 private:
@@ -96,10 +100,18 @@ private:
 	View* _rootView {};
 	Bundle _bundle {};
 	Bundle _resultData {};
+	Dialog* _dialog {};
 	int _status {};
 	void (* _resultCallback)(int statusCode, Bundle resultData) {nullptr};
 	Color _backgroundColor {DEFAULT_BACKGROUND_COLOR};
 };
+
+
+template <class compiledLayout>
+void Activity::setContentView() {
+	compiledLayout layout {};
+	layout.fill(this);  // "void fill(Activity*)" function must be present in the compiled layout
+}
 
 
 template <class ActivityClass>
@@ -112,13 +124,6 @@ template <class ActivityClass>
 void Activity::startActivityForResult(void (* onActivityResult)(int statusCode, Bundle resultData),
 		const Bundle& extras) {
 	ActivityManager::startActivity<ActivityClass>(extras, onActivityResult);
-}
-
-
-template <class compiledLayout>
-void Activity::setContentView() {
-	compiledLayout layout {};
-	layout.fill(this);  // "void fill(Activity*)" function must be present in the compiled layout
 }
 
 

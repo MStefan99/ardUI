@@ -81,6 +81,14 @@ class MainActivity: public Activity {
 		b3->setOnClickListener([](View* b) -> void {
 			ardUI::startActivity<ConstraintActivity>();
 		});
+
+		auto db = new ButtonView("back");
+		db->setOnClickListener([](View* v) {
+			ardUI::back();
+		});
+		auto dialog = new Dialog();
+		dialog->setRootView(db);
+		showDialog(dialog);
 	}
 
 

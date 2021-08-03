@@ -18,7 +18,11 @@ void ActivityManager::stopActivity(Activity* activityToStop) {
 
 
 void ActivityManager::back() {
-	stopActivity(_currentActivity);
+	if (_currentActivity->_dialog) {
+		_currentActivity->dismissDialog();
+	} else {
+		stopActivity(_currentActivity);
+	}
 }
 
 

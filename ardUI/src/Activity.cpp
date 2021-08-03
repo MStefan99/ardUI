@@ -34,6 +34,24 @@ void Activity::finish() {
 }
 
 
+void Activity::showDialog(Dialog* dialog) {
+	if (_dialog) {
+		_dialog->onStop();
+	}
+
+	_dialog = dialog;
+	_dialog->onCreate();
+}
+
+
+void Activity::dismissDialog() {
+	if (_dialog) {
+		_dialog->onStop();
+		_dialog = nullptr;
+	}
+}
+
+
 void Activity::create() {
 	_currentState = CREATED;
 	onCreate();
@@ -131,21 +149,27 @@ View* Activity::getRootView() {
 
 
 void Activity::measure(View::MeasureSpec widthMeasureSpec, View::MeasureSpec heightMeasureSpec) {
-	if (_rootView) {
+	if (_dialog) {
+		_dialog->measure(widthMeasureSpec, heightMeasureSpec);
+	} else if (_rootView) {
 		_rootView->measure(widthMeasureSpec, heightMeasureSpec);
 	}
 }
 
 
 void Activity::layout(int16_t left, int16_t top, int16_t right, int16_t bottom) {
-	if (_rootView) {
+	if (_dialog) {
+		_dialog->layout(left, top, right, bottom);
+	} else if (_rootView) {
 		_rootView->layout(left, top, right, bottom);
 	}
 }
 
 
 void Activity::draw() const {
-	if (_rootView) {
+	if (_dialog) {
+		_dialog->draw();
+	} else if (_rootView) {
 		if (!_rootView->_valid) {
 			DISPLAY::fill(_backgroundColor);
 		}
@@ -155,7 +179,9 @@ void Activity::draw() const {
 
 
 View* Activity::handleEvent(const Event& event) {
-	if (_rootView) {
+	if (_dialog) {
+		return _dialog->handleEvent(event);
+	} else if (_rootView) {
 		return _rootView->handleEvent(event);
 	}
 	return nullptr;

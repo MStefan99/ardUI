@@ -15,6 +15,7 @@ static void VectorAssert() {
 	describe("Vector check", [&](TestSuite& suite) {
 
 		suite.test("push and subscribe", [&] {
+			auto v1 = new ardui::vector<int> {v};
 			expect(v.empty()).toBeTruthy();
 			expect(v.capacity()).toBeFalsy();
 			for (int i = 0; i < 10; ++i) {
