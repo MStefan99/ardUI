@@ -81,14 +81,6 @@ class MainActivity: public Activity {
 		b3->setOnClickListener([](View* b) -> void {
 			ardUI::startActivity<ConstraintActivity>();
 		});
-
-		auto db = new ButtonView("back");
-		db->setOnClickListener([](View* v) {
-			ardUI::back();
-		});
-		auto dialog = new Dialog();
-		dialog->setRootView(db);
-		showDialog(dialog);
 	}
 
 
@@ -127,6 +119,11 @@ class SecondActivity: public Activity {
 			Serial.println("Back pressed");
 			ardUI::back();
 		});
+
+		auto dt = new TextView("Hi, I am a dialog!");
+		auto dialog = new Dialog();
+		dialog->setRootView(dt);
+		showDialog(dialog);
 	}
 };
 

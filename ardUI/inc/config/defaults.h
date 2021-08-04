@@ -40,4 +40,10 @@
  */
 #define DEFAULT_LEVEL ( 0 )
 
+
+/*
+ * Default dialog background
+ */
+#define DEFAULT_DIALOG_BACKGROUND_COLOR ( 0xaaaaaaul )
+
 #endif //ARDUI_DEFAULTS_H

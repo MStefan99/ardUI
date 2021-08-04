@@ -33,27 +33,42 @@ void Dialog::onStop() {
 
 void Dialog::measure(View::MeasureSpec widthMeasureSpec, View::MeasureSpec heightMeasureSpec) {
 	if (_rootView) {
-		_rootView->measure(widthMeasureSpec, heightMeasureSpec);
+		_rootView->measure(View::MeasureSpec {
+						static_cast<uint16_t>(widthMeasureSpec.getSize() * 4 / 5),
+						View::MeasureSpec::AT_MOST},
+				View::MeasureSpec {static_cast<uint16_t>(heightMeasureSpec.getSize() * 3 / 5),
+						View::MeasureSpec::AT_MOST});
 	}
 }
 
 
 void Dialog::layout(int16_t left, int16_t top, int16_t right, int16_t bottom) {
 	if (_rootView) {
-		_rootView->layout(left, top, right, bottom);
+		int16_t l {static_cast<int16_t>((left + right - _rootView->getMeasuredWidth()) / 2)};
+		int16_t t {static_cast<int16_t>((top + bottom - _rootView->getMeasuredHeight()) / 2)};
+
+		_rootView->layout({
+				static_cast<int16_t>(l),
+				static_cast<int16_t>(t),
+				static_cast<int16_t>(l + _rootView->getMeasuredWidth()),
+				static_cast<int16_t>(t + _rootView->getMeasuredHeight())
+		});
 	}
 }
 
 
 void Dialog::draw() const {
 	if (_rootView) {
+		if (!_rootView->isValid()) {
+			DISPLAY::fill({DEFAULT_DIALOG_BACKGROUND_COLOR});
+		}
 		_rootView->draw();
 	}
 }
 
 
 View* Dialog::handleEvent(const Event& event) {
-	if (_rootView) {
+	if (_rootView && _rootView->getBounds().contains(event._targetX, event._targetY)) {
 		return _rootView->handleEvent(event);
 	}
 	return nullptr;

@@ -180,7 +180,11 @@ void Activity::draw() const {
 
 View* Activity::handleEvent(const Event& event) {
 	if (_dialog) {
-		return _dialog->handleEvent(event);
+		auto v {_dialog->handleEvent(event)};
+		if (!v) {
+			dismissDialog();
+		}
+		return v;
 	} else if (_rootView) {
 		return _rootView->handleEvent(event);
 	}
