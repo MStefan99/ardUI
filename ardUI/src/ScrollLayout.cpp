@@ -35,13 +35,13 @@ void ScrollLayout::draw() {
 
 
 View* ScrollLayout::handleEvent(const Event& event) {
-	if (event._currentAction == Event::SCROLL) {
-		_offset += event._deltaY;
+	if (event.currentAction == Event::SCROLL) {
+		_offset += event.deltaY;
 		invalidate();
 		return this;
 	} else {
 		for (auto view: _viewList) {
-			if (view->getBounds().contains(event._targetX, event._targetY)) {
+			if (view->getBounds().contains(event.targetX, event.targetY)) {
 				return view->handleEvent(event);
 			}
 		}

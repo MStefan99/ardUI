@@ -17,11 +17,11 @@ struct Event {
 		SCROLL
 	};
 
-	Action _currentAction {NO_ACTION};
-	int16_t _targetX {0};
-	int16_t _targetY {0};
-	int16_t _deltaX {0};
-	int16_t _deltaY {0};
+	Action currentAction {NO_ACTION};
+	int16_t targetX {0};
+	int16_t targetY {0};
+	int16_t deltaX {0};
+	int16_t deltaY {0};
 };
 
 #endif //ARDUI_EVENT_H

@@ -68,7 +68,7 @@ void Dialog::draw() const {
 
 
 View* Dialog::handleEvent(const Event& event) {
-	if (_rootView && _rootView->getBounds().contains(event._targetX, event._targetY)) {
+	if (_rootView && _rootView->getBounds().contains(event.targetX, event.targetY)) {
 		return _rootView->handleEvent(event);
 	}
 	return nullptr;

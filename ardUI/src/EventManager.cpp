@@ -76,24 +76,24 @@ void EventManager::checkForActions(uint32_t deltaTime) {
 	static uint32_t actionTime {0};
 
 	if (ardui::display::isClicked()) {  // Detecting actions
-		int16_t lastX {event._targetX}, lastY {event._targetY};
-		event._targetX = static_cast<int16_t>(ardui::display::getClickX());
-		event._targetY = static_cast<int16_t>(ardui::display::getClickY());
+		int16_t lastX {event.targetX}, lastY {event.targetY};
+		event.targetX = static_cast<int16_t>(ardui::display::getClickX());
+		event.targetY = static_cast<int16_t>(ardui::display::getClickY());
 
-		if (event._currentAction == Event::Action::NO_ACTION) {
-			event._currentAction = Event::Action::CLICK;  // Register click
+		if (event.currentAction == Event::Action::NO_ACTION) {
+			event.currentAction = Event::Action::CLICK;  // Register click
 
-			lastX = event._targetX;  // Set last coords to current
-			lastY = event._targetY;
+			lastX = event.targetX;  // Set last coords to current
+			lastY = event.targetY;
 #if LOG_LEVEL >= LOG_VERBOSE
 			Serial.println("Event registered");
 #endif
 		} else {
 			actionTime += deltaTime;
-			event._deltaX = static_cast<int16_t>(event._targetX - lastX);
-			event._deltaY = static_cast<int16_t>(event._targetY - lastY);
+			event.deltaX = static_cast<int16_t>(event.targetX - lastX);
+			event.deltaY = static_cast<int16_t>(event.targetY - lastY);
 		}
-		if (event._currentAction == Event::Action::SCROLL) {
+		if (event.currentAction == Event::Action::SCROLL) {
 			// Handle scroll event every Update
 			if (ActivityManager::_currentActivity) {
 #if LOG_LEVEL >= LOG_VERBOSE
@@ -104,22 +104,22 @@ void EventManager::checkForActions(uint32_t deltaTime) {
 				}
 			}
 		} else if (actionTime >= LONG_CLICK_TIME) {
-			event._currentAction = Event::Action::LONG_CLICK;  // Register long click
+			event.currentAction = Event::Action::LONG_CLICK;  // Register long click
 		}
 		// TODO: add drift rejection
-		if (event._currentAction == Event::Action::CLICK && (
-				(static_cast<uint32_t>(ABS(event._deltaX) * 1000) / deltaTime > SCROLL_SENSITIVITY) ||
-						(static_cast<uint32_t>(ABS(event._deltaY)) * 1000 / deltaTime > SCROLL_SENSITIVITY))) {
-			event._currentAction = Event::Action::SCROLL;  // Register scroll
+		if (event.currentAction == Event::Action::CLICK && (
+				(static_cast<uint32_t>(ABS(event.deltaX) * 1000) / deltaTime > SCROLL_SENSITIVITY) ||
+						(static_cast<uint32_t>(ABS(event.deltaY)) * 1000 / deltaTime > SCROLL_SENSITIVITY))) {
+			event.currentAction = Event::Action::SCROLL;  // Register scroll
 		}
-	} else if (event._currentAction != Event::Action::NO_ACTION) {
+	} else if (event.currentAction != Event::Action::NO_ACTION) {
 #if LOG_LEVEL >= LOG_VERBOSE
 		Serial.println("Event dispatched");
 #endif
 		if (ActivityManager::_currentActivity) {  // Touch over, handle event
 			ActivityManager::_currentActivity->handleEvent(event);
 		}
-		event._currentAction = Event::Action::NO_ACTION;
+		event.currentAction = Event::Action::NO_ACTION;
 		actionTime = 0;
 	}
 }

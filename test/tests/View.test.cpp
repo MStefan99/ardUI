@@ -115,16 +115,16 @@ struct TestWrapper {
 				expect(CLICK_COUNT).toEqual(0);
 				expect(LONG_CLICK_COUNT).toEqual(0);
 
-				e._currentAction = Event::CLICK;
+				e.currentAction = Event::CLICK;
 				v->handleEvent(e);
 				expect(CLICK_COUNT).toEqual(1);
 
-				e._currentAction = Event::LONG_CLICK;
+				e.currentAction = Event::LONG_CLICK;
 				v->handleEvent(e);
 
 				expect(LONG_CLICK_COUNT).toEqual(1);
 
-				e._currentAction = Event::SCROLL;
+				e.currentAction = Event::SCROLL;
 				v->handleEvent(e);
 
 				expect(SCROLL_COUNT).toEqual(1);

@@ -77,7 +77,7 @@ void View::draw() {
 
 View* View::handleEvent(const Event& event) {
 	// TODO: check if visible
-	switch (event._currentAction) {
+	switch (event.currentAction) {
 		case Event::Action::NO_ACTION:
 		case Event::Action::TOUCH:
 			// Nothing to do
