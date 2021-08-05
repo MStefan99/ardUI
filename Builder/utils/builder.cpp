@@ -11,7 +11,6 @@
 #include "ProgressBar.h"
 #include "ListView.h"
 #include "ArrayAdapter.h"
-#include "BuilderInterface.h"
 
 
 class SecondActivity;
@@ -32,7 +31,7 @@ public:
 class MainActivity: public Activity {
 	using Activity::Activity;
 	String* _stringArray = new String[] {"a", "b", "c", "d", "e"};
-	StringAdapter* _stringAdapter = new StringAdapter(_stringArray, 4);
+	StringAdapter* _stringAdapter = new StringAdapter(_stringArray, 5);
 
 
 	void onCreate() override {

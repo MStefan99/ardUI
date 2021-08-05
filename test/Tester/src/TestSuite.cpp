@@ -121,9 +121,9 @@ void TestSuite::runTest(const Test& test) {
 
 void TestSuite::printResults() const {
 	if (_passed) {
-		std::cout << BG_GREEN << FG_BLACK << " PASS " << RST << " " << _name << std::endl;
+		std::cout << BG_BRIGHT_GREEN << FG_BLACK << " PASS " << RST << " " << _name << std::endl;
 	} else {
-		std::cout << BG_RED << FG_BLACK << " FAIL " << RST << " " << _name << RST << std::endl;
+		std::cout << BG_BRIGHT_RED << FG_BLACK << " FAIL " << RST << " " << _name << RST << std::endl;
 		for (const auto& e: _errors) {
 			std::cout << FG_RED << "● " << e.first << RST << std::endl
 			          << e.second << std::endl << std::endl;

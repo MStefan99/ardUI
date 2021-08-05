@@ -11,6 +11,15 @@
 #include "platform.h"
 #include LIST_H
 #include "View.h"
+#include "TextView.h"
+#include "ButtonView.h"
+#include "ProgressBar.h"
+#include "ViewGroup.h"
+#include "Adapter.h"
+#include "AdapterView.h"
+#include "ListView.h"
+#include "LinearLayout.h"
+#include "ConstraintLayout.h"
 #include "Activity.h"
 #include "ActivityManager.h"
 
@@ -18,9 +27,9 @@
 #define ENQUOTE(a) #a
 
 #define LIST_VIEW(class) \
-	class_<Adapter<class>>(ENQUOTE(class Adapter)); \
-	class_<AdapterView<class>, base<ViewGroup>>(ENQUOTE(class AdapterView)); \
-	class_<ListView<class>, base<AdapterView<class>>>(ENQUOTE(class ListView)).constructor()
+  class_<Adapter<class>>(ENQUOTE(class Adapter)); \
+  class_<AdapterView<class>, base<ViewGroup>>(ENQUOTE(class AdapterView)); \
+  class_<ListView<class>, base<AdapterView<class>>>(ENQUOTE(class ListView)).constructor()
 
 
 template <class T>
@@ -32,9 +41,7 @@ bool IteratorNotEquals(const typename LIST<T>::iterator& x,
 
 class BuilderInterface {
 public:
-	Activity* getCurrentActivity() const {
-		return ActivityManager::_currentActivity;
-	}
+	Activity* getCurrentActivity() const;
 };
 
 using namespace emscripten;

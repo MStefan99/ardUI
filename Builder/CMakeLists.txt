@@ -18,5 +18,6 @@ link_libraries(arduinoEmulator)
 # Adding examples
 add_executable(
 		Builder.js
+		${UTILS_DIRECTORY}/BuilderInterface.cpp
 		${UTILS_DIRECTORY}/builder.cpp
 )
