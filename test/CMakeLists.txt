@@ -81,6 +81,11 @@ add_executable(
 )
 
 add_executable(
+		Test_Dialog
+		${TEST_DIRECTORY}/tests/Dialog.test.cpp
+)
+
+add_executable(
 		Test_Activity_result
 		${TEST_DIRECTORY}/tests/Activity_result.test.cpp
 )

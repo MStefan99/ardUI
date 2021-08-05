@@ -5,6 +5,8 @@
 #include "BuilderInterface.h"
 
 
+#ifdef __EMSCRIPTEN__
 Activity* BuilderInterface::getCurrentActivity() const {
 	return ActivityManager::_currentActivity;
 }
+#endif

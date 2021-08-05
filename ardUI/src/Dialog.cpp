@@ -5,13 +5,7 @@
 #include "Dialog.h"
 
 
-Dialog::Dialog(Activity* activity):
-		_ownerActivity {activity} {
-	// Nothing to do
-}
-
-
-Activity* Dialog::getOwnerActivity() const {
+Activity* Dialog::getOwnerActivity() {
 	return _ownerActivity;
 }
 

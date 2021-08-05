@@ -15,6 +15,9 @@ Activity::Activity(const Bundle& extras,
 
 Activity::~Activity() {
 	delete _rootView;
+	if (_dialog) {
+		delete _dialog;
+	}
 }
 
 
@@ -40,6 +43,7 @@ void Activity::showDialog(Dialog* dialog) {
 	}
 
 	_dialog = dialog;
+	_dialog->_ownerActivity = this;
 	_dialog->onCreate();
 }
 
@@ -47,6 +51,7 @@ void Activity::showDialog(Dialog* dialog) {
 void Activity::dismissDialog() {
 	if (_dialog) {
 		_dialog->onStop();
+		_dialog->_ownerActivity = nullptr;
 		_dialog = nullptr;
 	}
 }

@@ -18,7 +18,7 @@ public:
 	Dialog() = default;
 	virtual ~Dialog() = default;
 
-	Activity* getOwnerActivity() const;
+	Activity* getOwnerActivity();
 
 	void setRootView (View* view);
 
@@ -29,8 +29,6 @@ protected:
 	virtual void onStop();
 
 private:
-	explicit Dialog(Activity* activity);
-
 	void measure(View::MeasureSpec widthMeasureSpec, View::MeasureSpec heightMeasureSpec);
 	void layout(int16_t left, int16_t top, int16_t right, int16_t bottom);
 	void draw() const;

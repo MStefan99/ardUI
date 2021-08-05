@@ -34,6 +34,7 @@ jobs:
           --target Test_LinearLayout
           --target Test_ConstraintLayout
           --target Test_Activity
+          --target Test_Dialog
           --target Test_Activity_result
           --target Test_ardUI
 
@@ -75,6 +76,9 @@ jobs:
 
       - name: Test Activity
         run: ${{github.workspace}}/build/test/Test_Activity
+
+      - name: Test Dialog
+        run: ${{github.workspace}}/build/test/Test_Dialog
 
       - name: Test Activity result
         run: ${{github.workspace}}/build/test/Test_Activity_result
