@@ -5,7 +5,7 @@
 #ifndef ARDUI_DRAWABLE_H
 #define ARDUI_DRAWABLE_H
 
-#include "config/defaults.h"
+#include "defaults.h"
 #include "platform.h"
 #include DISPLAY_H
 

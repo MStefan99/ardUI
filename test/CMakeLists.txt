@@ -1,6 +1,6 @@
 # Linking ardUI library to all targets below
 link_libraries(ardUI)
-target_sources(ardUI PRIVATE ${SOURCE_DIRECTORY}/display.cpp)
+target_sources(ardUI PRIVATE ${CORE_SRC_DIRECTORY}/display.cpp)
 
 add_compile_options(-DTEST)
 
