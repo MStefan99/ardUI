@@ -4,6 +4,14 @@ add_compile_options(-Weverything -Werror
 -Wno-unused-parameter -Wno-global-constructors -Wno-exit-time-destructors -Wno-unknown-pragmas)
 
 
+set(TL_DIRECTORY ${ARDUI_DIRECTORY}/core/tl)
+set(CONFIG_DIRECTORY ${ARDUI_DIRECTORY}/config)
+set(CORE_INC_DIRECTORY ${ARDUI_DIRECTORY}/core/inc)
+set(CORE_SRC_DIRECTORY ${ARDUI_DIRECTORY}/core/src)
+set(WIDGETS_INC_DIRECTORY ${ARDUI_DIRECTORY}/widgets/inc)
+set(WIDGETS_SRC_DIRECTORY ${ARDUI_DIRECTORY}/widgets/src)
+
+
 # Adding ardUI framework
 add_library(ardUI STATIC)
 target_sources(ardUI PRIVATE
@@ -30,8 +38,8 @@ target_sources(ardUI PRIVATE
 		${WIDGETS_SRC_DIRECTORY}/ConstraintLayout.cpp
 		)
 
+target_include_directories(ardUI PUBLIC ${TL_DIRECTORY})
+target_include_directories(ardUI PUBLIC ${CONFIG_DIRECTORY})
 target_include_directories(ardUI PUBLIC ${CORE_INC_DIRECTORY})
 target_include_directories(ardUI PUBLIC ${WIDGETS_INC_DIRECTORY})
-target_include_directories(ardUI PUBLIC ${CONFIG_DIRECTORY})
-target_include_directories(ardUI PUBLIC ${TL_DIRECTORY})
 target_link_libraries(ardUI arduinoEmulator)

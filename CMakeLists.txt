@@ -20,14 +20,6 @@ set(EXAMPLES_DIRECTORY ${PROJECT_SOURCE_DIR}/examples)
 set(BUILDER_DIRECTORY ${PROJECT_SOURCE_DIR}/Builder)
 
 
-set(CORE_INC_DIRECTORY ${ARDUI_DIRECTORY}/core/inc)
-set(CORE_SRC_DIRECTORY ${ARDUI_DIRECTORY}/core/src)
-set(WIDGETS_INC_DIRECTORY ${ARDUI_DIRECTORY}/widgets/inc)
-set(WIDGETS_SRC_DIRECTORY ${ARDUI_DIRECTORY}/widgets/src)
-set(TL_DIRECTORY ${ARDUI_DIRECTORY}/tl)
-set(CONFIG_DIRECTORY ${ARDUI_DIRECTORY}/config)
-
-
 # Adding ardUI and Arduino emulator build lists
 add_subdirectory(${ARDUINO_DIRECTORY})
 add_subdirectory(${ARDUI_DIRECTORY})
