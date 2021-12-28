@@ -45,7 +45,7 @@ int16_t ConstraintLayout::getPos(View* view, Side side) {
 
 
 void ConstraintLayout::applyConstraints(
-		PAIR<ConstraintSet::LayoutInfo, LIST<ConstraintSet::Constraint>>* constraints) {
+		TL_NS::pair<ConstraintSet::LayoutInfo, TL_NS::list<ConstraintSet::Constraint>>* constraints) {
 	auto& layoutInfo = constraints->first;
 
 	for (auto constraint: constraints->second) {

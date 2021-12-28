@@ -54,7 +54,7 @@ public:
 		friend class ConstraintLayout;
 
 	protected:
-		MAP<View*, PAIR<LayoutInfo, LIST<Constraint>>> _constraints {};
+		TL_NS::map<View*, TL_NS::pair<LayoutInfo, TL_NS::list<Constraint>>> _constraints {};
 	};
 
 	ConstraintLayout() = default;
@@ -67,7 +67,7 @@ protected:
 	void onDraw() override;
 
 	int16_t getPos(View* view, Side side);
-	void applyConstraints(PAIR<ConstraintSet::LayoutInfo, LIST<ConstraintSet::Constraint>>* constraints);
+	void applyConstraints(TL_NS::pair<ConstraintSet::LayoutInfo, TL_NS::list<ConstraintSet::Constraint>>* constraints);
 
 	ConstraintSet* _constraintSet {new ConstraintSet({})};
 };

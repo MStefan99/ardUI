@@ -69,8 +69,8 @@ void TextView::onDraw() {
 }
 
 
-LIST<String> TextView::getLines(uint16_t maxWidth) const {
-	LIST<String> lines {};
+TL_NS::list<String> TextView::getLines(uint16_t maxWidth) const {
+	TL_NS::list<String> lines {};
 	auto s {_text.c_str()};
 	uint16_t lineStart {0};
 	uint16_t lastSpace {0};

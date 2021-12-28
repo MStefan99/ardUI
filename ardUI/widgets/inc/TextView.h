@@ -44,7 +44,7 @@ protected:
 	void onMeasure(MeasureSpec widthMeasureSpec, MeasureSpec heightMeasureSpec) override;
 	void onDraw() override;
 
-	LIST<String> getLines(uint16_t maxWidth) const;
+	TL_NS::list<String> getLines(uint16_t maxWidth) const;
 	uint16_t getMaxWidth();
 
 	String _text;

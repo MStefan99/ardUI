@@ -25,7 +25,7 @@ public:
 int main() {
 	ListView<std::string> l;
 	std::string stringArray[] {"1", "2", "3"};
-	LIST<std::string> stringList;
+	TL_NS::list<std::string> stringList;
 	stringList.push_back("1");
 	stringList.push_back("2");
 	stringList.push_back("3");

@@ -7,9 +7,9 @@
 
 
 Activity* ActivityManager::_currentActivity {};
-LIST<Activity*> ActivityManager::_startingActivities {};
-LIST<Activity*> ActivityManager::_stoppingActivities {};
-LIST<Activity*> ActivityManager::_backList {};
+TL_NS::list<Activity*> ActivityManager::_startingActivities {};
+TL_NS::list<Activity*> ActivityManager::_stoppingActivities {};
+TL_NS::list<Activity*> ActivityManager::_backList {};
 
 
 void ActivityManager::stopActivity(Activity* activityToStop) {

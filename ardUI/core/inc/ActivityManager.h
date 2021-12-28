@@ -33,9 +33,9 @@ private:
 	static void startupActivities();
 
 	static Activity* _currentActivity;
-	static LIST<Activity*> _startingActivities;
-	static LIST<Activity*> _stoppingActivities;
-	static LIST<Activity*> _backList;
+	static TL_NS::list<Activity*> _startingActivities;
+	static TL_NS::list<Activity*> _stoppingActivities;
+	static TL_NS::list<Activity*> _backList;
 
 	friend class EventManager;
 
