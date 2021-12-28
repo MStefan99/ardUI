@@ -52,7 +52,7 @@
 	#define STACK_H "stack.h"
 	#define QUEUE_H "queue.h"
 
-	#define NAMESPACE ardui
+	#define NAMESPACE tl
 
 #endif
 

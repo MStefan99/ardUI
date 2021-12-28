@@ -5,7 +5,7 @@
 #ifndef ARDUI_LESS_H
 #define ARDUI_LESS_H
 
-namespace ardui {
+namespace tl {
 	template <class T>
 	struct less {
 		bool operator()(const T& x, const T& y) const;
@@ -17,7 +17,7 @@ namespace ardui {
 
 
 	template <class T>
-	bool ardui::less<T>::operator()(const T& x, const T& y) const {
+	bool tl::less<T>::operator()(const T& x, const T& y) const {
 		return x < y;
 	}
 }
