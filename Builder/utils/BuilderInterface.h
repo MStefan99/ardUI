@@ -33,8 +33,8 @@
 
 
 template <class T>
-bool IteratorNotEquals(const typename LIST<T>::iterator& x,
-		const typename LIST<T>::iterator& y) {
+bool IteratorNotEquals(const typename TL_NS::list<T>::iterator& x,
+		const typename TL_NS::list:iterator& y) {
 	return x != y;
 }
 
@@ -105,30 +105,30 @@ EMSCRIPTEN_BINDINGS(BuilderInterface) {
 			.property("_borderColor", &ButtonView::_borderColor);
 
 #if !USE_STL
-	class_<LIST<View*>::iterator>("listIterator")
-			.function("value", &LIST<View*>::iterator::operator *)
+	class_<TL_NS::list<View*>::iterator>("listIterator")
+			.function("value", &TL_NS::list<View*>::iterator::operator *)
 			.function("notEquals", &IteratorNotEquals<View*>)
 			.function<internal::DeduceArgumentsTag,
-					LIST<View*>::iterator& (LIST<View*>::iterator::*)()>
-					("increment", &LIST<View*>::iterator::operator ++);
+					TL_NS::list<View*>::iterator& (TL_NS::list<View*>::iterator::*)()>
+					("increment", &TL_NS::list<View*>::iterator::operator ++);
 
-	class_<LIST<View*>>("list")
+	class_<TL_NS::list<View*>>("list")
 			.constructor()
-			.function("begin", &LIST<View*>::begin)
-			.function("end", &LIST<View*>::end);
+			.function("begin", &TL_NS::list<View*>::begin)
+			.function("end", &TL_NS::list<View*>::end);
 #else
-	class_<LIST<View*>::iterator>("listIterator")
-			.function("value", &LIST<View*>::iterator::operator*)
+	class_<TL_NS::list<View*>::iterator>("listIterator")
+			.function("value", &TL_NS::list<View*>::iterator::operator*)
 			.function("notEquals", &IteratorNotEquals<View*>)
 			.function<internal::DeduceArgumentsTag,
-					LIST<View*>::iterator& (LIST<View*>::iterator::*)()>
-					("increment", &LIST<View*>::iterator::operator++);
+					TL_NS::list<View*>::iterator& (TL_NS::list<View*>::iterator::*)()>
+					("increment", &TL_NS::list<View*>::iterator::operator++);
 
-	class_<LIST<View*>>("list")
+	class_<TL_NS::list<View*>>("list")
 			.function<internal::DeduceArgumentsTag,
-					LIST<View*>::iterator (LIST<View*>::*)()>("begin", &LIST<View*>::begin)
+					TL_NS::list<View*>::iterator (TL_NS::list<View*>::*)()>("begin", &TL_NS::list<View*>::begin)
 			.function<internal::DeduceArgumentsTag,
-					LIST<View*>::iterator(LIST<View*>::*)()>("end", &LIST<View*>::end);
+					TL_NS::list<View*>::iterator(TL_NS::list<View*>::*)()>("end", &TL_NS::list<View*>::end);
 #endif
 
 	class_<ViewGroup, base<View>>("ViewGroup")

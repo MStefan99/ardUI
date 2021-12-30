@@ -16,13 +16,13 @@ class ArrayAdapter: public Adapter<T> {
 public:
 	ArrayAdapter() = default;
 	explicit ArrayAdapter(T data[], int length);
-	explicit ArrayAdapter(LIST<T> list);
+	explicit ArrayAdapter(TL_NS::list<T> list);
 
 	const T& getItem(int position) const override;
 	int getCount() const override;
 	bool isEmpty() const override;
 
-	LIST<T> list;
+	TL_NS::list<T> list;
 };
 
 
@@ -36,7 +36,7 @@ ArrayAdapter<T>::ArrayAdapter(T data[], int length) {
 
 
 template <class T>
-ArrayAdapter<T>::ArrayAdapter(LIST<T> list): list {list} {
+ArrayAdapter<T>::ArrayAdapter(TL_NS::list<T> list): list {list} {
 	// Nothing to do
 }
 

@@ -38,7 +38,7 @@ public:
 	~Bundle();
 
 protected:
-	MAP<String, Concept*> _bundleMap {};
+	TL_NS::map<String, Concept*> _bundleMap {};
 
 	class Concept {
 	public:

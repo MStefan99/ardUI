@@ -30,7 +30,7 @@ public:
 	static Activity* getCurrentActivity();
 
 private:
-	static MAP<String, View*> _viewMap;
+	static TL_NS::map<String, View*> _viewMap;
 };
 
 

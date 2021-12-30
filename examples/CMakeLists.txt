@@ -1,6 +1,6 @@
 # Linking emulator and ardUI to main code
 link_libraries(ardUI)
-target_sources(ardUI PRIVATE ${SOURCE_DIRECTORY}/display.cpp)
+target_sources(ardUI PRIVATE ${CORE_SRC_DIRECTORY}/display.cpp)
 link_libraries(arduinoEmulator)
 
 

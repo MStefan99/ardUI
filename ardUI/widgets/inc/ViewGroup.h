@@ -41,7 +41,7 @@ protected:
 
 	View* handleEvent(const Event& event) override;
 
-	LIST<View*> _viewList {};
+	TL_NS::list<View*> _viewList {};
 };
 
 #endif //ARDUI_VIEWGROUP_H

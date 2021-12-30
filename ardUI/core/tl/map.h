@@ -32,7 +32,7 @@ static pNode Rightmost(pNode pointer) {
 }
 
 
-namespace ardui {
+namespace tl {
 	template <class Key, class T, class Comp = less<Key>>
 	class map {
 	protected:

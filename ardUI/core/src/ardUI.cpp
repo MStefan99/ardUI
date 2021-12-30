@@ -5,7 +5,7 @@
 #include "ardUI.h"
 
 
-MAP<String, View*> ardUI::_viewMap {};
+TL_NS::map<String, View*> ardUI::_viewMap {};
 
 
 void ardUI::back() {

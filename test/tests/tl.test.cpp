@@ -3,6 +3,8 @@
 //
 
 #include "Tester.h"
+#include "platform.h"
+
 #include "vector.h"
 #include "list.h"
 #include "map.h"
@@ -11,11 +13,11 @@
 
 
 static void VectorAssert() {
-	ardui::vector<int> v {};
+	CTL_NS::vector<int> v {};
 	describe("Vector check", [&](TestSuite& suite) {
 
 		suite.test("push and subscribe", [&] {
-			auto v1 = new ardui::vector<int> {v};
+			auto v1 = new CTL_NS::vector<int> {v};
 			expect(v.empty()).toBeTruthy();
 			expect(v.capacity()).toBeFalsy();
 			for (int i = 0; i < 10; ++i) {
@@ -44,11 +46,11 @@ static void VectorAssert() {
 			expect(*it).toEqual(1);
 
 			it = v.begin();
-			ardui::advance(it, 3);
+			CTL_NS::advance(it, 3);
 			expect(*it).toEqual(3);
 
-			ardui::vector<ardui::vector<int>> v1;
-			v1.push_back(ardui::vector<int> {});
+			CTL_NS::vector<CTL_NS::vector<int>> v1;
+			v1.push_back(CTL_NS::vector<int> {});
 			expect(v1.begin()->size()).toBeFalsy();
 		});
 
@@ -99,8 +101,8 @@ static void VectorAssert() {
 		});
 
 		suite.test("copy", [&] {
-			ardui::vector<int> v1 {v};  // NOLINT(performance-unnecessary-copy-initialization)
-			ardui::vector<int> v2;
+			CTL_NS::vector<int> v1 {v};  // NOLINT(performance-unnecessary-copy-initialization)
+			CTL_NS::vector<int> v2;
 
 			v2 = v1;
 			expect(v1.size()).toEqual(9);
@@ -123,7 +125,7 @@ static void VectorAssert() {
 		});
 
 		suite.test("empty copy", [&] {
-			ardui::vector<int> {ardui::vector<int> {}};
+			CTL_NS::vector<int> {CTL_NS::vector<int> {}};
 		});
 
 		suite.test("Insert resize", [&] {
@@ -140,7 +142,7 @@ static void VectorAssert() {
 
 
 static void ListAssert() {
-	ardui::list<int> l {};
+	CTL_NS::list<int> l {};
 	describe("List check", [&](TestSuite& suite) {
 
 		suite.test("push and subscript assert", [&] {
@@ -175,7 +177,7 @@ static void ListAssert() {
 			expect(l.size()).toEqual(10);
 			expect(*l.begin()).toEqual(0);
 
-			ardui::list<ardui::list<int>> l1 {};
+			CTL_NS::list<CTL_NS::list<int>> l1 {};
 			l1.push_back({});
 			expect(l1.begin()->empty()).toBeTruthy();
 		});
@@ -186,7 +188,7 @@ static void ListAssert() {
 			expect(*++it).toEqual(2);
 
 			it = l.begin();
-			ardui::advance(it, 3);
+			CTL_NS::advance(it, 3);
 			expect(*it).toEqual(3);
 
 			it = --l.end();
@@ -214,7 +216,7 @@ static void ListAssert() {
 			l.insert(++l.begin(), -2);
 			expect(l.size()).toEqual(12);
 
-			ardui::list<int> l1;
+			CTL_NS::list<int> l1;
 			l1.insert(l1.begin(), 1);
 			l1.insert(l1.end(), 2);
 			expect(l1.front()).toEqual(1);
@@ -253,8 +255,8 @@ static void ListAssert() {
 		});
 
 		suite.test("copy assert", [&] {
-			ardui::list<int> l1 {l};  // NOLINT(performance-unnecessary-copy-initialization)
-			ardui::list<int> l2;
+			CTL_NS::list<int> l1 {l};  // NOLINT(performance-unnecessary-copy-initialization)
+			CTL_NS::list<int> l2;
 			l2 = l;
 
 			expect(l1.size()).toEqual(6);
@@ -269,7 +271,7 @@ static void ListAssert() {
 		});
 
 		suite.test("empty copy assert", [&] {
-			ardui::list<int> l1 {ardui::list<int> {}};
+			CTL_NS::list<int> l1 {CTL_NS::list<int> {}};
 
 			expect(l1.empty()).toBeTruthy();
 		});
@@ -278,7 +280,7 @@ static void ListAssert() {
 
 
 static void MapAssert() {
-	ardui::map<int, double> m {};
+	CTL_NS::map<int, double> m {};
 	describe("Map check", [&](TestSuite& suite) {
 
 		suite.test("insert assert", [&] {
@@ -299,7 +301,7 @@ static void MapAssert() {
 			expect(m[2]).toEqual(2.2);
 
 			it = m.begin();
-			ardui::advance(it, 3);
+			CTL_NS::advance(it, 3);
 			expect(it->first).toEqual(1);
 		});
 
@@ -309,7 +311,7 @@ static void MapAssert() {
 		});
 
 		suite.test("copy assert", [&] {
-			ardui::map<int, double> m1 {m};
+			CTL_NS::map<int, double> m1 {m};
 			expect(m1.size()).toEqual(8);
 			expect(m1[0]).toEqual(0.0);
 		});
@@ -344,12 +346,12 @@ static void MapAssert() {
 		});
 
 		suite.test("Unbalanced traversal", [&] {
-			ardui::map<int, int> mLeft {};
+			CTL_NS::map<int, int> mLeft {};
 			mLeft[3] = 3;
 			mLeft[2] = 2;
 			mLeft[1] = 1;
 
-			ardui::map<int, int> mRight {};
+			CTL_NS::map<int, int> mRight {};
 			mRight[1] = 1;
 			mRight[2] = 2;
 			mRight[3] = 3;
@@ -373,10 +375,10 @@ static void MapAssert() {
 		});
 
 		suite.test("Special copy cases", [&] {
-			ardui::map<int, double> m1 {ardui::map<int, double> {}};
+			CTL_NS::map<int, double> m1 {CTL_NS::map<int, double> {}};
 			expect(m1.empty()).toBeTruthy();
 
-			ardui::map<int, double> m2 {};
+			CTL_NS::map<int, double> m2 {};
 			m2[0] = 0;
 			auto m3 {m2};
 			expect(m3.size()).toEqual(1);
@@ -386,7 +388,7 @@ static void MapAssert() {
 
 
 static void StackAssert() {
-	ardui::stack<int> s;
+	CTL_NS::stack<int> s;
 	describe("Stack check", [&](TestSuite& suite) {
 
 		suite.beforeAll([&] {
@@ -410,7 +412,7 @@ static void StackAssert() {
 
 
 static void QueueAssert() {
-	ardui::queue<int> q;
+	CTL_NS::queue<int> q;
 	describe("Queue check", [&](TestSuite& suite) {
 
 		suite.beforeAll([&] {

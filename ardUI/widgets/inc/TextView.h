@@ -5,7 +5,7 @@
 #ifndef ARDUI_TEXTVIEW_H
 #define ARDUI_TEXTVIEW_H
 
-#include "config/defaults.h"
+#include "defaults.h"
 #include "platform.h"
 #include LIST_H
 
@@ -44,7 +44,7 @@ protected:
 	void onMeasure(MeasureSpec widthMeasureSpec, MeasureSpec heightMeasureSpec) override;
 	void onDraw() override;
 
-	LIST<String> getLines(uint16_t maxWidth) const;
+	TL_NS::list<String> getLines(uint16_t maxWidth) const;
 	uint16_t getMaxWidth();
 
 	String _text;

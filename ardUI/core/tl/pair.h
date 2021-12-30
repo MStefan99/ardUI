@@ -5,7 +5,7 @@
 #ifndef ARDUI_PAIR_H
 #define ARDUI_PAIR_H
 
-namespace ardui {
+namespace tl {
 	template <class T1, class T2>
 	struct pair {
 		pair() = default;

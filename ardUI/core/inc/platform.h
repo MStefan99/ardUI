@@ -30,6 +30,8 @@
 	#define DISPLAY_UTIL ardui::display
 #endif
 
+#define CTL_NS tl
+
 #if USE_STL
 
 	#define LESS_H <functional>
@@ -40,7 +42,7 @@
 	#define STACK_H <stack>
 	#define QUEUE_H <queue>
 
-	#define NAMESPACE std
+	#define TL_NS std
 
 #else
 
@@ -52,17 +54,10 @@
 	#define STACK_H "stack.h"
 	#define QUEUE_H "queue.h"
 
-	#define NAMESPACE ardui
+	#define TL_NS CTL_NS
 
 #endif
 
-#define PAIR NAMESPACE::pair
-#define VECTOR NAMESPACE::vector
-#define LIST NAMESPACE::list
-#define LESS NAMESPACE::less
-#define MAP NAMESPACE::map
-#define STACK NAMESPACE::stack
-#define QUEUE NAMESPACE::queue
 
 #define ABS(a) ((a > 0)? (a) : -(a))
 #define MIN(a, b) ((a < b)? (a) : (b))

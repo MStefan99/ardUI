@@ -26,13 +26,13 @@
  * Enable debug mode.
  * Can be useful during debugging.
  * Debug mode is not guaranteed to run on Arduino
- * and will only turned on in a desktop environment.
+ * and will only be turned on in a desktop environment.
  */
 #define DEBUGGING ( true )
 
 
 /*
- * Introduces delays between loop iterations.
+ * Introduces delay between loop iterations.
  * Can reduce the CPU load by only running the loop once per update.
  * Does not affect UI performance but leaves less time for other operations.
  */
@@ -40,8 +40,8 @@
 
 /*
  * Enable Display fallback.
- * This is is a utility for drawing using fallback shapes.
- * Enable it if your display library does not support some of the shapes that ardUI uses.
+ * This is a utility for drawing using fallback shapes.
+ * Enable it if your display library does not support some shapes that ardUI uses.
  */
 #define DISPLAY_FALLBACK ( false )
 
