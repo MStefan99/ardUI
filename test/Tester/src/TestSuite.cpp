@@ -100,7 +100,7 @@ void TestSuite::runTest(const Test& test) {
 		_errors.emplace_back(test.getName() + " > Test setup", e.what());
 		_passed = false;
 	}
-	if (_passed) {
+	if (_passed || !STOP_ON_FAIL) {
 		try {
 			test.run();
 		} catch (const AssertException& e) {

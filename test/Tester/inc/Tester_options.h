@@ -14,4 +14,11 @@
  */
 #define DEFERRED_RUN ( true )
 
+
+/*
+ * Stop on fail
+ * Stops suite execution immediately if a test case fails.
+ */
+#define STOP_ON_FAIL ( true )
+
 #endif //ARDUI_OPTIONS_H
