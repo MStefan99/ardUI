@@ -98,6 +98,18 @@ static void VectorAssert() {
 			expect(*it).toEqual(30);
 			it[1] = 40;
 			expect(*++it).toEqual(40);
+
+			auto array = v.data();
+			const auto constArray = v.data();
+
+			for (auto i {0}; i < v.size() - 1; ++i) {
+				expect(array[i]).toEqual(v[i]);
+				expect(constArray[i]).toEqual(v[i]);
+			}
+			array[0] = 5;
+			expect(*v.begin()).toEqual(5);
+			array[v.size() - 1] = -5;
+			expect(*--v.end()).toEqual(-5);
 		});
 
 		suite.test("copy", [&] {

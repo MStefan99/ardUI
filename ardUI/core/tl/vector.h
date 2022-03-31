@@ -71,6 +71,9 @@ namespace tl {
 		unsigned int size() const;
 		unsigned int capacity() const;
 
+		T* data();
+		const T* data() const;
+
 		void resize(unsigned int n);
 
 		iterator begin() const;
@@ -222,6 +225,18 @@ namespace tl {
 	template <class T>
 	unsigned int vector<T>::capacity() const {
 		return _vectorCapacity;
+	}
+
+
+	template <class T>
+	T* vector<T>::data() {
+		return _vectorArray;
+	}
+
+
+	template <class T>
+	const T* vector<T>::data() const {
+		return _vectorArray;
 	}
 
 
