@@ -35,7 +35,7 @@ StatRecorder::~StatRecorder() {
 	std::cout << _totalTests << " total." << std::endl;
 
 	std::cout << BOLD << "Time taken:  " << RST << std::fixed << std::setprecision(4)
-	          << (now - _startTime).count() / 1000000000.0 << "s" << std::endl;
+						<< (now - _startTime).count() / 1000000000.0 << "s" << std::endl;
 
 	std::cout << std::endl;
 

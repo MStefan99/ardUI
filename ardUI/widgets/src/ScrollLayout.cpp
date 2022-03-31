@@ -40,7 +40,7 @@ View* ScrollLayout::handleEvent(const Event& event) {
 		invalidate();
 		return this;
 	} else {
-		for (auto view: _viewList) {
+		for (auto view : _viewList) {
 			if (view->getBounds().contains(event.targetX, event.targetY)) {
 				return view->handleEvent(event);
 			}

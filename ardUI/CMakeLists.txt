@@ -1,7 +1,7 @@
 # Setting compiler flags
 add_compile_options(-Weverything -Werror
--Wno-padded -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-unknown-argument -Wno-unused-function
--Wno-unused-parameter -Wno-global-constructors -Wno-exit-time-destructors -Wno-unknown-pragmas)
+		-Wno-padded -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-unknown-argument -Wno-unused-function
+		-Wno-unused-parameter -Wno-global-constructors -Wno-exit-time-destructors -Wno-unknown-pragmas)
 
 
 # Adding ardUI framework

@@ -91,7 +91,7 @@ void ActivityManager::startupActivities() {
 
 
 void ActivityManager::cleanupActivities() {
-	for (auto a: _stoppingActivities) {
+	for (auto a : _stoppingActivities) {
 		finishActivity(a);
 	}
 

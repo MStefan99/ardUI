@@ -25,7 +25,7 @@ int main() {
 
 			bar->setProgress(100);
 			expect(bar->getProgress()).toEqual(100);
-			
+
 			bar->setMin(-100);
 			bar->setMax(0);
 

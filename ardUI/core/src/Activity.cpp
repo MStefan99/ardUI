@@ -15,9 +15,7 @@ Activity::Activity(const Bundle& extras,
 
 Activity::~Activity() {
 	delete _rootView;
-	if (_dialog) {
-		delete _dialog;
-	}
+	delete _dialog;
 }
 
 

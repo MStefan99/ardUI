@@ -25,7 +25,7 @@ int main() {
 		suite.test("Color conversions", [&] {
 			Color color;
 
-			for (auto c: testColors) {
+			for (auto c : testColors) {
 				color = c.first;
 
 				expect(Color {c.first}.to888()).toEqual(c.first);
@@ -39,7 +39,7 @@ int main() {
 		suite.test("Color copy", [&] {
 			Color c0 {0xfu};
 
-			for (auto c: testColors) {
+			for (auto c : testColors) {
 				Color c1 {c.first};
 				Color c2 {c1};
 
@@ -53,7 +53,7 @@ int main() {
 			Color c0 {0xfu};
 			Color c1;
 
-			for (auto c: testColors) {
+			for (auto c : testColors) {
 				Color c2 {c.first};
 				Color c3 {c.first};
 				c1 = c2;

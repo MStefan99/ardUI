@@ -7,7 +7,6 @@
 #include "View.h"
 
 
-
 int main() {
 	View* v {nullptr};  // Drawable is an abstract class, using child View class
 
@@ -47,11 +46,11 @@ int main() {
 			v->setPadding(10, 20, 30, 40);
 			expect(v->getPadding()).toEqual(r);
 		});
-		
+
 		suite.test("Dimensions", [&] {
 			expect(v->getMinimumWidth()).toEqual(20);
 			expect(v->getMinimumHeight()).toEqual(20);
-			
+
 			v->setMinimumWidth(40);
 			v->setMinimumHeight(40);
 

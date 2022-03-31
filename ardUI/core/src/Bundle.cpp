@@ -9,14 +9,14 @@ Bundle::Concept::~Concept() = default;
 
 
 Bundle::Bundle(const Bundle& b): _bundleMap(b._bundleMap) {
-	for (auto& e: _bundleMap) {
+	for (auto& e : _bundleMap) {
 		e.second = e.second->copy();
 	}
 }
 
 
 Bundle& Bundle::operator=(const Bundle& other) {
-	for (const auto& e: other._bundleMap) {
+	for (const auto& e : other._bundleMap) {
 		_bundleMap[e.first] = e.second->copy();
 	}
 	return *this;

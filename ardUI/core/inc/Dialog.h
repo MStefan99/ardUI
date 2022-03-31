@@ -20,7 +20,7 @@ public:
 
 	Activity* getOwnerActivity();
 
-	void setRootView (View* view);
+	void setRootView(View* view);
 
 	friend class Activity;
 

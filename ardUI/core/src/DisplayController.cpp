@@ -32,8 +32,8 @@ void DisplayController::drawLine(int16_t x1, int16_t y1,
 	} else {
 		auto dx = ABS(x2 - x1);
 		auto dy = -ABS(y2 - y1);
-		auto sx = x1 < x2? 1 : -1;
-		auto sy = y1 < y2? 1 : -1;
+		auto sx = x1 < x2? 1: -1;
+		auto sy = y1 < y2? 1: -1;
 		auto err = dx + dy;
 
 		while (true) {

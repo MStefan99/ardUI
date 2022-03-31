@@ -81,7 +81,7 @@ void ViewGroup::invalidate() {
 
 void ViewGroup::draw() {
 	onDraw();
-	for (auto view: _viewList) {
+	for (auto view : _viewList) {
 		view->draw();
 	}
 	_valid = true;
@@ -90,7 +90,7 @@ void ViewGroup::draw() {
 
 View* ViewGroup::handleEvent(const Event& event) {
 	// TODO: fix event handling (listeners not called)
-	for (auto view: _viewList) {
+	for (auto view : _viewList) {
 		if (view->getBounds().contains(event.targetX, event.targetY)) {
 			return view->handleEvent(event);
 		}

@@ -17,6 +17,7 @@ public:
 		++CREATED;
 	}
 
+
 	void onStop() override {
 		++STOPPED;
 	}

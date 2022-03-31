@@ -124,9 +124,9 @@ void TestSuite::printResults() const {
 		std::cout << BG_BRIGHT_GREEN << FG_BLACK << " PASS " << RST << " " << _name << std::endl;
 	} else {
 		std::cout << BG_BRIGHT_RED << FG_BLACK << " FAIL " << RST << " " << _name << RST << std::endl;
-		for (const auto& e: _errors) {
+		for (const auto& e : _errors) {
 			std::cout << FG_RED << "● " << e.first << RST << std::endl
-			          << e.second << std::endl << std::endl;
+								<< e.second << std::endl << std::endl;
 		}
 	}
 }
@@ -136,7 +136,7 @@ void TestSuite::run() {
 	#if DEFERRED_RUN
 	runBefore();
 	if (_passed) {
-		for (const auto& test: _tests) {
+		for (const auto& test : _tests) {
 			runTest(test);
 		}
 	}

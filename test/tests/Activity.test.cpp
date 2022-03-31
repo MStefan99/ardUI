@@ -26,25 +26,31 @@ public:
 		++created;
 	}
 
+
 	void onRestart() override {
 		++restarted;
 	}
+
 
 	void onStart() override {
 		++started;
 	}
 
+
 	void onResume() override {
 		++resumed;
 	}
+
 
 	void onPause() override {
 		++paused;
 	}
 
+
 	void onStop() override {
 		++stopped;
 	}
+
 
 	void onDestroy() override {
 		++destroyed;

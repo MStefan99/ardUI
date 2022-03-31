@@ -48,7 +48,7 @@ void ConstraintLayout::applyConstraints(
 		TL_NS::pair<ConstraintSet::LayoutInfo, TL_NS::list<ConstraintSet::Constraint>>* constraints) {
 	auto& layoutInfo = constraints->first;
 
-	for (auto constraint: constraints->second) {
+	for (auto constraint : constraints->second) {
 		auto& endConstraints = _constraintSet->_constraints[constraint.endView];
 		if (!endConstraints.first.constrained) {
 			applyConstraints(&endConstraints);
@@ -111,7 +111,7 @@ void ConstraintLayout::onMeasure(MeasureSpec widthMeasureSpec, MeasureSpec heigh
 			static_cast<int16_t>(getMeasuredWidth()), static_cast<int16_t>(getMeasuredHeight()));
 	_constraintSet->_constraints[this].first.constrained = true;
 
-	for (auto view: _viewList) {
+	for (auto view : _viewList) {
 		view->measure(MeasureSpec {static_cast<uint16_t>(getMeasuredWidth()), MeasureSpec::AT_MOST},
 				MeasureSpec {static_cast<uint16_t>(getMeasuredHeight()), MeasureSpec::AT_MOST});
 
@@ -126,7 +126,7 @@ void ConstraintLayout::onLayout(bool changed, int16_t left, int16_t top, int16_t
 		c.second.first.reset();
 	}
 
-	for (auto view: _viewList) {
+	for (auto view : _viewList) {
 		auto constraints {_constraintSet->_constraints[view]};
 		applyConstraints(&constraints);
 
@@ -136,7 +136,7 @@ void ConstraintLayout::onLayout(bool changed, int16_t left, int16_t top, int16_t
 
 
 void ConstraintLayout::onDraw() {
-	for (auto view: _viewList) {
+	for (auto view : _viewList) {
 		view->draw();
 	}
 }
