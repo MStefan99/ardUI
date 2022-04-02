@@ -13,11 +13,11 @@
 
 
 static void VectorAssert() {
-	CTL_NS::vector<int> v {};
+	tl::vector<int> v {};
 	describe("Vector check", [&](TestSuite& suite) {
 
 		suite.test("push and subscribe", [&] {
-			auto v1 = new CTL_NS::vector<int> {v};
+			auto v1 = new tl::vector<int> {v};
 			expect(v.empty()).toBeTruthy();
 			expect(v.capacity()).toBeFalsy();
 			for (int i = 0; i < 10; ++i) {
@@ -32,6 +32,7 @@ static void VectorAssert() {
 
 			expect(*v.begin()).toEqual(0);
 			expect(*--v.end()).toEqual(9);
+			delete(v1);
 		});
 
 		suite.test("Iterator arithmetics", [&] {
@@ -46,11 +47,11 @@ static void VectorAssert() {
 			expect(*it).toEqual(1);
 
 			it = v.begin();
-			CTL_NS::advance(it, 3);
+			tl::advance(it, 3);
 			expect(*it).toEqual(3);
 
-			CTL_NS::vector<CTL_NS::vector<int>> v1;
-			v1.push_back(CTL_NS::vector<int> {});
+			tl::vector<tl::vector<int>> v1;
+			v1.push_back(tl::vector<int> {});
 			expect(v1.begin()->size()).toBeFalsy();
 		});
 
@@ -113,12 +114,20 @@ static void VectorAssert() {
 		});
 
 		suite.test("copy", [&] {
-			CTL_NS::vector<int> v1 {v};  // NOLINT(performance-unnecessary-copy-initialization)
-			CTL_NS::vector<int> v2;
+			tl::vector<int> v1 {v};  // NOLINT(performance-unnecessary-copy-initialization)
+			tl::vector<int> v2 {};
+
+			for (auto i {0}; i < v.size(); ++i) {
+				v2.push_back(v.size() - i);
+			}
 
 			v2 = v1;
-			expect(v1.size()).toEqual(9);
-			expect(v2.size()).toEqual(9);
+
+			expect(v1.size()).toEqual(v.size());
+			expect(v2.size()).toEqual(v.size());
+
+			expect(v1.capacity()).toEqual(v.capacity());
+			expect(v2.capacity()).toEqual(v.capacity());
 
 			for (auto i {0}; i < v.size(); ++i) {
 				expect(v[i]).toEqual(v1[i]);
@@ -137,7 +146,7 @@ static void VectorAssert() {
 		});
 
 		suite.test("empty copy", [&] {
-			CTL_NS::vector<int> {CTL_NS::vector<int> {}};
+			tl::vector<int> {tl::vector<int> {}};
 		});
 
 		suite.test("Insert resize", [&] {
@@ -154,7 +163,7 @@ static void VectorAssert() {
 
 
 static void ListAssert() {
-	CTL_NS::list<int> l {};
+	tl::list<int> l {};
 	describe("List check", [&](TestSuite& suite) {
 
 		suite.test("push and subscript assert", [&] {
@@ -189,7 +198,7 @@ static void ListAssert() {
 			expect(l.size()).toEqual(10);
 			expect(*l.begin()).toEqual(0);
 
-			CTL_NS::list<CTL_NS::list<int>> l1 {};
+			tl::list<tl::list<int>> l1 {};
 			l1.push_back({});
 			expect(l1.begin()->empty()).toBeTruthy();
 		});
@@ -200,7 +209,7 @@ static void ListAssert() {
 			expect(*++it).toEqual(2);
 
 			it = l.begin();
-			CTL_NS::advance(it, 3);
+			tl::advance(it, 3);
 			expect(*it).toEqual(3);
 
 			it = --l.end();
@@ -228,7 +237,7 @@ static void ListAssert() {
 			l.insert(++l.begin(), -2);
 			expect(l.size()).toEqual(12);
 
-			CTL_NS::list<int> l1;
+			tl::list<int> l1;
 			l1.insert(l1.begin(), 1);
 			l1.insert(l1.end(), 2);
 			expect(l1.front()).toEqual(1);
@@ -267,8 +276,8 @@ static void ListAssert() {
 		});
 
 		suite.test("copy assert", [&] {
-			CTL_NS::list<int> l1 {l};  // NOLINT(performance-unnecessary-copy-initialization)
-			CTL_NS::list<int> l2;
+			tl::list<int> l1 {l};  // NOLINT(performance-unnecessary-copy-initialization)
+			tl::list<int> l2;
 			l2 = l;
 
 			expect(l1.size()).toEqual(6);
@@ -283,7 +292,7 @@ static void ListAssert() {
 		});
 
 		suite.test("empty copy assert", [&] {
-			CTL_NS::list<int> l1 {CTL_NS::list<int> {}};
+			tl::list<int> l1 {tl::list<int> {}};
 
 			expect(l1.empty()).toBeTruthy();
 		});
@@ -292,7 +301,7 @@ static void ListAssert() {
 
 
 static void MapAssert() {
-	CTL_NS::map<int, double> m {};
+	tl::map<int, double> m {};
 	describe("Map check", [&](TestSuite& suite) {
 
 		suite.test("insert assert", [&] {
@@ -313,7 +322,7 @@ static void MapAssert() {
 			expect(m[2]).toEqual(2.2);
 
 			it = m.begin();
-			CTL_NS::advance(it, 3);
+			tl::advance(it, 3);
 			expect(it->first).toEqual(1);
 		});
 
@@ -323,7 +332,7 @@ static void MapAssert() {
 		});
 
 		suite.test("copy assert", [&] {
-			CTL_NS::map<int, double> m1 {m};
+			tl::map<int, double> m1 {m};
 			expect(m1.size()).toEqual(8);
 			expect(m1[0]).toEqual(0.0);
 		});
@@ -358,12 +367,12 @@ static void MapAssert() {
 		});
 
 		suite.test("Unbalanced traversal", [&] {
-			CTL_NS::map<int, int> mLeft {};
+			tl::map<int, int> mLeft {};
 			mLeft[3] = 3;
 			mLeft[2] = 2;
 			mLeft[1] = 1;
 
-			CTL_NS::map<int, int> mRight {};
+			tl::map<int, int> mRight {};
 			mRight[1] = 1;
 			mRight[2] = 2;
 			mRight[3] = 3;
@@ -387,10 +396,10 @@ static void MapAssert() {
 		});
 
 		suite.test("Special copy cases", [&] {
-			CTL_NS::map<int, double> m1 {CTL_NS::map<int, double> {}};
+			tl::map<int, double> m1 {tl::map<int, double> {}};
 			expect(m1.empty()).toBeTruthy();
 
-			CTL_NS::map<int, double> m2 {};
+			tl::map<int, double> m2 {};
 			m2[0] = 0;
 			auto m3 {m2};
 			expect(m3.size()).toEqual(1);
@@ -400,7 +409,7 @@ static void MapAssert() {
 
 
 static void StackAssert() {
-	CTL_NS::stack<int> s;
+	tl::stack<int> s;
 	describe("Stack check", [&](TestSuite& suite) {
 
 		suite.beforeAll([&] {
@@ -424,7 +433,7 @@ static void StackAssert() {
 
 
 static void QueueAssert() {
-	CTL_NS::queue<int> q;
+	tl::queue<int> q;
 	describe("Queue check", [&](TestSuite& suite) {
 
 		suite.beforeAll([&] {

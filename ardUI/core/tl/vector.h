@@ -204,8 +204,9 @@ namespace tl {
 			for (unsigned int i {0}; i < vector.size(); ++i) {
 				_vectorArray[i] = vector._vectorArray[i];
 			}
+			_vectorSize = vector.size();
+			_vectorCapacity = vector.capacity();
 		}
-		_vectorSize = vector.size();
 		return *this;
 	}
 
