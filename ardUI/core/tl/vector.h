@@ -8,6 +8,9 @@
 #include "iterator.h"
 
 
+// TODO: change size type
+
+
 namespace tl {
 	template <class T>
 	class vector {
@@ -75,6 +78,10 @@ namespace tl {
 		const T* data() const;
 
 		void resize(unsigned int n);
+		void reserve(unsigned int n);
+
+		T& front();
+		T& back();
 
 		iterator begin() const;
 		iterator end() const;
@@ -89,7 +96,7 @@ namespace tl {
 	template <class T>
 	vector<T>::vector(const vector& v):
 			_vectorSize(v._vectorSize), _vectorCapacity(v._vectorCapacity) {
-		resize(_vectorCapacity);
+		_vectorArray = new T[_vectorSize];
 		for (unsigned int i {0}; i < v._vectorSize; ++i) {
 			_vectorArray[i] = v._vectorArray[i];
 		}
@@ -105,11 +112,10 @@ namespace tl {
 	template <class T>
 	void vector<T>::push_back(const T& value) {
 		if (_vectorSize == _vectorCapacity) {
-			resize(_vectorCapacity * 1.1 + 1);
+			reserve(_vectorCapacity * 3 / 2 + 1);
 		}
 
-		_vectorArray[_vectorSize] = value;
-		++_vectorSize;
+		_vectorArray[_vectorSize++] = value;
 	}
 
 
@@ -124,7 +130,7 @@ namespace tl {
 		auto i {position._elementPointer - _vectorArray};
 
 		if (_vectorSize == _vectorCapacity) {
-			resize(_vectorCapacity * 1.1 + 1);
+			reserve(_vectorCapacity * 3 / 2 + 1);
 		}
 		for (auto j {_vectorSize}; j > i; --j) {
 			_vectorArray[j] = _vectorArray[j - 1];
@@ -178,9 +184,34 @@ namespace tl {
 
 	template <class T>
 	void vector<T>::resize(unsigned int n) {
+		if (n <= _vectorSize) {
+			_vectorSize = n;
+			return;
+		}
+
+		_vectorSize = n;
 		T* temp = new T[n];
+
+		if (_vectorArray) {
+			for (unsigned int i {0}; i < _vectorSize && i < n; ++i) {
+				temp[i] = _vectorArray[i];
+			}
+			delete[] _vectorArray;
+		}
+		_vectorArray = temp;
+	}
+
+
+	template <class T>
+	void vector<T>::reserve(unsigned int n) {
+		if (n <= _vectorCapacity) {
+			_vectorCapacity = n;
+			return;
+		}
+
 		_vectorCapacity = n;
 
+		T* temp = new T[n];
 		if (_vectorArray) {
 			for (unsigned int i {0}; i < _vectorSize && i < n; ++i) {
 				temp[i] = _vectorArray[i];
@@ -238,6 +269,18 @@ namespace tl {
 	template <class T>
 	const T* vector<T>::data() const {
 		return _vectorArray;
+	}
+
+
+	template <class T>
+	T& vector<T>::front() {
+		return _vectorArray[0];
+	}
+
+
+	template <class T>
+	T& vector<T>::back() {
+		return _vectorArray[_vectorSize - 1];
 	}
 
 

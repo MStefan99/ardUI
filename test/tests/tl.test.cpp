@@ -26,6 +26,9 @@ static void VectorAssert() {
 			expect(v.empty()).toBeFalsy();
 			expect(v.size()).toEqual(10);
 
+			v.reserve(15);
+			expect(v.capacity()).toEqual(15);
+
 			for (int j = 0; j < 10; ++j) {
 				expect(v[j]).toEqual(j);
 			}
@@ -109,17 +112,15 @@ static void VectorAssert() {
 			}
 			array[0] = 5;
 			expect(*v.begin()).toEqual(5);
+			expect(v.front()).toEqual(5);
 			array[v.size() - 1] = -5;
 			expect(*--v.end()).toEqual(-5);
+			expect(v.back()).toEqual(-5);
 		});
 
 		suite.test("copy", [&] {
 			tl::vector<int> v1 {v};  // NOLINT(performance-unnecessary-copy-initialization)
 			tl::vector<int> v2 {};
-
-			for (auto i {0}; i < v.size(); ++i) {
-				v2.push_back(v.size() - i);
-			}
 
 			v2 = v1;
 
@@ -133,6 +134,10 @@ static void VectorAssert() {
 				expect(v[i]).toEqual(v1[i]);
 				expect(v[i]).toEqual(v2[i]);
 			}
+
+			v2.resize(5);
+			expect(v2.size()).toEqual(5);
+			expect(v2.capacity()).toEqual(v.capacity());
 		});
 
 		suite.test("pop", [&] {
