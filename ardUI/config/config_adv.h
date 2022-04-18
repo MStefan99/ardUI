@@ -14,6 +14,13 @@
 
 
 /*
+ * Use "new" operator when using the custom template library.
+ * Otherwise malloc() and free() are used.
+ */
+#define USE_NEW ( true )
+
+
+/*
  * Smart delay prevents ardUI from pausing whenever you call the
  * delay() function, so that the UI always remains dynamic and responsive.
  * If this feature is disabled, no UI updates will happen during sleep(),
