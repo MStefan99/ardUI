@@ -24,7 +24,7 @@ public:
 
 	~TestSuite();
 
-	#if DEFERRED_RUN
+	#if TESTER_DEFERRED_RUN
 	void beforeAll(const std::function<void()>& callback);
 	void afterAll(const std::function<void()>& callback);
 
@@ -43,14 +43,17 @@ protected:
 	void run();
 
 	std::string _name {};
+
 	std::function<void()> _beforeAllCb {};
 	std::function<void()> _beforeEachCb {};
 	std::function<void(TestSuite&)> _blockCb {};
 	std::function<void()> _afterAllCb {};
 	std::function<void()> _afterEachCb {};
-	std::list<std::pair<std::string, std::string>> _errors {};
-	bool _passed {true};
-	#if DEFERRED_RUN
+
+	std::list<std::string> _passed {};
+	std::list<std::pair<std::string, std::string>> _failed {};
+
+	#if TESTER_DEFERRED_RUN
 	std::list<Test> _tests {};
 	#endif
 };

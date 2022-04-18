@@ -8,17 +8,24 @@
 /*
  * Deferred run
  * Adds all the tests in the queue and runs them once all tests have been added.
- * May cause local variables to be deallocated.
+ * Will cause local variables to be deallocated.
  *
  * Suite setup and teardown are only available with deferred run enabled.
  */
-#define DEFERRED_RUN ( true )
+#define TESTER_DEFERRED_RUN ( true )
 
 
 /*
  * Stop on fail
  * Stops suite execution immediately if a test case fails.
  */
-#define STOP_ON_FAIL ( true )
+#define TESTER_STOP_ON_FAIL ( true )
+
+
+/*
+ * Print passed tests
+ * Will output all passed tests to the console.
+ */
+#define TESTER_PRINT_PASSED ( false )
 
 #endif //ARDUI_OPTIONS_H

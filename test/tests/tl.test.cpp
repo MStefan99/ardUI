@@ -12,11 +12,63 @@
 #include "queue.h"
 
 
-static void VectorAssert() {
-	tl::vector<int> v {};
-	describe("Vector check", [&](TestSuite& suite) {
+struct AllocatorTester {
+	int i {0};
 
-		suite.test("push and subscribe", [&] {
+
+	AllocatorTester() { i = 1; }
+
+
+	~AllocatorTester() { i = 2; }
+};
+
+
+static void AllocatorTests() {
+	describe("Allocator tests", [&](TestSuite& suite) {
+		suite.test("Allocating built-in types", [&] {
+			tl::allocator<int> a {};
+			int* i = a.allocate(1);
+			a.construct(i, 5);
+
+			expect(*i).toEqual(5);
+
+			a.destroy(i);
+			a.deallocate(i);
+		});
+
+		suite.test("Allocating standard types", [&] {
+			tl::allocator<std::string> a;
+
+			std::string* s = a.allocate(1);
+			a.construct(s, "test");
+
+			expect(*s).toEqual("test");
+
+			a.destroy(s);
+			a.deallocate(s);
+		});
+
+		suite.test("Allocating custom types", [&] {
+			tl::allocator<AllocatorTester> a;
+
+			AllocatorTester* t = a.allocate(1);
+
+			a.construct(t);
+			expect(t->i).toEqual(1);
+			a.destroy(t);
+			expect(t->i).toEqual(2);
+
+			a.deallocate(t);
+		});
+	});
+}
+
+
+static void VectorTests() {
+	tl::vector<int> v {};
+	describe("Vector tests", [&](TestSuite& suite) {
+
+		suite.test("Pushing elements", [&] {
 			auto v1 = new tl::vector<int> {v};
 			expect(v.empty()).toBeTruthy();
 			expect(v.capacity()).toBeFalsy();
@@ -35,7 +87,7 @@ static void VectorAssert() {
 
 			expect(*v.begin()).toEqual(0);
 			expect(*--v.end()).toEqual(9);
-			delete(v1);
+			delete (v1);
 		});
 
 		suite.test("Iterator arithmetics", [&] {
@@ -67,7 +119,7 @@ static void VectorAssert() {
 			expect(++v.begin()).toBeGreaterThanOrEqual(v.begin());
 		});
 
-		suite.test("erase", [&] {
+		suite.test("Erasing elements", [&] {
 			auto it = v.erase(++v.begin());
 			expect(*it).toEqual(2);
 			v.erase(v.begin() + 5);
@@ -82,7 +134,7 @@ static void VectorAssert() {
 			expect(v.size()).toEqual(7);
 		});
 
-		suite.test("insert", [&] {
+		suite.test("Inserting elements", [&] {
 			v.insert(v.begin() + 2, -2);
 			auto it = v.insert(v.begin() + 6, -1);
 			expect(*it).toEqual(-1);
@@ -94,7 +146,7 @@ static void VectorAssert() {
 			expect(v.size()).toEqual(9);
 		});
 
-		suite.test("Edit elements", [&] {
+		suite.test("Editing elements", [&] {
 			v[2] = 20;
 			expect(v[2]).toEqual(20);
 			auto it = v.begin() += 3;
@@ -118,7 +170,7 @@ static void VectorAssert() {
 			expect(v.back()).toEqual(-5);
 		});
 
-		suite.test("copy", [&] {
+		suite.test("Copying vector", [&] {
 			tl::vector<int> v1 {v};  // NOLINT(performance-unnecessary-copy-initialization)
 			tl::vector<int> v2 {};
 
@@ -140,38 +192,30 @@ static void VectorAssert() {
 			expect(v2.capacity()).toEqual(v.capacity());
 		});
 
-		suite.test("pop", [&] {
+		suite.test("Popping elements", [&] {
 			v.pop_back();
 			expect(*--v.end()).toEqual(8);
 		});
 
-		suite.test("clear", [&] {
+		suite.test("Clearing vector", [&] {
 			v.clear();
 			expect(v.size()).toEqual(0);
 		});
 
-		suite.test("empty copy", [&] {
+		suite.test("Copying empty vector", [&] {
 			tl::vector<int> {tl::vector<int> {}};
 		});
 
-		suite.test("Insert resize", [&] {
-			for (int i = 0; i < 20; ++i) {
-				v.insert(v.begin(), i);
-			}
-
-			for (int j = 0; j < 20; ++j) {
-				expect(v[j]).toEqual(19 - j);
-			}
-		});
+		// TODO: test vector::reserve
 	});
 }
 
 
-static void ListAssert() {
+static void ListTests() {
 	tl::list<int> l {};
-	describe("List check", [&](TestSuite& suite) {
+	describe("List tests", [&](TestSuite& suite) {
 
-		suite.test("push and subscript assert", [&] {
+		suite.test("Pushing elements", [&] {
 			expect(l.empty()).toBeTruthy();
 			l.push_back(1);
 			expect(l.front()).toEqual(1);
@@ -237,7 +281,7 @@ static void ListAssert() {
 			expect(l.begin()).toDiffer(l.end());
 		});
 
-		suite.test("insert assert", [&] {
+		suite.test("Inserting elements", [&] {
 			l.insert(l.begin(), -1);
 			l.insert(++l.begin(), -2);
 			expect(l.size()).toEqual(12);
@@ -249,7 +293,7 @@ static void ListAssert() {
 			expect(l1.back()).toEqual(2);
 		});
 
-		suite.test("erase assert", [&] {
+		suite.test("Erasing elements", [&] {
 			auto it {l.begin()};
 			it = l.erase(++it);
 			++it;
@@ -259,7 +303,7 @@ static void ListAssert() {
 			expect(l.size()).toEqual(8);
 		});
 
-		suite.test("remove assert", [&] {
+		suite.test("Removing elements", [&] {
 			int i = l.remove(6);
 			expect(i).toEqual(1);
 			i = l.remove_if([](const int& e) -> bool {
@@ -273,14 +317,14 @@ static void ListAssert() {
 			expect(*--l.end()).toEqual(9);
 		});
 
-		suite.test("Iterator edit", [&] {
+		suite.test("Editing elements", [&] {
 			expect(l.front()).toEqual(-1);
 
 			l.begin() = -2;
 			expect(l.front()).toEqual(-2);
 		});
 
-		suite.test("copy assert", [&] {
+		suite.test("Copying list", [&] {
 			tl::list<int> l1 {l};  // NOLINT(performance-unnecessary-copy-initialization)
 			tl::list<int> l2;
 			l2 = l;
@@ -296,7 +340,7 @@ static void ListAssert() {
 			expect(*--l2.end()).toEqual(9);
 		});
 
-		suite.test("empty copy assert", [&] {
+		suite.test("Copying empty list", [&] {
 			tl::list<int> l1 {tl::list<int> {}};
 
 			expect(l1.empty()).toBeTruthy();
@@ -305,11 +349,11 @@ static void ListAssert() {
 }
 
 
-static void MapAssert() {
+static void MapTests() {
 	tl::map<int, double> m {};
-	describe("Map check", [&](TestSuite& suite) {
+	describe("Map tests", [&](TestSuite& suite) {
 
-		suite.test("insert assert", [&] {
+		suite.test("Inserting elements", [&] {
 			expect(m.empty()).toBeTruthy();
 			m.insert({2, 2.2});
 			expect(m[2]).toEqual(2.2);
@@ -329,20 +373,18 @@ static void MapAssert() {
 			it = m.begin();
 			tl::advance(it, 3);
 			expect(it->first).toEqual(1);
-		});
 
-		suite.test("size assert", [&] {
 			expect(m.size()).toEqual(8);
 			expect(m.empty()).toBeFalsy();
 		});
 
-		suite.test("copy assert", [&] {
+		suite.test("Copying map", [&] {
 			tl::map<int, double> m1 {m};
 			expect(m1.size()).toEqual(8);
 			expect(m1[0]).toEqual(0.0);
 		});
 
-		suite.test("erase assert", [&] {
+		suite.test("Erasing elements", [&] {
 			auto it {--m.end()};
 			it = m.erase(--it);
 			m.erase(3);
@@ -413,22 +455,20 @@ static void MapAssert() {
 }
 
 
-static void StackAssert() {
+static void StackTests() {
 	tl::stack<int> s;
-	describe("Stack check", [&](TestSuite& suite) {
+	describe("Stack tests", [&](TestSuite& suite) {
 
-		suite.beforeAll([&] {
+		suite.test("Pushing elements", [&] {
 			s.push(1);
 			s.push(2);
 			s.push(3);
-		});
 
-		suite.test("Size assert", [&] {
 			expect(s.size()).toEqual(3);
 			expect(s.empty()).toBeFalsy();
 		});
 
-		suite.test("Pop assert", [&] {
+		suite.test("Popping elements", [&] {
 			expect(s.top()).toEqual(3);
 			s.pop();
 			expect(s.top()).toEqual(2);
@@ -437,27 +477,23 @@ static void StackAssert() {
 }
 
 
-static void QueueAssert() {
+static void QueueTests() {
 	tl::queue<int> q;
-	describe("Queue check", [&](TestSuite& suite) {
+	describe("Queue tests", [&](TestSuite& suite) {
 
-		suite.beforeAll([&] {
+		suite.test("Pushing elements", [&] {
 			q.push(1);
 			q.push(2);
 			q.push(3);
-		});
 
-		suite.test("Size assert", [&] {
+			expect(q.back()).toEqual(3);
+			expect(q.front()).toEqual(1);
+
 			expect(q.size()).toEqual(3);
 			expect(q.empty()).toBeFalsy();
 		});
 
-		suite.test("Front and back assert", [&] {
-			expect(q.back()).toEqual(3);
-			expect(q.front()).toEqual(1);
-		});
-
-		suite.test("Pop assert", [&] {
+		suite.test("Popping elements", [&] {
 			q.pop();
 			expect(q.front()).toEqual(2);
 		});
@@ -466,11 +502,12 @@ static void QueueAssert() {
 
 
 int main() {
-	VectorAssert();
-	ListAssert();
-	MapAssert();
-	StackAssert();
-	QueueAssert();
+	AllocatorTests();
+	VectorTests();
+	ListTests();
+	MapTests();
+	StackTests();
+	QueueTests();
 
 	return 0;
 }

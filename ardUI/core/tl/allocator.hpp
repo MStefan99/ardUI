@@ -37,7 +37,7 @@ namespace tl {
 		void deallocate(pointer p, size_type n = 1);
 
 		template <class U, class... Args>
-		void construct(U* p, Args& ... args);
+		void construct(U* p, Args&& ... args);
 		template <class U>
 		void destroy(U* p);
 	};
@@ -78,7 +78,7 @@ namespace tl {
 
 	template <class T>
 	template <class U, class... Args>
-	void allocator<T>::construct(U* p, Args& ...args) {
+	void allocator<T>::construct(U* p, Args&& ...args) {
 		::new((void*)p) U(args...);
 	}
 

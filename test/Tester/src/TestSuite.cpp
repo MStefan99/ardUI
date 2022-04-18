@@ -15,7 +15,7 @@ TestSuite::TestSuite(const std::string& name, const std::function<void(TestSuite
 		_name {name}, _blockCb {cb} {
 	StatRecorder::getInstance();
 	++StatRecorder::_totalSuites;
-	#if !DEFERRED_RUN
+	#if !TESTER_DEFERRED_RUN
 	runBefore();
 	#endif
 }
@@ -23,14 +23,14 @@ TestSuite::TestSuite(const std::string& name, const std::function<void(TestSuite
 
 TestSuite::~TestSuite() {
 	run();
-	#if !DEFERRED_RUN
+	#if !TESTER_DEFERRED_RUN
 	runAfter();
 	printResults();
 	#endif
 }
 
 
-#if DEFERRED_RUN
+#if TESTER_DEFERRED_RUN
 
 
 void TestSuite::beforeAll(const std::function<void()>& cb) {
@@ -58,7 +58,7 @@ void TestSuite::afterEach(const std::function<void()>& cb) {
 
 void TestSuite::test(const std::string& testName,
 		const std::function<void()>& cb) {
-	#if DEFERRED_RUN
+	#if TESTER_DEFERRED_RUN
 	_tests.emplace_back(testName, cb);
 	#else
 	runTest({testName, cb});
@@ -71,10 +71,10 @@ void TestSuite::runBefore() {
 		_blockCb(*this);
 		if (_beforeAllCb) {
 			_beforeAllCb();
+			_passed.emplace_back("Suite setup");
 		}
 	} catch (const AssertException& e) {
-		_errors.emplace_back("Suite setup", e.what());
-		_passed = false;
+		_failed.emplace_back("Suite setup", e.what());
 	}
 }
 
@@ -83,10 +83,10 @@ void TestSuite::runAfter() {
 	try {
 		if (_afterAllCb) {
 			_afterAllCb();
+			_passed.emplace_back("Suite teardown");
 		}
 	} catch (const AssertException& e) {
-		_errors.emplace_back("Suite teardown", e.what());
-		_passed = false;
+		_failed.emplace_back("Suite teardown", e.what());
 	}
 }
 
@@ -95,47 +95,53 @@ void TestSuite::runTest(const Test& test) {
 	try {
 		if (_beforeEachCb) {
 			_beforeEachCb();
+			_passed.emplace_back(test.getName() + " > Test setup");
 		}
 	} catch (const AssertException& e) {
-		_errors.emplace_back(test.getName() + " > Test setup", e.what());
-		_passed = false;
+		_failed.emplace_back(test.getName() + " > Test setup", e.what());
 	}
-	if (_passed || !STOP_ON_FAIL) {
+	if (_failed.empty() || !TESTER_STOP_ON_FAIL) {
 		try {
 			test.run();
+			_passed.emplace_back(test.getName());
 		} catch (const AssertException& e) {
-			_errors.emplace_back(test.getName(), e.what());
-			_passed = false;
+			_failed.emplace_back(test.getName(), e.what());
 		}
 	}
 	try {
 		if (_afterEachCb) {
 			_afterEachCb();
+			_passed.emplace_back(test.getName() + " > Test teardown");
 		}
 	} catch (const AssertException& e) {
-		_errors.emplace_back(test.getName() + " > Test teardown", e.what());
-		_passed = false;
+		_failed.emplace_back(test.getName() + " > Test teardown", e.what());
 	}
 }
 
 
 void TestSuite::printResults() const {
-	if (_passed) {
+	if (_failed.empty()) {
 		std::cout << BG_BRIGHT_GREEN << FG_BLACK << " PASS " << RST << " " << _name << std::endl;
 	} else {
 		std::cout << BG_BRIGHT_RED << FG_BLACK << " FAIL " << RST << " " << _name << RST << std::endl;
-		for (const auto& e : _errors) {
-			std::cout << FG_RED << "● " << e.first << RST << std::endl
-								<< e.second << std::endl << std::endl;
-		}
+	}
+	#if TESTER_PRINT_PASSED
+	for (const auto& e : _passed) {
+		std::cout << FG_GREEN << "  ● " << e << RST << std::endl;
+	}
+	std::cout << std::endl;
+	#endif
+	for (const auto& e : _failed) {
+		std::cout << FG_RED << "  ● " << e.first << RST << std::endl
+							<< e.second << std::endl << std::endl;
 	}
 }
 
 
 void TestSuite::run() {
-	#if DEFERRED_RUN
+	#if TESTER_DEFERRED_RUN
 	runBefore();
-	if (_passed) {
+	if (_failed.empty()) {
 		for (const auto& test : _tests) {
 			runTest(test);
 		}
@@ -143,7 +149,7 @@ void TestSuite::run() {
 	runAfter();
 	printResults();
 	#endif
-	if (_passed) {
+	if (_failed.empty()) {
 		++StatRecorder::_passedSuites;
 	}
 }
