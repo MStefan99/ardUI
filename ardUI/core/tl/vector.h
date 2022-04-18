@@ -14,91 +14,116 @@
 
 namespace tl {
 	template <class T, class Alloc = allocator<T>>
-	class vector {
-	public:
-		class iterator final {  // random access iterator
-		public:
-			typedef _internal::random_access_iterator_tag iterator_category;
+	struct vector;
 
-			iterator() = default;
 
-			iterator& operator++();
-			const iterator operator++(int);
+	template <class T>
+	struct _vectorIterator {
+		using iterator_category = _internal::random_access_iterator_tag;
 
-			iterator& operator--();
-			const iterator operator--(int);
+		using pointer = T*;
+		using const_pointer = const T*;
+		using reference = T&;
+		using const_reference = const T&;
 
-			bool operator==(const iterator& it) const;
-			bool operator!=(const iterator& it) const;
+		using size_type = unsigned int;
+		using difference_type = unsigned int;
 
-			iterator& operator=(const T&);
+		_vectorIterator() = default;
 
-			T* operator->() const;
-			T& operator*() const;
+		_vectorIterator& operator++();
+		const _vectorIterator operator++(int);
 
-			iterator operator+(int n) const;
-			iterator operator-(int n) const;
+		_vectorIterator& operator--();
+		const _vectorIterator operator--(int);
 
-			iterator& operator+=(int n);
-			iterator& operator-=(int n);
+		bool operator==(const _vectorIterator& it) const;
+		bool operator!=(const _vectorIterator& it) const;
 
-			bool operator<(const iterator& it) const;
-			bool operator<=(const iterator& it) const;
-			bool operator>(const iterator& it) const;
-			bool operator>=(const iterator& it) const;
+		_vectorIterator& operator=(const T&);
 
-			T& operator[](unsigned int n) const;
+		pointer operator->() const;
+		reference operator*() const;
 
-			friend class vector;
+		_vectorIterator operator+(difference_type n) const;
+		_vectorIterator operator-(difference_type n) const;
 
-		private:
-			explicit iterator(T* elementPointer);
-			T* _elementPointer {nullptr};
-		};
+		_vectorIterator& operator+=(difference_type n);
+		_vectorIterator& operator-=(difference_type n);
+
+		bool operator<(const _vectorIterator& it) const;
+		bool operator<=(const _vectorIterator& it) const;
+		bool operator>(const _vectorIterator& it) const;
+		bool operator>=(const _vectorIterator& it) const;
+
+		reference operator[](size_type n) const;
+
+		friend class vector<T>;
+
+	private:
+		explicit _vectorIterator(T* elementPointer);
+		T* _elementPointer {nullptr};
+	};
+
+
+	template <class T, class Alloc>
+	struct vector {
+		using value_type = T;
+		using allocator_type = Alloc;
+		using iterator = _vectorIterator<value_type>;
+
+		using pointer = typename Alloc::pointer;
+		using const_pointer = typename Alloc::const_pointer;
+		using reference = typename Alloc::reference;
+		using const_reference = typename Alloc::const_reference;
+
+		using difference_type = typename Alloc::difference_type;
+		using size_type = typename Alloc::size_type;
+
 
 		vector() = default;
 		vector(const vector& v);
 		~vector();
 
-		void push_back(const T& value);
+		void push_back(const_reference value);
 		void pop_back();
 
-		iterator insert(iterator pos, const T& value);
+		iterator insert(iterator pos, const_reference value);
 		iterator erase(iterator position);
 		iterator erase(iterator first, iterator last);
 		void clear();
 
-		T& operator[](unsigned int n) const;
+		reference operator[](size_type n) const;
 		vector& operator=(const vector& vector);
 
 		bool empty() const;
-		unsigned int size() const;
-		unsigned int capacity() const;
+		size_type size() const;
+		size_type capacity() const;
 
-		T* data();
-		const T* data() const;
+		pointer data();
+		const_pointer data() const;
 
-		void resize(unsigned int n);
-		void reserve(unsigned int n);
+		void resize(size_type n);
+		void reserve(size_type n);
 
-		T& front();
-		T& back();
+		reference front();
+		reference back();
 
 		iterator begin() const;
 		iterator end() const;
 
 	protected:
-		T* _vectorArray {nullptr};
-		unsigned int _vectorSize {0};
-		unsigned int _vectorCapacity {0};
+		pointer _vectorArray {nullptr};
+		size_type _vectorSize {0};
+		size_type _vectorCapacity {0};
 	};
 
 
 	template <class T, class Alloc>
 	vector<T, Alloc>::vector(const vector& v):
 			_vectorSize(v._vectorSize), _vectorCapacity(v._vectorCapacity) {
-		_vectorArray = Alloc().allocate(_vectorSize);
-		for (unsigned int i {0}; i < v._vectorSize; ++i) {
+		_vectorArray = allocator_type().allocate(_vectorSize);
+		for (size_type i {0}; i < v._vectorSize; ++i) {
 			_vectorArray[i] = v._vectorArray[i];
 		}
 	}
@@ -106,15 +131,15 @@ namespace tl {
 
 	template <class T, class Alloc>
 	vector<T, Alloc>::~vector() {
-		for (unsigned int i {0}; i < _vectorSize; ++i) {
-			Alloc().destroy(_vectorArray + i);
+		for (size_type i {0}; i < _vectorSize; ++i) {
+			allocator_type().destroy(_vectorArray + i);
 		}
-		Alloc().deallocate(_vectorArray);
+		allocator_type().deallocate(_vectorArray);
 	}
 
 
 	template <class T, class Alloc>
-	void vector<T, Alloc>::push_back(const T& value) {
+	void vector<T, Alloc>::push_back(const_reference value) {
 		if (_vectorSize == _vectorCapacity) {
 			reserve(_vectorCapacity * 3 / 2 + 1);
 		}
@@ -130,7 +155,7 @@ namespace tl {
 
 
 	template <class T, class Alloc>
-	typename vector<T, Alloc>::iterator vector<T, Alloc>::insert(iterator position, const T& value) {
+	_vectorIterator<T> vector<T, Alloc>::insert(iterator position, const_reference value) {
 		auto i {position._elementPointer - _vectorArray};
 
 		if (_vectorSize == _vectorCapacity) {
@@ -147,7 +172,7 @@ namespace tl {
 
 
 	template <class T, class Alloc>
-	typename vector<T, Alloc>::iterator vector<T, Alloc>::erase(vector<T, Alloc>::iterator position) {
+	_vectorIterator<T> vector<T, Alloc>::erase(_vectorIterator<T> position) {
 		auto i {position._elementPointer - _vectorArray};
 
 		if (i > _vectorSize - 1) {
@@ -163,7 +188,7 @@ namespace tl {
 
 
 	template <class T, class Alloc>
-	typename vector<T, Alloc>::iterator vector<T, Alloc>::erase(iterator first, iterator last) {
+	_vectorIterator<T> vector<T, Alloc>::erase(iterator first, iterator last) {
 		long i {first._elementPointer - _vectorArray};
 		long n {last._elementPointer - first._elementPointer};
 
@@ -179,7 +204,7 @@ namespace tl {
 
 	template <class T, class Alloc>
 	void vector<T, Alloc>::clear() {
-		for (unsigned int i {0}; i < _vectorSize; ++i) {
+		for (size_type i {0}; i < _vectorSize; ++i) {
 			_vectorArray[i] = T {};
 		}
 		_vectorSize = 0;
@@ -187,18 +212,18 @@ namespace tl {
 
 
 	template <class T, class Alloc>
-	void vector<T, Alloc>::resize(unsigned int n) {
+	void vector<T, Alloc>::resize(size_type n) {
 		if (n > _vectorSize) {
 			if (n > _vectorCapacity) {
 				reserve(n);
 			}
-			for (unsigned int i {_vectorSize + 1}; i < n; ++i) {
-				Alloc().construct(_vectorArray + i);
+			for (size_type i {_vectorSize + 1}; i < n; ++i) {
+				allocator_type().construct(_vectorArray + i);
 			}
 
 		} else if (n < _vectorSize) {
-			for (unsigned int i {n + 1}; i < _vectorSize; ++i) {
-				Alloc().destroy(_vectorArray + i);
+			for (size_type i {n + 1}; i < _vectorSize; ++i) {
+				allocator_type().destroy(_vectorArray + i);
 			}
 		}
 		_vectorSize = n;
@@ -206,29 +231,29 @@ namespace tl {
 
 
 	template <class T, class Alloc>
-	void vector<T, Alloc>::reserve(unsigned int n) {
+	void vector<T, Alloc>::reserve(size_type n) {
 		if (n <= _vectorCapacity) {
 			_vectorCapacity = n;
 			return;
 		}
 
-		T* temp = Alloc().allocate(n);
-		for (unsigned int i {0}; i < _vectorSize; ++i) {
+		pointer temp = allocator_type().allocate(n);
+		for (size_type i {0}; i < _vectorSize; ++i) {
 			temp[i] = _vectorArray[i];
-			Alloc().destroy(_vectorArray + i);
+			allocator_type().destroy(_vectorArray + i);
 		}
-		for (unsigned int i {_vectorSize}; i < n; ++i) {
-			Alloc().construct(temp + i);
+		for (size_type i {_vectorSize}; i < n; ++i) {
+			allocator_type().construct(temp + i);
 		}
 
-		Alloc().deallocate(_vectorArray);
+		allocator_type().deallocate(_vectorArray);
 		_vectorArray = temp;
 		_vectorCapacity = n;
 	}
 
 
 	template <class T, class Alloc>
-	T& vector<T, Alloc>::operator[](unsigned int n) const {
+	typename vector<T, Alloc>::reference vector<T, Alloc>::operator[](size_type n) const {
 		return _vectorArray[n];
 	}
 
@@ -237,7 +262,7 @@ namespace tl {
 	vector<T, Alloc>& vector<T, Alloc>::operator=(const vector <T, Alloc>& vector) {
 		if (this != &vector) {
 			resize(vector._vectorSize);
-			for (unsigned int i {0}; i < vector.size(); ++i) {
+			for (size_type i {0}; i < vector.size(); ++i) {
 				_vectorArray[i] = vector._vectorArray[i];
 			}
 			_vectorSize = vector.size();
@@ -254,177 +279,175 @@ namespace tl {
 
 
 	template <class T, class Alloc>
-	unsigned int vector<T, Alloc>::size() const {
+	typename vector<T, Alloc>::size_type vector<T, Alloc>::size() const {
 		return _vectorSize;
 	}
 
 
 	template <class T, class Alloc>
-	unsigned int vector<T, Alloc>::capacity() const {
+	typename vector<T, Alloc>::size_type vector<T, Alloc>::capacity() const {
 		return _vectorCapacity;
 	}
 
 
 	template <class T, class Alloc>
-	T* vector<T, Alloc>::data() {
+	typename vector<T, Alloc>::pointer vector<T, Alloc>::data() {
 		return _vectorArray;
 	}
 
 
 	template <class T, class Alloc>
-	const T* vector<T, Alloc>::data() const {
+	typename vector<T, Alloc>::const_pointer vector<T, Alloc>::data() const {
 		return _vectorArray;
 	}
 
 
 	template <class T, class Alloc>
-	T& vector<T, Alloc>::front() {
+	typename vector<T, Alloc>::reference vector<T, Alloc>::front() {
 		return _vectorArray[0];
 	}
 
 
 	template <class T, class Alloc>
-	T& vector<T, Alloc>::back() {
+	typename vector<T, Alloc>::reference vector<T, Alloc>::back() {
 		return _vectorArray[_vectorSize - 1];
 	}
 
 
 	template <class T, class Alloc>
-	typename vector<T, Alloc>::iterator vector<T, Alloc>::begin() const {
+	_vectorIterator<T> vector<T, Alloc>::begin() const {
 		return iterator(_vectorArray);
 	}
 
 
 	template <class T, class Alloc>
-	typename vector<T, Alloc>::iterator vector<T, Alloc>::end() const {
+	_vectorIterator<T> vector<T, Alloc>::end() const {
 		return iterator(_vectorArray + _vectorSize);
 	}
 
 
-	template <class T, class Alloc>
-	vector<T, Alloc>::iterator::iterator(T* elementPointer): _elementPointer(elementPointer) {
+	template <class T>
+	_vectorIterator<T>::_vectorIterator(pointer elementPointer): _elementPointer(elementPointer) {
 	}
 
 
-	template <class T, class Alloc>
-	typename vector<T, Alloc>::iterator& vector<T, Alloc>::iterator::operator++() {
+	template <class T>
+	_vectorIterator<T>& _vectorIterator<T>::operator++() {
 		++_elementPointer;
 		return *this;
 	}
 
 
-	template <class T, class Alloc>
-	const typename vector<T, Alloc>::iterator
-	vector<T, Alloc>::iterator::operator++(int) { // NOLINT(readability-const-return-type)
-		iterator temp {*this};
+	template <class T>
+	const _vectorIterator<T> _vectorIterator<T>::operator++(int) { // NOLINT(readability-const-return-type)
+		_vectorIterator<T> temp {*this};
 		++_elementPointer;
 		return temp;
 	}
 
 
-	template <class T, class Alloc>
-	typename vector<T, Alloc>::iterator& vector<T, Alloc>::iterator::operator--() {
+	template <class T>
+	_vectorIterator<T>& _vectorIterator<T>::operator--() {
 		--_elementPointer;
 		return *this;
 	}
 
 
-	template <class T, class Alloc>
-	const typename vector<T, Alloc>::iterator
-	vector<T, Alloc>::iterator::operator--(int) { // NOLINT(readability-const-return-type)
-		iterator temp {*this};
+	template <class T>
+	const _vectorIterator<T> _vectorIterator<T>::operator--(int) { // NOLINT(readability-const-return-type)
+		_vectorIterator<T> temp {*this};
 		--_elementPointer;
 		return temp;
 	}
 
 
-	template <class T, class Alloc>
-	typename vector<T, Alloc>::iterator vector<T, Alloc>::iterator::operator+(int n) const {
-		iterator temp {*this};
+	template <class T>
+	_vectorIterator<T> _vectorIterator<T>::operator+(size_type n) const {
+		_vectorIterator<T> temp {*this};
 		temp._elementPointer += n;
 		return temp;
 	}
 
 
-	template <class T, class Alloc>
-	typename vector<T, Alloc>::iterator vector<T, Alloc>::iterator::operator-(int n) const {
-		iterator temp {*this};
+	template <class T>
+	_vectorIterator<T> _vectorIterator<T>::operator-(size_type n) const {
+		_vectorIterator<T> temp {*this};
 		temp._elementPointer -= n;
 		return temp;
 	}
 
 
-	template <class T, class Alloc>
-	typename vector<T, Alloc>::iterator& vector<T, Alloc>::iterator::operator+=(int n) {
+	template <class T>
+	_vectorIterator<T>& _vectorIterator<T>::operator+=(size_type n) {
 		_elementPointer += n;
 		return *this;
 	}
 
 
-	template <class T, class Alloc>
-	typename vector<T, Alloc>::iterator& vector<T, Alloc>::iterator::operator-=(int n) {
+	template <class T>
+	_vectorIterator<T>& _vectorIterator<T>::operator-=(size_type n) {
 		_elementPointer -= n;
 		return *this;
 	}
 
 
-	template <class T, class Alloc>
-	typename vector<T, Alloc>::iterator& vector<T, Alloc>::iterator::operator=(const T& value) {
+	template <class T>
+	_vectorIterator<T>& _vectorIterator<T>::operator=(const_reference value) {
 		*_elementPointer = value;
 		return *this;
 	}
 
 
-	template <class T, class Alloc>
-	T* vector<T, Alloc>::iterator::operator->() const {
+	template <class T>
+	typename _vectorIterator<T>::pointer _vectorIterator<T>::operator->() const {
 		return _elementPointer;
 	}
 
 
-	template <class T, class Alloc>
-	T& vector<T, Alloc>::iterator::operator*() const {
+	template <class T>
+	typename _vectorIterator<T>::reference _vectorIterator<T>::operator*() const {
 		return *_elementPointer;
 	}
 
 
-	template <class T, class Alloc>
-	T& vector<T, Alloc>::iterator::operator[](unsigned int n) const {
+	template <class T>
+	typename _vectorIterator<T>::reference _vectorIterator<T>::operator[](size_type n) const {
 		return _elementPointer[n];
 	}
 
 
-	template <class T, class Alloc>
-	bool vector<T, Alloc>::iterator::operator==(const iterator& it) const {
+	template <class T>
+	bool _vectorIterator<T>::operator==(const _vectorIterator<T>& it) const {
 		return _elementPointer == it._elementPointer;
 	}
 
 
-	template <class T, class Alloc>
-	bool vector<T, Alloc>::iterator::operator!=(const iterator& it) const {
+	template <class T>
+	bool _vectorIterator<T>::operator!=(const _vectorIterator<T>& it) const {
 		return _elementPointer != it._elementPointer;
 	}
 
 
-	template <class T, class Alloc>
-	bool vector<T, Alloc>::iterator::operator<(const iterator& it) const {
+	template <class T>
+	bool _vectorIterator<T>::operator<(const _vectorIterator<T>& it) const {
 		return _elementPointer < it._elementPointer;
 	}
 
 
-	template <class T, class Alloc>
-	bool vector<T, Alloc>::iterator::operator<=(const iterator& it) const {
+	template <class T>
+	bool _vectorIterator<T>::operator<=(const _vectorIterator<T>& it) const {
 		return _elementPointer <= it._elementPointer;
 	}
 
 
-	template <class T, class Alloc>
-	bool vector<T, Alloc>::iterator::operator>(const iterator& it) const {
+	template <class T>
+	bool _vectorIterator<T>::operator>(const _vectorIterator<T>& it) const {
 		return _elementPointer > it._elementPointer;
 	}
 
 
-	template <class T, class Alloc>
-	bool vector<T, Alloc>::iterator::operator>=(const iterator& it) const {
+	template <class T>
+	bool _vectorIterator<T>::operator>=(const _vectorIterator<T>& it) const {
 		return _elementPointer >= it._elementPointer;
 	}
 }

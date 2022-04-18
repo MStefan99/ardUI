@@ -6,6 +6,7 @@
 #define ARDUI_ALLOCATOR_HPP
 
 #include "platform.h"
+#include <vector>
 
 
 #if !USE_NEW
@@ -17,13 +18,23 @@
 
 namespace tl {
 	template <class T>
-	class allocator {
-	public:
+	struct allocator {
+		using value_type = T;
+
+		using pointer = T*;
+		using const_pointer = const T*;
+		using reference = T&;
+		using const_reference = const T&;
+
+		using size_type = unsigned int;
+		using difference_type = unsigned long;
+
+
 		allocator() = default;
 		~allocator() = default;
 
-		T* allocate(unsigned int n = 1);
-		void deallocate(T* p, unsigned int n = 1);
+		pointer allocate(size_type n = 1);
+		void deallocate(pointer p, size_type n = 1);
 
 		template <class U, class... Args>
 		void construct(U* p, Args& ... args);
@@ -36,13 +47,13 @@ namespace tl {
 
 
 	template <class T>
-	T* allocator<T>::allocate(unsigned int n) {
+	typename allocator<T>::pointer allocator<T>::allocate(size_type n) {
 		return static_cast<T*>(::operator new(sizeof(T) * n));
 	}
 
 
 	template <class T>
-	void allocator<T>::deallocate(T* p, unsigned int n) {
+	void allocator<T>::deallocate(pointer p, size_type n) {
 		::operator delete(p);
 	}
 
@@ -51,13 +62,13 @@ namespace tl {
 
 
 	template <class T>
-	T* allocator<T>::allocate(unsigned int n) {
+	typename allocator<T>::pointer allocator<T>::allocate(size_type n) {
 		return static_cast<T*>(std::malloc(sizeof(T) * n));
 	}
 
 
 	template <class T>
-	void allocator<T>::deallocate(T* p, unsigned int) {
+	void allocator<T>::deallocate(pointer p, unsigned int) {
 		std::free(p);
 	}
 
