@@ -14,6 +14,7 @@ namespace tl {
 	struct _vectorIterator {
 		using iterator_category = _internal::random_access_iterator_tag;
 
+		using value_type = T;
 		using pointer = T*;
 		using const_pointer = const T*;
 		using reference = T&;
@@ -34,7 +35,7 @@ namespace tl {
 		bool operator==(const _vectorIterator& it) const;
 		bool operator!=(const _vectorIterator& it) const;
 
-		_vectorIterator& operator=(const T&);
+		_vectorIterator& operator=(const_reference value);
 
 		pointer operator->() const;
 		reference operator*() const;
@@ -45,7 +46,7 @@ namespace tl {
 		_vectorIterator& operator+=(difference_type n);
 		_vectorIterator& operator-=(difference_type n);
 
-		difference_type operator-(const _vectorIterator<T>& it) const;
+		difference_type operator-(const _vectorIterator<value_type>& it) const;
 
 		bool operator<(const _vectorIterator& it) const;
 		bool operator<=(const _vectorIterator& it) const;
@@ -165,7 +166,7 @@ namespace tl {
 
 
 	template <class T, class Alloc>
-	_vectorIterator<T> vector<T, Alloc>::erase(_vectorIterator<T> position) {
+	_vectorIterator<T> vector<T, Alloc>::erase(_vectorIterator<value_type> position) {
 		difference_type i {position - begin()};
 
 		if (i > _vectorSize - 1) {
@@ -198,7 +199,7 @@ namespace tl {
 	template <class T, class Alloc>
 	void vector<T, Alloc>::clear() {
 		for (size_type i {0}; i < _vectorSize; ++i) {
-			_vectorArray[i] = T {};
+			_vectorArray[i] = value_type {};
 		}
 		_vectorSize = 0;
 	}
@@ -252,7 +253,7 @@ namespace tl {
 
 
 	template <class T, class Alloc>
-	vector<T, Alloc>& vector<T, Alloc>::operator=(const vector <T, Alloc>& vector) {
+	vector<T, Alloc>& vector<T, Alloc>::operator=(const vector <value_type, allocator_type>& vector) {
 		if (this != &vector) {
 			resize(vector._vectorSize);
 			for (size_type i {0}; i < vector.size(); ++i) {
@@ -333,7 +334,7 @@ namespace tl {
 
 	template <class T>
 	const _vectorIterator<T> _vectorIterator<T>::operator++(int) { // NOLINT(readability-const-return-type)
-		_vectorIterator<T> temp {*this};
+		_vectorIterator<value_type> temp {*this};
 		++_elementPointer;
 		return temp;
 	}
@@ -348,7 +349,7 @@ namespace tl {
 
 	template <class T>
 	const _vectorIterator<T> _vectorIterator<T>::operator--(int) { // NOLINT(readability-const-return-type)
-		_vectorIterator<T> temp {*this};
+		_vectorIterator<value_type> temp {*this};
 		--_elementPointer;
 		return temp;
 	}
@@ -356,7 +357,7 @@ namespace tl {
 
 	template <class T>
 	_vectorIterator<T> _vectorIterator<T>::operator+(size_type n) const {
-		_vectorIterator<T> temp {*this};
+		_vectorIterator<value_type> temp {*this};
 		temp._elementPointer += n;
 		return temp;
 	}
@@ -364,7 +365,7 @@ namespace tl {
 
 	template <class T>
 	_vectorIterator<T> _vectorIterator<T>::operator-(size_type n) const {
-		_vectorIterator<T> temp {*this};
+		_vectorIterator<value_type> temp {*this};
 		temp._elementPointer -= n;
 		return temp;
 	}
@@ -385,7 +386,8 @@ namespace tl {
 
 
 	template <class T>
-	typename _vectorIterator<T>::difference_type _vectorIterator<T>::operator-(const _vectorIterator<T>& it) const {
+	typename _vectorIterator<T>::difference_type
+	_vectorIterator<T>::operator-(const _vectorIterator<value_type>& it) const {
 		return _elementPointer - it._elementPointer;
 	}
 

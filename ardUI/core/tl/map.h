@@ -36,10 +36,16 @@ namespace tl {
 
 	template <class T>
 	struct _mapNode {
-		explicit _mapNode(const T& value, _mapNode* parent);
-		explicit _mapNode(const typename T::first_type& k, _mapNode<T>* parent);
+		using value_type = T;
+		using pointer = T*;
+		using const_pointer = const T*;
+		using reference = T&;
+		using const_reference = const T&;
 
-		T value;
+		explicit _mapNode(const_reference value, _mapNode* parent);
+		explicit _mapNode(const typename value_type::first_type& k, _mapNode<value_type>* parent);
+
+		value_type value;
 		_mapNode* parent {nullptr};
 		_mapNode* left {nullptr};
 		_mapNode* right {nullptr};
@@ -50,8 +56,14 @@ namespace tl {
 	struct _mapIterator {
 		typedef _internal::bidirectional_iterator_tag iterator_category;
 
+		using value_type = T;
+		using pointer = T*;
+		using const_pointer = const T*;
+		using reference = T&;
+		using const_reference = const T&;
+
 		_mapIterator() = default;
-		explicit _mapIterator(_mapNode<T>* currentElement, _mapNode<T>* lastElement = nullptr);
+		explicit _mapIterator(_mapNode<value_type>* currentElement, _mapNode<value_type>* lastElement = nullptr);
 
 		_mapIterator& operator++();
 		const _mapIterator operator++(int);
@@ -62,14 +74,14 @@ namespace tl {
 		bool operator==(const _mapIterator& it) const;
 		bool operator!=(const _mapIterator& it) const;
 
-		_mapIterator& operator=(const T&);
+		_mapIterator& operator=(const_reference it);
 
-		T* operator->() const;
-		T& operator*() const;
+		pointer operator->() const;
+		reference operator*() const;
 
 		// TODO: make protected?
-		_mapNode<T>* _currentElement {nullptr};
-		_mapNode<T>* _lastElement {nullptr};
+		_mapNode<value_type>* _currentElement {nullptr};
+		_mapNode<value_type>* _lastElement {nullptr};
 	};
 
 
@@ -98,14 +110,14 @@ namespace tl {
 		mapped_type& operator[](const key_type& k);
 
 		bool empty() const;
-		unsigned int size() const;
+		size_type size() const;
 
 		iterator find(const key_type& k) const;
 
 		pair<iterator, bool> insert(const value_type& value);
 
 		iterator erase(iterator position);
-		unsigned int erase(const key_type& k);
+		size_type erase(const key_type& k);
 		iterator erase(iterator first, iterator last);
 		void clear();
 
@@ -119,21 +131,21 @@ namespace tl {
 		_mapNode<value_type>* findElement(const key_type& k) const;
 
 		_mapNode<value_type>* _mapRoot {nullptr};
-		Comp _less {};
+		key_compare _less {};
 		size_type _mapSize {0};
 		bool _balancingLeft {true};
 	};
 
 
 	template <class T>
-	_mapIterator<T>::_mapIterator(_mapNode<T>* currentElement, _mapNode<T>* lastElement):
+	_mapIterator<T>::_mapIterator(_mapNode<value_type>* currentElement, _mapNode<value_type>* lastElement):
 			_currentElement(currentElement),
 			_lastElement(lastElement) {
 	}
 
 
 	template <class T>
-	_mapIterator<T>& _mapIterator<T>::operator++() {
+	_mapIterator<typename _mapIterator<T>::value_type>& _mapIterator<T>::operator++() {
 		if (_currentElement->right) {
 			_currentElement = Leftmost(_currentElement->right);
 			_lastElement = _currentElement;
@@ -155,7 +167,8 @@ namespace tl {
 
 
 	template <class T>
-	const _mapIterator<T> _mapIterator<T>::operator++(int) {  // NOLINT(readability-const-return-type)
+	const _mapIterator<typename _mapIterator<T>::value_type>
+	_mapIterator<T>::operator++(int) {  // NOLINT(readability-const-return-type)
 		auto temp {*this};
 		operator++();
 		return temp;
@@ -163,7 +176,7 @@ namespace tl {
 
 
 	template <class T>
-	_mapIterator<T>& _mapIterator<T>::operator--() {
+	_mapIterator<typename _mapIterator<T>::value_type>& _mapIterator<T>::operator--() {
 		if (!_currentElement) {
 			_currentElement = _lastElement;
 		} else if (_currentElement->left) {
@@ -186,7 +199,8 @@ namespace tl {
 
 
 	template <class T>
-	const _mapIterator<T> _mapIterator<T>::operator--(int) {  // NOLINT(readability-const-return-type)
+	const _mapIterator<typename _mapIterator<T>::value_type>
+	_mapIterator<T>::operator--(int) {  // NOLINT(readability-const-return-type)
 		auto temp {*this};
 		operator--();
 		return temp;
@@ -194,38 +208,38 @@ namespace tl {
 
 
 	template <class T>
-	bool _mapIterator<T>::operator==(const _mapIterator<T>& it) const {
+	bool _mapIterator<T>::operator==(const _mapIterator<value_type>& it) const {
 		return _currentElement == it._currentElement;
 	}
 
 
 	template <class T>
-	bool _mapIterator<T>::operator!=(const _mapIterator<T>& it) const {
+	bool _mapIterator<T>::operator!=(const _mapIterator<value_type>& it) const {
 		return _currentElement != it._currentElement;
 	}
 
 
 	template <class T>
-	_mapIterator<T>& _mapIterator<T>::operator=(const T& value) {
+	_mapIterator<typename _mapIterator<T>::value_type>& _mapIterator<T>::operator=(const_reference value) {
 		_currentElement->value.second = value;
 		return *this;
 	}
 
 
 	template <class T>
-	T* _mapIterator<T>::operator->() const {
+	typename _mapIterator<T>::pointer _mapIterator<T>::operator->() const {
 		return &_currentElement->value;
 	}
 
 
 	template <class T>
-	T& _mapIterator<T>::operator*() const {
+	typename _mapIterator<T>::reference _mapIterator<T>::operator*() const {
 		return _currentElement->value;
 	}
 
 
 	template <class T>
-	_mapNode<T>::_mapNode(const T& v, _mapNode<T>* p):
+	_mapNode<T>::_mapNode(const_reference v, _mapNode<value_type>* p):
 			value(v),
 			parent(p) {
 		// Nothing to do
@@ -233,7 +247,7 @@ namespace tl {
 
 
 	template <class T>
-	_mapNode<T>::_mapNode(const typename T::first_type& k, _mapNode<T>* p):
+	_mapNode<T>::_mapNode(const typename value_type::first_type& k, _mapNode<value_type>* p):
 			value(k, typename T::second_type {}),
 			parent(p) {
 	}
@@ -246,24 +260,25 @@ namespace tl {
 
 
 	template <class Key, class T, class Comp, class Alloc>
-	unsigned int map<Key, T, Comp, Alloc>::size() const {
+	typename map<Key, T, Comp, Alloc>::size_type map<Key, T, Comp, Alloc>::size() const {
 		return _mapSize;
 	}
 
 
 	template <class Key, class T, class Comp, class Alloc>
-	typename map<Key, T, Comp, Alloc>::iterator map<Key, T, Comp, Alloc>::find(const Key& k) const {
+	typename map<Key, T, Comp, Alloc>::iterator map<Key, T, Comp, Alloc>::find(const key_type& k) const {
 		return iterator(findElement(k));
 	}
 
 
 	template <class Key, class T, class Comp, class Alloc>
-	tl::pair<typename map<Key, T, Comp, Alloc>::iterator, bool> map<Key, T, Comp, Alloc>::insert(const pair<const Key, T>& value) {
+	tl::pair<typename map<Key, T, Comp, Alloc>::iterator, bool>
+	map<Key, T, Comp, Alloc>::insert(const value_type& value) {
 		_mapNode<value_type>** node {&_mapRoot};
 		_mapNode<value_type>** parent {&_mapRoot};
 
 		while (*node) {
-			Key k = (*node)->value.first;
+			key_type k = (*node)->value.first;
 			if (k == value.first) {
 				return {iterator(*node), false};
 			} else if (_less(value.first, k)) {
@@ -292,7 +307,7 @@ namespace tl {
 
 
 	template <class Key, class T, class Comp, class Alloc>
-	unsigned int map<Key, T, Comp, Alloc>::erase(const Key& k) {
+	typename map<Key, T, Comp, Alloc>::size_type map<Key, T, Comp, Alloc>::erase(const key_type& k) {
 		_mapNode<value_type>* e {findElement(k)};
 
 		if (e) {
@@ -410,12 +425,12 @@ namespace tl {
 
 
 	template <class Key, class T, class Comp, class Alloc>
-	T& map<Key, T, Comp, Alloc>::operator[](const Key& k) {
+	typename map<Key, T, Comp, Alloc>::mapped_type& map<Key, T, Comp, Alloc>::operator[](const key_type& k) {
 		_mapNode<value_type>** node {&_mapRoot};
 		_mapNode<value_type>** parent {&_mapRoot};
 
 		while (*node) {
-			Key cKey = (*node)->value.first;
+			key_type cKey = (*node)->value.first;
 			if (cKey == k) {
 				return (*node)->value.second;
 			} else if (_less(k, cKey)) {
@@ -498,7 +513,8 @@ namespace tl {
 
 
 	template <class Key, class T, class Comp, class Alloc>
-	_mapNode<typename map<Key, T, Comp, Alloc>::value_type>* map<Key, T, Comp, Alloc>::findElement(const Key& k) const {
+	_mapNode<typename map<Key, T, Comp, Alloc>::value_type>*
+	map<Key, T, Comp, Alloc>::findElement(const key_type& k) const {
 		_mapNode<value_type>* node {_mapRoot};
 
 		while (node) {
