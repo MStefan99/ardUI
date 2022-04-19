@@ -2,7 +2,7 @@
 // Created by MStefan99 on 13.7.21.
 //
 
-#include "Test.h"
+#include "Test.hpp"
 
 
 Test::Test() {

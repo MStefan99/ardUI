@@ -2,7 +2,7 @@
 // Created by MStefan99 on 23.12.19.
 //
 
-#include "LinearLayout.h"
+#include "LinearLayout.hpp"
 
 
 LinearLayout::Orientation LinearLayout::getOrientation() const {

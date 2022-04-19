@@ -3,8 +3,9 @@
 //
 
 
-#include "Tester.h"
-#include "ardUI.h"
+#include "Tester.hpp"
+
+#include "ardUI.hpp"
 
 
 class ResultActivity: public Activity {

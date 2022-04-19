@@ -10,7 +10,7 @@
  * hardware to use the ardUI library.
  */
 
-#include "display.h"
+#include "display.hpp"
 
 
 #pragma clang diagnostic push

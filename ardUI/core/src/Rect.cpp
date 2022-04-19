@@ -2,7 +2,7 @@
 // Created by MStefan99 on 24.12.19.
 //
 
-#include "Rect.h"
+#include "Rect.hpp"
 
 
 Rect::Rect(int16_t l, int16_t t, int16_t r, int16_t b):

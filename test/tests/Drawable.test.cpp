@@ -2,9 +2,9 @@
 // Created by MStefan99 on 15.7.21.
 //
 
-#include "Tester.h"
+#include "Tester.hpp"
 
-#include "View.h"
+#include "View.hpp"
 
 
 int main() {

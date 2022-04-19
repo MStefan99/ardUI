@@ -2,7 +2,7 @@
 // Created by MStefan99 on 13.7.21.
 //
 
-#include "AssertException.h"
+#include "AssertException.hpp"
 
 
 AssertException::AssertException(std::string description) noexcept:

@@ -2,9 +2,9 @@
 // Created by MStefan99 on 19.7.21.
 //
 
-#include "Tester.h"
+#include "Tester.hpp"
 
-#include "LinearLayout.h"
+#include "LinearLayout.hpp"
 
 
 int main() {

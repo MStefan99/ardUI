@@ -2,15 +2,16 @@
 // Created by MStefan99 on 7.4.21.
 //
 
-#include "ardUI.h"
-#include "TextView.h"
-#include "ButtonView.h"
-#include "LinearLayout.h"
-#include "ScrollLayout.h"
-#include "ConstraintLayout.h"
-#include "ProgressBar.h"
-#include "ListView.h"
-#include "ArrayAdapter.h"
+#include "ardUI.hpp"
+
+#include "TextView.hpp"
+#include "ButtonView.hpp"
+#include "LinearLayout.hpp"
+#include "ScrollLayout.hpp"
+#include "ConstraintLayout.hpp"
+#include "ProgressBar.hpp"
+#include "ListView.hpp"
+#include "ArrayAdapter.hpp"
 
 
 class SecondActivity;

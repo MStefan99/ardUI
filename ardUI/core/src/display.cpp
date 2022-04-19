@@ -6,7 +6,7 @@
  * hardware to use the ardUI library.
  */
 
-#include "display.h"
+#include "display.hpp"
 
 
 uint16_t ardui::display::getHeight() {

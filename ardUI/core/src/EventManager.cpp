@@ -2,7 +2,7 @@
 // Created by MStefan99 on 11.11.20.
 //
 
-#include "EventManager.h"
+#include "EventManager.hpp"
 
 
 #undef setup

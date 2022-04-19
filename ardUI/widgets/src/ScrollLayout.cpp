@@ -2,7 +2,7 @@
 // Created by MStefan99 on 11.7.21.
 //
 
-#include "ScrollLayout.h"
+#include "ScrollLayout.hpp"
 
 
 void ScrollLayout::onLayout(bool changed, int16_t l, int16_t t, int16_t r, int16_t b) {

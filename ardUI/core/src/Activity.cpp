@@ -2,7 +2,7 @@
 // Created by MStefan99 on 16.12.19.
 //
 
-#include "Activity.h"
+#include "Activity.hpp"
 
 
 Activity::Activity(const Bundle& extras,

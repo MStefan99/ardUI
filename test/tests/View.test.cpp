@@ -2,10 +2,10 @@
 // Created by MStefan99 on 14.7.21.
 //
 
-#include "Tester.h"
+#include "Tester.hpp"
 
-#include "Event.h"
-#include "View.h"
+#include "Event.hpp"
+#include "View.hpp"
 
 
 size_t CLICK_COUNT {0};

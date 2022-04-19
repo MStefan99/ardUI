@@ -3,11 +3,12 @@
 //
 
 #include <Arduino.h>
-#include "ardUI.h"
 
-#include "TextView.h"
-#include "ButtonView.h"
-#include "LinearLayout.h"
+#include "ardUI.hpp"
+
+#include "TextView.hpp"
+#include "ButtonView.hpp"
+#include "LinearLayout.hpp"
 
 
 class MainActivity: public Activity {

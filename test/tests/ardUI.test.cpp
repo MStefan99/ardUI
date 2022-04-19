@@ -2,9 +2,9 @@
 // Created by MStefan99 on 19.3.21.
 //
 
-#include "Tester.h"
+#include "Tester.hpp"
 
-#include "ardUI.h"
+#include "ardUI.hpp"
 
 
 class TestActivity: public Activity {

@@ -3,8 +3,9 @@
 //
 
 
-#include "Tester.h"
-#include "Bundle.h"
+#include "Tester.hpp"
+
+#include "Bundle.hpp"
 
 
 struct A {

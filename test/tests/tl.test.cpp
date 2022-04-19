@@ -2,14 +2,15 @@
 // Created by MStefan99 on 3.2.20.
 //
 
-#include "Tester.h"
-#include "platform.h"
+#include "Tester.hpp"
 
-#include "vector.h"
-#include "list.h"
-#include "map.h"
-#include "stack.h"
-#include "queue.h"
+#include "platform.hpp"
+
+#include "vector.hpp"
+#include "list.hpp"
+#include "map.hpp"
+#include "stack.hpp"
+#include "queue.hpp"
 
 
 struct AllocatorTester {

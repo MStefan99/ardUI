@@ -3,8 +3,9 @@
 //
 
 
-#include "Tester.h"
-#include "Rect.h"
+#include "Tester.hpp"
+
+#include "Rect.hpp"
 
 
 int main() {

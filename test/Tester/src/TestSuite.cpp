@@ -2,7 +2,7 @@
 // Created by MStefan99 on 13.7.21.
 //
 
-#include "TestSuite.h"
+#include "TestSuite.hpp"
 
 
 TestSuite::TestSuite() {

@@ -2,7 +2,7 @@
 // Created by MStefan99 on 8.7.21.
 //
 
-#include "DisplayController.h"
+#include "DisplayController.hpp"
 
 
 DisplayController::FeatureSupport DisplayController::_featureSupport {};

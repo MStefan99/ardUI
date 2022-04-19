@@ -2,7 +2,7 @@
 // Created by MStefan99 on 13.7.21.
 //
 
-#include "StatRecorder.h"
+#include "StatRecorder.hpp"
 
 
 size_t StatRecorder::_totalSuites {};

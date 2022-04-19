@@ -2,7 +2,7 @@
 // Created by MStefan99 on 20.10.20.
 //
 
-#include "Bundle.h"
+#include "Bundle.hpp"
 
 
 Bundle::Concept::~Concept() = default;

@@ -5,16 +5,14 @@
 #ifndef ARDUI_ALLOCATOR_HPP
 #define ARDUI_ALLOCATOR_HPP
 
-#include "config_adv.h"
+#include <new>
+
+#include "tl_config.hpp"
 
 
 #if !USE_NEW
 
 #include <cstdlib>
-
-#else
-
-#include <new>
 
 #endif
 
@@ -88,7 +86,7 @@ namespace tl {
 	template <class T>
 	template <class U, class... Args>
 	void allocator<T>::construct(U* p, Args&& ...args) {
-		::new((void*)p) U(args...);
+		::new(static_cast<void*>(p)) U(args...);
 	}
 
 

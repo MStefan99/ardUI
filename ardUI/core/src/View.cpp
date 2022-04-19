@@ -2,7 +2,7 @@
 // Created by MStefan99 on 16.12.19.
 //
 
-#include "View.h"
+#include "View.hpp"
 
 
 View::MeasureSpec::MeasureSpec(uint16_t size, Sizing mode): _size {size}, _mode {mode} {

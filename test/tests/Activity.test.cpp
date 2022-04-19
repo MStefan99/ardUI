@@ -3,10 +3,10 @@
 //
 
 
-#include "Tester.h"
+#include "Tester.hpp"
 
-#include "ardUI.h"
-#include "TextView.h"
+#include "ardUI.hpp"
+#include "TextView.hpp"
 
 
 class TestActivity: public Activity {

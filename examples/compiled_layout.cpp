@@ -2,10 +2,11 @@
 // Created by MStefan99 on 7.4.21.
 //
 
-#include "ardUI.h"
-#include "TextView.h"
-#include "ButtonView.h"
-#include "LinearLayout.h"
+#include <Arduino.h>
+
+#include "ardUI.hpp"
+
+#include "TextView.hpp"
 
 
 struct Layout {

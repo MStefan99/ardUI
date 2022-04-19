@@ -4,12 +4,12 @@
 
 #include <string>
 
-#include "Tester.h"
+#include "Tester.hpp"
 
-#include "platform.h"
-#include "TextView.h"
-#include "ArrayAdapter.h"
-#include "ListView.h"
+#include "platform.hpp"
+#include "TextView.hpp"
+#include "ArrayAdapter.hpp"
+#include "ListView.hpp"
 
 
 class StringAdapter: public ArrayAdapter<std::string> {

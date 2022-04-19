@@ -5,8 +5,9 @@
 #include <vector>
 #include <iostream>
 
-#include "Tester.h"
-#include "Color.h"
+#include "Tester.hpp"
+
+#include "Color.hpp"
 
 
 int main() {

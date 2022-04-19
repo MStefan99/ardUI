@@ -2,12 +2,12 @@
 // Created by MStefan99 on 18.7.21.
 //
 
-
-#include "Tester.h"
-
-#include "TextView.h"
-
 #include <iostream>
+
+#include "Tester.hpp"
+
+#include "TextView.hpp"
+
 
 struct TestWrapper {
 	static void run() {

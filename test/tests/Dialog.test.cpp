@@ -2,10 +2,10 @@
 // Created by MStefan99 on 5.8.21.
 //
 
-#include "Tester.h"
+#include "Tester.hpp"
 
-#include "Activity.h"
-#include "TextView.h"
+#include "Activity.hpp"
+#include "TextView.hpp"
 
 static size_t CREATED {};
 static size_t STOPPED {};

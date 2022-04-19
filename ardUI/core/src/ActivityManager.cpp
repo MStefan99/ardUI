@@ -2,8 +2,8 @@
 // Created by MStefan99 on 11.11.20.
 //
 
-#include "ActivityManager.h"
-#include "ActivitySwitcher.h"
+#include "ActivityManager.hpp"
+#include "ActivitySwitcher.hpp"
 
 
 Activity* ActivityManager::_currentActivity {};

@@ -2,7 +2,7 @@
 // Created by MStefan99 on 14.4.21.
 //
 
-#include "ProgressBar.h"
+#include "ProgressBar.hpp"
 
 
 int16_t ProgressBar::getProgress() const {

@@ -2,9 +2,9 @@
 // Created by MStefan99 on 18.7.21.
 //
 
-#include "Tester.h"
+#include "Tester.hpp"
 
-#include "ButtonView.h"
+#include "ButtonView.hpp"
 
 
 int main() {

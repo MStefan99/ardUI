@@ -4,8 +4,9 @@
 
 #include <vector>
 
-#include "Tester.h"
-#include "ConstraintLayout.h"
+#include "Tester.hpp"
+
+#include "ConstraintLayout.hpp"
 
 
 int main() {

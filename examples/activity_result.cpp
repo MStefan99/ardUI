@@ -3,7 +3,8 @@
 //
 
 #include <Arduino.h>
-#include "ardUI.h"
+
+#include "ardUI.hpp"
 
 
 class ResultActivity: public Activity {
@@ -39,7 +40,7 @@ class MainActivity: public Activity {
 		startActivityForResult<ResultActivity>([](int code, Bundle results) -> void {
 			Serial.print("Got result from ResultActivity: ");
 			Serial.println(results.getInt("someResult"));
-			ardUI::getCurrentActivity().finish();
+			ardUI::getCurrentActivity()->finish();
 		});
 		Serial.println("Doing other things...");
 	}

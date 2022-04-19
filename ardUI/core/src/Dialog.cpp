@@ -2,7 +2,7 @@
 // Created by MStefan99 on 28.7.21.
 //
 
-#include "Dialog.h"
+#include "Dialog.hpp"
 
 
 Activity* Dialog::getOwnerActivity() {

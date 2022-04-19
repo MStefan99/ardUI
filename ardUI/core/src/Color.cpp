@@ -2,7 +2,7 @@
 // Created by MStefan99 on 9.7.21.
 //
 
-#include "Color.h"
+#include "Color.hpp"
 
 
 #if COLOR_MODE == COLOR_888
