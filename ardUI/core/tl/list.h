@@ -140,7 +140,7 @@ namespace tl {
 
 	template <class T, class Alloc>
 	void list<T, Alloc>::push_back(const_reference value) {
-		_listNode<value_type>* e = _node_allocator().allocate(1);
+		_listNode<value_type>* e = _node_allocator().allocate();
 		_node_allocator().construct(e, value, _last, nullptr);
 
 		if (!_first) {
@@ -156,7 +156,7 @@ namespace tl {
 
 	template <class T, class Alloc>
 	void list<T, Alloc>::push_front(const_reference value) {
-		_listNode<value_type>* e = _node_allocator().allocate(1);
+		_listNode<value_type>* e = _node_allocator().allocate();
 		_node_allocator().construct(e, value, nullptr, _first);
 
 		if (!_last) {
@@ -239,7 +239,7 @@ namespace tl {
 	_listIterator<typename list<T, Alloc>::value_type>
 	list<T, Alloc>::insert(_listIterator<value_type> position, const_reference value) {
 		auto e {position._elementPointer};
-		_listNode<value_type>* n = _node_allocator().allocate(1);
+		_listNode<value_type>* n = _node_allocator().allocate();
 		_node_allocator().construct(n, value, nullptr, e);
 
 		if (e) {

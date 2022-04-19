@@ -101,6 +101,8 @@ namespace tl {
 
 		using difference_type = typename allocator_type::difference_type;
 		using size_type = typename allocator_type::size_type;
+		
+		using _node_allocator = typename allocator_type::template rebind<_mapNode<value_type>>::other;
 
 
 		map() = default;
@@ -167,8 +169,8 @@ namespace tl {
 
 
 	template <class T>
-	const _mapIterator<typename _mapIterator<T>::value_type>
-	_mapIterator<T>::operator++(int) {  // NOLINT(readability-const-return-type)
+	const _mapIterator<typename _mapIterator<T>::value_type>  // NOLINT(readability-const-return-type)
+	_mapIterator<T>::operator++(int) {
 		auto temp {*this};
 		operator++();
 		return temp;
@@ -199,8 +201,8 @@ namespace tl {
 
 
 	template <class T>
-	const _mapIterator<typename _mapIterator<T>::value_type>
-	_mapIterator<T>::operator--(int) {  // NOLINT(readability-const-return-type)
+	const _mapIterator<typename _mapIterator<T>::value_type>  // NOLINT(readability-const-return-type)
+	_mapIterator<T>::operator--(int) {
 		auto temp {*this};
 		operator--();
 		return temp;
@@ -220,8 +222,8 @@ namespace tl {
 
 
 	template <class T>
-	_mapIterator<typename _mapIterator<T>::value_type>& _mapIterator<T>::operator=(const_reference value) {
-		_currentElement->value.second = value;
+	_mapIterator<typename _mapIterator<T>::value_type>& _mapIterator<T>::operator=(const_reference it) {
+		_currentElement->value.second = it;
 		return *this;
 	}
 
@@ -275,22 +277,23 @@ namespace tl {
 	tl::pair<typename map<Key, T, Comp, Alloc>::iterator, bool>
 	map<Key, T, Comp, Alloc>::insert(const value_type& value) {
 		_mapNode<value_type>** node {&_mapRoot};
-		_mapNode<value_type>** parent {&_mapRoot};
+		_mapNode<value_type>* parent {nullptr};
 
 		while (*node) {
 			key_type k = (*node)->value.first;
 			if (k == value.first) {
 				return {iterator(*node), false};
 			} else if (_less(value.first, k)) {
-				parent = node;
+				parent = *node;
 				node = &(*node)->left;
 			} else {
-				parent = node;
+				parent = *node;
 				node = &(*node)->right;
 			}
 		}
 		++_mapSize;
-		*node = new _mapNode<value_type> {value, *parent};
+		*node = _node_allocator().allocate();
+		_node_allocator().construct(*node, _mapNode<value_type>{value, parent});
 		return {iterator(*node), true};
 	}
 
@@ -323,7 +326,7 @@ namespace tl {
 	template <class Key, class T, class Comp, class Alloc>
 	typename map<Key, T, Comp, Alloc>::iterator map<Key, T, Comp, Alloc>::erase(iterator first, iterator last) {
 		_mapNode<value_type>* node {first._currentElement};
-		_mapNode<value_type>* temp {node};
+		_mapNode<value_type>* temp;
 		bool deleteRoot {false};
 
 		while (node != last._currentElement) {
@@ -357,7 +360,7 @@ namespace tl {
 	template <class Key, class T, class Comp, class Alloc>
 	void map<Key, T, Comp, Alloc>::clear() {
 		_mapNode<value_type>* node {Leftmost(_mapRoot)};
-		_mapNode<value_type>* temp {node};
+		_mapNode<value_type>* temp;
 
 		while (node) {
 			if (node->right) {
@@ -385,7 +388,8 @@ namespace tl {
 	template <class Key, class T, class Comp, class Alloc>
 	map<Key, T, Comp, Alloc>::map(const map& m) {
 		if (m._mapRoot) {
-			_mapRoot = new _mapNode<value_type> {{m._mapRoot->value}, nullptr};
+			_mapRoot = _node_allocator().allocate();
+			_node_allocator().construct(_mapRoot, _mapNode<value_type>{{m._mapRoot->value}, nullptr});
 			_mapSize = 1;
 
 			auto e {m._mapRoot};
@@ -427,22 +431,23 @@ namespace tl {
 	template <class Key, class T, class Comp, class Alloc>
 	typename map<Key, T, Comp, Alloc>::mapped_type& map<Key, T, Comp, Alloc>::operator[](const key_type& k) {
 		_mapNode<value_type>** node {&_mapRoot};
-		_mapNode<value_type>** parent {&_mapRoot};
+		_mapNode<value_type>* parent {_mapRoot};
 
 		while (*node) {
 			key_type cKey = (*node)->value.first;
 			if (cKey == k) {
 				return (*node)->value.second;
 			} else if (_less(k, cKey)) {
-				parent = node;
+				parent = *node;
 				node = &(*node)->left;
 			} else {
-				parent = node;
+				parent = *node;
 				node = &(*node)->right;
 			}
 		}
 		++_mapSize;
-		*node = new _mapNode<value_type> {k, *parent};
+		*node = _node_allocator().allocate();
+		_node_allocator().construct(*node, _mapNode<value_type>{k, parent});
 		return (*node)->value.second;
 	}
 
@@ -508,7 +513,8 @@ namespace tl {
 		if (e == _mapRoot) {
 			_mapRoot = replacement;
 		}
-		delete (e);
+		_node_allocator().destroy(e);
+		_node_allocator().deallocate(e);
 	}
 
 

@@ -27,7 +27,7 @@ static void AllocatorTests() {
 	describe("Allocator tests", [&](TestSuite& suite) {
 		suite.test("Allocating built-in types", [&] {
 			tl::allocator<int> a {};
-			int* i = a.allocate(1);
+			int* i = a.allocate();
 			a.construct(i, 5);
 
 			expect(*i).toEqual(5);
@@ -39,7 +39,7 @@ static void AllocatorTests() {
 		suite.test("Allocating standard types", [&] {
 			tl::allocator<std::string> a;
 
-			std::string* s = a.allocate(1);
+			std::string* s = a.allocate();
 			a.construct(s, "test");
 
 			expect(*s).toEqual("test");
@@ -51,7 +51,7 @@ static void AllocatorTests() {
 		suite.test("Allocating custom types", [&] {
 			tl::allocator<AllocatorTester> a;
 
-			AllocatorTester* t = a.allocate(1);
+			AllocatorTester* t = a.allocate();
 
 			a.construct(t);
 			expect(t->i).toEqual(1);
