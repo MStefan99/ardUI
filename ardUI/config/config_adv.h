@@ -45,6 +45,7 @@
  */
 #define SLOW_MODE ( false )
 
+
 /*
  * Enable Display fallback.
  * This is a utility for drawing using fallback shapes.

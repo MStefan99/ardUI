@@ -43,10 +43,10 @@ protected:
 	void run();
 
 	std::string _name {};
+	std::function<void(TestSuite&)> _blockCb {};
 
 	std::function<void()> _beforeAllCb {};
 	std::function<void()> _beforeEachCb {};
-	std::function<void(TestSuite&)> _blockCb {};
 	std::function<void()> _afterAllCb {};
 	std::function<void()> _afterEachCb {};
 

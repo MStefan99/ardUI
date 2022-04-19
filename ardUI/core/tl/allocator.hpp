@@ -5,13 +5,16 @@
 #ifndef ARDUI_ALLOCATOR_HPP
 #define ARDUI_ALLOCATOR_HPP
 
-#include "platform.h"
-#include <vector>
+#include "config_adv.h"
 
 
 #if !USE_NEW
 
 #include <cstdlib>
+
+#else
+
+#include <new>
 
 #endif
 
@@ -28,6 +31,12 @@ namespace tl {
 
 		using size_type = unsigned int;
 		using difference_type = unsigned long;
+
+
+		template <typename U>
+		struct rebind {
+			using other = allocator<U>;
+		};
 
 
 		allocator() = default;

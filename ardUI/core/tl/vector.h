@@ -9,14 +9,7 @@
 #include "iterator.h"
 
 
-// TODO: change size type
-
-
 namespace tl {
-	template <class T, class Alloc = allocator<T>>
-	struct vector;
-
-
 	template <class T>
 	struct _vectorIterator {
 		using iterator_category = _internal::random_access_iterator_tag;
@@ -30,6 +23,7 @@ namespace tl {
 		using difference_type = unsigned int;
 
 		_vectorIterator() = default;
+		explicit _vectorIterator(pointer elementPointer);
 
 		_vectorIterator& operator++();
 		const _vectorIterator operator++(int);
@@ -51,6 +45,8 @@ namespace tl {
 		_vectorIterator& operator+=(difference_type n);
 		_vectorIterator& operator-=(difference_type n);
 
+		difference_type operator-(const _vectorIterator<T>& it) const;
+
 		bool operator<(const _vectorIterator& it) const;
 		bool operator<=(const _vectorIterator& it) const;
 		bool operator>(const _vectorIterator& it) const;
@@ -58,27 +54,24 @@ namespace tl {
 
 		reference operator[](size_type n) const;
 
-		friend class vector<T>;
-
-	private:
-		explicit _vectorIterator(T* elementPointer);
-		T* _elementPointer {nullptr};
+	protected:
+		pointer _elementPointer {nullptr};
 	};
 
 
-	template <class T, class Alloc>
+	template <class T, class Alloc = tl::allocator<T>>
 	struct vector {
 		using value_type = T;
 		using allocator_type = Alloc;
 		using iterator = _vectorIterator<value_type>;
 
-		using pointer = typename Alloc::pointer;
-		using const_pointer = typename Alloc::const_pointer;
-		using reference = typename Alloc::reference;
-		using const_reference = typename Alloc::const_reference;
+		using pointer = typename allocator_type::pointer;
+		using const_pointer = typename allocator_type::const_pointer;
+		using reference = typename allocator_type::reference;
+		using const_reference = typename allocator_type::const_reference;
 
-		using difference_type = typename Alloc::difference_type;
-		using size_type = typename Alloc::size_type;
+		using difference_type = typename allocator_type::difference_type;
+		using size_type = typename allocator_type::size_type;
 
 
 		vector() = default;
@@ -156,12 +149,12 @@ namespace tl {
 
 	template <class T, class Alloc>
 	_vectorIterator<T> vector<T, Alloc>::insert(iterator position, const_reference value) {
-		auto i {position._elementPointer - _vectorArray};
+		difference_type i {position - begin()};
 
 		if (_vectorSize == _vectorCapacity) {
 			reserve(_vectorCapacity * 3 / 2 + 1);
 		}
-		for (auto j {_vectorSize}; j > i; --j) {
+		for (size_type j {_vectorSize}; j > i; --j) {
 			_vectorArray[j] = _vectorArray[j - 1];
 		}
 		_vectorArray[i] = value;
@@ -173,7 +166,7 @@ namespace tl {
 
 	template <class T, class Alloc>
 	_vectorIterator<T> vector<T, Alloc>::erase(_vectorIterator<T> position) {
-		auto i {position._elementPointer - _vectorArray};
+		difference_type i {position - begin()};
 
 		if (i > _vectorSize - 1) {
 			return position;
@@ -189,8 +182,8 @@ namespace tl {
 
 	template <class T, class Alloc>
 	_vectorIterator<T> vector<T, Alloc>::erase(iterator first, iterator last) {
-		long i {first._elementPointer - _vectorArray};
-		long n {last._elementPointer - first._elementPointer};
+		difference_type i {first - begin()};
+		difference_type n {last - first};
 
 		while (i < _vectorSize - n) {
 			_vectorArray[i] = _vectorArray[i + n];
@@ -388,6 +381,12 @@ namespace tl {
 	_vectorIterator<T>& _vectorIterator<T>::operator-=(size_type n) {
 		_elementPointer -= n;
 		return *this;
+	}
+
+
+	template <class T>
+	typename _vectorIterator<T>::difference_type _vectorIterator<T>::operator-(const _vectorIterator<T>& it) const {
+		return _elementPointer - it._elementPointer;
 	}
 
 

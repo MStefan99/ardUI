@@ -5,43 +5,70 @@
 #ifndef ARDUI_LIST_H
 #define ARDUI_LIST_H
 
+#include "allocator.hpp"
 #include "iterator.h"
 
 
 namespace tl {
 	template <class T>
-	class list {
-	protected:
-		struct element;
+	struct _listNode {
+		_listNode(const T& value, _listNode* prev, _listNode* next);
+		_listNode(const _listNode& listElement) = default;
+		~_listNode() = default;
 
-	public:
-		class iterator final {  // bidirectional iterator
-		public:
-			typedef _internal::bidirectional_iterator_tag iterator_category;
+		T elementValue;
+		_listNode* prevElement {nullptr};
+		_listNode* nextElement {nullptr};
+	};
 
-			iterator() = default;
 
-			iterator& operator++();
-			const iterator operator++(int);
+	template <class T>
+	struct _listIterator {  // bidirectional _listIterator<T>
+		using iterator_category = _internal::bidirectional_iterator_tag;
 
-			iterator& operator--();
-			const iterator operator--(int);
+		using pointer = T*;
+		using const_pointer = const T*;
+		using reference = T&;
+		using const_reference = const T&;
 
-			bool operator==(const iterator& it) const;
-			bool operator!=(const iterator& it) const;
+		_listIterator() = default;
+		explicit _listIterator(_listNode<T>* elementPointer);
 
-			iterator& operator=(const T&);
+		_listIterator& operator++();
+		const _listIterator operator++(int);
 
-			T* operator->() const;
-			T& operator*() const;
+		_listIterator& operator--();
+		const _listIterator operator--(int);
 
-			friend class list;
+		bool operator==(const _listIterator& it) const;
+		bool operator!=(const _listIterator& it) const;
 
-		private:
-			explicit iterator(element* elementPointer);
-			element* _elementPointer {nullptr};
-			element* _lastPointer {nullptr};
-		};
+		_listIterator& operator=(const T&);
+
+		T* operator->() const;
+		T& operator*() const;
+
+		// TODO: make protected?
+		_listNode<T>* _elementPointer {nullptr};
+		_listNode<T>* _lastPointer {nullptr};
+	};
+
+	
+	template <class T, class Alloc = tl::allocator<T>>
+	struct list {
+		using value_type = T;
+		using allocator_type = Alloc;
+		using iterator = _vectorIterator<value_type>;
+
+		using pointer = typename allocator_type::pointer;
+		using const_pointer = typename allocator_type::const_pointer;
+		using reference = typename allocator_type::reference;
+		using const_reference = typename allocator_type::const_reference;
+
+		using difference_type = typename allocator_type::difference_type;
+		using size_type = typename allocator_type::size_type;
+
+		using _node_allocator = typename allocator_type::template rebind<_listNode<T>>::other;
 
 		list() = default;
 		list(const list& list);
@@ -59,10 +86,10 @@ namespace tl {
 		unsigned int remove(const T& value);
 		unsigned int remove_if(bool (* predicate)(const T&));
 
-		iterator insert(iterator position, const T& value);
+		_listIterator<T> insert(_listIterator<T> position, const T& value);
 
-		iterator erase(iterator position);
-		iterator erase(iterator first, iterator last);
+		_listIterator<T> erase(_listIterator<T> position);
+		_listIterator<T> erase(_listIterator<T> first, _listIterator<T> last);
 		void clear();
 
 		unsigned int size() const;
@@ -70,37 +97,27 @@ namespace tl {
 
 		list& operator=(const list& list);
 
-		iterator begin() const;
-		iterator end() const;
+		_listIterator<T> begin() const;
+		_listIterator<T> end() const;
 
 	protected:
-		struct element {
-			explicit element(const T& value, element* prev, element* next);
-			element(const element& listElement) = default;
-			~element() = default;
+		_listNode<T>* _first {nullptr};
+		_listNode<T>* _last {nullptr};
 
-			T elementValue;
-			element* prevElement {nullptr};
-			element* nextElement {nullptr};
-		};
-
-		element* _first {nullptr};
-		element* _last {nullptr};
-
-		void destroyElement(element* e);
+		void destroyElement(_listNode<T>* e);
 		unsigned int _listSize {0};
 	};
 
 
 	template <class T>
-	list<T>::element::element(const T& value, element* prev, element* next):
+	_listNode<T>::_listNode(const T& value, _listNode<T>* prev, _listNode<T>* next):
 			elementValue(value), prevElement(prev), nextElement(next) {
 		// Nothing to do
 	}
 
 
-	template <class T>
-	list<T>::list(const list& l) {
+	template <class T, class Alloc>
+	list<T, Alloc>::list(const list& l) {
 		for (auto e {l._first}; e != nullptr; e = e->nextElement) {
 			push_back(e->elementValue);
 		}
@@ -108,15 +125,16 @@ namespace tl {
 	}
 
 
-	template <class T>
-	list<T>::~list() {
+	template <class T, class Alloc>
+	list<T, Alloc>::~list() {
 		clear();
 	}
 
 
-	template <class T>
-	void list<T>::push_back(const T& value) {
-		auto e = new element {value, _last, nullptr};
+	template <class T, class Alloc>
+	void list<T, Alloc>::push_back(const T& value) {
+		_listNode<T>* e = _node_allocator().allocate(1);
+		_node_allocator().construct(e, value, _last, nullptr);
 
 		if (!_first) {
 			_first = e;
@@ -129,9 +147,10 @@ namespace tl {
 	}
 
 
-	template <class T>
-	void list<T>::push_front(const T& value) {
-		auto e = new element {value, nullptr, _first};
+	template <class T, class Alloc>
+	void list<T, Alloc>::push_front(const T& value) {
+		_listNode<T>* e = _node_allocator().allocate(1);
+		_node_allocator().construct(e, value, nullptr, _first);
 
 		if (!_last) {
 			_last = e;
@@ -144,8 +163,8 @@ namespace tl {
 	}
 
 
-	template <class T>
-	void list<T>::pop_back() {
+	template <class T, class Alloc>
+	void list<T, Alloc>::pop_back() {
 		auto e {_last};
 		if (e) {
 			if (e->prevElement) {
@@ -156,13 +175,14 @@ namespace tl {
 
 			_last = e->prevElement;
 			--_listSize;
-			delete e;
+			_node_allocator().destroy(e);
+			_node_allocator().deallocate(e);
 		}
 	}
 
 
-	template <class T>
-	void list<T>::pop_front() {
+	template <class T, class Alloc>
+	void list<T, Alloc>::pop_front() {
 		auto e {_first};
 		if (e) {
 			if (e->nextElement) {
@@ -173,25 +193,26 @@ namespace tl {
 
 			_first = e->nextElement;
 			--_listSize;
-			delete e;
+			_node_allocator().destroy(e);
+			_node_allocator().deallocate(e);
 		}
 	}
 
 
-	template <class T>
-	T& list<T>::front() const {
+	template <class T, class Alloc>
+	T& list<T, Alloc>::front() const {
 		return _first->elementValue;
 	}
 
 
-	template <class T>
-	T& list<T>::back() const {
+	template <class T, class Alloc>
+	T& list<T, Alloc>::back() const {
 		return _last->elementValue;
 	}
 
 
-	template <class T>
-	void list<T>::destroyElement(list<T>::element* e) {
+	template <class T, class Alloc>
+	void list<T, Alloc>::destroyElement(_listNode<T>* e) {
 		if (e->nextElement) {
 			e->nextElement->prevElement = e->prevElement;
 		} else {
@@ -202,14 +223,16 @@ namespace tl {
 		} else {
 			_first = e->nextElement;
 		}
-		delete e;
+		_node_allocator().destroy(e);
+		_node_allocator().deallocate(e);
 	}
 
 
-	template <class T>
-	typename list<T>::iterator list<T>::insert(iterator position, const T& value) {
+	template <class T, class Alloc>
+	_listIterator<T> list<T, Alloc>::insert(_listIterator<T> position, const T& value) {
 		auto e {position._elementPointer};
-		auto n = new element {value, nullptr, e};
+		_listNode<T>* n = _node_allocator().allocate(1);
+		_node_allocator().construct(n, value, nullptr, e);
 
 		if (e) {
 			if (e->prevElement) {
@@ -230,12 +253,12 @@ namespace tl {
 			_last = n;
 		}
 		++_listSize;
-		return iterator(n);
+		return _listIterator<T>(n);
 	}
 
 
-	template <class T>
-	typename list<T>::iterator list<T>::erase(iterator position) {
+	template <class T, class Alloc>
+	_listIterator<T> list<T, Alloc>::erase(_listIterator<T> position) {
 		auto temp = position;
 
 		++position;
@@ -245,8 +268,8 @@ namespace tl {
 	}
 
 
-	template <class T>
-	typename list<T>::iterator list<T>::erase(iterator f, iterator l) {
+	template <class T, class Alloc>
+	_listIterator<T> list<T, Alloc>::erase(_listIterator<T> f, _listIterator<T> l) {
 		while (f != l) {
 			auto temp {f};
 			++f;
@@ -257,10 +280,10 @@ namespace tl {
 	}
 
 
-	template <class T>
-	unsigned int list<T>::remove(const T& value) {
+	template <class T, class Alloc>
+	unsigned int list<T, Alloc>::remove(const T& value) {
 		unsigned int i {0};
-		element* e {_first};
+		_listNode<T>* e {_first};
 
 		while (e) {
 			auto temp = e;
@@ -275,10 +298,10 @@ namespace tl {
 	}
 
 
-	template <class T>
-	unsigned int list<T>::remove_if(bool (* p)(const T&)) {
+	template <class T, class Alloc>
+	unsigned int list<T, Alloc>::remove_if(bool (* p)(const T&)) {
 		unsigned int i {0};
-		element* e {_first};
+		_listNode<T>* e {_first};
 
 		while (e) {
 			auto temp = e;
@@ -293,9 +316,9 @@ namespace tl {
 	}
 
 
-	template <class T>
-	void list<T>::clear() {
-		element* e {_first};
+	template <class T, class Alloc>
+	void list<T, Alloc>::clear() {
+		_listNode<T>* e {_first};
 
 		while (e) {
 			auto temp = e;
@@ -306,34 +329,34 @@ namespace tl {
 	}
 
 
-	template <class T>
-	unsigned int list<T>::size() const {
+	template <class T, class Alloc>
+	unsigned int list<T, Alloc>::size() const {
 		return _listSize;
 	}
 
 
-	template <class T>
-	bool list<T>::empty() const {
+	template <class T, class Alloc>
+	bool list<T, Alloc>::empty() const {
 		return _first == nullptr;
 	}
 
 
-	template <class T>
-	typename list<T>::iterator list<T>::begin() const {
-		return iterator(_first);
+	template <class T, class Alloc>
+	_listIterator<T> list<T, Alloc>::begin() const {
+		return _listIterator<T>(_first);
 	}
 
 
-	template <class T>
-	typename list<T>::iterator list<T>::end() const {
-		iterator it {};
+	template <class T, class Alloc>
+	_listIterator<T> list<T, Alloc>::end() const {
+		_listIterator<T> it {};
 		it._lastPointer = _last;
 		return it;
 	}
 
 
-	template <class T>
-	list<T>& list<T>::operator=(const list& l) {
+	template <class T, class Alloc>
+	list<T, Alloc>& list<T, Alloc>::operator=(const list& l) {
 		if (this != &l) {
 			clear();
 			for (auto p = l._first; p != nullptr; p = p->nextElement) {
@@ -345,11 +368,11 @@ namespace tl {
 
 
 	template <class T>
-	list<T>::iterator::iterator(element* elementPointer): _elementPointer(elementPointer) {}
+	_listIterator<T>::_listIterator(_listNode<T>* elementPointer): _elementPointer(elementPointer) {}
 
 
 	template <class T>
-	typename list<T>::iterator& list<T>::iterator::operator++() {
+	_listIterator<T>& _listIterator<T>::operator++() {
 		if (!_elementPointer->nextElement) {
 			_lastPointer = _elementPointer;
 		}
@@ -359,15 +382,15 @@ namespace tl {
 
 
 	template <class T>
-	const typename list<T>::iterator list<T>::iterator::operator++(int) { // NOLINT(readability-const-return-type)
-		iterator temp {*this};
+	const _listIterator<T> _listIterator<T>::operator++(int) { // NOLINT(readability-const-return-type)
+		_listIterator<T> temp {*this};
 		operator++();
 		return temp;
 	}
 
 
 	template <class T>
-	typename list<T>::iterator& list<T>::iterator::operator--() {
+	_listIterator<T>& _listIterator<T>::operator--() {
 		if (!_elementPointer) {
 			_elementPointer = _lastPointer;
 		} else {
@@ -378,40 +401,40 @@ namespace tl {
 
 
 	template <class T>
-	const typename list<T>::iterator list<T>::iterator::operator--(int) { // NOLINT(readability-const-return-type)
-		iterator temp {*this};
+	const _listIterator<T> _listIterator<T>::operator--(int) { // NOLINT(readability-const-return-type)
+		_listIterator<T> temp {*this};
 		operator--();
 		return temp;
 	}
 
 
 	template <class T>
-	bool list<T>::iterator::operator==(const iterator& it) const {
+	bool _listIterator<T>::operator==(const _listIterator<T>& it) const {
 		return _elementPointer == it._elementPointer;
 	}
 
 
 	template <class T>
-	bool list<T>::iterator::operator!=(const iterator& it) const {
+	bool _listIterator<T>::operator!=(const _listIterator<T>& it) const {
 		return _elementPointer != it._elementPointer;
 	}
 
 
 	template <class T>
-	typename list<T>::iterator& list<T>::iterator::operator=(const T& value) {
+	_listIterator<T>& _listIterator<T>::operator=(const T& value) {
 		_elementPointer->elementValue = value;
 		return *this;
 	}
 
 
 	template <class T>
-	T* list<T>::iterator::operator->() const {
+	T* _listIterator<T>::operator->() const {
 		return &_elementPointer->elementValue;
 	}
 
 
 	template <class T>
-	T& list<T>::iterator::operator*() const {
+	T& _listIterator<T>::operator*() const {
 		return _elementPointer->elementValue;
 	}
 }
