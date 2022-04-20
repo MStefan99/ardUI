@@ -2,8 +2,8 @@
 // Created by MStefan99 on 19.4.22.
 //
 
-#ifndef ARDUI_TL_CONFIG_HPP
-#define ARDUI_TL_CONFIG_HPP
+#ifndef ARDUI_CONFIG_TL_HPP
+#define ARDUI_CONFIG_TL_HPP
 
 
 /*
@@ -14,4 +14,4 @@
 
 
 
-#endif //ARDUI_TL_CONFIG_HPP
+#endif //ARDUI_CONFIG_TL_HPP

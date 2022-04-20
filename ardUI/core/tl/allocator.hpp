@@ -7,7 +7,7 @@
 
 #include <new>
 
-#include "tl_config.hpp"
+#include "config_tl.hpp"
 
 
 #if !USE_NEW
