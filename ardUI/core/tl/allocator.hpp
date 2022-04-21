@@ -55,7 +55,7 @@ namespace tl {
 
 	template <class T>
 	typename allocator<T>::pointer allocator<T>::allocate(size_type n) {
-		return static_cast<T*>(::operator new(sizeof(T) * n));
+		return static_cast<pointer>(::operator new(sizeof(T) * n));
 	}
 
 
@@ -70,7 +70,7 @@ namespace tl {
 
 	template <class T>
 	typename allocator<T>::pointer allocator<T>::allocate(size_type n) {
-		return static_cast<T*>(std::malloc(sizeof(T) * n));
+		return static_cast<pointer>(std::malloc(sizeof(T) * n));
 	}
 
 

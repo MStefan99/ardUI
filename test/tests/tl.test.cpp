@@ -2,6 +2,8 @@
 // Created by MStefan99 on 3.2.20.
 //
 
+#include <new>
+
 #include "Tester.hpp"
 
 #include "platform.hpp"
@@ -13,18 +15,103 @@
 #include "queue.hpp"
 
 
-struct AllocatorTester {
-	int i {0};
+#if !USE_NEW
+
+#include <cstdlib>
+
+#endif
 
 
-	AllocatorTester() { i = 1; }
+template <class T>
+struct Allocator {
+	using value_type = T;
+
+	using pointer = T*;
+	using const_pointer = const T*;
+	using reference = T&;
+	using const_reference = const T&;
+
+	using size_type = unsigned int;
+	using difference_type = unsigned long;
+
+	#if USE_NEW
 
 
-	~AllocatorTester() { i = 2; }
+	pointer allocate(size_type n) {
+		auto p = static_cast<pointer>(::operator new(sizeof(T) * n));
+		_allocated.push_back(p);
+		return p;
+	}
+
+
+	static void clean_up() {
+		while (auto p {_allocated.front()}) {
+			::operator delete(p);
+			_allocated.remove(p);
+		}
+	}
+
+
+	#else
+
+
+	pointer allocate(size_type n = 1) {
+		auto p = static_cast<pointer>(std::malloc(sizeof(T) * n));
+		_allocated.push_back(p);
+		return p;
+	}
+
+
+	static void clean_up() {
+		while (auto p {_allocated.front()}) {
+			std::free(p);
+			_allocated.remove(p);
+		}
+	}
+
+
+	#endif
+
+
+	void deallocate(pointer p, size_type n = 1) {
+		_allocated.push_back(p);
+	}
+
+
+	template <class U, class... Args>
+	void construct(U* p, Args&& ... args) {
+		::new(static_cast<void*>(p)) U(args...);
+	}
+
+
+	template <class U>
+	void destroy(U* p) {
+		p->~U();
+	}
+
+
+protected:
+	static tl::list<T*> _allocated;
 };
 
 
-static void AllocatorTests() {
+template <class T>
+tl::list<T*> Allocator<T>::_allocated {};
+
+
+struct AllocatorTester {
+	unsigned int constructed {0};
+	unsigned int destroyed {0};
+
+
+	AllocatorTester() { ++constructed; }
+
+
+	~AllocatorTester() { ++destroyed; }
+};
+
+
+static void allocatorTests() {
 	describe("Allocator tests", [&](TestSuite& suite) {
 		suite.test("Allocating built-in types", [&] {
 			tl::allocator<int> a {};
@@ -55,9 +142,11 @@ static void AllocatorTests() {
 			AllocatorTester* t = a.allocate();
 
 			a.construct(t);
-			expect(t->i).toEqual(1);
+			expect(t->constructed).toEqual(1);
+			expect(t->destroyed).toEqual(0);
 			a.destroy(t);
-			expect(t->i).toEqual(2);
+			expect(t->constructed).toEqual(1);
+			expect(t->destroyed).toEqual(1);
 
 			a.deallocate(t);
 		});
@@ -65,7 +154,7 @@ static void AllocatorTests() {
 }
 
 
-static void VectorTests() {
+static void vectorTests() {
 	tl::vector<int> v {};
 	describe("Vector tests", [&](TestSuite& suite) {
 
@@ -173,7 +262,7 @@ static void VectorTests() {
 
 		suite.test("Copying vector", [&] {
 			tl::vector<int> v1 {v};  // NOLINT(performance-unnecessary-copy-initialization)
-			tl::vector<int> v2 {};
+			tl::vector<int> v2 {v};
 
 			v2 = v1;
 
@@ -203,16 +292,45 @@ static void VectorTests() {
 			expect(v.size()).toEqual(0);
 		});
 
+		suite.test("Resizing and reserving", [&] {
+			auto va = new tl::vector<AllocatorTester, Allocator<AllocatorTester>>;
+
+			va->resize(10);
+
+			for (unsigned int i {0}; i < va->size(); ++i) {
+				expect((*va)[i].constructed).toEqual(1);
+				expect((*va)[i].destroyed).toEqual(0);
+			}
+
+			va->resize(5);
+
+			for (unsigned int i {va->size()}; i < va->capacity(); ++i) {
+				expect((*va)[i].constructed).toEqual(1);
+				expect((*va)[i].destroyed).toEqual(1);
+			}
+
+			delete va;
+			Allocator<AllocatorTester>::clean_up();
+		});
+
 		suite.test("Copying empty vector", [&] {
 			tl::vector<int> {tl::vector<int> {}};
 		});
 
-		// TODO: test vector::reserve
+		suite.test("Nesting vectors", [&] {
+			tl::vector<int> vt {};
+			tl::vector<tl::vector<int>> vv {};
+
+			for (auto i {0}; i < 2; ++i) {
+				vt.push_back(i);
+				vv.push_back(vt);
+			}
+		});
 	});
 }
 
 
-static void ListTests() {
+static void listTests() {
 	tl::list<int> l {};
 	describe("List tests", [&](TestSuite& suite) {
 
@@ -350,7 +468,7 @@ static void ListTests() {
 }
 
 
-static void MapTests() {
+static void mapTests() {
 	tl::map<int, double> m {};
 	describe("Map tests", [&](TestSuite& suite) {
 
@@ -425,6 +543,7 @@ static void MapTests() {
 			mRight[2] = 2;
 			mRight[3] = 3;
 
+			// TODO: what exactly is this testing? remake!
 			for (const auto& e : mLeft) {
 				expect(e.first).toEqual(e.second);
 			}
@@ -439,8 +558,7 @@ static void MapTests() {
 			for (it = --mRight.end(); it != mRight.begin(); --it) {
 				expect(it->first).toEqual(it->second);
 			}
-			--it;  // Covers lines needed for reverse iterator
-			// TODO: add reverse iterators
+			--it;
 		});
 
 		suite.test("Special copy cases", [&] {
@@ -456,7 +574,7 @@ static void MapTests() {
 }
 
 
-static void StackTests() {
+static void stackTests() {
 	tl::stack<int> s;
 	describe("Stack tests", [&](TestSuite& suite) {
 
@@ -478,7 +596,7 @@ static void StackTests() {
 }
 
 
-static void QueueTests() {
+static void queueTests() {
 	tl::queue<int> q;
 	describe("Queue tests", [&](TestSuite& suite) {
 
@@ -503,12 +621,12 @@ static void QueueTests() {
 
 
 int main() {
-	AllocatorTests();
-	VectorTests();
-	ListTests();
-	MapTests();
-	StackTests();
-	QueueTests();
+	allocatorTests();
+	vectorTests();
+	listTests();
+	mapTests();
+	stackTests();
+	queueTests();
 
 	return 0;
 }
