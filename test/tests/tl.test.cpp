@@ -39,15 +39,15 @@ struct Allocator {
 
 	pointer allocate(size_type n) {
 		auto p = static_cast<pointer>(::operator new(sizeof(T) * n));
-		_allocated.push_back(p);
+		_deallocated.push_back(p);
 		return p;
 	}
 
 
 	static void clean_up() {
-		while (auto p {_allocated.front()}) {
+		while (auto p {_deallocated.front()}) {
 			::operator delete(p);
-			_allocated.remove(p);
+			_deallocated.remove(p);
 		}
 	}
 
@@ -57,15 +57,14 @@ struct Allocator {
 
 	pointer allocate(size_type n = 1) {
 		auto p = static_cast<pointer>(std::malloc(sizeof(T) * n));
-		_allocated.push_back(p);
 		return p;
 	}
 
 
 	static void clean_up() {
-		while (auto p {_allocated.front()}) {
-			std::free(p);
-			_allocated.remove(p);
+		while (!_deallocated.empty()) {
+			std::free(_deallocated.front());
+			_deallocated.pop_front();
 		}
 	}
 
@@ -74,7 +73,7 @@ struct Allocator {
 
 
 	void deallocate(pointer p, size_type n = 1) {
-		_allocated.push_back(p);
+		_deallocated.push_back(p);
 	}
 
 
@@ -91,12 +90,12 @@ struct Allocator {
 
 
 protected:
-	static tl::list<T*> _allocated;
+	static tl::list<T*> _deallocated;
 };
 
 
 template <class T>
-tl::list<T*> Allocator<T>::_allocated {};
+tl::list<T*> Allocator<T>::_deallocated {};
 
 
 struct AllocatorTester {
@@ -108,6 +107,21 @@ struct AllocatorTester {
 
 
 	~AllocatorTester() { ++destroyed; }
+
+
+	// Non-default constructor that will initialize members
+	explicit AllocatorTester(int) {};
+
+
+	AllocatorTester& operator=(const AllocatorTester& t) {
+		if (this != &t) {
+			if (constructed) {
+				constructed = t.constructed;
+				destroyed = t.destroyed;
+			}
+		}
+		return *this;
+	}
 };
 
 
@@ -212,6 +226,7 @@ static void vectorTests() {
 		suite.test("Erasing elements", [&] {
 			auto it = v.erase(++v.begin());
 			expect(*it).toEqual(2);
+			expect(v.front()).toEqual(0);
 			v.erase(v.begin() + 5);
 			it = v.erase(v.begin() + 3, v.begin() + 4);
 			expect(*it).toEqual(5);
@@ -311,24 +326,91 @@ static void vectorTests() {
 			expect(v.size()).toEqual(0);
 		});
 
-		suite.test("Resizing and reserving", [&] {
+		// TODO: test other containers
+		suite.test("Constructing and destroying elements", [&] {
 			auto va = new tl::vector<AllocatorTester, Allocator<AllocatorTester>>;
 
-			va->resize(10);
+			va->reserve(20);
+			for (unsigned int i {0}; i < va->capacity(); ++i) {
+				// Initializing values for testing
+				::new(static_cast<void*>(&(*va)[i])) AllocatorTester(1);
 
+				expect((*va)[i].constructed).toEqual(0);
+				expect((*va)[i].destroyed).toEqual(0);
+			}
+
+			va->resize(10);
 			for (unsigned int i {0}; i < va->size(); ++i) {
 				expect((*va)[i].constructed).toEqual(1);
 				expect((*va)[i].destroyed).toEqual(0);
 			}
+			for (unsigned int i {va->size()}; i < va->capacity(); ++i) {
+				expect((*va)[i].constructed).toEqual((*va)[i].destroyed);
+				expect((*va)[i].destroyed).toBeLessThan(2);
+			}
 
 			va->resize(5);
-
-			for (unsigned int i {va->size()}; i < va->capacity(); ++i) {
+			for (unsigned int i {0}; i < va->size(); ++i) {
+				expect((*va)[i].constructed).toEqual(1);
+				expect((*va)[i].destroyed).toEqual(0);
+			}
+			for (unsigned int i {va->size()}; i < 10; ++i) {
 				expect((*va)[i].constructed).toEqual(1);
 				expect((*va)[i].destroyed).toEqual(1);
 			}
+			for (unsigned int i {10}; i < va->capacity(); ++i) {
+				expect((*va)[i].constructed).toEqual((*va)[i].destroyed);
+				expect((*va)[i].destroyed).toBeLessThan(2);
+			}
+			va->shrink_to_fit();
+			expect(va->size()).toEqual(va->capacity());
 
-			delete va;
+			va->push_back({});
+			expect(va->back().constructed).toEqual(1);
+			expect(va->back().destroyed).toEqual(0);
+			va->pop_back();
+			expect((*va)[va->size()].constructed).toEqual(1);
+			expect((*va)[va->size()].destroyed).toEqual(1);
+
+			va->shrink_to_fit();
+
+			va->insert(va->begin(), {});
+			for (unsigned int i {0}; i < va->size(); ++i) {
+				expect((*va)[i].constructed).toEqual(1);
+				expect((*va)[i].destroyed).toEqual(0);
+			}
+			for (unsigned int i {va->size()}; i < va->capacity(); ++i) {
+				// Initializing values for testing
+				::new(static_cast<void*>(&(*va)[i])) AllocatorTester(1);
+			}
+
+			va->erase(va->begin());
+			for (unsigned int i {0}; i < va->size(); ++i) {
+				expect((*va)[i].constructed).toEqual(1);
+				expect((*va)[i].destroyed).toEqual(0);
+			}
+			for (unsigned int i {va->size()}; i < va->capacity(); ++i) {
+				expect((*va)[i].constructed).toEqual((*va)[i].destroyed);
+				expect((*va)[i].destroyed).toBeLessThan(2);
+			}
+
+			va->erase(va->begin(), va->end() - 2);
+			for (unsigned int i {0}; i < va->size(); ++i) {
+				expect((*va)[i].constructed).toEqual(1);
+				expect((*va)[i].destroyed).toEqual(0);
+			}
+			for (unsigned int i {va->size()}; i < va->capacity(); ++i) {
+				expect((*va)[i].constructed).toEqual((*va)[i].destroyed);
+				expect((*va)[i].destroyed).toBeLessThan(2);
+			}
+
+			va->clear();
+			for (unsigned int i {va->size()}; i < va->capacity(); ++i) {
+				expect((*va)[i].constructed).toEqual((*va)[i].destroyed);
+				expect((*va)[i].destroyed).toBeLessThan(2);
+			}
+
+			delete (va);
 			Allocator<AllocatorTester>::clean_up();
 		});
 

@@ -99,6 +99,7 @@ namespace tl {
 
 		void resize(size_type n);
 		void reserve(size_type n);
+		void shrink_to_fit();
 
 		reference front();
 		reference back();
@@ -148,6 +149,7 @@ namespace tl {
 	template <class T, class Alloc>
 	void vector<T, Alloc>::pop_back() {
 		--_vectorSize;
+		allocator_type().destroy(_vectorArray + _vectorSize);
 	}
 
 
@@ -158,6 +160,7 @@ namespace tl {
 		if (_vectorSize == _vectorCapacity) {
 			reserve(_vectorCapacity * 3 / 2 + 1);
 		}
+		allocator_type().construct(_vectorArray + _vectorSize);
 		for (size_type j {_vectorSize}; j > i; --j) {
 			_vectorArray[j] = _vectorArray[j - 1];
 		}
@@ -177,6 +180,7 @@ namespace tl {
 		}
 		while (i < _vectorSize - 1) {
 			_vectorArray[i] = _vectorArray[i + 1];
+			allocator_type().destroy(_vectorArray + i + 1);
 			++i;
 		}
 		--_vectorSize;
@@ -194,6 +198,10 @@ namespace tl {
 			++i;
 		}
 
+		for (; i < _vectorSize; ++i) {
+			allocator_type().destroy(_vectorArray + i);
+		}
+
 		_vectorSize -= n;
 		return last - n;
 	}
@@ -202,7 +210,7 @@ namespace tl {
 	template <class T, class Alloc>
 	void vector<T, Alloc>::clear() {
 		for (size_type i {0}; i < _vectorSize; ++i) {
-			_vectorArray[i] = value_type {};
+			allocator_type().destroy(_vectorArray + i);
 		}
 		_vectorSize = 0;
 	}
@@ -212,19 +220,7 @@ namespace tl {
 	void vector<T, Alloc>::resize(size_type n) {
 		if (n > _vectorSize) {  // Expanding, constructing new elements
 			if (n > _vectorCapacity) {  // Not enough space, reallocating
-				pointer temp = allocator_type().allocate(n);
-				for (size_type i {0}; i < n; ++i) {
-					allocator_type().construct(temp + i);
-				}
-
-				for (size_type i {0}; i < _vectorSize; ++i) {
-					temp[i] = _vectorArray[i];
-					allocator_type().destroy(_vectorArray + i);  // Destroying old elements if reallocating
-				}
-
-				allocator_type().deallocate(_vectorArray, _vectorCapacity);
-				_vectorArray = temp;
-				_vectorCapacity = n;
+				reserve(n);
 			}
 
 			for (size_type i {_vectorSize}; i < n; ++i) {
@@ -236,6 +232,7 @@ namespace tl {
 				allocator_type().destroy(_vectorArray + i);
 			}
 		}
+
 		_vectorSize = n;
 	}
 
@@ -249,18 +246,30 @@ namespace tl {
 		}
 
 		pointer temp = allocator_type().allocate(n);
-		for (size_type i {0}; i < n; ++i) {
-			allocator_type().construct(temp + i);
-		}
-
 		for (size_type i {0}; i < _vectorSize; ++i) {
+			allocator_type().construct(temp + i);
 			temp[i] = _vectorArray[i];
 			allocator_type().destroy(_vectorArray + i);  // Destroying old elements if reallocating
 		}
-
 		allocator_type().deallocate(_vectorArray, _vectorCapacity);
+
 		_vectorArray = temp;
 		_vectorCapacity = n;
+	}
+
+
+	template <class T, class Alloc>
+	void vector<T, Alloc>::shrink_to_fit() {
+		pointer temp = allocator_type().allocate(_vectorSize);
+		for (size_type i {0}; i < _vectorSize; ++i) {
+			allocator_type().construct(temp + i);
+			temp[i] = _vectorArray[i];
+			allocator_type().destroy(_vectorArray + i);
+		}
+		allocator_type().deallocate(_vectorArray, _vectorCapacity);
+
+		_vectorArray = temp;
+		_vectorCapacity = _vectorSize;
 	}
 
 

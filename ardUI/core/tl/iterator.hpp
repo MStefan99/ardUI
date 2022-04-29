@@ -20,23 +20,29 @@ namespace tl {
 		};
 
 
-		template <class Iterator>
-		void _advance(Iterator& it, unsigned int n, bidirectional_iterator_tag t) {
-			while (n--) {
-				++it;
+		template <class Iterator, class Distance>
+		void _advance(Iterator& it, Distance n, bidirectional_iterator_tag t) {
+			if (n > 0) {
+				while (n--) {
+					++it;
+				}
+			} else {
+				while (n++) {
+					--it;
+				}
 			}
 		}
 
 
-		template <class Iterator>
-		void _advance(Iterator& it, unsigned int n, random_access_iterator_tag t) {
+		template <class Iterator, class Distance>
+		void _advance(Iterator& it, Distance n, random_access_iterator_tag t) {
 			it += n;
 		}
 	}
 
 
-	template <class Iterator>
-	void advance(Iterator& it, unsigned int n) {
+	template <class Iterator, class Distance>
+	void advance(Iterator& it, Distance n) {
 		_internal::_advance(it, n, typename _internal::iterator<Iterator>::iterator_category());
 	}
 }
