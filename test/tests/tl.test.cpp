@@ -282,6 +282,25 @@ static void vectorTests() {
 			expect(v2.capacity()).toEqual(v.capacity());
 		});
 
+		suite.test("Assigning vector", [&] {
+			tl::vector<int> v1;
+			tl::vector<int> v2;
+
+			for (unsigned int i {0}; i < 10; ++i) {
+				v1.push_back(i);
+				v2.push_back(10 - i);
+
+				expect(v1[i]).toEqual(i);
+				expect(v2[i]).toEqual(10 - i);
+			}
+
+			v1 = v2;
+
+			for (unsigned int i {0}; i < 10; ++i) {
+				expect(v1[i]).toEqual(v2[i]);
+			}
+		});
+
 		suite.test("Popping elements", [&] {
 			v.pop_back();
 			expect(*--v.end()).toEqual(8);

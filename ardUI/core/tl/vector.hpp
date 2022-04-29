@@ -273,18 +273,18 @@ namespace tl {
 	template <class T, class Alloc>
 	vector<T, Alloc>& vector<T, Alloc>::operator=(const vector <value_type, allocator_type>& vector) {
 		if (this != &vector) {
-			if (_vectorArray) {
-				for (size_type i {0}; i < vector.size(); ++i) {
-					allocator_type().destroy(_vectorArray + i);
-				}
-				allocator_type().deallocate(_vectorArray, _vectorCapacity);
+			for (size_type i {0}; i < _vectorSize; ++i) {
+				allocator_type().destroy(_vectorArray + i);
 			}
+
+			allocator_type().deallocate(_vectorArray, _vectorCapacity);
 
 			_vectorArray = allocator_type().allocate(vector.size());
 			for (size_type i {0}; i < vector.size(); ++i) {
 				allocator_type().construct(_vectorArray + i);
 				_vectorArray[i] = vector._vectorArray[i];
 			}
+
 			_vectorSize = vector.size();
 			_vectorCapacity = vector.capacity();
 		}
