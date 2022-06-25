@@ -19,7 +19,7 @@
 
 
 class ardUI final {
-public:
+S_PUBLIC:
 	template <class ActivityClass>
 	static void startActivity(const Bundle& extras = {});
 	static void back();
@@ -29,7 +29,7 @@ public:
 	static View* getViewByName(const String& name);
 	static Activity* getCurrentActivity();
 
-private:
+S_PRIVATE:
 	static TL_NS::map<String, View*> _viewMap;
 };
 

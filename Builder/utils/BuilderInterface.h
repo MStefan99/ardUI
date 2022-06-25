@@ -8,20 +8,20 @@
 
 #include <emscripten/bind.h>
 
-#include "platform.h"
+#include "platform.hpp"
 #include LIST_H
-#include "View.h"
-#include "TextView.h"
-#include "ButtonView.h"
-#include "ProgressBar.h"
-#include "ViewGroup.h"
-#include "Adapter.h"
-#include "AdapterView.h"
-#include "ListView.h"
-#include "LinearLayout.h"
-#include "ConstraintLayout.h"
-#include "Activity.h"
-#include "ActivityManager.h"
+#include "View.hpp"
+#include "TextView.hpp"
+#include "ButtonView.hpp"
+#include "ProgressBar.hpp"
+#include "ViewGroup.hpp"
+#include "Adapter.hpp"
+#include "AdapterView.hpp"
+#include "ListView.hpp"
+#include "LinearLayout.hpp"
+#include "ConstraintLayout.hpp"
+#include "Activity.hpp"
+#include "ActivityManager.hpp"
 
 
 #define ENQUOTE(a) #a
@@ -30,13 +30,6 @@
   class_<Adapter<class>>(ENQUOTE(class Adapter)); \
   class_<AdapterView<class>, base<ViewGroup>>(ENQUOTE(class AdapterView)); \
   class_<ListView<class>, base<AdapterView<class>>>(ENQUOTE(class ListView)).constructor()
-
-
-template <class T>
-bool IteratorNotEquals(const typename TL_NS::list<T>::iterator& x,
-		const typename TL_NS::list:iterator& y) {
-	return x != y;
-}
 
 
 class BuilderInterface {
@@ -107,7 +100,7 @@ EMSCRIPTEN_BINDINGS(BuilderInterface) {
 #if !USE_STL
 	class_<TL_NS::list<View*>::iterator>("listIterator")
 			.function("value", &TL_NS::list<View*>::iterator::operator *)
-			.function("notEquals", &IteratorNotEquals<View*>)
+			.function("notEquals", &TL_NS::list<View*>::iterator::operator!=)
 			.function<internal::DeduceArgumentsTag,
 					TL_NS::list<View*>::iterator& (TL_NS::list<View*>::iterator::*)()>
 					("increment", &TL_NS::list<View*>::iterator::operator ++);

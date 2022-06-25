@@ -9,7 +9,7 @@
 
 
 class Rect {
-public:
+S_PUBLIC:
 	Rect() = default;
 	Rect(int16_t left, int16_t top, int16_t right, int16_t bottom);
 	Rect(const Rect& r) = default;

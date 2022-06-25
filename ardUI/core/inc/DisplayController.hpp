@@ -11,7 +11,7 @@
 
 
 class DisplayController {
-public:
+S_PUBLIC:
 	static void fill(Color color);
 
 	static void drawLine(int16_t x1, int16_t y1,
@@ -57,7 +57,7 @@ public:
 	static void drawBitmap(int16_t x, int16_t y,
 			int16_t* bitmap);
 
-protected:
+S_PROTECTED:
 	struct FeatureSupport {
 		bool fill {isSupported(ardui::display::fill({}))};
 		bool drawLine {isSupported(ardui::display::drawLine(0, 0, 0, 0, {}))};

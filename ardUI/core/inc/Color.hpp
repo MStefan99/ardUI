@@ -9,7 +9,7 @@
 
 
 class Color final {
-public:
+S_PUBLIC:
 	Color() = default;
 	Color(const Color& color) = default;
 
@@ -26,15 +26,11 @@ public:
 
 	Color& operator=(const Color& c) = default;
 
-	#ifdef __EMSCRIPTEN__
-	friend class EmscriptenBindingInitializer_BuilderInterface;
-	#endif
-
-protected:
+S_PROTECTED:
 	#if COLOR_MODE == COLOR_888
 
 	class ColorData {
-	public:
+	S_PUBLIC:
 		ColorData() = default;
 
 		explicit ColorData(uint32_t color);
@@ -51,7 +47,7 @@ protected:
 		friend class EmscriptenBindingInitializer_BuilderInterface;
 		#endif
 
-	protected:
+	S_PROTECTED:
 		uint8_t _r {};
 		uint8_t _g {};
 		uint8_t _b {};

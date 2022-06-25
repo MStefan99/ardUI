@@ -14,10 +14,10 @@
 class Activity;
 
 class ActivityManager final {
-public:
+S_PUBLIC:
 	ActivityManager() = delete;
 
-private:
+S_PRIVATE:
 	template <class ActivityClass>
 	static void startActivity(const Bundle& extras = {},
 			void (* onActivityResult)(int statusCode, Bundle resultData) = {});

@@ -11,8 +11,8 @@
 #include "TextView.hpp"
 
 
-class ButtonView: public TextView {
-public:
+class ButtonView: S_PUBLIC TextView {
+S_PUBLIC:
 	ButtonView() = default;
 	explicit ButtonView(const String& text);
 	~ButtonView() override = default;
@@ -20,11 +20,7 @@ public:
 	Color getBorderColor() const;
 	void setBorderColor(Color borderColor);
 
-	#ifdef __EMSCRIPTEN__
-	friend class EmscriptenBindingInitializer_BuilderInterface;
-	#endif
-
-protected:
+S_PROTECTED:
 	void onDraw() override;
 
 	Color _borderColor {DEFAULT_BORDER_COLOR};

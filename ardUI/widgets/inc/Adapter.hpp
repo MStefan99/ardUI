@@ -14,7 +14,7 @@ class AdapterView;
 
 template <class T>
 class Adapter {
-public:
+S_PUBLIC:
 	virtual ~Adapter() = default;
 
 	virtual View* getView(int position) const = 0;

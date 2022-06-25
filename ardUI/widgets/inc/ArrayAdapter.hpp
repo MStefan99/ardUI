@@ -12,8 +12,8 @@
 
 
 template <class T>
-class ArrayAdapter: public Adapter<T> {
-public:
+class ArrayAdapter: S_PUBLIC Adapter<T> {
+S_PUBLIC:
 	ArrayAdapter() = default;
 	explicit ArrayAdapter(T data[], int length);
 	explicit ArrayAdapter(TL_NS::list<T> list);

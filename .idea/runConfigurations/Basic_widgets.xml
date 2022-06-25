@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Basic widgets" type="CMakeRunConfiguration" factoryName="Application" folderName="Examples" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="ardUI" TARGET_NAME="Basic_Widgets" CONFIG_NAME="Linux" RUN_TARGET_PROJECT_NAME="ardUI" RUN_TARGET_NAME="Basic_Widgets">
+  <configuration default="false" name="Basic widgets" type="CMakeRunConfiguration" factoryName="Application" folderName="Examples" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="ardUI" TARGET_NAME="Basic_Widgets" CONFIG_NAME="Linux debug" RUN_TARGET_PROJECT_NAME="ardUI" RUN_TARGET_NAME="Basic_Widgets">
     <method v="2">
       <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
     </method>

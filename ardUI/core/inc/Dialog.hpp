@@ -14,7 +14,7 @@ class Activity;
 
 
 class Dialog {
-public:
+S_PUBLIC:
 	Dialog() = default;
 	virtual ~Dialog() = default;
 
@@ -24,11 +24,11 @@ public:
 
 	friend class Activity;
 
-protected:
+S_PROTECTED:
 	virtual void onCreate();
 	virtual void onStop();
 
-private:
+S_PRIVATE:
 	void measure(View::MeasureSpec widthMeasureSpec, View::MeasureSpec heightMeasureSpec);
 	void layout(int16_t left, int16_t top, int16_t right, int16_t bottom);
 	void draw() const;

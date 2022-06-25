@@ -11,8 +11,8 @@
 #include "LinearLayout.hpp"
 
 
-class ScrollLayout: public LinearLayout {
-protected:
+class ScrollLayout: S_PUBLIC LinearLayout {
+S_PROTECTED:
 	void onLayout(bool changed, int16_t left, int16_t top, int16_t right, int16_t bottom) override;
 
 	void draw() override;

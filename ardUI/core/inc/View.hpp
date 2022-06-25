@@ -12,10 +12,10 @@
 #include "Drawable.hpp"
 
 
-class View: public Drawable {
-public:
+class View: S_PUBLIC Drawable {
+S_PUBLIC:
 	class MeasureSpec {
-	public:
+	S_PUBLIC:
 		enum Sizing {
 			UNSPECIFIED,
 			AT_MOST,
@@ -27,7 +27,7 @@ public:
 		uint16_t getSize() const;
 		Sizing getMode() const;
 
-	protected:
+	S_PROTECTED:
 		uint16_t _size {};
 		Sizing _mode {};
 	};
@@ -62,17 +62,13 @@ public:
 
 	friend class Activity;
 
-	#ifdef __EMSCRIPTEN__
-	friend class EmscriptenBindingInitializer_BuilderInterface;
-	#endif
-
 	#ifdef TEST
 
 	friend class TestWrapper;
 
 	#endif
 
-protected:
+S_PROTECTED:
 	// Measure contents of the current view
 	virtual void onMeasure(MeasureSpec widthMeasureSpec, MeasureSpec heightMeasureSpec);
 	// Assign size and position to children
@@ -84,7 +80,7 @@ protected:
 
 	static uint16_t getDefaultSize(uint16_t size, MeasureSpec measureSpec);
 
-private:
+S_PRIVATE:
 	void (* _onClick)(View* view) {nullptr};
 	void (* _onLongClick)(View* view) {nullptr};
 	void (* _onScroll)(View* view) {nullptr};

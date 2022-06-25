@@ -12,8 +12,8 @@
 #include "View.hpp"
 
 
-class TextView: public View {
-public:
+class TextView: S_PUBLIC View {
+S_PUBLIC:
 	TextView() = default;
 	explicit TextView(const String& text);
 	~TextView() override = default;
@@ -30,17 +30,13 @@ public:
 	// TODO: add alignment options
 	// TODO: add background toggle
 
-	#ifdef __EMSCRIPTEN__
-	friend class EmscriptenBindingInitializer_BuilderInterface;
-	#endif
-
 	#ifdef TEST
 
 	friend class TestWrapper;
 
 	#endif
 
-protected:
+S_PROTECTED:
 	void onMeasure(MeasureSpec widthMeasureSpec, MeasureSpec heightMeasureSpec) override;
 	void onDraw() override;
 

@@ -18,7 +18,7 @@
 
 
 class Activity {
-public:
+S_PUBLIC:
 	Activity() = default;
 	Activity(const Bundle& extras,
 			void (* onActivityResult)(int statusCode, Bundle resultData));
@@ -47,17 +47,13 @@ public:
 
 	friend class ActivityManager;
 
-	#ifdef __EMSCRIPTEN__
-	friend class EmscriptenBindingInitializer_BuilderInterface;
-	#endif
-
 	#ifdef TEST
 
 	friend class TestWrapper;
 
 	#endif
 
-protected:
+S_PROTECTED:
 	virtual void onCreate() = 0;
 	virtual void onStart();
 	virtual void onRestart();
@@ -68,7 +64,7 @@ protected:
 
 	const Bundle& getExtras();
 
-private:
+S_PRIVATE:
 	enum State {
 		LAUNCHED,
 		CREATED,

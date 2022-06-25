@@ -10,15 +10,15 @@
 
 
 template <class T>
-class AdapterView: public ViewGroup {
-public:
+class AdapterView: S_PUBLIC ViewGroup {
+S_PUBLIC:
 	AdapterView() = default;
 	explicit AdapterView(const Adapter<T>& adapter);
 
 	void setAdapter(Adapter<T>* adapter);
 	Adapter<T>* getAdapter() const;
 
-protected:
+S_PROTECTED:
 	Adapter<T>* _adapter {nullptr};
 };
 

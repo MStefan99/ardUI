@@ -10,11 +10,11 @@
 
 
 template <class T>
-class ListView: public AdapterView<T> {
-public:
+class ListView: S_PUBLIC AdapterView<T> {
+S_PUBLIC:
 	ListView() = default;
 
-protected:
+S_PROTECTED:
 	void onMeasure(View::MeasureSpec width, View::MeasureSpec height) override;
 	void onLayout(bool changed, int16_t left, int16_t top, int16_t right, int16_t bottom) override;
 	void onDraw() override;

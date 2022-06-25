@@ -10,10 +10,10 @@
 
 
 class Bundle {
-protected:
+S_PROTECTED:
 	class Concept;
 
-public:
+S_PUBLIC:
 	Bundle() = default;
 	Bundle(const Bundle& b);
 	Bundle& operator=(const Bundle& other);
@@ -37,18 +37,18 @@ public:
 
 	~Bundle();
 
-protected:
+S_PROTECTED:
 	TL_NS::map<String, Concept*> _bundleMap {};
 
 	class Concept {
-	public:
+	S_PUBLIC:
 		virtual ~Concept();
 		virtual Concept* copy() = 0;
 	};
 
 	template <class T>
-	class Model: public Concept {
-	public:
+	class Model: S_PUBLIC Concept {
+	S_PUBLIC:
 		explicit Model<T>(T value);
 		Model<T>* copy() override;
 

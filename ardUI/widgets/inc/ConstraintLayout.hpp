@@ -13,8 +13,8 @@
 #include "ViewGroup.hpp"
 
 
-class ConstraintLayout: public ViewGroup {
-public:
+class ConstraintLayout: S_PUBLIC ViewGroup {
+S_PUBLIC:
 	enum Side {
 		LEFT = 0,
 		TOP = 1,
@@ -24,7 +24,7 @@ public:
 	};
 
 	class ConstraintSet {
-	protected:
+	S_PROTECTED:
 		struct Constraint {
 			View* startView {nullptr};
 			Side startSide {LEFT};
@@ -46,14 +46,14 @@ public:
 			void reset();
 		};
 
-	public:
+	S_PUBLIC:
 		ConstraintSet() = default;
 
 		void connect(View* startView, Side startSide, View* endView, Side endSide, int16_t margin);
 
 		friend class ConstraintLayout;
 
-	protected:
+	S_PROTECTED:
 		TL_NS::map<View*, TL_NS::pair<LayoutInfo, TL_NS::list<Constraint>>> _constraints {};
 	};
 
@@ -61,7 +61,7 @@ public:
 
 	ConstraintSet* getConstraints();
 
-protected:
+S_PROTECTED:
 	void onMeasure(MeasureSpec widthMeasureSpec, MeasureSpec heightMeasureSpec) override;
 	void onLayout(bool changed, int16_t left, int16_t top, int16_t right, int16_t bottom) override;
 	void onDraw() override;

@@ -12,8 +12,8 @@
 #include "View.hpp"
 
 
-class ProgressBar: public View {
-public:
+class ProgressBar: S_PUBLIC View {
+S_PUBLIC:
 	ProgressBar() = default;
 	~ProgressBar() override = default;
 
@@ -32,11 +32,7 @@ public:
 	Color getBackgroundColor() const;
 	void setBackgroundColor(Color backgroundColor);
 
-	#ifdef __EMSCRIPTEN__
-	friend class EmscriptenBindingInitializer_BuilderInterface;
-	#endif
-
-protected:
+S_PROTECTED:
 	void onDraw() override;
 
 	static int16_t mapScale(int16_t value, int16_t oldMin, int16_t oldMax, int16_t newMin, int16_t newMax);

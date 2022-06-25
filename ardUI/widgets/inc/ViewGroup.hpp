@@ -11,8 +11,8 @@
 #include "View.hpp"
 
 
-class ViewGroup: public View {
-public:
+class ViewGroup: S_PUBLIC View {
+S_PUBLIC:
 	ViewGroup() = default;
 	~ViewGroup() override;
 
@@ -30,11 +30,7 @@ public:
 	void draw() override;
 	void invalidate() override;
 
-	#ifdef __EMSCRIPTEN__
-	friend class EmscriptenBindingInitializer_BuilderInterface;
-	#endif
-
-protected:
+S_PROTECTED:
 	void onMeasure(MeasureSpec widthMeasureSpec, MeasureSpec heightMeasureSpec) override = 0;
 	void onLayout(bool changed, int16_t left, int16_t top, int16_t right, int16_t bottom) override = 0;
 	void onDraw() override = 0;

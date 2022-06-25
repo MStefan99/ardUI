@@ -14,7 +14,7 @@
 
 
 class Drawable {
-public:
+S_PUBLIC:
 	Drawable() = default;
 	virtual ~Drawable();
 
@@ -43,11 +43,7 @@ public:
 
 	bool isValid() const;
 
-	#ifdef __EMSCRIPTEN__
-	friend class EmscriptenBindingInitializer_BuilderInterface;
-	#endif
-
-protected:
+S_PROTECTED:
 	bool _valid {false};
 	bool _visible {true};
 

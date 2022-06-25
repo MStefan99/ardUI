@@ -26,12 +26,12 @@ void arduiSmartDelay(uint32_t ms);  // This method replaces the original "delay"
 #endif
 
 class EventManager final {
-public:
+S_PUBLIC:
 	EventManager() = delete;
 
 	static void update(bool forceDraw = false, bool callUserLoop = false);
 
-private:
+S_PRIVATE:
 	static void checkForActions(uint32_t deltaTime);
 	static void draw();
 };

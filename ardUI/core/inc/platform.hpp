@@ -10,6 +10,17 @@
 #include "config_adv.hpp"
 
 
+#ifndef __EMSCRIPTEN__
+	#define S_PUBLIC public
+	#define S_PROTECTED protected
+	#define S_PRIVATE private
+#else
+	#define S_PUBLIC public
+	#define S_PROTECTED public
+	#define S_PRIVATE public
+#endif
+
+
 #if LOG_LEVEL < LOG_NONE || LOG_LEVEL > LOG_VERBOSE
 #error ERROR: Invalid log level
 #endif

@@ -9,8 +9,8 @@
 #include "ViewGroup.hpp"
 
 
-class LinearLayout: public ViewGroup {
-public:
+class LinearLayout: S_PUBLIC ViewGroup {
+S_PUBLIC:
 	enum Orientation {
 		HORIZONTAL,
 		VERTICAL
@@ -21,11 +21,7 @@ public:
 	Orientation getOrientation() const;
 	void setOrientation(Orientation orientation);
 
-	#ifdef __EMSCRIPTEN__
-	friend class EmscriptenBindingInitializer_BuilderInterface;
-	#endif
-
-protected:
+S_PROTECTED:
 	void onMeasure(MeasureSpec widthMeasureSpec, MeasureSpec heightMeasureSpec) override;
 	void onLayout(bool changed, int16_t left, int16_t top, int16_t right, int16_t bottom) override;
 	void onDraw() override;
