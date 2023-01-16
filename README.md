@@ -1,15 +1,16 @@
 # ardUI
 
-![Version](https://img.shields.io/badge/ardUI-pre--alpha-red?style=flat-square)
+![Version](https://img.shields.io/badge/ardUI-alpha-red?style=flat-square)
 [![Docs](https://img.shields.io/badge/ardUI-Docs-brightgreen?style=flat-square)][docs]
 [![Open issues](https://img.shields.io/github/issues/MStefan99/ardUI?style=flat-square)](https://github.com/MStefan99/ardUI/issues)
 [![License](https://img.shields.io/badge/license-GPL--3.0-brightgreen?style=flat-square)](https://www.gnu.org/licenses/gpl-3.0.en.html)
 ![Repo size](https://img.shields.io/github/repo-size/mstefan99/ardui?style=flat-square)
 [![Releases](https://img.shields.io/github/downloads/MStefan99/ardUI/total?style=flat-square)](https://github.com/MStefan99/ardUI/releases)
+![Maintenance](https://img.shields.io/maintenance/no/2021?style=flat-square)
 
 ![Project card][project-card]
 
-_Note: ardUI is in pre-alpha now, many features are still in development_
+_Note: ardUI is in alpha now, many features are still in development_
 
 ### What is ardUI?
 ardUI is a simple yet powerful framework that allows you to quickly build complex, interactive and beautiful interfaces
