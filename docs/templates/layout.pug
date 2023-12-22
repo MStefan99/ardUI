@@ -7,6 +7,9 @@ html(lang='en')
 		meta(name='viewport' content='width=device-width, initial-scale=1.0')
 		block head
 			title ardUI Documentation
+		script(async type='module').
+			import {sendHit} from 'https://crash-course.apps.mstefan99.com/api/cc?k=cdf17ba6c5495f93&verbose';
+			sendHit();
 		link(rel='icon' href='/img/ardUI_logo.svg')
 		link(rel='stylesheet' href='/style/stylify.css')
 		link(rel='stylesheet' href='/style/style.css')
